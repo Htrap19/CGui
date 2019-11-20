@@ -9,26 +9,56 @@
 
 ## Code Structure
 ```C++
+// Label example
 #include <CGUI.hh>
 
 int main(int argc, char *argv[])
 {
   gtk_init(&argc, &argv); // Initialize gtk
+  
   // Some code
   Window window(TOPLEVEL, "CGUI WINDOW", CEN); // Create a new Window
+  
   Label label("Text");
   label.Align(CENTER, CENTER); // align the label to center horizontally and vertically
+  
   window.Add<Label>(label); // add label to window
   window.DefaultSize(640, 480); // window default size
   window.InternalWidth(10); // Internal window width
   window.ShowAll(); // Show all widgets 
+  
   gtk_main(); // End gtk
 
   return 0;
 }
 ```
 Result:-<br>
-![](https://github.com/Developmentprogramming/CGui/blob/master/ExampleOne.png)
+![ExampleOne](https://github.com/Developmentprogramming/CGui/blob/master/Examples/ExampleOne.png)
+
+```C++
+//Image Example
+#include <CGUI.hh>
+
+int main(int argc, char *argv[])
+{
+  gtk_init(&argc, &argv); // Initialize gtk
+  
+  Window window(TOPLEVEL, "CGUI WINDOW", CEN); // Create a new Window
+  
+  Image image("./Image/yaktocat.png", 400, 400); // create a new image at scale of 400X400
+  image.Align(CENTER, CENTER); // align the image to center horizontally and vertically
+  
+  window.Add<Image>(image);
+  window.DefaultSize(640, 480); // window default size
+  window.InternalWidth(10); // Internal window width
+  window.ShowAll(); // Show all widgets 
+  
+  gtk_main(); // End gtk
+  return 0;
+}
+```
+Result:- <br>
+![ExampleTwo]()
 
 ## Compilation
 ```

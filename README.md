@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
   Image image("./Image/yaktocat.png", 400, 400); // create a new image at scale of 400X400
   image.Align(CENTER, CENTER); // align the image to center horizontally and vertically
   
-  window.Add<Image>(image);
+  window.Add<Image>(image); // add image to window
   window.DefaultSize(640, 480); // window default size
   window.InternalWidth(10); // Internal window width
   window.ShowAll(); // Show all widgets 

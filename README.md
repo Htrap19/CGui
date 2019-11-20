@@ -27,8 +27,8 @@ int main(int argc, char *argv[])
   return 0;
 }
 ```
-Result:-
-![ExampleOne]()
+Result:-<br>
+![](https://github.com/Developmentprogramming/CGui/blob/master/ExampleOne.png)
 
 ## Compilation
 ```

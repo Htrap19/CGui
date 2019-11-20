@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 }
 ```
 Result:- <br>
-![ExampleTwo]()
+![ExampleTwo](https://github.com/Developmentprogramming/CGui/blob/master/Examples/ExampleTwo.png)
 
 ## Compilation
 ```

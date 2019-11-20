@@ -1,4 +1,4 @@
-# CGui
+# CGui(Beta)
 
 ### Open Source Library for C++ UI based on GTK 3
 

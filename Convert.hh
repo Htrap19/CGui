@@ -14,12 +14,14 @@ enum BoxAddType { START, END };
 
 enum Alignments { FILL, BEGIN, LAST, CENTER };
 
+enum Events { CLICKED, DELETE, TOGGLED };
+
 namespace Converter
 {
   class Convert
   {
     public:
-      std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition> ConvertToGtkCode(std::variant<Alignments, BoxType, WindowType, WindowPos> data)
+      std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition, gchar*> ConvertToGtkCode(std::variant<Alignments, BoxType, WindowType, WindowPos, Events> data)
       {
         if(data.index() == 0)
           return GetGtkCode(std::get<Alignments>(data));
@@ -29,10 +31,29 @@ namespace Converter
           return GetGtkCode(std::get<WindowType>(data));
         else if(data.index() == 3)
           return GetGtkCode(std::get<WindowPos>(data));
-
+        else if(data.index() == 4)
+          return GetGtkCode(std::get<Events>(data));
       }
 
     private:
+      gchar *GetGtkCode(Events event)
+      {
+        switch (event)
+        {
+          case CLICKED:
+            return "clicked";
+            break;
+          case DELETE:
+            return "delete-event";
+            break;
+          case TOGGLED:
+            return "toggled";
+            break;
+        }
+
+        return "clicked";
+      }
+
       GtkWindowType GetGtkCode(WindowType data)
       {
         switch (data)

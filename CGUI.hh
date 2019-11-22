@@ -2,6 +2,7 @@
 #define CGUI_HH
 
 #include <gtk/gtk.h>
+#include <any>
 #include "Convert.hh"
 
 using namespace Converter;
@@ -12,6 +13,67 @@ class widget
     virtual GtkWidget *GetWidget() = 0;
     virtual void Align(Alignments halign, Alignments valign) = 0;
     virtual void SizeRequest(guint x, guint y) = 0;
+};
+
+class Button : public widget
+{
+  public:
+    Button()
+    { button = gtk_button_new(); }
+
+    Button(const gchar *text)
+    { button = gtk_button_new_with_label(text); }
+
+    GtkWidget *GetWidget()
+    { return button; }
+
+    void Align(Alignments halign, Alignments valign)
+    {
+      Convert convert;
+      gtk_widget_set_halign(GTK_WIDGET(button), std::get<GtkAlign>(convert.ConvertToGtkCode(halign)));
+      gtk_widget_set_valign(GTK_WIDGET(button), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
+    }
+
+    void SignalHandler(Events event, GCallback callbackFunction, gpointer data = NULL)
+    {
+      Convert convert;
+      g_signal_connect(G_OBJECT(button), std::get<gchar *>(convert.ConvertToGtkCode(event)), callbackFunction, data);
+    }
+
+    void SizeRequest(guint x, guint y)
+    { gtk_widget_set_size_request(GTK_WIDGET(button), x, y); }
+
+  private:
+    GtkWidget *button;
+};
+
+class Image : public widget
+{
+  public:
+    Image(const gchar *filename)
+    { image = gtk_image_new_from_file(filename); }
+
+    Image(const gchar *filename, int width, int height, gboolean aspectRatio = true, GError **error = NULL)
+    {
+      GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file_at_scale(filename, width, height, aspectRatio, error);
+      image = gtk_image_new_from_pixbuf(pixbuf);
+    }
+
+    void Align(Alignments halign, Alignments valign)
+    {
+      Convert convert;
+      gtk_widget_set_halign(GTK_WIDGET(image), std::get<GtkAlign>(convert.ConvertToGtkCode(halign)));
+      gtk_widget_set_valign(GTK_WIDGET(image), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
+    }
+
+    void SizeRequest(guint x, guint y)
+    { gtk_widget_set_size_request(GTK_WIDGET(image), x, y); }
+
+    GtkWidget *GetWidget()
+    { return image; }
+
+  private:
+    GtkWidget *image;
 };
 
 class Label : public widget

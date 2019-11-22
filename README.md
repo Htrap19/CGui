@@ -91,6 +91,10 @@ int main(int argc, char *argv[])
   return 0;
 }
 ```
+Result:- <br>
+![ExampleThree](https://github.com/Developmentprogramming/CGui/blob/master/Examples/ExampleThree.png)<br>
+On Button clicked:- <br>
+![ExampleThreeButtonClicked](https://github.com/Developmentprogramming/CGui/blob/master/Examples/ExampleThreeButtonClicked.png)
 
 ## Compilation
 ```

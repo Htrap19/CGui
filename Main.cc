@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
   Image image("./Image/gui-interface.png", 300, 300);
   image.Align(CENTER, BEGIN);
 
-  Label label("Welcome to CGui");
+  Label label("Welcome to CGui, Make C++ UI Efficient");
   label.Align(CENTER, LAST);
 
   vbox.Add<Image>(START, image);

@@ -96,16 +96,23 @@ Result:- <br>
 On Button clicked:- <br>
 ![ExampleThreeButtonClicked](https://github.com/Developmentprogramming/CGui/blob/master/Examples/ExampleThreeButtonClicked.png)
 
-## Compilation
+## Compilation and Precompiling headers
 ```
 git clone https://github.com/Developmentprogramming/CGui.git
 cd CGui
-g++-8 -std=c++17 Main.cc -o Main `pkg-config gtk+-3.0 --cflags --libs`
+make -i PrecompiledHeaders
 ```
+Compile the test file and run it: <br>
+```
+g++-8 -std=c++17 Main.cc -o Main `pkg-config gtk+-3.0 --cflags --libs`
+./Main
+```
+Result:<br>
+![MainResult](https://github.com/Developmentprogramming/CGui/blob/master/Examples/MainResult.png)
 ## Contribution
 **Email: developmentprogramming154@gmail.com**
 
 ## Owner Info
 **Name: Parth Lodhia** <br>
 **Age: 17** <br>
-**Email: parthlodhia154@gmail.cm**
+**Email: parthlodhia154@gmail.com**

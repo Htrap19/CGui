@@ -1,3 +1,5 @@
+// This is just all the custom created widget test file
+
 #include "CGUI.hh"
 
 static void Helloworld(GtkWidget *widget, gpointer data)
@@ -10,6 +12,7 @@ int main(int argc, char *argv[])
   gtk_init(&argc, &argv);
 
   Window window(TOPLEVEL, "Gtk Window", CEN);
+  window.Icon("./Image/yaktocat.png");
   Label label("Text");
   label.SizeRequest(100, 100);
   label.Align(LAST, CENTER);

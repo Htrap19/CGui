@@ -1,9 +1,7 @@
-#ifndef CONVERT_HH
-#define CONVERT_HH
+#pragma once
 
 #include <iostream>
 #include <gtk/gtk.h>
-#include <typeinfo>
 #include <variant>
 
 enum WindowType { TOPLEVEL, POPUP };
@@ -21,8 +19,9 @@ namespace Converter
   class Convert
   {
     public:
-      std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition, gchar*> ConvertToGtkCode(std::variant<Alignments, BoxType, WindowType, WindowPos, Events> data)
+      std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition, char*> ConvertToGtkCode(std::variant<Alignments, BoxType, WindowType, WindowPos, Events> data)
       {
+        std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition, char*> retValue;
         if(data.index() == 0)
           return GetGtkCode(std::get<Alignments>(data));
         else if(data.index() == 1)
@@ -33,11 +32,28 @@ namespace Converter
           return GetGtkCode(std::get<WindowPos>(data));
         else if(data.index() == 4)
           return GetGtkCode(std::get<Events>(data));
+
+        return retValue;
+      }
+
+      template<typename t> void AddIntoBox(GtkWidget *&box, t &w, BoxAddType type, gboolean expand, gboolean fill, guint padding)
+      {
+        switch (type)
+        {
+          case START:
+            gtk_box_pack_start(GTK_BOX(box), w.GetWidget(), expand, fill, padding);
+            break;
+
+          case END:
+            gtk_box_pack_end(GTK_BOX(box), w.GetWidget(), expand, fill, padding);
+            break;
+        }
       }
 
     private:
-      gchar *GetGtkCode(Events event)
+      char *GetGtkCode(Events event)
       {
+        char *retValue;
         switch (event)
         {
           case CLICKED:
@@ -51,11 +67,12 @@ namespace Converter
             break;
         }
 
-        return "clicked";
+        return retValue;
       }
 
       GtkWindowType GetGtkCode(WindowType data)
       {
+        GtkWindowType retValue;
         switch (data)
         {
           case TOPLEVEL:
@@ -66,11 +83,12 @@ namespace Converter
           break;
         }
 
-        return GTK_WINDOW_TOPLEVEL;
+        return retValue;
       }
 
       GtkWindowPosition GetGtkCode(WindowPos data)
       {
+        GtkWindowPosition retValue;
         switch (data)
         {
           case CEN:
@@ -83,11 +101,12 @@ namespace Converter
             return GTK_WIN_POS_CENTER_ALWAYS;
         }
 
-        return GTK_WIN_POS_CENTER;
+        return retValue;
       }
 
       GtkAlign GetGtkCode(Alignments data)
       {
+        GtkAlign retValue;
         switch (data)
         {
           case BEGIN:
@@ -104,11 +123,12 @@ namespace Converter
           break;
         }
 
-        return GTK_ALIGN_START;
+        return retValue;
       }
 
       GtkOrientation GetGtkCode(BoxType data)
       {
+        GtkOrientation retValue;
         switch (data)
         {
           case VER:
@@ -119,9 +139,7 @@ namespace Converter
           break;
         }
 
-        return GTK_ORIENTATION_VERTICAL;
+        return retValue;
       }
   };
 }
-
-#endif

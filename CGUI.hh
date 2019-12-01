@@ -7,3 +7,5 @@
 #include "CGuiEntry.hh"
 #include "CGuiBox.hh"
 #include "CGuiWindow.hh"
+#include "CGuiCssProvider.hh"
+#include "CGuiHeaderbar.hh"

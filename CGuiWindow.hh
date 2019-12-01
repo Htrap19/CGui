@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CGuiWidget.hh"
+#include "CGuiHeaderbar.hh"
 
 class Window : public widget
 {
@@ -10,9 +11,11 @@ class Window : public widget
     template<typename addtype> void Add(addtype &w);
     void InternalWidth(guint width);
     void DefaultSize(guint xsize, guint ysize);
+    void NewHeaderbar(Headerbar &hb);
     void ShowAll();
     void Align(Alignments halign, Alignments valign);
     void SizeRequest(guint x, guint y);
+    void StyleClass(const gchar *classname);
     GtkWidget *GetWidget();
 
   private:
@@ -23,6 +26,7 @@ Window::Window(WindowType type, const gchar *title, WindowPos pos)
 {
   Converter::Convert convert;
   window = gtk_window_new(std::get<GtkWindowType>(convert.ConvertToGtkCode(type)));
+
   g_signal_connect(G_OBJECT(window), "delete-event", G_CALLBACK(gtk_main_quit), NULL);
   gtk_window_set_title(GTK_WINDOW(window), title);
   gtk_window_set_position(GTK_WINDOW(window), std::get<GtkWindowPosition>(convert.ConvertToGtkCode(pos)));
@@ -49,6 +53,9 @@ void Window::InternalWidth(guint width)
 void Window::DefaultSize(guint xsize, guint ysize)
 { gtk_window_set_default_size(GTK_WINDOW(window), xsize, ysize); }
 
+void Window::NewHeaderbar(Headerbar &hb)
+{ gtk_window_set_titlebar(GTK_WINDOW(window), hb.GetWidget()); }
+
 void Window::ShowAll()
 { gtk_widget_show_all(window); }
 
@@ -61,6 +68,9 @@ void Window::Align(Alignments halign, Alignments valign)
 
 void Window::SizeRequest(guint x, guint y)
 { gtk_widget_set_size_request(GTK_WIDGET(window), x, y); }
+
+void Window::StyleClass(const gchar *classname)
+{ gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(window))), classname); }
 
 GtkWidget *Window::GetWidget()
 { return window; }

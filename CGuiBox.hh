@@ -9,6 +9,7 @@ class Box : public widget
     template<typename addtype> void Add(BoxAddType type, addtype &w, gboolean expand = false, gboolean fill = false, guint padding = 0);
     void Align(Alignments halign, Alignments valign);
     void SizeRequest(guint x, guint y);
+    void StyleClass(const gchar *classname);
     GtkWidget *GetWidget();
 
   private:
@@ -36,6 +37,9 @@ void Box::Align(Alignments halign, Alignments valign)
 
 void Box::SizeRequest(guint x, guint y)
 { gtk_widget_set_size_request(GTK_WIDGET(box), x, y); }
+
+void Box::StyleClass(const gchar *classname)
+{ gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(box))), classname); }
 
 GtkWidget *Box::GetWidget()
 { return box; }

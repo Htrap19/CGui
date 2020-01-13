@@ -23,4 +23,4 @@ namespace CGui
 
   GtkCssProvider *CssProvider::GetWidget()
   { return cssProvider; }
-}
+};

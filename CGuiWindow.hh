@@ -3,8 +3,6 @@
 #include "CGuiWidget.hh"
 #include "CGuiHeaderbar.hh"
 
-using namespace CGui;
-
 namespace CGui
 {
   class Window : public widget
@@ -16,6 +14,7 @@ namespace CGui
       void InternalWidth(guint width);
       void DefaultSize(guint xsize, guint ysize);
       void NewHeaderbar(Headerbar &hb);
+      void Quit();
       void ShowAll();
       void Align(Alignments halign, Alignments valign);
       void SizeRequest(guint x, guint y);
@@ -59,6 +58,9 @@ namespace CGui
 
   void Window::NewHeaderbar(Headerbar &hb)
   { gtk_window_set_titlebar(GTK_WINDOW(window), hb.GetWidget()); }
+
+  void Window::Quit()
+  { gtk_main_quit(); }
 
   void Window::ShowAll()
   { gtk_widget_show_all(window); }

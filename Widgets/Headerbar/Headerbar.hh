@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CGuiWidget.hh"
+#include "../Widget.hh"
 
 namespace CGui
 {

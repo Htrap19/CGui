@@ -1,7 +1,7 @@
 #pragma once
 
-#include "CGuiWidget.hh"
-#include "CGuiHeaderbar.hh"
+#include "../Widget.hh"
+#include "../Headerbar/Headerbar.hh"
 
 namespace CGui
 {

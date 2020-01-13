@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CGuiWidget.hh"
+#include "../Widget.hh"
 
 namespace CGui
 {
@@ -50,7 +50,7 @@ namespace CGui
     static Data *tempdata = &data;
     auto callback = +[](GtkWidget *widget, void* data) -> void { userfunc(tempbutton, tempdata); };
 
-    g_signal_connect(G_OBJECT(button), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), G_OBJECT(data.GetWidget()));
+    g_signal_connect(G_OBJECT(button), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), &data);
   }
 
   template <typename Data> void Button::Clicked(void(*func)(Button*, Data*), Data &data)
@@ -61,7 +61,7 @@ namespace CGui
     static Data *tempdata = &data;
     auto callback = +[](GtkWidget *widget, gpointer data) -> void { userfunc(tempbutton, tempdata); };
 
-    g_signal_connect(G_OBJECT(button), std::get<char *>(convert.ConvertToGtkCode(CLICKED)), G_CALLBACK(callback), G_OBJECT(data.GetWidget()));
+    g_signal_connect(G_OBJECT(button), std::get<char *>(convert.ConvertToGtkCode(CLICKED)), G_CALLBACK(callback), &data);
   }
 
   void Button::SetText(const char *text)

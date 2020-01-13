@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Convert.hh"
+#include "../Converter/Convert.hh"
 
 namespace CGui
 {

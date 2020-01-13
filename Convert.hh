@@ -50,6 +50,16 @@ namespace Converter
         }
       }
 
+      // template<typename data> data EventDataConverter(std::variant<gpointer, GtkWidget, widget> data)
+      // {
+      //   if(data.index() == 0)
+      //     return std::get<gpointer>(data);
+      //   else if(data.index() == 1)
+      //     return std::get<GtkWidget>(data);
+      //   else
+      //     return std::get<widget>(data).GetWidget();
+      // }
+
     private:
       char *GetGtkCode(Events event)
       {

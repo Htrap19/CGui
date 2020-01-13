@@ -10,6 +10,8 @@ class Entry : public widget
     void Align(Alignments halign, Alignments valign);
     void SizeRequest(guint x, guint y);
     void StyleClass(const gchar *classname);
+    void SetText(const char *text);
+    const char *GetText();
     GtkWidget *GetWidget();
 
   private:
@@ -37,6 +39,12 @@ void Entry::SizeRequest(guint x, guint y)
 
 void Entry::StyleClass(const gchar *classname)
 { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(entry))), classname); }
+
+void Entry::SetText(const char *text)
+{ gtk_entry_set_text(GTK_ENTRY(entry), text); }
+
+const char *Entry::GetText()
+{ return gtk_entry_get_text(GTK_ENTRY(entry)); }
 
 GtkWidget *Entry::GetWidget()
 { return entry; }

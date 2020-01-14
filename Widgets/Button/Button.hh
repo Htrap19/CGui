@@ -16,6 +16,7 @@ namespace CGui
       const char *GetText();
       template <typename Data> void SignalHandler(Events event, void(*func)(Button*, Data*), Data &data = NULL);
       template <typename Data> void Clicked(void(*func)(Button*, Data*), Data &data = NULL);
+      void Clicked(void(*func)(Button*));
       void StyleClass(const gchar *classname);
       GtkWidget *GetWidget();
 
@@ -62,6 +63,16 @@ namespace CGui
     auto callback = +[](GtkWidget *widget, gpointer data) -> void { userfunc(tempbutton, tempdata); };
 
     g_signal_connect(G_OBJECT(button), std::get<char *>(convert.ConvertToGtkCode(CLICKED)), G_CALLBACK(callback), &data);
+  }
+
+  void Button::Clicked(void(*func)(Button*))
+  {
+    Converter::Convert convert;
+    static auto *userfunc = func;
+    static Button *tempbutton = this;
+    auto callback = +[](GtkWidget *widget, gpointer data) -> void { userfunc(tempbutton); };
+
+    g_signal_connect(G_OBJECT(button), std::get<char *>(convert.ConvertToGtkCode(CLICKED)), G_CALLBACK(callback), NULL);
   }
 
   void Button::SetText(const char *text)

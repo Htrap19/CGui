@@ -9,3 +9,4 @@
 #include "./Widgets/Window/Window.hh"
 #include "./Widgets/CssProvider/CssProvider.hh"
 #include "./Widgets/Headerbar/Headerbar.hh"
+#include "./Widgets/CheckButton/CheckButton.hh"

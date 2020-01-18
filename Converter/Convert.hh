@@ -14,7 +14,7 @@ namespace CGui
 
   enum Alignments { FILL, BEGIN, LAST, CENTER };
 
-  enum Events { CLICKED, DELETE, TOGGLED };
+  enum Events { CLICKED, DELETE, TOGGLED, CHANGED };
 
   namespace Converter
   {
@@ -76,6 +76,9 @@ namespace CGui
               break;
             case TOGGLED:
               return "toggled";
+              break;
+            case CHANGED:
+              return "changed";
               break;
           }
 

@@ -10,3 +10,15 @@
 #include "./Widgets/CssProvider/CssProvider.hh"
 #include "./Widgets/Headerbar/Headerbar.hh"
 #include "./Widgets/CheckButton/CheckButton.hh"
+
+namespace CGui
+{
+  struct Init
+  {
+    public:
+      Init(int argc, char *argv[])
+      { gtk_init(&argc, &argv); }
+      ~Init()
+      { gtk_main(); }
+  };
+};

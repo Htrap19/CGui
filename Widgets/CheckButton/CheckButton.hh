@@ -9,6 +9,8 @@ namespace CGui
     public:
       CheckButton();
       CheckButton(const char *text);
+      void Name(const char *name);
+      const char *Name();
       template <typename Data> void SignalHandler(Events event, void(*func)(CheckButton*, Data*), Data &data);
       void Align(Alignments halign, Alignments valign);
       void SizeRequest(guint x, guint y);
@@ -24,6 +26,12 @@ namespace CGui
 
   CheckButton::CheckButton(const gchar *text)
   { checkbutton = gtk_check_button_new_with_label(text); }
+
+  void CheckButton::Name(const char *name)
+  { gtk_widget_set_name(GTK_WIDGET(checkbutton), name); }
+
+  const char *CheckButton::Name()
+  { return gtk_widget_get_name(GTK_WIDGET(checkbutton)); }
 
   template <typename Data> void CheckButton::SignalHandler(Events event, void(*func)(CheckButton*, Data*), Data &data)
   {

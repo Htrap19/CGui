@@ -8,6 +8,8 @@ namespace CGui
   {
     public:
       Box(BoxType type, gint spacing);
+      void Name(const char *name);
+      const char *Name();
       template<typename addtype> void Add(BoxAddType type, addtype &w, gboolean expand = false, gboolean fill = false, guint padding = 0);
       void Align(Alignments halign, Alignments valign);
       void SizeRequest(guint x, guint y);
@@ -23,6 +25,12 @@ namespace CGui
     Converter::Convert convert;
     box = gtk_box_new(std::get<GtkOrientation>(convert.ConvertToGtkCode(type)), spacing);
   }
+
+  void Box::Name(const char *name)
+  { gtk_widget_set_name(GTK_WIDGET(box), name); }
+
+  const char *Box::Name()
+  { return gtk_widget_get_name(GTK_WIDGET(box)); }
 
   template<typename addtype> void Box::Add(BoxAddType type, addtype &w, gboolean expand, gboolean fill, guint padding)
   {

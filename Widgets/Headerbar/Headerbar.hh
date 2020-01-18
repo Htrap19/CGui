@@ -8,6 +8,8 @@ namespace CGui
   {
     public:
       Headerbar(const gchar *title = "", const gchar *subtitle = "");
+      void Name(const char *name);
+      const char *Name();
       template<typename addtype> void Add(BoxAddType type, addtype &w);
       void Align(Alignments halign, Alignments valign);
       void SizeRequest(guint x, guint y);
@@ -24,6 +26,12 @@ namespace CGui
     gtk_header_bar_set_title(GTK_HEADER_BAR(headerbar), title);
     gtk_header_bar_set_subtitle(GTK_HEADER_BAR(headerbar), subtitle);
   }
+
+  void Headerbar::Name(const char *name)
+  { gtk_widget_set_name(GTK_WIDGET(headerbar), name); }
+
+  const char *Headerbar::Name()
+  { return gtk_widget_get_name(GTK_WIDGET(headerbar)); }
 
   template<typename addtype> void Headerbar::Add(BoxAddType type, addtype &w)
   {

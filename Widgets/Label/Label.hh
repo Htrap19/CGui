@@ -8,6 +8,8 @@ namespace CGui
   {
     public:
       Label(const gchar *text);
+      void Name(const char *name);
+      const char *Name();
       void Align(Alignments halign, Alignments valign);
       void SizeRequest(guint x, guint y);
       void StyleClass(const gchar *classname);
@@ -19,6 +21,12 @@ namespace CGui
 
   Label::Label(const gchar *text)
   { label = gtk_label_new(text); }
+
+  void Label::Name(const char *name)
+  { gtk_widget_set_name(GTK_WIDGET(label), name); }
+
+  const char *Label::Name()
+  { return gtk_widget_get_name(GTK_WIDGET(label)); }
 
   void Label::Align(Alignments halign, Alignments valign)
   {

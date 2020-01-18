@@ -9,11 +9,14 @@ namespace CGui
   {
     public:
       Window(WindowType type, const gchar *title, WindowPos pos);
+      void Name(const char *name);
+      const char *Name();
       void Icon(const gchar *iconpath);
       template<typename addtype> void Add(addtype &w);
       void InternalWidth(guint width);
       void DefaultSize(guint xsize, guint ysize);
       void NewHeaderbar(Headerbar &hb);
+      void Resizable(bool resizable);
       void Quit();
       void ShowAll();
       void Align(Alignments halign, Alignments valign);
@@ -34,6 +37,12 @@ namespace CGui
     gtk_window_set_title(GTK_WINDOW(window), title);
     gtk_window_set_position(GTK_WINDOW(window), std::get<GtkWindowPosition>(convert.ConvertToGtkCode(pos)));
   }
+
+  void Window::Name(const char *name)
+  { gtk_widget_set_name(GTK_WIDGET(window), name); }
+
+  const char *Window::Name()
+  { return gtk_widget_get_name(GTK_WIDGET(window)); }
 
   void Window::Icon(const gchar *iconpath)
   {
@@ -58,6 +67,9 @@ namespace CGui
 
   void Window::NewHeaderbar(Headerbar &hb)
   { gtk_window_set_titlebar(GTK_WINDOW(window), hb.GetWidget()); }
+
+  void Window::Resizable(bool resizable)
+  { gtk_window_set_resizable(GTK_WINDOW(window), resizable); }
 
   void Window::Quit()
   { gtk_main_quit(); }

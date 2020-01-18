@@ -9,6 +9,8 @@ namespace CGui
     public:
       Image(const gchar *filename);
       Image(const gchar *filename, int width, int height, gboolean aspectRatio = true, GError **error = NULL);
+      void Name(const char *name);
+      const char *Name();
       void Align(Alignments halign, Alignments valign);
       void SizeRequest(guint x, guint y);
       void StyleClass(const gchar *classname);
@@ -26,6 +28,12 @@ namespace CGui
     GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file_at_scale(filename, width, height, aspectRatio, error);
     image = gtk_image_new_from_pixbuf(pixbuf);
   }
+
+  void Image::Name(const char *name)
+  { gtk_widget_set_name(GTK_WIDGET(image), name); }
+
+  const char *Image::Name()
+  { return gtk_widget_get_name(GTK_WIDGET(image)); }
 
   void Image::Align(Alignments halign, Alignments valign)
   {

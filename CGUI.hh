@@ -10,6 +10,9 @@
 #include "./Widgets/CssProvider/CssProvider.hh"
 #include "./Widgets/Headerbar/Headerbar.hh"
 #include "./Widgets/CheckButton/CheckButton.hh"
+#include "./Widgets/Progressbar/Progressbar.hh"
+#include "./Widgets/Revealer/Revealer.hh"
+#include "./Widgets/Infobar/Infobar.hh"
 
 namespace CGui
 {

@@ -16,14 +16,17 @@ namespace CGui
 
   enum Events { CLICKED, DELETE, TOGGLED, CHANGED };
 
+  enum Transition { SLIDERIGHT, SLIDELEFT, SLIDEUP, SLIDEDOWN, CROSSFADE, NONE };
+  enum MessageType { INFO, WARNING, QUESTION, ERROR, OTHER };
+
   namespace Converter
   {
     class Convert
     {
       public:
-        std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition, char*> ConvertToGtkCode(std::variant<Alignments, BoxType, WindowType, WindowPos, Events> data)
+        std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition, GtkRevealerTransitionType, GtkMessageType, char*> ConvertToGtkCode(std::variant<Alignments, BoxType, WindowType, WindowPos, Transition, MessageType, Events> data)
         {
-          std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition, char*> retValue;
+          std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition, GtkRevealerTransitionType, GtkMessageType, char*> retValue;
           if(data.index() == 0)
             return GetGtkCode(std::get<Alignments>(data));
           else if(data.index() == 1)
@@ -33,6 +36,10 @@ namespace CGui
           else if(data.index() == 3)
             return GetGtkCode(std::get<WindowPos>(data));
           else if(data.index() == 4)
+            return GetGtkCode(std::get<Transition>(data));
+          else if(data.index() == 5)
+            return GetGtkCode(std::get<MessageType>(data));
+          else if(data.index() == 6)
             return GetGtkCode(std::get<Events>(data));
 
           return retValue;
@@ -52,17 +59,57 @@ namespace CGui
           }
         }
 
-        // template<typename data> data EventDataConverter(std::variant<gpointer, GtkWidget, widget> data)
-        // {
-        //   if(data.index() == 0)
-        //     return std::get<gpointer>(data);
-        //   else if(data.index() == 1)
-        //     return std::get<GtkWidget>(data);
-        //   else
-        //     return std::get<widget>(data).GetWidget();
-        // }
-
       private:
+        GtkMessageType GetGtkCode(MessageType messagetype)
+        {
+          switch (messagetype)
+          {
+            case INFO:
+              return GTK_MESSAGE_INFO;
+              break;
+            case WARNING:
+              return GTK_MESSAGE_WARNING;
+              break;
+            case QUESTION:
+              return GTK_MESSAGE_QUESTION;
+              break;
+            case ERROR:
+              return GTK_MESSAGE_ERROR;
+              break;
+            case OTHER:
+              return GTK_MESSAGE_OTHER;
+              break;
+
+            default:
+              return GTK_MESSAGE_OTHER;
+          }
+        }
+
+        GtkRevealerTransitionType GetGtkCode(Transition transition)
+        {
+          switch (transition)
+          {
+            case SLIDEUP:
+              return GTK_REVEALER_TRANSITION_TYPE_SLIDE_UP;
+              break;
+            case SLIDEDOWN:
+              return GTK_REVEALER_TRANSITION_TYPE_SLIDE_DOWN;
+              break;
+            case SLIDELEFT:
+              return GTK_REVEALER_TRANSITION_TYPE_SLIDE_LEFT;
+              break;
+            case SLIDERIGHT:
+              return GTK_REVEALER_TRANSITION_TYPE_SLIDE_RIGHT;
+              break;
+            case CROSSFADE:
+              return GTK_REVEALER_TRANSITION_TYPE_CROSSFADE;
+              break;
+
+            default:
+              return GTK_REVEALER_TRANSITION_TYPE_NONE;
+          }
+        }
+
         char *GetGtkCode(Events event)
         {
           char *retValue;

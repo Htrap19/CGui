@@ -19,9 +19,11 @@ namespace CGui
       void Resizable(bool resizable);
       void Quit();
       void ShowAll();
+      void Sensitive(bool sensitive);
       void Align(Alignments halign, Alignments valign);
       void SizeRequest(guint x, guint y);
       void StyleClass(const gchar *classname);
+      void Show();
       GtkWidget *GetWidget();
 
     private:
@@ -77,6 +79,9 @@ namespace CGui
   void Window::ShowAll()
   { gtk_widget_show_all(window); }
 
+  void Window::Sensitive(bool sensitive)
+  { gtk_widget_set_sensitive(GTK_WIDGET(window), sensitive); }
+
   void Window::Align(Alignments halign, Alignments valign)
   {
     Converter::Convert convert;
@@ -89,6 +94,9 @@ namespace CGui
 
   void Window::StyleClass(const gchar *classname)
   { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(window))), classname); }
+
+  void Window::Show()
+  { gtk_widget_show(GTK_WIDGET(window)); }
 
   GtkWidget *Window::GetWidget()
   { return window; }

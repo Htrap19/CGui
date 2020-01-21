@@ -10,9 +10,13 @@ namespace CGui
       Label(const gchar *text);
       void Name(const char *name);
       const char *Name();
+      void Text(const char *text);
+      const char *Text();
+      void Sensitive(bool sensitive);
       void Align(Alignments halign, Alignments valign);
       void SizeRequest(guint x, guint y);
       void StyleClass(const gchar *classname);
+      void Show();
       GtkWidget *GetWidget();
 
     private:
@@ -28,6 +32,15 @@ namespace CGui
   const char *Label::Name()
   { return gtk_widget_get_name(GTK_WIDGET(label)); }
 
+  void Label::Text(const char *text)
+  { gtk_label_set_label(GTK_LABEL(label), text); }
+
+  const char *Label::Text()
+  { return gtk_label_get_text(GTK_LABEL(label)); }
+
+  void Label::Sensitive(bool sensitive)
+  { gtk_widget_set_sensitive(GTK_WIDGET(label), sensitive); }
+
   void Label::Align(Alignments halign, Alignments valign)
   {
     Converter::Convert convert;
@@ -40,6 +53,9 @@ namespace CGui
 
   void Label::StyleClass(const gchar *classname)
   { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(label))), classname); }
+
+  void Label::Show()
+  { gtk_widget_show(GTK_WIDGET(label)); }
 
   GtkWidget *Label::GetWidget()
   { return label; }

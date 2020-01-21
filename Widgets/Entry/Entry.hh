@@ -11,11 +11,17 @@ namespace CGui
       Entry(const gchar *placeholdertext);
       void Name(const char *name);
       const char *Name();
+      void Editable(bool editable);
+      bool Editable();
+      void Visibility(bool visibility);
+      bool Visibility();
+      void Sensitive(bool sensitive);
       void Align(Alignments halign, Alignments valign);
       void SizeRequest(guint x, guint y);
       void StyleClass(const gchar *classname);
       void Text(const char *text);
       const char *Text();
+      void Show();
       GtkWidget *GetWidget();
 
     private:
@@ -37,12 +43,27 @@ namespace CGui
   const char *Entry::Name()
   { return gtk_widget_get_name(GTK_WIDGET(entry)); }
 
+  void Entry::Editable(bool editable)
+  { gtk_editable_set_editable(GTK_EDITABLE(entry), editable); }
+
+  bool Entry::Editable()
+  { return gtk_editable_get_editable(GTK_EDITABLE(entry)); }
+
+  void Entry::Visibility(bool visibility)
+  { gtk_entry_set_visibility(GTK_ENTRY(entry), visibility); }
+
+  bool Entry::Visibility()
+  { return gtk_entry_get_visibility(GTK_ENTRY(entry)); }
+
   void Entry::Align(Alignments halign, Alignments valign)
   {
     Converter::Convert convert;
     gtk_widget_set_halign(GTK_WIDGET(entry), std::get<GtkAlign>(convert.ConvertToGtkCode(halign)));
     gtk_widget_set_valign(GTK_WIDGET(entry), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
   }
+
+  void Entry::Sensitive(bool sensitive)
+  { gtk_widget_set_sensitive(GTK_WIDGET(entry), sensitive); }
 
   void Entry::SizeRequest(guint x, guint y)
   { gtk_widget_set_size_request(GTK_WIDGET(entry), x, y); }
@@ -55,6 +76,9 @@ namespace CGui
 
   const char *Entry::Text()
   { return gtk_entry_get_text(GTK_ENTRY(entry)); }
+
+  void Entry::Show()
+  { gtk_widget_show(GTK_WIDGET(entry)); }
 
   GtkWidget *Entry::GetWidget()
   { return entry; }

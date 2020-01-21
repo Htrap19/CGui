@@ -11,9 +11,11 @@ namespace CGui
       Image(const gchar *filename, int width, int height, gboolean aspectRatio = true, GError **error = NULL);
       void Name(const char *name);
       const char *Name();
+      void Sensitive(bool sensitive);
       void Align(Alignments halign, Alignments valign);
       void SizeRequest(guint x, guint y);
       void StyleClass(const gchar *classname);
+      void Show();
       GtkWidget *GetWidget();
 
     private:
@@ -35,6 +37,9 @@ namespace CGui
   const char *Image::Name()
   { return gtk_widget_get_name(GTK_WIDGET(image)); }
 
+  void Image::Sensitive(bool sensitive)
+  { gtk_widget_set_sensitive(GTK_WIDGET(image), sensitive); }
+
   void Image::Align(Alignments halign, Alignments valign)
   {
     Converter::Convert convert;
@@ -47,6 +52,9 @@ namespace CGui
 
   void Image::StyleClass(const gchar *classname)
   { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(image))), classname); }
+
+  void Image::Show()
+  { gtk_widget_show(GTK_WIDGET(image)); }
 
   GtkWidget *Image::GetWidget()
   { return image; }

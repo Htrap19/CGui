@@ -11,9 +11,11 @@ namespace CGui
       void Name(const char *name);
       const char *Name();
       template<typename addtype> void Add(BoxAddType type, addtype &w);
+      void Sensitive(bool sensitive);
       void Align(Alignments halign, Alignments valign);
       void SizeRequest(guint x, guint y);
       void StyleClass(const gchar *classname);
+      void Show();
       GtkWidget *GetWidget();
 
     private:
@@ -46,6 +48,9 @@ namespace CGui
     }
   }
 
+  void Headerbar::Sensitive(bool sensitive)
+  { gtk_widget_set_sensitive(GTK_WIDGET(headerbar), sensitive); }
+
   void Headerbar::Align(Alignments halign, Alignments valign)
   {
     Converter::Convert convert;
@@ -58,6 +63,9 @@ namespace CGui
 
   void Headerbar::StyleClass(const gchar *classname)
   { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(headerbar))), classname); }
+
+  void Headerbar::Show()
+  { gtk_widget_show(GTK_WIDGET(headerbar)); }
 
   GtkWidget *Headerbar::GetWidget()
   { return headerbar; }

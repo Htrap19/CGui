@@ -1,12 +1,17 @@
 #pragma once
 
 #include "../Widget.hh"
+#include <vector>
+#include <tuple>
+#include <functional>
 
 namespace CGui
 {
   class Progressbar : public widget
   {
     public:
+      static std::vector<std::tuple<Progressbar*, bool(*)(Progressbar*)>> singletimeoutmethods;
+      template <typename Data, typename ... Rest> static std::vector<std::tuple<Progressbar*, unsigned int, bool(*)(Progressbar*, Data*, Rest*...), Data*, Rest*...>> timeoutmethods;
       Progressbar();
       Progressbar(const char *text);
       void Pulse();
@@ -17,6 +22,10 @@ namespace CGui
       bool ShowText();
       void Text(const char *text);
       const char *Text();
+      template <typename Data, typename ... Rest> void TimeoutAdd(unsigned int interval, bool(*func)(Progressbar*, Data*, Rest*...), Data &data, Rest & ... rest);
+      void TimeoutAdd(unsigned int interval, bool(*func)(Progressbar*));
+      void Increment(double fraction);
+      void Increment();
       void Name(const char *name);
       const char *Name();
       void Align(Alignments halign, Alignments valign);
@@ -29,6 +38,9 @@ namespace CGui
     private:
       GtkWidget *progressbar;
   };
+
+  std::vector<std::tuple<Progressbar*, bool(*)(Progressbar*)>> Progressbar::singletimeoutmethods;
+  template <typename Data, typename ... Rest> std::vector<std::tuple<Progressbar*, unsigned int, bool(*)(Progressbar*, Data*, Rest*...), Data*, Rest*...>> Progressbar::timeoutmethods;
 
   Progressbar::Progressbar()
   { progressbar = gtk_progress_bar_new(); }
@@ -64,6 +76,56 @@ namespace CGui
   const char *Progressbar::Text()
   { return gtk_progress_bar_get_text(GTK_PROGRESS_BAR(progressbar)); }
 
+  template <typename Data, typename ... Rest> void Progressbar::TimeoutAdd(unsigned int interval, bool(*func)(Progressbar*, Data*, Rest*...), Data &data, Rest & ... rest)
+  {
+    timeoutmethods<Data, Rest...>.push_back(std::make_tuple(this, interval, func, &data, &rest...));
+
+    auto callback = +[](Progressbar *data) -> bool
+    {
+      typename std::vector<std::tuple<Progressbar*, unsigned int, bool(*)(Progressbar*, Data*, Rest*...), Data*, Rest*...>>::iterator it;
+      for(it = timeoutmethods<Data, Rest...>.begin(); it != timeoutmethods<Data, Rest...>.end(); it++)
+      {
+        if(data == std::get<0>(*it))
+        {
+          return std::apply([](Progressbar* ins, unsigned int interval, bool(*func)(Progressbar*, Data*, Rest*...), Data *data, Rest * ... rest)
+          {
+            return func(ins, data, rest...);
+          }, *it);
+        }
+      }
+    };
+
+    g_timeout_add(interval, (GSourceFunc) callback, this);
+  }
+
+  void Progressbar::TimeoutAdd(unsigned int interval, bool(*func)(Progressbar*))
+  {
+    singletimeoutmethods.push_back(std::make_tuple(this, func));
+
+    auto callback = +[](Progressbar *data) -> gboolean
+    {
+      std::vector<std::tuple<Progressbar*, bool(*)(Progressbar*)>>::iterator it;
+      for(it = singletimeoutmethods.begin(); it != singletimeoutmethods.end(); it++)
+      {
+        if(data == std::get<0>(*it))
+        {
+          return std::apply([](Progressbar *ins, bool(*func)(Progressbar*))
+          {
+            return func(ins);
+          }, *it);
+        }
+      }
+    };
+
+    g_timeout_add(interval, (GSourceFunc) callback, this);
+  }
+
+  void Progressbar::Increment(double fraction)
+  { this->Fraction(this->Fraction() + fraction); }
+
+  void Progressbar::Increment()
+  { this->Fraction(this->Fraction() + this->Fraction()); }
+
   void Progressbar::Name(const char *name)
   { gtk_widget_set_name(GTK_WIDGET(progressbar), name); }
 
@@ -84,7 +146,7 @@ namespace CGui
   { gtk_widget_set_size_request(GTK_WIDGET(progressbar), x, y); }
 
   void Progressbar::StyleClass(const gchar *classname)
-  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(GTK_WIDGET(progressbar)), classname); }
+  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(progressbar))), classname); }
 
   void Progressbar::Show()
   { gtk_widget_show(GTK_WIDGET(progressbar)); }

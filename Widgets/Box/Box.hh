@@ -7,10 +7,12 @@ namespace CGui
   class Box : public widget
   {
     public:
-      Box(BoxType type, gint spacing);
+      Box(BoxType type, int spacing);
       void Name(const char *name);
       const char *Name();
-      template<typename addtype> void Add(BoxAddType type, addtype &w, gboolean expand = false, gboolean fill = false, guint padding = 0);
+      template<typename addtype> void Add(BoxAddType type, addtype &w, bool expand = false, bool fill = false, unsigned int padding = 0);
+      template<typename removetype> void Remove(removetype &w);
+      // template<typename addtype, typename ... restaddtype> void Add(BoxAddType, addtype &w, restaddtype & ... rw, bool expand = false, bool fill = false, unsigned int padding = 0);
       void Homogeneous(bool homogeneous);
       bool Homogeneous();
       void Sensitive(bool sensitive);
@@ -24,7 +26,7 @@ namespace CGui
       GtkWidget *box;
   };
 
-  Box::Box(BoxType type, gint spacing)
+  Box::Box(BoxType type, int spacing)
   {
     Converter::Convert convert;
     box = gtk_box_new(std::get<GtkOrientation>(convert.ConvertToGtkCode(type)), spacing);
@@ -36,11 +38,20 @@ namespace CGui
   const char *Box::Name()
   { return gtk_widget_get_name(GTK_WIDGET(box)); }
 
-  template<typename addtype> void Box::Add(BoxAddType type, addtype &w, gboolean expand, gboolean fill, guint padding)
+  template<typename addtype> void Box::Add(BoxAddType type, addtype &w, bool expand, bool fill, unsigned int padding)
   {
     Converter::Convert convert;
     convert.AddIntoBox(box, w, type, expand, fill, padding);
   }
+
+  // template<typename addtype, typename ... restaddtype> void Box::Add(BoxAddType type, addtype &w, restaddtype & ... rw, bool expand, bool fill, unsigned int padding)
+  // {
+  //   this->Add(type, &w, expand, fill, padding);
+  //   this->Add(type, &rw..., expand, fill, padding);
+  // }
+
+  template <typename removetype> void Box::Remove(removetype &w)
+  { gtk_container_remove(GTK_CONTAINER(box), w.GetWidget()); }
 
   void Box::Homogeneous(bool homogeneous)
   { gtk_box_set_homogeneous(GTK_BOX(box), homogeneous); }

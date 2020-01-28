@@ -11,6 +11,7 @@ namespace CGui
       void Reveal(bool reveal);
       bool Reveal();
       template <typename addtype> void Add(addtype &w);
+      template <typename removetype> void Remove(removetype &w);
       void Name(const char *name);
       const char *Name();
       void Align(Alignments halign, Alignments valign);
@@ -41,6 +42,9 @@ namespace CGui
   template <typename addtype> void Revealer::Add(addtype &w)
   { gtk_container_add(GTK_CONTAINER(revealer), w.GetWidget()); }
 
+  template <typename removetype> void Revealer::Remove(removetype &w)
+  { gtk_container_remove(GTK_CONTAINER(revealer), w.GetWidget()); }
+
   void Revealer::Name(const char *name)
   { gtk_widget_set_name(GTK_WIDGET(revealer), name); }
 
@@ -61,7 +65,7 @@ namespace CGui
   { gtk_widget_set_size_request(GTK_WIDGET(revealer), x, y); }
 
   void Revealer::StyleClass(const gchar *classname)
-  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(GTK_WIDGET(revealer)), classname); }
+  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(revealer))), classname); }
 
   void Revealer::Show()
   { gtk_widget_show(GTK_WIDGET(revealer)); }

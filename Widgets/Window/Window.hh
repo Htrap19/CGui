@@ -13,6 +13,7 @@ namespace CGui
       const char *Name();
       void Icon(const gchar *iconpath);
       template<typename addtype> void Add(addtype &w);
+      template<typename removetype> void Remove(removetype &w);
       void InternalWidth(guint width);
       void DefaultSize(guint xsize, guint ysize);
       void NewHeaderbar(Headerbar &hb);
@@ -60,6 +61,9 @@ namespace CGui
 
   template<typename addtype> void Window::Add(addtype &w)
   { gtk_container_add(GTK_CONTAINER(window), w.GetWidget()); }
+
+  template<typename removetype> void Window::Remove(removetype &w)
+  { gtk_container_remove(GTK_CONTAINER(window), w.GetWidget()); }
 
   void Window::InternalWidth(guint width)
   { gtk_container_set_border_width(GTK_CONTAINER(window), width); }

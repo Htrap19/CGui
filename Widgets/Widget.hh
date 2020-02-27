@@ -15,5 +15,8 @@ namespace CGui
       virtual void SizeRequest(guint x, guint y) = 0;
       virtual void StyleClass(const gchar *classname) = 0;
       virtual void Show() = 0;
+
+    protected:
+      GtkWidget *widget;
   };
 }

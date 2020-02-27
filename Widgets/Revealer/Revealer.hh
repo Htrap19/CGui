@@ -20,56 +20,53 @@ namespace CGui
       void StyleClass(const gchar *classname);
       void Show();
       GtkWidget *GetWidget();
-
-    private:
-      GtkWidget *revealer;
   };
 
   Revealer::Revealer(Transition transition, unsigned int duration)
   {
-    revealer = gtk_revealer_new();
+    widget = gtk_revealer_new();
     Converter::Convert convert;
-    gtk_revealer_set_transition_type(GTK_REVEALER(revealer), std::get<GtkRevealerTransitionType>(convert.ConvertToGtkCode(transition)));
-    gtk_revealer_set_transition_duration(GTK_REVEALER(revealer), duration);
+    gtk_revealer_set_transition_type(GTK_REVEALER(widget), std::get<GtkRevealerTransitionType>(convert.ConvertToGtkCode(transition)));
+    gtk_revealer_set_transition_duration(GTK_REVEALER(widget), duration);
   }
 
   void Revealer::Reveal(bool reveal)
-  { gtk_revealer_set_reveal_child(GTK_REVEALER(revealer), reveal); }
+  { gtk_revealer_set_reveal_child(GTK_REVEALER(widget), reveal); }
 
   bool Revealer::Reveal()
-  { return gtk_revealer_get_reveal_child(GTK_REVEALER(revealer)); }
+  { return gtk_revealer_get_reveal_child(GTK_REVEALER(widget)); }
 
   template <typename addtype> void Revealer::Add(addtype &w)
-  { gtk_container_add(GTK_CONTAINER(revealer), w.GetWidget()); }
+  { gtk_container_add(GTK_CONTAINER(widget), w.GetWidget()); }
 
   template <typename removetype> void Revealer::Remove(removetype &w)
-  { gtk_container_remove(GTK_CONTAINER(revealer), w.GetWidget()); }
+  { gtk_container_remove(GTK_CONTAINER(widget), w.GetWidget()); }
 
   void Revealer::Name(const char *name)
-  { gtk_widget_set_name(GTK_WIDGET(revealer), name); }
+  { gtk_widget_set_name(GTK_WIDGET(widget), name); }
 
   const char *Revealer::Name()
-  { return gtk_widget_get_name(GTK_WIDGET(revealer)); }
+  { return gtk_widget_get_name(GTK_WIDGET(widget)); }
 
   void Revealer::Align(Alignments halign, Alignments valign)
   {
     Converter::Convert convert;
-    gtk_widget_set_halign(GTK_WIDGET(revealer), std::get<GtkAlign>(convert.ConvertToGtkCode(halign)));
-    gtk_widget_set_valign(GTK_WIDGET(revealer), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
+    gtk_widget_set_halign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(halign)));
+    gtk_widget_set_valign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
   }
 
   void Revealer::Sensitive(bool sensitive)
-  { gtk_widget_set_sensitive(GTK_WIDGET(revealer), sensitive); }
+  { gtk_widget_set_sensitive(GTK_WIDGET(widget), sensitive); }
 
   void Revealer::SizeRequest(guint x, guint y)
-  { gtk_widget_set_size_request(GTK_WIDGET(revealer), x, y); }
+  { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
 
   void Revealer::StyleClass(const gchar *classname)
-  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(revealer))), classname); }
+  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
 
   void Revealer::Show()
-  { gtk_widget_show(GTK_WIDGET(revealer)); }
+  { gtk_widget_show(GTK_WIDGET(widget)); }
 
   GtkWidget *Revealer::GetWidget()
-  { return revealer; }
+  { return widget; }
 };

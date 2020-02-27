@@ -18,45 +18,42 @@ namespace CGui
       void StyleClass(const gchar *classname);
       void Show();
       GtkWidget *GetWidget();
-
-    private:
-      GtkWidget *label;
   };
 
   Label::Label(const gchar *text)
-  { label = gtk_label_new(text); }
+  { widget = gtk_label_new(text); }
 
   void Label::Name(const char *name)
-  { gtk_widget_set_name(GTK_WIDGET(label), name); }
+  { gtk_widget_set_name(GTK_WIDGET(widget), name); }
 
   const char *Label::Name()
-  { return gtk_widget_get_name(GTK_WIDGET(label)); }
+  { return gtk_widget_get_name(GTK_WIDGET(widget)); }
 
   void Label::Text(const char *text)
-  { gtk_label_set_label(GTK_LABEL(label), text); }
+  { gtk_label_set_label(GTK_LABEL(widget), text); }
 
   const char *Label::Text()
-  { return gtk_label_get_text(GTK_LABEL(label)); }
+  { return gtk_label_get_text(GTK_LABEL(widget)); }
 
   void Label::Sensitive(bool sensitive)
-  { gtk_widget_set_sensitive(GTK_WIDGET(label), sensitive); }
+  { gtk_widget_set_sensitive(GTK_WIDGET(widget), sensitive); }
 
   void Label::Align(Alignments halign, Alignments valign)
   {
     Converter::Convert convert;
-    gtk_widget_set_halign(GTK_WIDGET(label), std::get<GtkAlign>(convert.ConvertToGtkCode(halign)));
-    gtk_widget_set_valign(GTK_WIDGET(label), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
+    gtk_widget_set_halign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(halign)));
+    gtk_widget_set_valign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
   }
 
   void Label::SizeRequest(guint x, guint y)
-  { gtk_widget_set_size_request(GTK_WIDGET(label), x, y); }
+  { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
 
   void Label::StyleClass(const gchar *classname)
-  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(label))), classname); }
+  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
 
   void Label::Show()
-  { gtk_widget_show(GTK_WIDGET(label)); }
+  { gtk_widget_show(GTK_WIDGET(widget)); }
 
   GtkWidget *Label::GetWidget()
-  { return label; }
+  { return widget; }
 }

@@ -1,7 +1,7 @@
 CC = g++-8 -std=c++17
 libgtk = `pkg-config gtk+-3.0 --cflags --libs`
 
-PrecompiledHeaders: CGUI.hh ./Widgets/Box/Box.hh ./Widgets/Button/Button.hh ./Widgets/Entry/Entry.hh ./Widgets/Image/Image.hh ./Widgets/Label/Label.hh ./Widgets/Widget.hh ./Converter/Convert.hh ./Widgets/CssProvider/CssProvider.hh
+PrecompiledHeaders: CGUI.hh ./Widgets/Box/Box.hh ./Widgets/Button/Button.hh ./Widgets/Entry/Entry.hh ./Widgets/Image/Image.hh ./Widgets/Label/Label.hh ./Widgets/Widget.hh ./Converter/Convert.hh ./CssProvider/CssProvider.hh
 	make PrecompileCGUI && make PrecompileCGuiWindow && make PrecompileCGuiBox && make PrecompileCGuiButton && make PrecompileCGuiEntry && make PrecompileCGuiImage && make PrecompileCGuiLabel && make PrecompileCGuiWidget && make PrecompileCGuiConvert && make PrecompileCGuiCssProvider && make PrecompileCGuiHeaderbar && make PrecompileCGuiCheckButton && make PrecompileCGuiProgressbar && make PrecompileCGuiRevealer && make PrecompileCGuiInfobar
 
 PrecompileCGUI: CGUI.hh
@@ -31,8 +31,8 @@ PrecompileCGuiWidget: ./Widgets/Widget.hh
 PrecompileCGuiConvert: ./Converter/Convert.hh
 	$(CC) ./Converter/Convert.hh $(libgtk)
 
-PrecompileCGuiCssProvider: ./Widgets/CssProvider/CssProvider.hh
-	$(CC) ./Widgets/CssProvider/CssProvider.hh $(libgtk)
+PrecompileCGuiCssProvider: ./CssProvider/CssProvider.hh
+	$(CC) ./CssProvider/CssProvider.hh $(libgtk)
 
 PrecompileCGuiHeaderbar: ./Widgets/Headerbar/Headerbar.hh
 	$(CC) ./Widgets/Headerbar/Headerbar.hh $(libgtk)

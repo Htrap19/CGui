@@ -17,45 +17,42 @@ namespace CGui
       void StyleClass(const gchar *classname);
       void Show();
       GtkWidget *GetWidget();
-
-    private:
-      GtkWidget *image;
   };
 
   Image::Image(const gchar *filename)
-  { image = gtk_image_new_from_file(filename); }
+  { widget = gtk_image_new_from_file(filename); }
 
   Image::Image(const gchar *filename, int width, int height, gboolean aspectRatio, GError **error)
   {
     GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file_at_scale(filename, width, height, aspectRatio, error);
-    image = gtk_image_new_from_pixbuf(pixbuf);
+    widget = gtk_image_new_from_pixbuf(pixbuf);
   }
 
   void Image::Name(const char *name)
-  { gtk_widget_set_name(GTK_WIDGET(image), name); }
+  { gtk_widget_set_name(GTK_WIDGET(widget), name); }
 
   const char *Image::Name()
-  { return gtk_widget_get_name(GTK_WIDGET(image)); }
+  { return gtk_widget_get_name(GTK_WIDGET(widget)); }
 
   void Image::Sensitive(bool sensitive)
-  { gtk_widget_set_sensitive(GTK_WIDGET(image), sensitive); }
+  { gtk_widget_set_sensitive(GTK_WIDGET(widget), sensitive); }
 
   void Image::Align(Alignments halign, Alignments valign)
   {
     Converter::Convert convert;
-    gtk_widget_set_halign(GTK_WIDGET(image), std::get<GtkAlign>(convert.ConvertToGtkCode(halign)));
-    gtk_widget_set_valign(GTK_WIDGET(image), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
+    gtk_widget_set_halign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(halign)));
+    gtk_widget_set_valign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
   }
 
   void Image::SizeRequest(guint x, guint y)
-  { gtk_widget_set_size_request(GTK_WIDGET(image), x, y); }
+  { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
 
   void Image::StyleClass(const gchar *classname)
-  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(image))), classname); }
+  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
 
   void Image::Show()
-  { gtk_widget_show(GTK_WIDGET(image)); }
+  { gtk_widget_show(GTK_WIDGET(widget)); }
 
   GtkWidget *Image::GetWidget()
-  { return image; }
+  { return widget; }
 }

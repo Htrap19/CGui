@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Widget.hh"
+#include <vector>
 
 namespace CGui
 {
@@ -21,27 +22,24 @@ namespace CGui
       void StyleClass(const gchar *classname);
       void Show();
       GtkWidget *GetWidget();
-
-    private:
-      GtkWidget *box;
   };
 
   Box::Box(BoxType type, int spacing)
   {
     Converter::Convert convert;
-    box = gtk_box_new(std::get<GtkOrientation>(convert.ConvertToGtkCode(type)), spacing);
+    widget = gtk_box_new(std::get<GtkOrientation>(convert.ConvertToGtkCode(type)), spacing);
   }
 
   void Box::Name(const char *name)
-  { gtk_widget_set_name(GTK_WIDGET(box), name); }
+  { gtk_widget_set_name(GTK_WIDGET(widget), name); }
 
   const char *Box::Name()
-  { return gtk_widget_get_name(GTK_WIDGET(box)); }
+  { return gtk_widget_get_name(GTK_WIDGET(widget)); }
 
   template<typename addtype> void Box::Add(BoxAddType type, addtype &w, bool expand, bool fill, unsigned int padding)
   {
     Converter::Convert convert;
-    convert.AddIntoBox(box, w, type, expand, fill, padding);
+    convert.AddIntoBox(widget, w, type, expand, fill, padding);
   }
 
   // template<typename addtype, typename ... restaddtype> void Box::Add(BoxAddType type, addtype &w, restaddtype & ... rw, bool expand, bool fill, unsigned int padding)
@@ -51,33 +49,33 @@ namespace CGui
   // }
 
   template <typename removetype> void Box::Remove(removetype &w)
-  { gtk_container_remove(GTK_CONTAINER(box), w.GetWidget()); }
+  { gtk_container_remove(GTK_CONTAINER(widget), w.GetWidget()); }
 
   void Box::Homogeneous(bool homogeneous)
-  { gtk_box_set_homogeneous(GTK_BOX(box), homogeneous); }
+  { gtk_box_set_homogeneous(GTK_BOX(widget), homogeneous); }
 
   bool Box::Homogeneous()
-  { return gtk_box_get_homogeneous(GTK_BOX(box)); }
+  { return gtk_box_get_homogeneous(GTK_BOX(widget)); }
 
   void Box::Sensitive(bool sensitive)
-  { gtk_widget_set_sensitive(GTK_WIDGET(box), sensitive); }
+  { gtk_widget_set_sensitive(GTK_WIDGET(widget), sensitive); }
 
   void Box::Align(Alignments halign, Alignments valign)
   {
     Converter::Convert convert;
-    gtk_widget_set_halign(GTK_WIDGET(box), std::get<GtkAlign>(convert.ConvertToGtkCode(halign)));
-    gtk_widget_set_valign(GTK_WIDGET(box), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
+    gtk_widget_set_halign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(halign)));
+    gtk_widget_set_valign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
   }
 
   void Box::SizeRequest(guint x, guint y)
-  { gtk_widget_set_size_request(GTK_WIDGET(box), x, y); }
+  { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
 
   void Box::StyleClass(const gchar *classname)
-  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(box))), classname); }
+  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
 
   void Box::Show()
-  { gtk_widget_show(GTK_WIDGET(box)); }
+  { gtk_widget_show(GTK_WIDGET(widget)); }
 
   GtkWidget *Box::GetWidget()
-  { return box; }
+  { return widget; }
 }

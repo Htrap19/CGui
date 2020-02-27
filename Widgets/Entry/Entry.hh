@@ -38,9 +38,6 @@ namespace CGui
       const char *Text();
       void Show();
       GtkWidget *GetWidget();
-
-    private:
-      GtkWidget *entry;
   };
 
   std::vector<std::tuple<Entry*, void(*)()>> Entry::emptymethods;
@@ -49,31 +46,31 @@ namespace CGui
   template<typename Data, typename ... Rest> std::vector<std::tuple<Entry*, void(*)(Entry*, Data*, Rest*...), Data*, Rest*...>> Entry::infinitemethods;
 
   Entry::Entry()
-  { entry = gtk_entry_new(); }
+  { widget = gtk_entry_new(); }
 
   Entry::Entry(const gchar *placeholdertext)
   {
-    entry = gtk_entry_new();
-    gtk_entry_set_placeholder_text(GTK_ENTRY(entry), placeholdertext);
+    widget = gtk_entry_new();
+    gtk_entry_set_placeholder_text(GTK_ENTRY(widget), placeholdertext);
   }
 
   void Entry::Name(const char *name)
-  { gtk_widget_set_name(GTK_WIDGET(entry), name); }
+  { gtk_widget_set_name(GTK_WIDGET(widget), name); }
 
   const char *Entry::Name()
-  { return gtk_widget_get_name(GTK_WIDGET(entry)); }
+  { return gtk_widget_get_name(GTK_WIDGET(widget)); }
 
   void Entry::Editable(bool editable)
-  { gtk_editable_set_editable(GTK_EDITABLE(entry), editable); }
+  { gtk_editable_set_editable(GTK_EDITABLE(widget), editable); }
 
   bool Entry::Editable()
-  { return gtk_editable_get_editable(GTK_EDITABLE(entry)); }
+  { return gtk_editable_get_editable(GTK_EDITABLE(widget)); }
 
   void Entry::Visibility(bool visibility)
-  { gtk_entry_set_visibility(GTK_ENTRY(entry), visibility); }
+  { gtk_entry_set_visibility(GTK_ENTRY(widget), visibility); }
 
   bool Entry::Visibility()
-  { return gtk_entry_get_visibility(GTK_ENTRY(entry)); }
+  { return gtk_entry_get_visibility(GTK_ENTRY(widget)); }
 
   void Entry::SignalHandler(Events event, void(*func)())
   {
@@ -90,7 +87,7 @@ namespace CGui
         }
       }
     };
-    g_signal_connect(G_OBJECT(entry), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
+    g_signal_connect(G_OBJECT(widget), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
   }
 
   void Entry::SignalHandler(Events event, void(*func)(Entry*))
@@ -108,7 +105,7 @@ namespace CGui
         }
       }
     };
-    g_signal_connect(G_OBJECT(entry), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
+    g_signal_connect(G_OBJECT(widget), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
   }
 
   template <typename Data> void Entry::SignalHandler(Events event, void(*func)(Entry*, Data*), Data &data)
@@ -129,7 +126,7 @@ namespace CGui
       }
     };
 
-    g_signal_connect(G_OBJECT(entry), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
+    g_signal_connect(G_OBJECT(widget), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
   }
 
   template <typename Data, typename ... Rest> void Entry::SignalHandler(Events event, void(*func)(Entry*, Data*, Rest*...), Data &data, Rest & ... rest)
@@ -152,7 +149,7 @@ namespace CGui
       }
     };
 
-    g_signal_connect(G_OBJECT(entry), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
+    g_signal_connect(G_OBJECT(widget), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
   }
 
   void Entry::Changed(void(*func)())
@@ -170,28 +167,28 @@ namespace CGui
   void Entry::Align(Alignments halign, Alignments valign)
   {
     Converter::Convert convert;
-    gtk_widget_set_halign(GTK_WIDGET(entry), std::get<GtkAlign>(convert.ConvertToGtkCode(halign)));
-    gtk_widget_set_valign(GTK_WIDGET(entry), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
+    gtk_widget_set_halign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(halign)));
+    gtk_widget_set_valign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
   }
 
   void Entry::Sensitive(bool sensitive)
-  { gtk_widget_set_sensitive(GTK_WIDGET(entry), sensitive); }
+  { gtk_widget_set_sensitive(GTK_WIDGET(widget), sensitive); }
 
   void Entry::SizeRequest(guint x, guint y)
-  { gtk_widget_set_size_request(GTK_WIDGET(entry), x, y); }
+  { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
 
   void Entry::StyleClass(const gchar *classname)
-  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(entry))), classname); }
+  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
 
   void Entry::Text(const char *text)
-  { gtk_entry_set_text(GTK_ENTRY(entry), text); }
+  { gtk_entry_set_text(GTK_ENTRY(widget), text); }
 
   const char *Entry::Text()
-  { return gtk_entry_get_text(GTK_ENTRY(entry)); }
+  { return gtk_entry_get_text(GTK_ENTRY(widget)); }
 
   void Entry::Show()
-  { gtk_widget_show(GTK_WIDGET(entry)); }
+  { gtk_widget_show(GTK_WIDGET(widget)); }
 
   GtkWidget *Entry::GetWidget()
-  { return entry; }
+  { return widget; }
 }

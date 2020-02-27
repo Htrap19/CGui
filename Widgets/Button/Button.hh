@@ -43,9 +43,6 @@ namespace CGui
       void StyleClass(const gchar *classname);
       void Show();
       GtkWidget *GetWidget();
-
-    private:
-      GtkWidget *button;
   };
 
   std::vector<std::tuple<Button*, void(*)()>> Button::emptymethods;
@@ -64,35 +61,35 @@ namespace CGui
   }
 
   Button::Button()
-  { button = gtk_button_new(); }
+  { widget = gtk_button_new(); }
 
   Button::Button(const gchar *text)
-  { button = gtk_button_new_with_label(text); }
+  { widget = gtk_button_new_with_label(text); }
 
   void Button::Name(const char *name)
-  { gtk_widget_set_name(GTK_WIDGET(button), name); }
+  { gtk_widget_set_name(GTK_WIDGET(widget), name); }
 
   const char *Button::Name()
-  { return gtk_widget_get_name(GTK_WIDGET(button)); }
+  { return gtk_widget_get_name(GTK_WIDGET(widget)); }
 
   template<typename addtype> void Button::Add(addtype &w)
-  { gtk_container_add(GTK_CONTAINER(button), w.GetWidget()); }
+  { gtk_container_add(GTK_CONTAINER(widget), w.GetWidget()); }
 
   template<typename removetype> void Button::Remove(removetype &w)
-  { gtk_container_remove(GTK_CONTAINER(button), w.GetWidget()); }
+  { gtk_container_remove(GTK_CONTAINER(widget), w.GetWidget()); }
 
   void Button::Sensitive(bool sensitive)
-  { gtk_widget_set_sensitive(GTK_WIDGET(button), sensitive); }
+  { gtk_widget_set_sensitive(GTK_WIDGET(widget), sensitive); }
 
   void Button::Align(Alignments halign, Alignments valign)
   {
     Converter::Convert convert;
-    gtk_widget_set_halign(GTK_WIDGET(button), std::get<GtkAlign>(convert.ConvertToGtkCode(halign)));
-    gtk_widget_set_valign(GTK_WIDGET(button), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
+    gtk_widget_set_halign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(halign)));
+    gtk_widget_set_valign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
   }
 
   void Button::SizeRequest(guint x, guint y)
-  { gtk_widget_set_size_request(GTK_WIDGET(button), x, y); }
+  { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
 
   void Button::SignalHandler(Events event, void(*func)())
   {
@@ -111,7 +108,7 @@ namespace CGui
         }
       }
     };
-    g_signal_connect(G_OBJECT(button), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
+    g_signal_connect(G_OBJECT(widget), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
   }
 
   void Button::SignalHandler(Events event, void(*func)(Button*))
@@ -131,7 +128,7 @@ namespace CGui
         }
       }
     };
-    g_signal_connect(G_OBJECT(button), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
+    g_signal_connect(G_OBJECT(widget), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
   }
 
   template<typename Data> void Button::SignalHandler(Events event, void(*func)(Button*, Data*), Data &data)
@@ -153,7 +150,7 @@ namespace CGui
       }
     };
 
-    g_signal_connect(G_OBJECT(button), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
+    g_signal_connect(G_OBJECT(widget), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
   }
 
   template <typename Data> void Button::SignalHandler(Events event, void(*func)(Data*), Data &data)
@@ -175,7 +172,7 @@ namespace CGui
       }
     };
 
-    g_signal_connect(G_OBJECT(button), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
+    g_signal_connect(G_OBJECT(widget), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
   }
 
   template <typename Data, typename ... Rest> void Button::SignalHandler(Events event, void(*func)(Button*, Data*, Rest*...), Data &data, Rest & ... rest)
@@ -198,7 +195,7 @@ namespace CGui
       }
     };
 
-    g_signal_connect(G_OBJECT(button), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
+    g_signal_connect(G_OBJECT(widget), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
   }
 
   template <typename Data, typename ... Rest> void Button::SignalHandler(Events event, void(*func)(Data*, Rest*...), Data &data, Rest & ... rest)
@@ -221,7 +218,7 @@ namespace CGui
       }
     };
 
-    g_signal_connect(G_OBJECT(button), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
+    g_signal_connect(G_OBJECT(widget), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
   }
 
   template <typename Data> void Button::Clicked(void(*func)(Button*, Data*), Data &data)
@@ -243,17 +240,17 @@ namespace CGui
   { this->SignalHandler(CLICKED, func); }
 
   void Button::Text(const char *text)
-  { gtk_button_set_label(GTK_BUTTON(button), text); }
+  { gtk_button_set_label(GTK_BUTTON(widget), text); }
 
   const char *Button::Text()
-  { return gtk_button_get_label(GTK_BUTTON(button)); }
+  { return gtk_button_get_label(GTK_BUTTON(widget)); }
 
   void Button::StyleClass(const gchar *classname)
-  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(button))), classname); }
+  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
 
   void Button::Show()
-  { gtk_widget_show(GTK_WIDGET(button)); }
+  { gtk_widget_show(GTK_WIDGET(widget)); }
 
   GtkWidget *Button::GetWidget()
-  { return button; }
+  { return widget; }
 }

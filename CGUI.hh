@@ -7,7 +7,7 @@
 #include "./Widgets/Entry/Entry.hh"
 #include "./Widgets/Box/Box.hh"
 #include "./Widgets/Window/Window.hh"
-#include "./Widgets/CssProvider/CssProvider.hh"
+#include "./CssProvider/CssProvider.hh"
 #include "./Widgets/Headerbar/Headerbar.hh"
 #include "./Widgets/CheckButton/CheckButton.hh"
 #include "./Widgets/Progressbar/Progressbar.hh"

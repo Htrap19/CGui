@@ -34,47 +34,44 @@ namespace CGui
       void StyleClass(const gchar *classname);
       void Show();
       GtkWidget *GetWidget();
-
-    private:
-      GtkWidget *progressbar;
   };
 
   std::vector<std::tuple<Progressbar*, bool(*)(Progressbar*)>> Progressbar::singletimeoutmethods;
   template <typename Data, typename ... Rest> std::vector<std::tuple<Progressbar*, unsigned int, bool(*)(Progressbar*, Data*, Rest*...), Data*, Rest*...>> Progressbar::timeoutmethods;
 
   Progressbar::Progressbar()
-  { progressbar = gtk_progress_bar_new(); }
+  { widget = gtk_progress_bar_new(); }
 
   Progressbar::Progressbar(const char *text)
   {
-    progressbar = gtk_progress_bar_new();
-    gtk_progress_bar_set_show_text(GTK_PROGRESS_BAR(progressbar), true);
-    gtk_progress_bar_set_text(GTK_PROGRESS_BAR(progressbar), text);
+    widget = gtk_progress_bar_new();
+    gtk_progress_bar_set_show_text(GTK_PROGRESS_BAR(widget), true);
+    gtk_progress_bar_set_text(GTK_PROGRESS_BAR(widget), text);
   }
 
   void Progressbar::Pulse()
-  { gtk_progress_bar_pulse(GTK_PROGRESS_BAR(progressbar)); }
+  { gtk_progress_bar_pulse(GTK_PROGRESS_BAR(widget)); }
 
   void Progressbar::Pulse(double fraction)
-  { gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(progressbar), fraction); }
+  { gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(widget), fraction); }
 
   void Progressbar::Fraction(double fraction)
-  { gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(progressbar), fraction); }
+  { gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(widget), fraction); }
 
   double Progressbar::Fraction()
-  { return gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(progressbar)); }
+  { return gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(widget)); }
 
   void Progressbar::ShowText(bool show)
-  { gtk_progress_bar_set_show_text(GTK_PROGRESS_BAR(progressbar), show); }
+  { gtk_progress_bar_set_show_text(GTK_PROGRESS_BAR(widget), show); }
 
   bool Progressbar::ShowText()
-  { return gtk_progress_bar_get_show_text(GTK_PROGRESS_BAR(progressbar)); }
+  { return gtk_progress_bar_get_show_text(GTK_PROGRESS_BAR(widget)); }
 
   void Progressbar::Text(const char *text)
-  { gtk_progress_bar_set_text(GTK_PROGRESS_BAR(progressbar), text); }
+  { gtk_progress_bar_set_text(GTK_PROGRESS_BAR(widget), text); }
 
   const char *Progressbar::Text()
-  { return gtk_progress_bar_get_text(GTK_PROGRESS_BAR(progressbar)); }
+  { return gtk_progress_bar_get_text(GTK_PROGRESS_BAR(widget)); }
 
   template <typename Data, typename ... Rest> void Progressbar::TimeoutAdd(unsigned int interval, bool(*func)(Progressbar*, Data*, Rest*...), Data &data, Rest & ... rest)
   {
@@ -115,6 +112,8 @@ namespace CGui
           }, *it);
         }
       }
+
+      return false;
     };
 
     g_timeout_add(interval, (GSourceFunc) callback, this);
@@ -127,30 +126,30 @@ namespace CGui
   { this->Fraction(this->Fraction() + this->Fraction()); }
 
   void Progressbar::Name(const char *name)
-  { gtk_widget_set_name(GTK_WIDGET(progressbar), name); }
+  { gtk_widget_set_name(GTK_WIDGET(widget), name); }
 
   const char *Progressbar::Name()
-  { return gtk_widget_get_name(GTK_WIDGET(progressbar)); }
+  { return gtk_widget_get_name(GTK_WIDGET(widget)); }
 
   void Progressbar::Align(Alignments halign, Alignments valign)
   {
     Converter::Convert convert;
-    gtk_widget_set_halign(GTK_WIDGET(progressbar), std::get<GtkAlign>(convert.ConvertToGtkCode(halign)));
-    gtk_widget_set_valign(GTK_WIDGET(progressbar), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
+    gtk_widget_set_halign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(halign)));
+    gtk_widget_set_valign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
   }
 
   void Progressbar::Sensitive(bool sensitive)
-  { gtk_widget_set_sensitive(GTK_WIDGET(progressbar), sensitive); }
+  { gtk_widget_set_sensitive(GTK_WIDGET(widget), sensitive); }
 
   void Progressbar::SizeRequest(guint x, guint y)
-  { gtk_widget_set_size_request(GTK_WIDGET(progressbar), x, y); }
+  { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
 
   void Progressbar::StyleClass(const gchar *classname)
-  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(progressbar))), classname); }
+  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
 
   void Progressbar::Show()
-  { gtk_widget_show(GTK_WIDGET(progressbar)); }
+  { gtk_widget_show(GTK_WIDGET(widget)); }
 
   GtkWidget *Progressbar::GetWidget()
-  { return progressbar; }
+  { return widget; }
 }

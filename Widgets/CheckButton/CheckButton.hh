@@ -40,9 +40,6 @@ namespace CGui
       void StyleClass(const gchar *classname);
       void Show();
       GtkWidget *GetWidget();
-
-    private:
-      GtkWidget *checkbutton;
   };
 
   std::vector<std::tuple<CheckButton*, void(*)()>> CheckButton::emptymethods;
@@ -61,22 +58,22 @@ namespace CGui
   }
 
   CheckButton::CheckButton()
-  { checkbutton = gtk_check_button_new(); }
+  { widget = gtk_check_button_new(); }
 
   CheckButton::CheckButton(const gchar *text)
-  { checkbutton = gtk_check_button_new_with_label(text); }
+  { widget = gtk_check_button_new_with_label(text); }
 
   void CheckButton::Name(const char *name)
-  { gtk_widget_set_name(GTK_WIDGET(checkbutton), name); }
+  { gtk_widget_set_name(GTK_WIDGET(widget), name); }
 
   const char *CheckButton::Name()
-  { return gtk_widget_get_name(GTK_WIDGET(checkbutton)); }
+  { return gtk_widget_get_name(GTK_WIDGET(widget)); }
 
   void CheckButton::Checked(bool active)
-  { gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbutton), active); }
+  { gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget), active); }
 
   bool CheckButton::Checked()
-  { return gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkbutton)); }
+  { return gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget)); }
 
   void CheckButton::SignalHandler(Events event, void(*func)())
   {
@@ -97,7 +94,7 @@ namespace CGui
       }
     };
 
-    g_signal_connect(G_OBJECT(checkbutton), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
+    g_signal_connect(G_OBJECT(widget), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
   }
 
   void CheckButton::SignalHandler(Events event, void(*func)(CheckButton*))
@@ -119,7 +116,7 @@ namespace CGui
       }
     };
 
-    g_signal_connect(G_OBJECT(checkbutton), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
+    g_signal_connect(G_OBJECT(widget), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
   }
 
   template <typename Data> void CheckButton::SignalHandler(Events event, void(*func)(CheckButton*, Data*), Data &data)
@@ -142,7 +139,7 @@ namespace CGui
       }
     };
 
-    g_signal_connect(G_OBJECT(checkbutton), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
+    g_signal_connect(G_OBJECT(widget), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
   }
 
   template <typename Data> void CheckButton::SignalHandler(Events event, void(*func)(Data*), Data &data)
@@ -164,7 +161,7 @@ namespace CGui
       }
     };
 
-    g_signal_connect(G_OBJECT(checkbutton), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
+    g_signal_connect(G_OBJECT(widget), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
   }
 
   template <typename Data, typename ... Rest> void CheckButton::SignalHandler(Events event, void(*func)(CheckButton*, Data*, Rest*...), Data &data, Rest & ... rest)
@@ -187,7 +184,7 @@ namespace CGui
       }
     };
 
-    g_signal_connect(G_OBJECT(checkbutton), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
+    g_signal_connect(G_OBJECT(widget), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
   }
 
   template <typename Data, typename ... Rest> void CheckButton::SignalHandler(Events event, void(*func)(Data*, Rest*...), Data &data, Rest & ... rest)
@@ -210,7 +207,7 @@ namespace CGui
       }
     };
 
-    g_signal_connect(G_OBJECT(checkbutton), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
+    g_signal_connect(G_OBJECT(widget), std::get<char *>(convert.ConvertToGtkCode(event)), G_CALLBACK(callback), this);
   }
 
   template<typename Data> void CheckButton::Toggled(void(*func)(CheckButton*, Data*), Data &data)
@@ -232,24 +229,24 @@ namespace CGui
   { this->SignalHandler(TOGGLED, func); }
 
   void CheckButton::Sensitive(bool sensitive)
-  { gtk_widget_set_sensitive(GTK_WIDGET(checkbutton), sensitive); }
+  { gtk_widget_set_sensitive(GTK_WIDGET(widget), sensitive); }
 
   void CheckButton::Align(Alignments halign, Alignments valign)
   {
     Converter::Convert convert;
-    gtk_widget_set_halign(GTK_WIDGET(checkbutton), std::get<GtkAlign>(convert.ConvertToGtkCode(halign)));
-    gtk_widget_set_valign(GTK_WIDGET(checkbutton), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
+    gtk_widget_set_halign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(halign)));
+    gtk_widget_set_valign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
   }
 
   void CheckButton::SizeRequest(guint x, guint y)
-  { gtk_widget_set_size_request(GTK_WIDGET(checkbutton), x, y); }
+  { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
 
   void CheckButton::StyleClass(const gchar *classname)
-  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(checkbutton))), classname); }
+  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
 
   void CheckButton::Show()
-  { gtk_widget_show(GTK_WIDGET(checkbutton)); }
+  { gtk_widget_show(GTK_WIDGET(widget)); }
 
   GtkWidget *CheckButton::GetWidget()
-  { return checkbutton; }
+  { return widget; }
 };

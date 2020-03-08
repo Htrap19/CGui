@@ -14,7 +14,10 @@ namespace CGui
       void Sensitive(bool sensitive);
       void Align(Alignments halign, Alignments valign);
       void SizeRequest(guint x, guint y);
+      void Tooltip(const char *text);
+      const char *Tooltip();
       void StyleClass(const gchar *classname);
+      void Hide();
       void Show();
       GtkWidget *GetWidget();
   };
@@ -58,8 +61,17 @@ namespace CGui
   void Headerbar::SizeRequest(guint x, guint y)
   { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
 
+  void Headerbar::Tooltip(const char *text)
+  { gtk_widget_set_tooltip_text(GTK_WIDGET(widget), text); }
+
+  const char *Headerbar::Tooltip()
+  { return gtk_widget_get_tooltip_text(GTK_WIDGET(widget)); }
+
   void Headerbar::StyleClass(const gchar *classname)
   { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
+
+  void Headerbar::Hide()
+  { gtk_widget_hide(GTK_WIDGET(widget)); }
 
   void Headerbar::Show()
   { gtk_widget_show(GTK_WIDGET(widget)); }

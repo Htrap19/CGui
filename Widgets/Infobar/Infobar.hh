@@ -20,7 +20,10 @@ namespace CGui
       void Align(Alignments halign, Alignments valign);
       void Sensitive(bool sensitive);
       void SizeRequest(guint x, guint y);
+      void Tooltip(const char *text);
+      const char *Tooltip();
       void StyleClass(const gchar *classname);
+      void Hide();
       void Show();
       GtkWidget *GetWidget();
 
@@ -83,8 +86,17 @@ namespace CGui
   void Infobar::SizeRequest(guint x, guint y)
   { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
 
+  void Infobar::Tooltip(const char *text)
+  { gtk_widget_set_tooltip_text(GTK_WIDGET(widget), text); }
+
+  const char *Infobar::Tooltip()
+  { return gtk_widget_get_tooltip_text(GTK_WIDGET(widget)); }
+
   void Infobar::StyleClass(const gchar *classname)
   { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
+
+  void Infobar::Hide()
+  { gtk_widget_hide(GTK_WIDGET(widget)); }
 
   void Infobar::Show()
   { gtk_widget_show(GTK_WIDGET(widget)); }

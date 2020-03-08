@@ -24,4 +24,10 @@ namespace CGui
       ~Init()
       { gtk_main(); }
   };
+
+  static void UpdateUI()
+  {
+    while(gtk_events_pending())
+      gtk_main_iteration();
+  }
 };

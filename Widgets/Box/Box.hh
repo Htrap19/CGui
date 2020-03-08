@@ -19,7 +19,10 @@ namespace CGui
       void Sensitive(bool sensitive);
       void Align(Alignments halign, Alignments valign);
       void SizeRequest(guint x, guint y);
+      void Tooltip(const char *text);
+      const char *Tooltip();
       void StyleClass(const gchar *classname);
+      void Hide();
       void Show();
       GtkWidget *GetWidget();
   };
@@ -70,8 +73,17 @@ namespace CGui
   void Box::SizeRequest(guint x, guint y)
   { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
 
+  void Box::Tooltip(const char *text)
+  { gtk_widget_set_tooltip_text(GTK_WIDGET(widget), text); }
+
+  const char *Box::Tooltip()
+  { return gtk_widget_get_tooltip_text(GTK_WIDGET(widget)); }
+
   void Box::StyleClass(const gchar *classname)
   { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
+
+  void Box::Hide()
+  { gtk_widget_hide(GTK_WIDGET(widget)); }
 
   void Box::Show()
   { gtk_widget_show(GTK_WIDGET(widget)); }

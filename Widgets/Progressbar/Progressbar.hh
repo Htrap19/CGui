@@ -31,7 +31,10 @@ namespace CGui
       void Align(Alignments halign, Alignments valign);
       void Sensitive(bool sensitive);
       void SizeRequest(guint x, guint y);
+      void Tooltip(const char *text);
+      const char *Tooltip();
       void StyleClass(const gchar *classname);
+      void Hide();
       void Show();
       GtkWidget *GetWidget();
   };
@@ -56,7 +59,11 @@ namespace CGui
   { gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(widget), fraction); }
 
   void Progressbar::Fraction(double fraction)
-  { gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(widget), fraction); }
+  {
+    gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(widget), fraction);
+    while(gtk_events_pending())
+      gtk_main_iteration();
+  }
 
   double Progressbar::Fraction()
   { return gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(widget)); }
@@ -144,8 +151,17 @@ namespace CGui
   void Progressbar::SizeRequest(guint x, guint y)
   { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
 
+  void Progressbar::Tooltip(const char *text)
+  { gtk_widget_set_tooltip_text(GTK_WIDGET(widget), text); }
+
+  const char *Progressbar::Tooltip()
+  { return gtk_widget_get_tooltip_text(GTK_WIDGET(widget)); }
+
   void Progressbar::StyleClass(const gchar *classname)
   { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
+
+  void Progressbar::Hide()
+  { gtk_widget_hide(GTK_WIDGET(widget)); }
 
   void Progressbar::Show()
   { gtk_widget_show(GTK_WIDGET(widget)); }

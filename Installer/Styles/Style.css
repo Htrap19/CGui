@@ -1,0 +1,46 @@
+.installbutton {
+  background-color: #27ae60;
+}
+
+.installbutton:hover {
+  background-color: #2ecc71;
+}
+
+.installbutton:disabled {
+  background-color: transparent;
+}
+
+.noteinfobar {
+  background-color: #3498db;
+  border-color: transparent;
+  border-radius: 4px;
+}
+
+.noteinfobar_error {
+  background-color: #EA2027;
+  border-color: transparent;
+  border-radius: 4px;
+}
+
+.noteinfobar_trans {
+  background-color: transparent;
+  border-color: transparent;
+  border-radius: 4px;
+  color: black;
+}
+
+.cancel_button {
+  background-color: #EA2027;
+  border-color: transparent;
+  border-radius: 4px;
+}
+
+.cancel_button:hover {
+  background-color: #ff3f34;
+  border-color: transparent;
+  border-radius: 4px;
+}
+
+.Test {
+  background-color: transparent;
+}

@@ -33,9 +33,12 @@ namespace CGui
       void Changed(void(*func)());
       void Align(Alignments halign, Alignments valign);
       void SizeRequest(guint x, guint y);
+      void Tooltip(const char *text);
+      const char *Tooltip();
       void StyleClass(const gchar *classname);
       void Text(const char *text);
       const char *Text();
+      void Hide();
       void Show();
       GtkWidget *GetWidget();
   };
@@ -177,6 +180,12 @@ namespace CGui
   void Entry::SizeRequest(guint x, guint y)
   { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
 
+  void Entry::Tooltip(const char *text)
+  { gtk_widget_set_tooltip_text(GTK_WIDGET(widget), text); }
+
+  const char *Entry::Tooltip()
+  { return gtk_widget_get_tooltip_text(GTK_WIDGET(widget)); }
+
   void Entry::StyleClass(const gchar *classname)
   { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
 
@@ -185,6 +194,9 @@ namespace CGui
 
   const char *Entry::Text()
   { return gtk_entry_get_text(GTK_ENTRY(widget)); }
+
+  void Entry::Hide()
+  { gtk_widget_hide(GTK_WIDGET(widget)); }
 
   void Entry::Show()
   { gtk_widget_show(GTK_WIDGET(widget)); }

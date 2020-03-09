@@ -98,7 +98,7 @@ void copy(std::string diterator, std::string &desp, Infobar *infobar, Progressba
 
 void UpdateProfileFile(std::string &lib_path)
 {
-  std::ifstream profile_file(home + "/profile");
+  std::ifstream profile_file(home + "/.profile");
   if(profile_file.is_open())
   {
     std::string line;
@@ -106,11 +106,12 @@ void UpdateProfileFile(std::string &lib_path)
     while(getline(profile_file, line))
       fulltext += line + '\n';
 
-    std::ofstream update(home + "/profile");
+    std::ofstream update(home + "/.profile");
     if(update.is_open())
     {
       update << fulltext;
-      update << "#Added by CGui \nexport CPLUS_INCLUDE_PATH=" + lib_path;
+      update << "# Added by CGui \n";
+      update << "export CPLUS_INCLUDE_PATH=" + lib_path;
       update.close();
     }
     profile_file.close();
@@ -185,8 +186,6 @@ void start_installation(Button *sender, Revealer *revealer, Progressbar *progres
 int main(int argc, char *argv[])
 {
   Init init(argc, argv); // Initialize the CGUI
-
-  long unsigned int id;
 
   Window window(TOPLEVEL, "CGui Installer", CEN);
   window.DefaultSize(640, 480);
@@ -263,6 +262,7 @@ int main(int argc, char *argv[])
 
   progressbar_revealer.Add<Progressbar>(inst_progressbar);
 
+  long unsigned int id;
   id = install_button.Clicked(start_installation, progressbar_revealer, inst_progressbar, path_entry, pref_button, curr_button, univ_checkbutton, inst_cguic, note_infobar, install_button, quit_button, id, window);
 
   vbox.Add<Infobar>(START, note_infobar);

@@ -40,7 +40,7 @@ For compile any file, use the following command line:<br>
 ```
 g++-8 -std=c++17 file.cc `pkg-config gtk+-3.0 --cflags --libs`
 ```
-1. Change the **file.cc** with your file.<br>
+1. Change the **file.cc** with your cpp file.<br>
 2. ```g++-8``` for g++ 8th generation compiler<br>
 3. ```-std=c++17``` for c++ standard version 17<br>
 

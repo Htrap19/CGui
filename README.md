@@ -25,7 +25,8 @@ chmod +x ./Installer
 ![Installer](https://github.com/Developmentprogramming/CGui/blob/master/Examples/Installer.png)<br>
 Now choose the path where you want to install, and check the **Universal Access** to get access of this library from any where on your system.<br>
 And at last click on install and wait until it finsihes.<br>
-*Note: This installer it self is made using this library(CGui).*
+*Note: This installer it self is made using this library(CGui).*<br>
+If you want to install in **Preferred Path** location then you must run this installer with root access, and if you want to install it in the **Current Path** location or any other user's location then no need for root access.
 
 ## Compilation and Precompiling headers(Only for development purpose)
 ```
@@ -50,7 +51,7 @@ using namespace CGui;
 
 int main(int argc, char *argv[])
 {
-  Init init(argc, argv); Initialize CGui
+  Init init(argc, argv); // Initialize CGui
   
   // Some code
   Window window(TOPLEVEL, "CGUI WINDOW", CEN); // Create a new Window

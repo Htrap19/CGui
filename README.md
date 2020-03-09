@@ -8,15 +8,22 @@
 * 8th generation of C++ compiler(g++-8) with C++ version 17
 
 ## Installation
+Install dependencies for CGui<br>
 ```
 sudo apt-get install g++-8 libgtk-3-dev
+```
+Clone this repository
+```
 git clone https://github.com/Developmentprogramming/CGui.git
+```
+Start the installtion process
+```
 cd CGui/Installer/bin
 chmod +x ./Installer
 ./Installer
 ```
 ![Installer](https://github.com/Developmentprogramming/CGui/blob/master/Examples/Installer.png)<br>
-Now choose the path where you want to install, and check the **Universal access** to get access of this library from any where on your system.<br>
+Now choose the path where you want to install, and check the **Universal Access** to get access of this library from any where on your system.<br>
 And at last click on install and wait until it finsihes.<br>
 *Note: This installer it self is made using this library(CGui).*
 

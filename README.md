@@ -25,21 +25,36 @@ chmod +x ./Installer
 ![Installer](https://github.com/Developmentprogramming/CGui/blob/master/Examples/Installer.png)<br>
 Now choose the path where you want to install, and check the **Universal Access** to get access of this library from any where on your system.<br>
 And at last click on install and wait until it finsihes.<br>
-*Note: This installer it self is made using this library(CGui).*
+**Note: This installer itself is made using this library(CGui).**<br><br>
+If you want to install in **Preferred Path** location then you must run this installer with root access, and if you want to install it in the **Current Path** location or any other user's location then no need for root access.
 
-## Compilation and Precompiling headers(Only for development purpose)
+## Precompiling headers(Only for development purpose)
 ```
 git clone https://github.com/Developmentprogramming/CGui.git
 cd CGui
 make -i PrecompiledHeaders
 ```
-Compile the test file and run it: <br>
+
+## Compilation
+For compile any file, use the following command line:<br>
+```
+g++-8 -std=c++17 file.cc `pkg-config gtk+-3.0 --cflags --libs`
+```
+1. Change the **file.cc** with your cpp file.<br>
+2. ```g++-8``` for g++ 8th generation compiler<br>
+3. ```-std=c++17``` for c++ standard version 17<br>
+4. ``` `pkg-config gtk+-3.0 --cflags --libs` ``` for invoking all the GTK+ files
+
+Compile the test file and run it(Only for testing the CGui is working): <br>
 ```
 g++-8 -std=c++17 Main.cc -o Main `pkg-config gtk+-3.0 --cflags --libs`
 ./Main
 ```
 Result:<br>
-![MainResult](https://github.com/Developmentprogramming/CGui/blob/master/Examples/MainResult.png)
+![MainResult](https://github.com/Developmentprogramming/CGui/blob/master/Examples/MainResult.png)<br>
+
+If you see this message **Welcome to CGui**.<br>
+Congratulations!!!, it's working... .
 
 ## Code Structure
 ```C++
@@ -50,7 +65,7 @@ using namespace CGui;
 
 int main(int argc, char *argv[])
 {
-  Init init(argc, argv); Initialize CGui
+  Init init(argc, argv); // Initialize CGui
   
   // Some code
   Window window(TOPLEVEL, "CGUI WINDOW", CEN); // Create a new Window

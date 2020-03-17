@@ -11,12 +11,14 @@ namespace CGui
       void Name(const char *name);
       const char *Name();
       template<typename addtype> void Add(BoxAddType type, addtype &w);
+      template <typename addtype> void AddStart(addtype &w);
+      template <typename addtype> void AddEnd(addtype &w);
       void Sensitive(bool sensitive);
       void Align(Alignments halign, Alignments valign);
-      void SizeRequest(guint x, guint y);
+      void SizeRequest(unsigned int x, unsigned int y);
       void Tooltip(const char *text);
       const char *Tooltip();
-      void StyleClass(const gchar *classname);
+      void StyleClass(const char *classname);
       void Hide();
       void Show();
       GtkWidget *GetWidget();
@@ -37,16 +39,16 @@ namespace CGui
 
   template<typename addtype> void Headerbar::Add(BoxAddType type, addtype &w)
   {
-    switch (type)
-    {
-      case START:
-        gtk_header_bar_pack_start(GTK_HEADER_BAR(widget), w.GetWidget());
-        break;
-      case END:
-        gtk_header_bar_pack_end(GTK_HEADER_BAR(widget), w.GetWidget());
-        break;
-    }
+    Converter::Convert convert;
+    auto func = convert.AddIntoHeaderbarFuncPtr(type);
+    func(GTK_HEADER_BAR(widget), w.GetWidget());
   }
+
+  template <typename addtype> void Headerbar::AddStart(addtype &w)
+  { this->Add(START, w); }
+
+  template <typename addtype> void Headerbar::AddEnd(addtype &w)
+  { this->Add(END, w); }
 
   void Headerbar::Sensitive(bool sensitive)
   { gtk_widget_set_sensitive(GTK_WIDGET(widget), sensitive); }
@@ -58,7 +60,7 @@ namespace CGui
     gtk_widget_set_valign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
   }
 
-  void Headerbar::SizeRequest(guint x, guint y)
+  void Headerbar::SizeRequest(unsigned int x, unsigned int y)
   { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
 
   void Headerbar::Tooltip(const char *text)
@@ -67,7 +69,7 @@ namespace CGui
   const char *Headerbar::Tooltip()
   { return gtk_widget_get_tooltip_text(GTK_WIDGET(widget)); }
 
-  void Headerbar::StyleClass(const gchar *classname)
+  void Headerbar::StyleClass(const char *classname)
   { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
 
   void Headerbar::Hide()

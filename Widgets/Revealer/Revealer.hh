@@ -16,8 +16,8 @@ namespace CGui
       const char *Name();
       void Align(Alignments halign, Alignments valign);
       void Sensitive(bool sensitive);
-      void SizeRequest(guint x, guint y);
-      void StyleClass(const gchar *classname);
+      void SizeRequest(unsigned int x, unsigned int y);
+      void StyleClass(const char *classname);
       void Tooltip(const char *text);
       const char *Tooltip();
       void Hide();
@@ -61,10 +61,10 @@ namespace CGui
   void Revealer::Sensitive(bool sensitive)
   { gtk_widget_set_sensitive(GTK_WIDGET(widget), sensitive); }
 
-  void Revealer::SizeRequest(guint x, guint y)
+  void Revealer::SizeRequest(unsigned int x, unsigned int y)
   { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
 
-  void Revealer::StyleClass(const gchar *classname)
+  void Revealer::StyleClass(const char *classname)
   { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
 
   void Revealer::Tooltip(const char *text)

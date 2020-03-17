@@ -36,10 +36,10 @@ namespace CGui
       void Toggled(void(*func)());
       void Sensitive(bool sensitive);
       void Align(Alignments halign, Alignments valign);
-      void SizeRequest(guint x, guint y);
+      void SizeRequest(unsigned int x, unsigned int y);
       void Tooltip(const char *text);
       const char *Tooltip();
-      void StyleClass(const gchar *classname);
+      void StyleClass(const char *classname);
       void Hide();
       void Show();
       GtkWidget *GetWidget();
@@ -241,7 +241,7 @@ namespace CGui
     gtk_widget_set_valign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
   }
 
-  void CheckButton::SizeRequest(guint x, guint y)
+  void CheckButton::SizeRequest(unsigned int x, unsigned int y)
   { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
 
   void CheckButton::Tooltip(const char *text)
@@ -250,7 +250,7 @@ namespace CGui
   const char *CheckButton::Tooltip()
   { return gtk_widget_get_tooltip_text(GTK_WIDGET(widget)); }
 
-  void CheckButton::StyleClass(const gchar *classname)
+  void CheckButton::StyleClass(const char *classname)
   { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
 
   void CheckButton::Hide()

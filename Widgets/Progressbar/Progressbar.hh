@@ -30,10 +30,10 @@ namespace CGui
       const char *Name();
       void Align(Alignments halign, Alignments valign);
       void Sensitive(bool sensitive);
-      void SizeRequest(guint x, guint y);
+      void SizeRequest(unsigned int x, unsigned int y);
       void Tooltip(const char *text);
       const char *Tooltip();
-      void StyleClass(const gchar *classname);
+      void StyleClass(const char *classname);
       void Hide();
       void Show();
       GtkWidget *GetWidget();
@@ -148,7 +148,7 @@ namespace CGui
   void Progressbar::Sensitive(bool sensitive)
   { gtk_widget_set_sensitive(GTK_WIDGET(widget), sensitive); }
 
-  void Progressbar::SizeRequest(guint x, guint y)
+  void Progressbar::SizeRequest(unsigned int x, unsigned int y)
   { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
 
   void Progressbar::Tooltip(const char *text)
@@ -157,7 +157,7 @@ namespace CGui
   const char *Progressbar::Tooltip()
   { return gtk_widget_get_tooltip_text(GTK_WIDGET(widget)); }
 
-  void Progressbar::StyleClass(const gchar *classname)
+  void Progressbar::StyleClass(const char *classname)
   { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
 
   void Progressbar::Hide()

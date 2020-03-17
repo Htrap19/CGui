@@ -25,7 +25,7 @@ namespace CGui
       template<typename removetype> void Remove(removetype &w);
       void Sensitive(bool sensitive);
       void Align(Alignments halign, Alignments valign);
-      void SizeRequest(guint x, guint y);
+      void SizeRequest(unsigned int x, unsigned int y);
       void Tooltip(const char *text);
       const char *Tooltip();
       void Text(const char *text);
@@ -43,7 +43,7 @@ namespace CGui
       long unsigned int Clicked(void(*func)(Button*));
       long unsigned int Clicked(void(*func)());
       void DisconnectHandler(long unsigned int id);
-      void StyleClass(const gchar *classname);
+      void StyleClass(const char *classname);
       void Hide();
       void Show();
       GtkWidget *GetWidget();
@@ -92,7 +92,7 @@ namespace CGui
     gtk_widget_set_valign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
   }
 
-  void Button::SizeRequest(guint x, guint y)
+  void Button::SizeRequest(unsigned int x, unsigned int y)
   { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
 
   void Button::Tooltip(const char *text)
@@ -262,7 +262,7 @@ namespace CGui
   const char *Button::Text()
   { return gtk_button_get_label(GTK_BUTTON(widget)); }
 
-  void Button::StyleClass(const gchar *classname)
+  void Button::StyleClass(const char *classname)
   { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
 
   void Button::Hide()

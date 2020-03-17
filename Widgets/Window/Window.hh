@@ -8,24 +8,24 @@ namespace CGui
   class Window : public widget
   {
     public:
-      Window(WindowType type, const gchar *title, WindowPos pos);
+      Window(WindowType type, const char *title, WindowPos pos);
       void Name(const char *name);
       const char *Name();
-      void Icon(const gchar *iconpath);
+      void Icon(const char *iconpath);
       template<typename addtype> void Add(addtype &w);
       template<typename removetype> void Remove(removetype &w);
-      void InternalWidth(guint width);
-      void DefaultSize(guint xsize, guint ysize);
+      void InternalWidth(unsigned int width);
+      void DefaultSize(unsigned int xsize, unsigned int ysize);
       void NewHeaderbar(Headerbar &hb);
       void Resizable(bool resizable);
       void Quit();
       void ShowAll();
       void Sensitive(bool sensitive);
       void Align(Alignments halign, Alignments valign);
-      void SizeRequest(guint x, guint y);
+      void SizeRequest(unsigned int x, unsigned int y);
       void Tooltip(const char *text);
       const char *Tooltip();
-      void StyleClass(const gchar *classname);
+      void StyleClass(const char *classname);
       void Hide();
       void Show();
       GtkWidget *GetWidget();
@@ -47,7 +47,7 @@ namespace CGui
   const char *Window::Name()
   { return gtk_widget_get_name(GTK_WIDGET(widget)); }
 
-  void Window::Icon(const gchar *iconpath)
+  void Window::Icon(const char *iconpath)
   {
     GError *error = NULL;
     GdkPixbuf *icon = gdk_pixbuf_new_from_file(iconpath, &error);
@@ -65,10 +65,10 @@ namespace CGui
   template<typename removetype> void Window::Remove(removetype &w)
   { gtk_container_remove(GTK_CONTAINER(widget), w.GetWidget()); }
 
-  void Window::InternalWidth(guint width)
+  void Window::InternalWidth(unsigned int width)
   { gtk_container_set_border_width(GTK_CONTAINER(widget), width); }
 
-  void Window::DefaultSize(guint xsize, guint ysize)
+  void Window::DefaultSize(unsigned int xsize, unsigned int ysize)
   { gtk_window_set_default_size(GTK_WINDOW(widget), xsize, ysize); }
 
   void Window::NewHeaderbar(Headerbar &hb)
@@ -93,7 +93,7 @@ namespace CGui
     gtk_widget_set_valign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
   }
 
-  void Window::SizeRequest(guint x, guint y)
+  void Window::SizeRequest(unsigned int x, unsigned int y)
   { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
 
   void Window::Tooltip(const char *text)
@@ -102,7 +102,7 @@ namespace CGui
   const char *Window::Tooltip()
   { return gtk_widget_get_tooltip_text(GTK_WIDGET(widget)); }
 
-  void Window::StyleClass(const gchar *classname)
+  void Window::StyleClass(const char *classname)
   { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
 
   void Window::Hide()

@@ -14,19 +14,21 @@ namespace CGui
 
   enum Alignments { FILL, BEGIN, LAST, CENTER };
 
-  enum Events { CLICKED, DELETE, TOGGLED, CHANGED };
+  enum Events { CLICKED, DELETE, TOGGLED, CHANGED, ENTER };
 
   enum Transition { SLIDERIGHT, SLIDELEFT, SLIDEUP, SLIDEDOWN, CROSSFADE, NONE };
   enum MessageType { INFO, WARNING, QUESTION, ERROR, OTHER };
+
+  enum Policy { AUTOMATIC, NEVER, ALWAYS };
 
   namespace Converter
   {
     class Convert
     {
       public:
-        std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition, GtkRevealerTransitionType, GtkMessageType, char*> ConvertToGtkCode(std::variant<Alignments, BoxType, WindowType, WindowPos, Transition, MessageType, Events> data)
+        std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition, GtkRevealerTransitionType, GtkMessageType, GtkPolicyType, char*> ConvertToGtkCode(std::variant<Alignments, BoxType, WindowType, WindowPos, Transition, MessageType, Events, Policy> data)
         {
-          std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition, GtkRevealerTransitionType, GtkMessageType, char*> retValue;
+          std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition, GtkRevealerTransitionType, GtkMessageType, GtkPolicyType, char*> retValue;
           if(data.index() == 0)
             return GetGtkCode(std::get<Alignments>(data));
           else if(data.index() == 1)
@@ -41,25 +43,64 @@ namespace CGui
             return GetGtkCode(std::get<MessageType>(data));
           else if(data.index() == 6)
             return GetGtkCode(std::get<Events>(data));
-
+          else if(data.index() == 7)
+            return GetGtkCode(std::get<Policy>(data));
           return retValue;
         }
 
-        template<typename t> void AddIntoBox(GtkWidget *&box, t &w, BoxAddType type, gboolean expand, gboolean fill, guint padding)
+        auto AddIntoBoxFuncPtr(BoxAddType type)
         {
           switch (type)
           {
             case START:
-              gtk_box_pack_start(GTK_BOX(box), w.GetWidget(), expand, fill, padding);
+              return gtk_box_pack_start;
               break;
 
             case END:
-              gtk_box_pack_end(GTK_BOX(box), w.GetWidget(), expand, fill, padding);
+              return gtk_box_pack_end;
               break;
+
+            default:
+              return gtk_box_pack_start;
+          }
+        }
+
+        auto AddIntoHeaderbarFuncPtr(BoxAddType type)
+        {
+          switch (type)
+          {
+            case START:
+              return gtk_header_bar_pack_start;
+              break;
+            case END:
+              return gtk_header_bar_pack_end;
+              break;
+
+              default:
+                return gtk_header_bar_pack_start;
           }
         }
 
       private:
+        GtkPolicyType GetGtkCode(Policy policy)
+        {
+          switch (policy)
+          {
+            case AUTOMATIC:
+              return GTK_POLICY_AUTOMATIC;
+              break;
+            case NEVER:
+              return GTK_POLICY_NEVER;
+              break;
+            case ALWAYS:
+              return GTK_POLICY_ALWAYS;
+              break;
+
+            default:
+              return GTK_POLICY_AUTOMATIC;
+          }
+        }
+
         GtkMessageType GetGtkCode(MessageType messagetype)
         {
           switch (messagetype)
@@ -112,7 +153,6 @@ namespace CGui
 
         char *GetGtkCode(Events event)
         {
-          char *retValue;
           switch (event)
           {
             case CLICKED:
@@ -127,14 +167,17 @@ namespace CGui
             case CHANGED:
               return "changed";
               break;
-          }
+            case ENTER:
+              return "enter";
+              break;
 
-          return retValue;
+            default:
+              return "changed";
+          }
         }
 
         GtkWindowType GetGtkCode(WindowType data)
         {
-          GtkWindowType retValue;
           switch (data)
           {
             case TOPLEVEL:
@@ -143,14 +186,14 @@ namespace CGui
             case POPUP:
               return GTK_WINDOW_POPUP;
             break;
-          }
 
-          return retValue;
+            default:
+              return GTK_WINDOW_TOPLEVEL;
+          }
         }
 
         GtkWindowPosition GetGtkCode(WindowPos data)
         {
-          GtkWindowPosition retValue;
           switch (data)
           {
             case CEN:
@@ -161,14 +204,14 @@ namespace CGui
               break;
             case CENA:
               return GTK_WIN_POS_CENTER_ALWAYS;
-          }
 
-          return retValue;
+            default:
+              return GTK_WIN_POS_CENTER;
+          }
         }
 
         GtkAlign GetGtkCode(Alignments data)
         {
-          GtkAlign retValue;
           switch (data)
           {
             case BEGIN:
@@ -183,14 +226,14 @@ namespace CGui
             case CENTER:
               return GTK_ALIGN_CENTER;
             break;
-          }
 
-          return retValue;
+            default:
+              return GTK_ALIGN_CENTER;
+          }
         }
 
         GtkOrientation GetGtkCode(BoxType data)
         {
-          GtkOrientation retValue;
           switch (data)
           {
             case VER:
@@ -199,9 +242,10 @@ namespace CGui
             case HOR:
               return GTK_ORIENTATION_HORIZONTAL;
             break;
-          }
 
-          return retValue;
+            default:
+              return GTK_ORIENTATION_VERTICAL;
+          }
         }
     };
   }

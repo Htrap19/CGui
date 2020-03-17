@@ -1,6 +1,5 @@
 #include <CGUI.hh>
 #include <filesystem>
-#include <thread>
 #include <iostream>
 #include <stdlib.h>
 #include <fstream>
@@ -8,6 +7,12 @@
 using namespace CGui;
 
 std::string home = std::string( getenv("HOME") );
+
+void* operator new(size_t size)
+{
+  std::cout << "Allocating " << size << " bytes\n";
+  return malloc(size);
+}
 
 void applyppath(Entry *entry)
 { entry->Text("/usr/local/include"); }
@@ -207,8 +212,8 @@ int main(int argc, char *argv[])
   quit_button.Align(BEGIN, CENTER);
   quit_button.Clicked<Window>(quitinstaller, window);
 
-  win_headerbar.Add<Button>(END, install_button);
-  win_headerbar.Add<Button>(START, quit_button);
+  win_headerbar.AddEnd(install_button);
+  win_headerbar.AddStart(quit_button);
 
   window.NewHeaderbar(win_headerbar);
 

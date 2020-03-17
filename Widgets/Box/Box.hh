@@ -2,6 +2,7 @@
 
 #include "../Widget.hh"
 #include <vector>
+#include <tuple>
 
 namespace CGui
 {
@@ -11,19 +12,22 @@ namespace CGui
       Box(BoxType type, int spacing);
       void Name(const char *name);
       const char *Name();
-      template<typename addtype> void Add(BoxAddType type, addtype &w, bool expand = false, bool fill = false, unsigned int padding = 0);
-      template<typename removetype> void Remove(removetype &w);
+      template <typename addtype> void Add(BoxAddType type, addtype &w, bool expand = false, bool fill = false, unsigned int padding = 0);
+      template <typename addtype> void AddStart(addtype &w, bool expand = false, bool fill = false, unsigned int padding = 0);
+      template <typename addtype> void AddEnd(addtype &w, bool expand = false, bool fill = false, unsigned int padding = 0);
+      template <typename removetype> void Remove(removetype &w);
       // template<typename addtype, typename ... restaddtype> void Add(BoxAddType, addtype &w, restaddtype & ... rw, bool expand = false, bool fill = false, unsigned int padding = 0);
       void Homogeneous(bool homogeneous);
       bool Homogeneous();
       void Sensitive(bool sensitive);
       void Align(Alignments halign, Alignments valign);
-      void SizeRequest(guint x, guint y);
+      void SizeRequest(unsigned int x, unsigned int y);
       void Tooltip(const char *text);
       const char *Tooltip();
-      void StyleClass(const gchar *classname);
+      void StyleClass(const char *classname);
       void Hide();
       void Show();
+      void ShowAll();
       GtkWidget *GetWidget();
   };
 
@@ -42,8 +46,15 @@ namespace CGui
   template<typename addtype> void Box::Add(BoxAddType type, addtype &w, bool expand, bool fill, unsigned int padding)
   {
     Converter::Convert convert;
-    convert.AddIntoBox(widget, w, type, expand, fill, padding);
+    auto func = convert.AddIntoBoxFuncPtr(type);
+    func(GTK_BOX(widget), w.GetWidget(), expand, fill, padding);
   }
+
+  template <typename addtype> void Box::AddStart(addtype &w, bool expand, bool fill, unsigned int padding)
+  { this->Add(START, w, expand, fill, padding); }
+
+  template <typename addtype> void Box::AddEnd(addtype &w, bool expand, bool fill, unsigned int padding)
+  { this->Add(END, w, expand, fill, padding); }
 
   // template<typename addtype, typename ... restaddtype> void Box::Add(BoxAddType type, addtype &w, restaddtype & ... rw, bool expand, bool fill, unsigned int padding)
   // {
@@ -70,7 +81,7 @@ namespace CGui
     gtk_widget_set_valign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
   }
 
-  void Box::SizeRequest(guint x, guint y)
+  void Box::SizeRequest(unsigned int x, unsigned int y)
   { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
 
   void Box::Tooltip(const char *text)
@@ -79,7 +90,7 @@ namespace CGui
   const char *Box::Tooltip()
   { return gtk_widget_get_tooltip_text(GTK_WIDGET(widget)); }
 
-  void Box::StyleClass(const gchar *classname)
+  void Box::StyleClass(const char *classname)
   { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
 
   void Box::Hide()
@@ -87,6 +98,9 @@ namespace CGui
 
   void Box::Show()
   { gtk_widget_show(GTK_WIDGET(widget)); }
+
+  void Box::ShowAll()
+  { gtk_widget_show_all(GTK_WIDGET(widget)); }
 
   GtkWidget *Box::GetWidget()
   { return widget; }

@@ -1,10 +1,12 @@
 // This the test file
 
-#include "CGUI.hh"
+#include <CGUI.hh>
+
+using namespace CGui;
 
 int main(int argc, char *argv[])
 {
-  gtk_init(&argc, &argv);
+  Init init(argc, argv);
 
   Window window(TOPLEVEL, "CGuiWindow", CEN);
 
@@ -17,14 +19,13 @@ int main(int argc, char *argv[])
   Label label("Welcome to CGui, Make C++ UI Efficient");
   label.Align(CENTER, LAST);
 
-  vbox.Add<Image>(START, image);
-  vbox.Add<Label>(END, label);
+  vbox.AddStart(image);
+  vbox.AddStart(label);
 
-  window.Add<Box>(vbox);
+  window.Add(vbox);
   window.InternalWidth(10);
   window.DefaultSize(640, 480);
   window.ShowAll();
 
-  gtk_main();
   return 0;
 }

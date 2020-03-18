@@ -18,8 +18,8 @@ namespace CGui
       virtual void StyleClass(const char *classname) = 0;
       virtual void Hide() = 0;
       virtual void Show() = 0;
-      virtual ~widget()
-      {  }
+      // virtual ~widget()
+      // {  }
 
     protected:
       GtkWidget *widget;

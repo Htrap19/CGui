@@ -1,8 +1,8 @@
 CC = g++-8 -std=c++17
 libgtk = `pkg-config gtk+-3.0 --cflags --libs`
 
-PrecompiledHeaders: CGUI.hh ./Widgets/Box/Box.hh ./Widgets/Button/Button.hh ./Widgets/Entry/Entry.hh ./Widgets/Image/Image.hh ./Widgets/Label/Label.hh ./Widgets/Widget.hh ./Converter/Convert.hh ./CssProvider/CssProvider.hh 
-	make PrecompileCGUI && make PrecompileCGuiWindow && make PrecompileCGuiBox && make PrecompileCGuiButton && make PrecompileCGuiEntry && make PrecompileCGuiImage && make PrecompileCGuiLabel && make PrecompileCGuiWidget && make PrecompileCGuiConvert && make PrecompileCGuiCssProvider && make PrecompileCGuiHeaderbar && make PrecompileCGuiCheckButton && make PrecompileCGuiProgressbar && make PrecompileCGuiRevealer && make PrecompileCGuiInfobar
+PrecompiledHeaders: CGUI.hh ./Widgets/Box/Box.hh ./Widgets/Button/Button.hh ./Widgets/Entry/Entry.hh ./Widgets/Image/Image.hh ./Widgets/Label/Label.hh ./Widgets/Widget.hh ./Converter/Convert.hh ./CssProvider/CssProvider.hh ./Widgets/Spinner/Spinner.hh ./Widgets/ScrolledWindow/ScrolledWindow.hh
+	make PrecompileCGUI && make PrecompileCGuiWindow && make PrecompileCGuiBox && make PrecompileCGuiButton && make PrecompileCGuiEntry && make PrecompileCGuiImage && make PrecompileCGuiLabel && make PrecompileCGuiWidget && make PrecompileCGuiConvert && make PrecompileCGuiCssProvider && make PrecompileCGuiHeaderbar && make PrecompileCGuiCheckButton && make PrecompileCGuiProgressbar && make PrecompileCGuiRevealer && make PrecompileCGuiInfobar && make PrecompileCGuiSpinner && make PrecompileCGuiScrolledWindow
 
 PrecompileCGUI: CGUI.hh
 	$(CC) CGUI.hh $(libgtk)
@@ -48,3 +48,9 @@ PrecompileCGuiRevealer: ./Widgets/Revealer/Revealer.hh
 
 PrecompileCGuiInfobar: ./Widgets/Infobar/Infobar.hh
 	${CC} ./Widgets/Infobar/Infobar.hh ${libgtk}
+
+PrecompileCGuiSpinner: ./Widgets/Spinner/Spinner.hh
+	${CC} ./Widgets/Spinner/Spinner.hh ${libgtk}
+
+PrecompileCGuiScrolledWindow: ./Widgets/ScrolledWindow/ScrolledWindow.hh
+		${CC} ./Widgets/ScrolledWindow/ScrolledWindow.hh ${libgtk}

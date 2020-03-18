@@ -18,7 +18,7 @@ namespace CGui
       template<typename Data, typename ... Rest> static std::vector<std::tuple<Button*, void(*)(Data*, Rest*...), Data*, Rest*...>> infinitedatamethods;
       template<typename Data, typename ... Rest> static std::vector<std::tuple<Button*, void(*)(Button*, Data*, Rest*...), Data*, Rest*...>> infinitemethods;
       Button();
-      Button(const gchar *text);
+      Button(const char *text);
       void Name(const char *name);
       const char *Name();
       template<typename addtype> void Add(addtype &w);
@@ -67,7 +67,7 @@ namespace CGui
   Button::Button()
   { widget = gtk_button_new(); }
 
-  Button::Button(const gchar *text)
+  Button::Button(const char *text)
   { widget = gtk_button_new_with_label(text); }
 
   void Button::Name(const char *name)

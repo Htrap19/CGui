@@ -13,6 +13,8 @@
 #include "./Widgets/Progressbar/Progressbar.hh"
 #include "./Widgets/Revealer/Revealer.hh"
 #include "./Widgets/Infobar/Infobar.hh"
+#include "./Widgets/Spinner/Spinner.hh"
+#include "./Widgets/ScrolledWindow/ScrolledWindow.hh"
 
 namespace CGui
 {

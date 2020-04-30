@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 {
   Init init(argc, argv);
 
-  Window window(TOPLEVEL, "CGuiWindow", CEN);
+  Window window(TOPLEVEL, "Window", CEN);
 
   Box vbox(VER, 10);
   vbox.Align(CENTER, CENTER);

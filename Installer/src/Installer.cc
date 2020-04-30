@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <fstream>
+#include <unistd.h>
 
 using namespace CGui;
 
@@ -38,10 +39,28 @@ void fill(Progressbar *progressbar, Button *ibutton, long unsigned int *id, Butt
   }
 }
 
+std::string GetOsDependentCompiler()
+{
+  if(access("/usr/bin/g++-8", F_OK) == 0)
+    return "g++-8";
+  else if(access("/usr/bin/g++", F_OK) == 0)
+    return "g++";
+  else
+    return "";
+}
+
 void MakePrecompiledHeadersCmd(std::string &hhpath)
 {
-  std::string cmd = "g++-8 -std=c++17 " + hhpath + " `pkg-config gtk+-3.0 --cflags --libs`";
-  std::system(cmd.c_str());
+  auto compiler = GetOsDependentCompiler();
+  if(compiler != "")
+  {
+    std::string cmd = compiler + " -std=c++17 " + hhpath + " `pkg-config gtk+-3.0 --cflags --libs`";
+    std::system(cmd.c_str());
+  }
+  else
+  {
+    std::cout << "Compiler is not installed\n";
+  }
 }
 
 void MakePrecompiledHeaders(std::string &dir, Progressbar *progressbar, Button *ibutton, long unsigned int *id, Button *cbutton, Window *window)
@@ -215,7 +234,7 @@ int main(int argc, char *argv[])
   win_headerbar.AddEnd(install_button);
   win_headerbar.AddStart(quit_button);
 
-  window.NewHeaderbar(win_headerbar);
+  window.CustomHeaderbar(win_headerbar);
 
   // main vertical box container
   Box vbox(VER, 10);
@@ -226,7 +245,7 @@ int main(int argc, char *argv[])
   note_infobar.StyleClass("noteinfobar");
 
   // Path label
-  Label path_label("Path");
+  Label path_label("Installaion Path");
   path_label.Align(BEGIN, CENTER);
 
   // Path entry

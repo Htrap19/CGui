@@ -15,6 +15,11 @@
 #include "./Widgets/Infobar/Infobar.hh"
 #include "./Widgets/Spinner/Spinner.hh"
 #include "./Widgets/ScrolledWindow/ScrolledWindow.hh"
+#include "./Widgets/Dialog/Dialog.hh"
+#include "./Widgets/FileChooser/FileChooser.hh"
+#include "./Custom/List/List.hh"
+#include "./Custom/Storage/Storage.hh"
+#include "./FileChooserDialog/FileChooserDialog.hh"
 
 namespace CGui
 {
@@ -27,9 +32,12 @@ namespace CGui
       { gtk_main(); }
   };
 
-  static void UpdateUI()
+  static void UpdateUIWhile()
   {
     while(gtk_events_pending())
       gtk_main_iteration();
   }
+
+  static void UpdateUI()
+  { gtk_main_iteration(); }
 };

@@ -8,76 +8,10 @@ namespace CGui
   {
     public:
       Headerbar(const gchar *title = "", const gchar *subtitle = "");
-      void Name(const char *name);
-      const char *Name();
       template<typename addtype> void Add(BoxAddType type, addtype &w);
       template <typename addtype> void AddStart(addtype &w);
       template <typename addtype> void AddEnd(addtype &w);
-      void Sensitive(bool sensitive);
-      void Align(Alignments halign, Alignments valign);
-      void SizeRequest(unsigned int x, unsigned int y);
-      void Tooltip(const char *text);
-      const char *Tooltip();
-      void StyleClass(const char *classname);
-      void Hide();
-      void Show();
-      GtkWidget *GetWidget();
   };
-
-  Headerbar::Headerbar(const gchar *title, const gchar *subtitle)
-  {
-    widget = gtk_header_bar_new();
-    gtk_header_bar_set_title(GTK_HEADER_BAR(widget), title);
-    gtk_header_bar_set_subtitle(GTK_HEADER_BAR(widget), subtitle);
-  }
-
-  void Headerbar::Name(const char *name)
-  { gtk_widget_set_name(GTK_WIDGET(widget), name); }
-
-  const char *Headerbar::Name()
-  { return gtk_widget_get_name(GTK_WIDGET(widget)); }
-
-  template<typename addtype> void Headerbar::Add(BoxAddType type, addtype &w)
-  {
-    Converter::Convert convert;
-    auto func = convert.AddIntoHeaderbarFuncPtr(type);
-    func(GTK_HEADER_BAR(widget), w.GetWidget());
-  }
-
-  template <typename addtype> void Headerbar::AddStart(addtype &w)
-  { this->Add(START, w); }
-
-  template <typename addtype> void Headerbar::AddEnd(addtype &w)
-  { this->Add(END, w); }
-
-  void Headerbar::Sensitive(bool sensitive)
-  { gtk_widget_set_sensitive(GTK_WIDGET(widget), sensitive); }
-
-  void Headerbar::Align(Alignments halign, Alignments valign)
-  {
-    Converter::Convert convert;
-    gtk_widget_set_halign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(halign)));
-    gtk_widget_set_valign(GTK_WIDGET(widget), std::get<GtkAlign>(convert.ConvertToGtkCode(valign)));
-  }
-
-  void Headerbar::SizeRequest(unsigned int x, unsigned int y)
-  { gtk_widget_set_size_request(GTK_WIDGET(widget), x, y); }
-
-  void Headerbar::Tooltip(const char *text)
-  { gtk_widget_set_tooltip_text(GTK_WIDGET(widget), text); }
-
-  const char *Headerbar::Tooltip()
-  { return gtk_widget_get_tooltip_text(GTK_WIDGET(widget)); }
-
-  void Headerbar::StyleClass(const char *classname)
-  { gtk_style_context_add_class(GTK_STYLE_CONTEXT(gtk_widget_get_style_context(GTK_WIDGET(widget))), classname); }
-
-  void Headerbar::Hide()
-  { gtk_widget_hide(GTK_WIDGET(widget)); }
-
-  void Headerbar::Show()
-  { gtk_widget_show(GTK_WIDGET(widget)); }
-
-  GtkWidget *Headerbar::GetWidget()
-  { return widget; }
 }
+
+#include "./Headerbar.cc"

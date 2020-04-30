@@ -21,14 +21,16 @@ namespace CGui
 
   enum Policy { AUTOMATIC, NEVER, ALWAYS };
 
+  enum Action { OPEN, SAVE, SELECT_FOLDER, CREATE_FOLDER };
+
   namespace Converter
   {
     class Convert
     {
       public:
-        std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition, GtkRevealerTransitionType, GtkMessageType, GtkPolicyType, char*> ConvertToGtkCode(std::variant<Alignments, BoxType, WindowType, WindowPos, Transition, MessageType, Events, Policy> data)
+        std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition, GtkRevealerTransitionType, GtkMessageType, GtkPolicyType, GtkFileChooserAction, char*> ConvertToGtkCode(std::variant<Alignments, BoxType, WindowType, WindowPos, Transition, MessageType, Events, Policy, Action> data)
         {
-          std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition, GtkRevealerTransitionType, GtkMessageType, GtkPolicyType, char*> retValue;
+          std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition, GtkRevealerTransitionType, GtkMessageType, GtkPolicyType, GtkFileChooserAction, char*> retValue;
           if(data.index() == 0)
             return GetGtkCode(std::get<Alignments>(data));
           else if(data.index() == 1)
@@ -45,10 +47,12 @@ namespace CGui
             return GetGtkCode(std::get<Events>(data));
           else if(data.index() == 7)
             return GetGtkCode(std::get<Policy>(data));
+          else if(data.index() == 8)
+            return GetGtkCode(std::get<Action>(data));
           return retValue;
         }
 
-        auto AddIntoBoxFuncPtr(BoxAddType type)
+        auto BoxFuncPtr(BoxAddType type)
         {
           switch (type)
           {
@@ -65,7 +69,7 @@ namespace CGui
           }
         }
 
-        auto AddIntoHeaderbarFuncPtr(BoxAddType type)
+        auto HeaderbarFuncPtr(BoxAddType type)
         {
           switch (type)
           {
@@ -81,7 +85,40 @@ namespace CGui
           }
         }
 
+        static Convert &GetInstance()
+        {
+          static Convert instance;
+          return instance;
+        }
+
+        Convert(const Convert&) = delete;
+
       private:
+        Convert()
+        {  }
+
+        GtkFileChooserAction GetGtkCode(Action action)
+        {
+          switch (action)
+          {
+            case OPEN:
+              return GTK_FILE_CHOOSER_ACTION_OPEN;
+              break;
+            case SAVE:
+              return GTK_FILE_CHOOSER_ACTION_SAVE;
+              break;
+            case SELECT_FOLDER:
+              return GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER;
+              break;
+            case CREATE_FOLDER:
+              return GTK_FILE_CHOOSER_ACTION_CREATE_FOLDER;
+              break;
+
+            default:
+              return GTK_FILE_CHOOSER_ACTION_OPEN;
+          }
+        }
+
         GtkPolicyType GetGtkCode(Policy policy)
         {
           switch (policy)

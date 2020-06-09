@@ -2,12 +2,32 @@
 
 namespace CGui
 {
-  Revealer::Revealer(Transition transition, unsigned int duration) : Container(this)
+  Revealer::Revealer(RevealerTransition transition, unsigned int duration) : Container(this)
   {
     widget = gtk_revealer_new();
-    gtk_revealer_set_transition_type(GTK_REVEALER(widget), std::get<GtkRevealerTransitionType>(Converter::Convert::GetInstance().ConvertToGtkCode(transition)));
+	this->Transition(transition);
     gtk_revealer_set_transition_duration(GTK_REVEALER(widget), duration);
 	this->SetContext(widget);
+  }
+
+  void Revealer::Transition(RevealerTransition transition)
+  {
+	  gtk_revealer_set_transition_type(GTK_REVEALER(widget), (GtkRevealerTransitionType)transition);
+  }
+
+  RevealerTransition Revealer::Transition()
+  {
+	  return (RevealerTransition)gtk_revealer_get_transition_type(GTK_REVEALER(widget));
+  }
+
+  void Revealer::Duration(unsigned int duration)
+  {
+	  gtk_revealer_set_transition_duration(GTK_REVEALER(widget), duration);
+  }
+
+  unsigned int Revealer::Duration()
+  {
+	  return gtk_revealer_get_transition_duration(GTK_REVEALER(widget));
   }
 
   void Revealer::Reveal(bool reveal)

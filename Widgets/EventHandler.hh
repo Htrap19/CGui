@@ -36,7 +36,7 @@ namespace CGui
           });
         };
 
-        return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), std::get<const char *>(Converter::Convert::GetInstance().ConvertToGtkCode(event)), G_CALLBACK((void(*)(GtkWidget *, Single::List<std::any>*))callback), emptyCallbackMethods));
+        return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((void(*)(GtkWidget *, Single::List<std::any>*))callback), emptyCallbackMethods));
       }
 
       long unsigned int SignalHandler(Events event, void(*func)(WidgetType*))
@@ -60,7 +60,7 @@ namespace CGui
 		  data->singleCallbackMethods->ForEach((void(*)(Single::Node<std::any>*, WidgetType*))f, data->t_widget);
         };
 
-        return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), std::get<const char *>(Converter::Convert::GetInstance().ConvertToGtkCode(event)), G_CALLBACK((void(*)(GtkWidget *, EventHandler*))callback), this));
+        return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((void(*)(GtkWidget *, EventHandler*))callback), this));
       }
 
       template <typename ... Args> long unsigned int SignalHandler(Events event, void(*func)(WidgetType*, Args*...), Args & ... args)
@@ -88,7 +88,7 @@ namespace CGui
           data->infiniteCallbackMethods->ForEach((void(*)(Single::Node<std::any>*, WidgetType*))f, data->t_widget);
         };
 
-        return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), std::get<const char *>(Converter::Convert::GetInstance().ConvertToGtkCode(event)), G_CALLBACK((void(*)(GtkWidget*, EventHandler*))callback), this));
+        return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((void(*)(GtkWidget*, EventHandler*))callback), this));
       }
 
       template <typename ... Args> long unsigned int SignalHandler(Events event, void(*func)(Args*...), Args & ... args)
@@ -116,7 +116,7 @@ namespace CGui
           data->infiniteCallbackMethods->ForEach((void(*)(Single::Node<std::any>*, WidgetType*))f, data->t_widget);
         };
 
-        return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), std::get<const char *>(Converter::Convert::GetInstance().ConvertToGtkCode(event)), G_CALLBACK((void(*)(GtkWidget*, EventHandler*))callback), this));
+        return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((void(*)(GtkWidget*, EventHandler*))callback), this));
       }
 
       void DisconnectHandler(long unsigned int id)

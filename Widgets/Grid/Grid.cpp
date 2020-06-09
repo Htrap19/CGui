@@ -18,6 +18,16 @@ namespace CGui
 		gtk_grid_insert_column(GTK_GRID(widget), position);
 	}
 
+	void Grid::RemoveRow(int position)
+	{
+		gtk_grid_remove_row(GTK_GRID(widget), position);
+	}
+
+	void Grid::RemoveColumn(int position)
+	{
+		gtk_grid_remove_column(GTK_GRID(widget), position);
+	}
+
 	void Grid::RowHomogeneous(bool row_homogeneous)
 	{
 		gtk_grid_set_row_homogeneous(GTK_GRID(widget), row_homogeneous);
@@ -56,5 +66,25 @@ namespace CGui
 	bool Grid::ColumnSpacing()
 	{
 		return gtk_grid_get_column_spacing(GTK_GRID(widget));
+	}
+
+	void Grid::BaselineRow(int row)
+	{
+		gtk_grid_set_baseline_row(GTK_GRID(widget), row);
+	}
+
+	int Grid::BaselineRow()
+	{
+		return gtk_grid_get_baseline_row(GTK_GRID(widget));
+	}
+
+	void Grid::RowBaselinePosition(int row, BaselinePosition pos)
+	{
+		gtk_grid_set_row_baseline_position(GTK_GRID(widget), row, (GtkBaselinePosition)pos);
+	}
+
+	BaselinePosition Grid::RowBaselinePosition(int row)
+	{
+		return (BaselinePosition)gtk_grid_get_row_baseline_position(GTK_GRID(widget), row);
 	}
 }

@@ -15,13 +15,13 @@ namespace CGui
 		  t_widget = w;
 	  }
 
-	  template <typename addtype> void Add(addtype& w)
+	  void Add(Widget& w)
 	  {
 		  gtk_container_add(GTK_CONTAINER(t_widget->GetWidget()), w.GetWidget());
 		  children.Insert((void*)& w);
 	  }
 
-	  template <typename removetype> void Remove(removetype& w)
+	  void Remove(Widget& w)
 	  {
 		  gtk_container_remove(GTK_CONTAINER(t_widget->GetWidget()), w.GetWidget());
 		  if (children.Exists((void*)& w))
@@ -49,13 +49,13 @@ namespace CGui
 		  t_widget = w;
 	  }
 
-	  template <typename addtype> void Add(addtype& w)
+	  void Add(Widget& w)
 	  {
 		  gtk_container_add(GTK_CONTAINER(t_widget), w.GetWidget());
 		  children.Insert((void*)& w);
 	  }
 
-	  template <typename removetype> void Remove(removetype& w)
+	  void Remove(Widget& w)
 	  {
 		  gtk_container_remove(GTK_CONTAINER(t_widget), w.GetWidget());
 		  if (children.Exists((void*)& w))

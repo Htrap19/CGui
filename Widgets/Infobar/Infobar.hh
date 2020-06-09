@@ -13,6 +13,8 @@ namespace CGui
       void Reveal(bool reveal);
       bool Reveal();
       void MessageBoxType(MessageType messagetype);
+	  MessageType MessageBoxType();
       void ShowCloseButton(bool showclosebutton);
+	  bool ShowCloseButton();
   };
 };

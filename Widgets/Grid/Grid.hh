@@ -12,6 +12,8 @@ namespace CGui
 		template <typename addtype> void Add(addtype &w, int left, int top, int width, int height);
 		void InsertRow(int position);
 		void InsertColumn(int position);
+		void RemoveRow(int position);
+		void RemoveColumn(int position);
 		void RowHomogeneous(bool row_homogeneous);
 		bool RowHomogeneous();
 		void RowSpacing(bool row_spacing);
@@ -20,6 +22,10 @@ namespace CGui
 		bool ColumnHomogeneous();
 		void ColumnSpacing(bool column_spacing);
 		bool ColumnSpacing();
+		void BaselineRow(int row);
+		int BaselineRow();
+		void RowBaselinePosition(int row, BaselinePosition pos);
+		BaselinePosition RowBaselinePosition(int row);
 	};
 
 	template <typename addtype> void Grid::Add(addtype& w, int left, int top, int width, int height)

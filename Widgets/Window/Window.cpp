@@ -5,7 +5,7 @@ namespace CGui
 {
   Window::Window(WindowType type, const char *title, WindowPos pos) : Container(this)
   {
-    widget = gtk_window_new(std::get<GtkWindowType>(Converter::Convert::GetInstance().ConvertToGtkCode(type)));
+    widget = gtk_window_new((GtkWindowType)type);
 
     auto exit = [](GtkWidget *widget, gpointer data) -> void
     {
@@ -19,7 +19,7 @@ namespace CGui
       Storage::GetInstance().Free<const char *, Single::List<std::any>*>("allcallbacks");
 	  gtk_main_quit();
     };
-    g_signal_connect(G_OBJECT(widget), std::get<const char *>(Converter::Convert::GetInstance().ConvertToGtkCode(Events::DELETE)), G_CALLBACK((void(*)(GtkWidget*, gpointer))exit), NULL);
+    g_signal_connect(G_OBJECT(widget), Converter::Convert::GetInstance().GetGtkCode(Events::DELETE), G_CALLBACK((void(*)(GtkWidget*, gpointer))exit), NULL);
     this->Title(title);
     this->Position(pos);
 	this->SetContext(widget);
@@ -68,7 +68,7 @@ namespace CGui
   { gtk_window_unfullscreen(GTK_WINDOW(widget)); }
 
   void Window::Position(WindowPos pos) const
-  { gtk_window_set_position(GTK_WINDOW(widget), std::get<GtkWindowPosition>(Converter::Convert::GetInstance().ConvertToGtkCode(pos))); }
+  { gtk_window_set_position(GTK_WINDOW(widget), (GtkWindowPosition)pos); }
 
   void Window::Quit() const
   { gtk_main_quit(); }

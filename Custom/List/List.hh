@@ -323,11 +323,11 @@ namespace CGui
       public:
         List(void);
         ~List(void);
-
         bool IsEmpty();
         Node<Key, Value> *Insert(Key key, Value value);
         Node<Key, Value> *First();
         Node<Key, Value> *Last();
+		unsigned int Size();
         bool ExistsValue(Value value);
         bool ExistsKey(Key key);
         Node<Key, Value> *FindByKey(Key key);
@@ -339,12 +339,15 @@ namespace CGui
         bool DeleteKey(Key key);
         bool DeleteValue(Value value);
 
+		std::pair<Key, Value> operator[](unsigned int index);
+
       private:
         Node<Key, Value> *head;
+		unsigned int size;
     };
 
 	template <typename Key, typename Value>
-	List<Key, Value>::List()
+	List<Key, Value>::List() : size{0}
 	{
 		head = NULL;
 	}
@@ -391,6 +394,7 @@ namespace CGui
 			currNode->next = newNode;
 		}
 
+		size++;
 		return newNode;
 	}
 
@@ -409,6 +413,12 @@ namespace CGui
 			currNode = currNode->next;
 
 		return currNode;
+	}
+
+	template <typename Key, typename Value>
+	unsigned int List<Key, Value>::Size()
+	{
+		return size;
 	}
 
 	template <typename Key, typename Value>
@@ -537,12 +547,14 @@ namespace CGui
 			{
 				prevNode->next = currNode->next;
 				delete currNode;
+				size--;
 				return true;
 			}
 			else
 			{
 				head = currNode->next;
 				delete currNode;
+				size--;
 				return true;
 			}
 
@@ -571,16 +583,42 @@ namespace CGui
 			{
 				prevNode->next = currNode->next;
 				delete currNode;
+				size--;
 				return true;
 			}
 			else
 			{
 				head = currNode->next;
 				delete currNode;
+				size--;
 				return true;
 			}
 
 		return false;
+	}
+
+	template <typename Key, typename Value>
+	std::pair<Key, Value> List<Key, Value>::operator[](unsigned int index)
+	{
+		if (index <= 0)
+			return std::make_pair(head->key, head->value);
+
+		Node<Key, Value>* currNode = head;
+		unsigned int currIndex = 0;
+
+		while (currNode != NULL)
+		{
+			if (currIndex != index)
+			{
+				currNode = currNode->next;
+				currIndex++;
+				continue;
+			}
+			else
+				break;
+		}
+
+		return std::make_pair(currNode->key, currNode->value);
 	}
   };
 };

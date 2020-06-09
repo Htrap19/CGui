@@ -13,8 +13,8 @@ namespace CGui
 
       virtual void Align(Alignments halign, Alignments valign) const
       {
-        gtk_widget_set_halign(GTK_WIDGET(widget), std::get<GtkAlign>(Converter::Convert::GetInstance().ConvertToGtkCode(halign)));
-        gtk_widget_set_valign(GTK_WIDGET(widget), std::get<GtkAlign>(Converter::Convert::GetInstance().ConvertToGtkCode(valign)));
+        gtk_widget_set_halign(GTK_WIDGET(widget), (GtkAlign)halign);
+        gtk_widget_set_valign(GTK_WIDGET(widget), (GtkAlign)valign);
       }
 
       virtual void Name(const char *name) const
@@ -47,10 +47,10 @@ namespace CGui
       virtual void ShowAll() const
       { gtk_widget_show_all(GTK_WIDGET(widget)); }
 
-    protected:
-      GtkWidget *widget;
-
 	  virtual ~Widget()
 	  {  }
+
+    protected:
+      GtkWidget *widget;
   };
 }

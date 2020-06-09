@@ -18,6 +18,5 @@ namespace CGui
       void Modal(bool modal);
       bool Modal();
       void Parent(Window &window);
-      void Parent(Window *window);
   };
 };

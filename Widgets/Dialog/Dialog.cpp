@@ -38,7 +38,4 @@ namespace CGui
 
   void Dialog::Parent(Window &window)
   { gtk_window_set_transient_for(GTK_WINDOW(widget), GTK_WINDOW(window.GetWidget())); }
-
-  void Dialog::Parent(Window *window)
-  { gtk_window_set_transient_for(GTK_WINDOW(widget), GTK_WINDOW(window->GetWidget())); }
 };

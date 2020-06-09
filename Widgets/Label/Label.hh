@@ -4,13 +4,11 @@
 
 namespace CGui
 {
-  class Label : public widget
+  class Label : public Widget
   {
     public:
-      Label(const gchar *text);
+      Label(const char *text);
       void Text(const char *text);
       const char *Text();
   };
 };
-
-#include "./Label.cc"

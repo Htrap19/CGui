@@ -1,15 +1,13 @@
-#pragma once
-
 #include "./Revealer.hh"
 
 namespace CGui
 {
-  Revealer::Revealer(Transition transition, unsigned int duration)
+  Revealer::Revealer(Transition transition, unsigned int duration) : Container(this)
   {
     widget = gtk_revealer_new();
     gtk_revealer_set_transition_type(GTK_REVEALER(widget), std::get<GtkRevealerTransitionType>(Converter::Convert::GetInstance().ConvertToGtkCode(transition)));
     gtk_revealer_set_transition_duration(GTK_REVEALER(widget), duration);
-    this->SetContainer(widget);
+	this->SetContext(widget);
   }
 
   void Revealer::Reveal(bool reveal)

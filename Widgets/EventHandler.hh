@@ -26,16 +26,17 @@ namespace CGui
         }
 
         emptyCallbackMethods->Insert(func);
-        auto callback = +[](GtkWidget *widget, Single::List<std::any> *list) -> void
+
+        auto callback = [](GtkWidget *widget, Single::List<std::any> *list) -> void
         {
-          list->ForEach(+[](Single::Node<std::any> *node)
+          list->ForEach([](Single::Node<std::any> *node)
           {
             auto f = std::any_cast<void(*)()>(node->data);
             f();
           });
         };
 
-        return reinterpret_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), std::get<char *>(Converter::Convert::GetInstance().ConvertToGtkCode(event)), G_CALLBACK(callback), emptyCallbackMethods));
+        return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), std::get<const char *>(Converter::Convert::GetInstance().ConvertToGtkCode(event)), G_CALLBACK((void(*)(GtkWidget *, Single::List<std::any>*))callback), emptyCallbackMethods));
       }
 
       long unsigned int SignalHandler(Events event, void(*func)(WidgetType*))
@@ -48,15 +49,18 @@ namespace CGui
 
         singleCallbackMethods->Insert(func);
 
-        auto callback = +[](GtkWidget *widget, WidgetType *data) -> void
+        auto callback = [](GtkWidget *widget, EventHandler *data)
         {
-          data->singleCallbackMethods->ForEach(+[](Single::Node<std::any> *node, WidgetType *ins)
-          {
-            auto f = std::any_cast<void(*)(WidgetType*)>(node->data);
-            f(ins);
-          }, data);
+		  auto f = [](Single::Node<std::any> *node, WidgetType *ins)
+		  {
+		    auto user_func = std::any_cast<void(*)(WidgetType*)>(node->data);
+			user_func(ins);
+		  };
+
+		  data->singleCallbackMethods->ForEach((void(*)(Single::Node<std::any>*, WidgetType*))f, data->t_widget);
         };
-        return reinterpret_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), std::get<char *>(Converter::Convert::GetInstance().ConvertToGtkCode(event)), G_CALLBACK(callback), t_widget));
+
+        return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), std::get<const char *>(Converter::Convert::GetInstance().ConvertToGtkCode(event)), G_CALLBACK((void(*)(GtkWidget *, EventHandler*))callback), this));
       }
 
       template <typename ... Args> long unsigned int SignalHandler(Events event, void(*func)(WidgetType*, Args*...), Args & ... args)
@@ -69,20 +73,22 @@ namespace CGui
 
         infiniteCallbackMethods->Insert(std::make_tuple(func, &args...));
 
-        auto callback = +[](GtkWidget *widget, WidgetType *data) -> void
+        auto callback = [](GtkWidget *widget, EventHandler *data) mutable -> void
         {
-          auto f = +[](Single::Node<std::any> *node, WidgetType *ins)
+          auto f = [](Single::Node<std::any> *node, WidgetType *ins) mutable -> void
           {
-            std::apply([&ins](auto *func, Args * ... a)
-            {
-              func(ins, a...);
-            }, std::any_cast<std::tuple<void(*)(WidgetType*, Args*...), Args*...>>(node->data));
+			auto user_f = [&ins](void(*func)(WidgetType*, Args * ...), Args * ... user_data)
+			{
+				func(ins, std::forward<Args*>(user_data)...);
+			};
+
+            std::apply(user_f, std::any_cast<std::tuple<void(*)(WidgetType*, Args*...), Args*...>>(node->data));
           };
 
-          data->infiniteCallbackMethods->ForEach(f, data);
+          data->infiniteCallbackMethods->ForEach((void(*)(Single::Node<std::any>*, WidgetType*))f, data->t_widget);
         };
 
-        return reinterpret_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), std::get<char *>(Converter::Convert::GetInstance().ConvertToGtkCode(event)), G_CALLBACK(callback), t_widget));
+        return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), std::get<const char *>(Converter::Convert::GetInstance().ConvertToGtkCode(event)), G_CALLBACK((void(*)(GtkWidget*, EventHandler*))callback), this));
       }
 
       template <typename ... Args> long unsigned int SignalHandler(Events event, void(*func)(Args*...), Args & ... args)
@@ -95,28 +101,26 @@ namespace CGui
 
         infiniteCallbackMethods->Insert(std::make_tuple(func, &args...));
 
-        auto callback = +[](GtkWidget *widget, WidgetType *data) -> void
+        auto callback = [](GtkWidget *widget, EventHandler *data) mutable -> void
         {
-          auto f = +[](Single::Node<std::any> *node, WidgetType *ins)
+          auto f = [](Single::Node<std::any> *node, WidgetType *ins) mutable -> void
           {
-            std::apply([](auto *func, Args * ... a)
-            {
-              func(a...);
-            }, std::any_cast<std::tuple<void(*)(Args*...), Args*...>>(node->data));
+			auto user_f = [](void(*func)(Args * ...), Args * ... user_data)
+			{
+				func(std::forward<Args*>(user_data)...);
+			};
+
+            std::apply(user_f, std::any_cast<std::tuple<void(*)(Args*...), Args*...>>(node->data));
           };
 
-          data->infiniteCallbackMethods->ForEach(f, data);
+          data->infiniteCallbackMethods->ForEach((void(*)(Single::Node<std::any>*, WidgetType*))f, data->t_widget);
         };
 
-        return reinterpret_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), std::get<char *>(Converter::Convert::GetInstance().ConvertToGtkCode(event)), G_CALLBACK(callback), t_widget));
+        return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), std::get<const char *>(Converter::Convert::GetInstance().ConvertToGtkCode(event)), G_CALLBACK((void(*)(GtkWidget*, EventHandler*))callback), this));
       }
 
       void DisconnectHandler(long unsigned int id)
-      {
-        auto *first_value = reinterpret_cast<gulong*>(&id);
-        auto &final_value = *first_value;
-        g_signal_handler_disconnect(t_widget->GetWidget(), final_value);
-      }
+      { g_signal_handler_disconnect(t_widget->GetWidget(), *reinterpret_cast<gulong*>(&id)); }
 
       virtual ~EventHandler()
       {  }

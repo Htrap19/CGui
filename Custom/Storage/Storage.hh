@@ -10,7 +10,9 @@ namespace CGui
   {
     public:
       Storage(const Storage&) = delete;
+	  Storage(const Storage&&) = delete;
       Storage& operator=(const Storage&) = delete;
+	  Storage& operator==(const Storage&) = delete;
 
       ~Storage()
       {
@@ -27,7 +29,7 @@ namespace CGui
         }
         else
         {
-          auto f = +[](KeyValue::Node<std::any, std::any> *node, const char *pass, std::any *key, std::any *value)
+          auto f = [](KeyValue::Node<std::any, std::any> *node, const char *pass, std::any *key, std::any *value)
           {
             try
             {
@@ -41,7 +43,7 @@ namespace CGui
             { std::cout << e.what() << std::endl; }
           };
 
-          l_instance->ForEach(f, passkey, &key, &value);
+          l_instance->ForEach((void(*)(KeyValue::Node<std::any, std::any>*, const char*, std::any*, std::any*))f, passkey, &key, &value);
         }
       }
 
@@ -54,7 +56,7 @@ namespace CGui
         }
         else
         {
-          auto f = +[](KeyValue::Node<std::any, std::any> *node, const char *pass, void(*func)(KeyValue::Node<Key, Value>*))
+          auto f = [](KeyValue::Node<std::any, std::any> *node, const char *pass, void(*func)(KeyValue::Node<Key, Value>*))
           {
             try
             {
@@ -68,7 +70,7 @@ namespace CGui
             { std::cout << e.what() << std::endl; }
           };
 
-          l_instance->ForEach(f, passkey, func);
+          l_instance->ForEach((void(*)(KeyValue::Node<std::any, std::any>*, const char*, void(*)(KeyValue::Node<Key, Value>*)))f, passkey, func);
         }
       }
 
@@ -81,13 +83,13 @@ namespace CGui
       bool IsExistsPrivate(const char *passkey)
       {
         bool exists = false;
-        auto f = +[](KeyValue::Node<std::any, std::any> *node, bool *e, const char *p) -> void
+        auto f = [](KeyValue::Node<std::any, std::any> *node, bool *e, const char *p) -> void
         {
           if(std::any_cast<std::string>(node->key) == std::string( p ))
             *e = true;
         };
 
-        l_instance->ForEach(f, &exists, passkey);
+        l_instance->ForEach((void(*)(KeyValue::Node<std::any, std::any>*, bool*, const char*))f, &exists, passkey);
 
         return exists;
       }
@@ -97,7 +99,7 @@ namespace CGui
         if(!GetInstance().IsExistsPrivate(passkey))
         {
           bool inserted = false;
-          auto f = +[](KeyValue::Node<std::any, std::any> *node, bool *i, const char *pass, KeyValue::List<std::any, std::any> *l)
+          auto f = [](KeyValue::Node<std::any, std::any> *node, bool *i, const char *pass, KeyValue::List<std::any, std::any> *l)
           {
             if(!*i)
               if(std::string(pass) == std::any_cast<std::string>(node->key))
@@ -108,7 +110,7 @@ namespace CGui
                 *i = true;
               }
           };
-          l_instance->ForEach(f, &inserted, passkey, l_instance);
+          l_instance->ForEach((void(*)(KeyValue::Node<std::any, std::any>*, bool*, const char*, KeyValue::List<std::any, std::any>*))f, &inserted, passkey, l_instance);
 
           return inserted;
         }
@@ -130,16 +132,15 @@ namespace CGui
             *d = false;
         };
 
-        l_instance->ForEach(f, passkey, &deleted);
+        l_instance->ForEach((void(*)(KeyValue::Node<std::any, std::any>*, const char*, bool*))f, passkey, &deleted);
 
         return deleted;
       }
 
     private:
       KeyValue::List<std::any, std::any> *l_instance;
-      Storage()
+      Storage() : l_instance { new KeyValue::List<std::any, std::any> }
       {
-        l_instance = new KeyValue::List<std::any, std::any>;
         l_instance->Insert(std::string("NULL"), new KeyValue::List<std::any, std::any>);
       }
   };

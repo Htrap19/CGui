@@ -6,7 +6,7 @@
 
 namespace CGui
 {
-  class Button : public widget, public EventHandler<Button>, public Container
+  class Button : public Widget, public EventHandler<Button>, public Container<Button>
   {
     public:
       Button();
@@ -18,6 +18,14 @@ namespace CGui
       template <typename ... Args> long unsigned int Clicked(void(*func)(Button*, Args*...), Args & ... args);
       template <typename ... Args> long unsigned int Clicked(void(*func)(Args*...), Args & ... args);
   };
-}
 
-#include "./Button.cc"
+  template <typename ... Args> long unsigned int Button::Clicked(void(*func)(Button*, Args* ...), Args& ... args)
+  {
+	  return this->SignalHandler(Events::CLICKED, func, args...);
+  }
+
+  template <typename ... Args> long unsigned int Button::Clicked(void(*func)(Args* ...), Args& ... args)
+  {
+	  return this->SignalHandler(Events::CLICKED, func, args...);
+  }
+}

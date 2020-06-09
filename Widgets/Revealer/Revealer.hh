@@ -5,7 +5,7 @@
 
 namespace CGui
 {
-  class Revealer : public widget, public Container
+  class Revealer : public Widget, public Container<Revealer>
   {
     public:
       Revealer(Transition transition, unsigned int duration);
@@ -13,5 +13,3 @@ namespace CGui
       bool Reveal();
   };
 };
-
-#include "./Revealer.cc"

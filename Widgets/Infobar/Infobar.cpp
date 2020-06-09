@@ -1,5 +1,3 @@
-#pragma once
-
 #include "./Infobar.hh"
 
 namespace CGui
@@ -7,24 +5,24 @@ namespace CGui
   Infobar::Infobar()
   {
     widget = gtk_info_bar_new();
-    content_area = gtk_info_bar_get_content_area(GTK_INFO_BAR(widget));
-    this->SetContainer(content_area);
+	t_widget = gtk_info_bar_get_content_area(GTK_INFO_BAR(widget));
+	this->SetContext(widget);
   }
 
   Infobar::Infobar(MessageType messagetype, bool showclosebutton)
   {
     widget = gtk_info_bar_new();
-    content_area = gtk_info_bar_get_content_area(GTK_INFO_BAR(widget));
     gtk_info_bar_set_message_type(GTK_INFO_BAR(widget), std::get<GtkMessageType>(Converter::Convert::GetInstance().ConvertToGtkCode(messagetype)));
     this->ShowCloseButton(showclosebutton);
-    this->SetContainer(content_area);
+	t_widget = gtk_info_bar_get_content_area(GTK_INFO_BAR(widget));
+	this->SetContext(widget);
   }
 
   void Infobar::Reveal(bool reveal)
-  { gtk_info_bar_set_revealed(GTK_INFO_BAR(widget), reveal); }
+  { gtk_revealer_set_reveal_child(GTK_REVEALER(widget), reveal); }
 
   bool Infobar::Reveal()
-  { return gtk_info_bar_get_revealed(GTK_INFO_BAR(widget)); }
+  { return gtk_revealer_get_reveal_child(GTK_REVEALER(widget)); }
 
   void Infobar::MessageBoxType(MessageType messagetype)
   { gtk_info_bar_set_message_type(GTK_INFO_BAR(widget), std::get<GtkMessageType>(Converter::Convert::GetInstance().ConvertToGtkCode(messagetype))); }

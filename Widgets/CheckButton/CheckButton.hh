@@ -5,7 +5,7 @@
 
 namespace CGui
 {
-  class CheckButton : public widget, public EventHandler<CheckButton>
+  class CheckButton : public Widget, public EventHandler<CheckButton>
   {
     public:
       CheckButton();
@@ -17,6 +17,13 @@ namespace CGui
       template <typename ... Args> long unsigned int Toggled(void(*func)(CheckButton*, Args*...), Args & ... args);
       template <typename ... Args> long unsigned int Toggled(void(*func)(Args*...), Args & ... args);
   };
-};
+  template <typename ... Args> long unsigned int CheckButton::Toggled(void(*func)(CheckButton*, Args* ...), Args& ... args)
+  {
+	  return this->SignalHandler(Events::TOGGLED, func, args...);
+  }
 
-#include "./CheckButton.cc"
+  template <typename ... Args> long unsigned int CheckButton::Toggled(void(*func)(Args* ...), Args& ... args)
+  {
+	  return this->SignalHandler(Events::TOGGLED, func, args...);
+  }
+};

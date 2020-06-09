@@ -4,12 +4,10 @@
 
 namespace CGui
 {
-  class FileChooser : public widget
+  class FileChooser : public Widget
   {
     public:
       FileChooser(Action action);
       void ChooseAction(Action action);
   };
 };
-
-#include "./FileChooser.cc"

@@ -4,7 +4,7 @@
 
 namespace CGui
 {
-  class Spinner : public widget
+  class Spinner : public Widget
   {
     public:
       Spinner();
@@ -12,5 +12,3 @@ namespace CGui
       void Stop();
   };
 };
-
-#include "./Spinner.cc"

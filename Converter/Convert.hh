@@ -6,49 +6,52 @@
 
 namespace CGui
 {
-  enum WindowType { TOPLEVEL, POPUP };
-  enum WindowPos { CEN, MOU, CENA };
+  enum class WindowType { TOPLEVEL, POPUP };
+  enum class WindowPos { CEN, MOU, CENA };
 
-  enum BoxType { VER, HOR };
-  enum BoxAddType { START, END };
+  enum class BoxType { VER, HOR };
+  enum class BoxAddType { START, END };
 
-  enum Alignments { FILL, BEGIN, LAST, CENTER };
+  enum class Alignments { FILL, BEGIN, LAST, CENTER };
 
-  enum Events { CLICKED, DELETE, TOGGLED, CHANGED, ENTER };
+  enum class Events { CLICKED, DELETE, TOGGLED, CHANGED, ENTER, ACTIVATE };
 
-  enum Transition { SLIDERIGHT, SLIDELEFT, SLIDEUP, SLIDEDOWN, CROSSFADE, NONE };
-  enum MessageType { INFO, WARNING, QUESTION, ERROR, OTHER };
+  enum class Transition { SLIDERIGHT, SLIDELEFT, SLIDEUP, SLIDEDOWN, CROSSFADE, NONE };
 
-  enum Policy { AUTOMATIC, NEVER, ALWAYS };
+  enum class MessageType { INFO, WARNING, QUESTION, ERROR, OTHER };
 
-  enum Action { OPEN, SAVE, SELECT_FOLDER, CREATE_FOLDER };
+  enum class Policy { AUTOMATIC, NEVER, ALWAYS };
+
+  enum class Action { OPEN, SAVE, SELECT_FOLDER, CREATE_FOLDER };
+
+  enum class Priority : unsigned short int { FALLBACK = 1, THEME = 200, SETTINGS = 400, APPLICATION = 600, USER = 800 };
 
   namespace Converter
   {
     class Convert
     {
       public:
-        std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition, GtkRevealerTransitionType, GtkMessageType, GtkPolicyType, GtkFileChooserAction, char*> ConvertToGtkCode(std::variant<Alignments, BoxType, WindowType, WindowPos, Transition, MessageType, Events, Policy, Action> data)
+        std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition, GtkRevealerTransitionType, GtkMessageType, GtkPolicyType, GtkFileChooserAction, const char*> ConvertToGtkCode(std::variant<Alignments, BoxType, WindowType, WindowPos, Transition, MessageType, Events, Policy, Action> data)
         {
-          std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition, GtkRevealerTransitionType, GtkMessageType, GtkPolicyType, GtkFileChooserAction, char*> retValue;
-          if(data.index() == 0)
-            return GetGtkCode(std::get<Alignments>(data));
-          else if(data.index() == 1)
-            return GetGtkCode(std::get<BoxType>(data));
-          else if(data.index() == 2)
-            return GetGtkCode(std::get<WindowType>(data));
-          else if(data.index() == 3)
-            return GetGtkCode(std::get<WindowPos>(data));
-          else if(data.index() == 4)
-            return GetGtkCode(std::get<Transition>(data));
-          else if(data.index() == 5)
-            return GetGtkCode(std::get<MessageType>(data));
-          else if(data.index() == 6)
-            return GetGtkCode(std::get<Events>(data));
-          else if(data.index() == 7)
-            return GetGtkCode(std::get<Policy>(data));
-          else if(data.index() == 8)
-            return GetGtkCode(std::get<Action>(data));
+          std::variant<GtkAlign, GtkOrientation, GtkWindowType, GtkWindowPosition, GtkRevealerTransitionType, GtkMessageType, GtkPolicyType, GtkFileChooserAction, const char*> retValue;
+		  if (data.index() == 0)
+			  return GetGtkCode(std::get<Alignments>(data));
+		  else if (data.index() == 1)
+			  return GetGtkCode(std::get<BoxType>(data));
+		  else if (data.index() == 2)
+			  return GetGtkCode(std::get<WindowType>(data));
+		  else if (data.index() == 3)
+			  return GetGtkCode(std::get<WindowPos>(data));
+		  else if (data.index() == 4)
+			  return GetGtkCode(std::get<Transition>(data));
+		  else if (data.index() == 5)
+			  return GetGtkCode(std::get<MessageType>(data));
+		  else if (data.index() == 6)
+			  return GetGtkCode(std::get<Events>(data));
+		  else if (data.index() == 7)
+			  return GetGtkCode(std::get<Policy>(data));
+		  else if (data.index() == 8)
+			  return GetGtkCode(std::get<Action>(data));
           return retValue;
         }
 
@@ -56,11 +59,11 @@ namespace CGui
         {
           switch (type)
           {
-            case START:
+			case BoxAddType::START:
               return gtk_box_pack_start;
               break;
 
-            case END:
+            case BoxAddType::END:
               return gtk_box_pack_end;
               break;
 
@@ -73,10 +76,10 @@ namespace CGui
         {
           switch (type)
           {
-            case START:
+			case BoxAddType::START:
               return gtk_header_bar_pack_start;
               break;
-            case END:
+			case BoxAddType::END:
               return gtk_header_bar_pack_end;
               break;
 
@@ -92,6 +95,8 @@ namespace CGui
         }
 
         Convert(const Convert&) = delete;
+		Convert(const Convert&&) = delete;
+		Convert& operator=(const Convert&) = delete;
 
       private:
         Convert()
@@ -101,16 +106,16 @@ namespace CGui
         {
           switch (action)
           {
-            case OPEN:
+			case Action::OPEN:
               return GTK_FILE_CHOOSER_ACTION_OPEN;
               break;
-            case SAVE:
+            case Action::SAVE:
               return GTK_FILE_CHOOSER_ACTION_SAVE;
               break;
-            case SELECT_FOLDER:
+            case Action::SELECT_FOLDER:
               return GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER;
               break;
-            case CREATE_FOLDER:
+            case Action::CREATE_FOLDER:
               return GTK_FILE_CHOOSER_ACTION_CREATE_FOLDER;
               break;
 
@@ -123,13 +128,13 @@ namespace CGui
         {
           switch (policy)
           {
-            case AUTOMATIC:
+			case Policy::AUTOMATIC:
               return GTK_POLICY_AUTOMATIC;
               break;
-            case NEVER:
+            case Policy::NEVER:
               return GTK_POLICY_NEVER;
               break;
-            case ALWAYS:
+            case Policy::ALWAYS:
               return GTK_POLICY_ALWAYS;
               break;
 
@@ -142,19 +147,19 @@ namespace CGui
         {
           switch (messagetype)
           {
-            case INFO:
+			case MessageType::INFO:
               return GTK_MESSAGE_INFO;
               break;
-            case WARNING:
+            case MessageType::WARNING:
               return GTK_MESSAGE_WARNING;
               break;
-            case QUESTION:
+            case MessageType::QUESTION:
               return GTK_MESSAGE_QUESTION;
               break;
-            case ERROR:
+            case MessageType::ERROR:
               return GTK_MESSAGE_ERROR;
               break;
-            case OTHER:
+            case MessageType::OTHER:
               return GTK_MESSAGE_OTHER;
               break;
 
@@ -167,19 +172,19 @@ namespace CGui
         {
           switch (transition)
           {
-            case SLIDEUP:
+			case Transition::SLIDEUP:
               return GTK_REVEALER_TRANSITION_TYPE_SLIDE_UP;
               break;
-            case SLIDEDOWN:
+            case Transition::SLIDEDOWN:
               return GTK_REVEALER_TRANSITION_TYPE_SLIDE_DOWN;
               break;
-            case SLIDELEFT:
+            case Transition::SLIDELEFT:
               return GTK_REVEALER_TRANSITION_TYPE_SLIDE_LEFT;
               break;
-            case SLIDERIGHT:
+            case Transition::SLIDERIGHT:
               return GTK_REVEALER_TRANSITION_TYPE_SLIDE_RIGHT;
               break;
-            case CROSSFADE:
+            case Transition::CROSSFADE:
               return GTK_REVEALER_TRANSITION_TYPE_CROSSFADE;
               break;
 
@@ -188,25 +193,28 @@ namespace CGui
           }
         }
 
-        char *GetGtkCode(Events event)
+        const char *GetGtkCode(Events event)
         {
           switch (event)
           {
-            case CLICKED:
+			case Events::CLICKED:
               return "clicked";
               break;
-            case DELETE:
+            case Events::DELETE:
               return "delete-event";
               break;
-            case TOGGLED:
+            case Events::TOGGLED:
               return "toggled";
               break;
-            case CHANGED:
+            case Events::CHANGED:
               return "changed";
               break;
-            case ENTER:
+            case Events::ENTER:
               return "enter";
               break;
+			case Events::ACTIVATE:
+			  return "activate";
+			  break;
 
             default:
               return "changed";
@@ -217,10 +225,10 @@ namespace CGui
         {
           switch (data)
           {
-            case TOPLEVEL:
+			case WindowType::TOPLEVEL:
               return GTK_WINDOW_TOPLEVEL;
             break;
-            case POPUP:
+            case WindowType::POPUP:
               return GTK_WINDOW_POPUP;
             break;
 
@@ -233,13 +241,13 @@ namespace CGui
         {
           switch (data)
           {
-            case CEN:
+			case WindowPos::CEN:
               return GTK_WIN_POS_CENTER;
               break;
-            case MOU:
+            case WindowPos::MOU:
               return GTK_WIN_POS_MOUSE;
               break;
-            case CENA:
+            case WindowPos::CENA:
               return GTK_WIN_POS_CENTER_ALWAYS;
 
             default:
@@ -251,16 +259,16 @@ namespace CGui
         {
           switch (data)
           {
-            case BEGIN:
+			case Alignments::BEGIN:
               return GTK_ALIGN_START;
             break;
-            case FILL:
+            case Alignments::FILL:
               return GTK_ALIGN_FILL;
             break;
-            case LAST:
+            case Alignments::LAST:
               return GTK_ALIGN_END;
             break;
-            case CENTER:
+            case Alignments::CENTER:
               return GTK_ALIGN_CENTER;
             break;
 
@@ -273,10 +281,10 @@ namespace CGui
         {
           switch (data)
           {
-            case VER:
+			case BoxType::VER:
               return GTK_ORIENTATION_VERTICAL;
             break;
-            case HOR:
+			case BoxType::HOR:
               return GTK_ORIENTATION_HORIZONTAL;
             break;
 

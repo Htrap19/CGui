@@ -5,11 +5,11 @@
 
 namespace CGui
 {
-  class Entry : public widget, public EventHandler<Entry>
+  class Entry : public Widget, public EventHandler<Entry>
   {
     public:
       Entry();
-      Entry(const gchar *placeholdertext);
+      Entry(const char *placeholdertext);
       void Editable(bool editable);
       bool Editable();
       void Visibility(bool visibility);
@@ -21,6 +21,14 @@ namespace CGui
       template <typename ... Args> long unsigned int Changed(void(*func)(Entry*, Args*...), Args & ... args);
       template <typename ... Args> long unsigned int Changed(void(*func)(Args*...), Args & ... args);
   };
-}
 
-#include "./Entry.cc"
+  template <typename ... Args> long unsigned int Entry::Changed(void(*func)(Entry*, Args* ...), Args& ... args)
+  {
+	  return this->SignalHandler(Events::CHANGED, func, args...);
+  }
+
+  template <typename ... Args> long unsigned int Entry::Changed(void(*func)(Args* ...), Args& ... args)
+  {
+	  return this->SignalHandler(Events::CHANGED, func, args...);
+  }
+}

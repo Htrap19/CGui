@@ -5,7 +5,7 @@
 
 namespace CGui
 {
-  class Infobar : public widget, public Container
+  class Infobar : public Widget, public Container<Widget>
   {
     public:
       Infobar();
@@ -14,10 +14,5 @@ namespace CGui
       bool Reveal();
       void MessageBoxType(MessageType messagetype);
       void ShowCloseButton(bool showclosebutton);
-
-    private:
-      GtkWidget *content_area;
   };
 };
-
-#include "./Infobar.cc"

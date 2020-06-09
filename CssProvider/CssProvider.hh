@@ -1,18 +1,17 @@
 #pragma once
 
 #include <gtk/gtk.h>
+#include "../Converter/Convert.hh"
 
 namespace CGui
 {
   class CssProvider
   {
     public:
-      CssProvider(const gchar *cssfilepath);
+      CssProvider(const char *cssfilepath, Priority priority);
       GtkCssProvider *GetWidget();
 
-    protected:
+    private:
       GtkCssProvider *cssProvider;
   };
 };
-
-#include "./CssProvider.cc"

@@ -2,11 +2,10 @@
 
 #include "../Widget.hh"
 #include "../Window/Window.hh"
-#include "../Container.hh"
 
 namespace CGui
 {
-  class Dialog : public widget, public Container
+  class Dialog : public Widget, public Container<Widget>
   {
     public:
       Dialog(Window &window, bool modal, const char *title = "");
@@ -20,10 +19,5 @@ namespace CGui
       bool Modal();
       void Parent(Window &window);
       void Parent(Window *window);
-
-    protected:
-      GtkWidget *content_area;
   };
 };
-
-#include "./Dialog.cc"

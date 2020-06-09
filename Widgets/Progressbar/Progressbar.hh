@@ -4,7 +4,7 @@
 
 namespace CGui
 {
-  class Progressbar : public widget
+  class Progressbar : public Widget
   {
     public:
       Progressbar();
@@ -21,5 +21,3 @@ namespace CGui
       void Increment();
   };
 }
-
-#include "./Progressbar.cc"

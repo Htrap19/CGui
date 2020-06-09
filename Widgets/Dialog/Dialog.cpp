@@ -1,5 +1,3 @@
-#pragma once
-
 #include "./Dialog.hh"
 
 namespace CGui
@@ -7,11 +5,11 @@ namespace CGui
   Dialog::Dialog(Window &window, bool modal, const char *title)
   {
     widget = gtk_dialog_new();
+	t_widget = gtk_dialog_get_content_area(GTK_DIALOG(widget));
     this->Parent(window);
     this->Modal(modal);
     this->Title(title);
-    content_area = gtk_dialog_get_content_area(GTK_DIALOG(widget));
-    this->SetContainer(content_area);
+	this->SetContext(widget);
   }
 
   void Dialog::InternalWidth(unsigned int width)

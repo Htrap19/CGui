@@ -20,6 +20,8 @@
 #include "./Custom/List/List.hh"
 #include "./Custom/Storage/Storage.hh"
 #include "./FileChooserDialog/FileChooserDialog.hh"
+#include "./Widgets/StyleContext.hh"
+#include "./Widgets/Grid/Grid.hh"
 
 namespace CGui
 {
@@ -40,4 +42,7 @@ namespace CGui
 
   static void UpdateUI()
   { gtk_main_iteration(); }
+
+  static void MainQuit()
+  { gtk_main_quit(); }
 };

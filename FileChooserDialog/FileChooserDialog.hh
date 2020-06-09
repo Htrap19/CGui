@@ -1,9 +1,9 @@
 #pragma once
 
-#include "./Widgets/FileChooser/FileChooser.hh"
-#include "./Widgets/Dialog/Dialog.hh"
-#include "./Widgets/Headerbar/Headerbar.hh"
-#include "./Widgets/Window/Window.hh"
+#include "../Widgets/FileChooser/FileChooser.hh"
+#include "../Widgets/Dialog/Dialog.hh"
+#include "../Widgets/Headerbar/Headerbar.hh"
+#include "../Widgets/Window/Window.hh"
 
 namespace CGui
 {
@@ -13,5 +13,3 @@ namespace CGui
       FileChooserDialog(Action action, Window &window, const char *title);
   };
 };
-
-#include "./FileChooserDialog.cc"

@@ -4,12 +4,10 @@
 
 namespace CGui
 {
-  class Image : public widget
+  class Image : public Widget
   {
     public:
       Image(const char *filename);
       Image(const char *filename, int width, int height, bool aspectRatio = true, GError **error = NULL);
   };
 }
-
-#include "./Image.cc"

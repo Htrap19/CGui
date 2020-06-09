@@ -1,17 +1,19 @@
-#pragma once
-
 #include "./Progressbar.hh"
 
 namespace CGui
 {
   Progressbar::Progressbar()
-  { widget = gtk_progress_bar_new(); }
+  {
+	  widget = gtk_progress_bar_new();
+	  this->SetContext(widget);
+  }
 
   Progressbar::Progressbar(const char *text)
   {
     widget = gtk_progress_bar_new();
     gtk_progress_bar_set_show_text(GTK_PROGRESS_BAR(widget), true);
     gtk_progress_bar_set_text(GTK_PROGRESS_BAR(widget), text);
+	this->SetContext(widget);
   }
 
   void Progressbar::Pulse()

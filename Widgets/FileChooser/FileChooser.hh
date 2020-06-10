@@ -4,10 +4,10 @@
 
 namespace CGui
 {
-  class FileChooser : public Widget
-  {
-    public:
-      FileChooser(Action action);
-      void ChooseAction(Action action);
-  };
+	class FileChooser : public Widget
+	{
+	public:
+		FileChooser(Action action);
+		void ChooseAction(Action action);
+	};
 };

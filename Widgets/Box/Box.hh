@@ -5,15 +5,26 @@
 
 namespace CGui
 {
-  class Box : public Widget, public Container<Box>
-  {
-    public:
-      Box(BoxType type, int spacing);
-      void Add(BoxAddType type, Widget& w, bool expand = false, bool fill = false, unsigned int padding = 0);
-      void AddStart(Widget& w, bool expand = false, bool fill = false, unsigned int padding = 0);
-      void AddEnd(Widget& w, bool expand = false, bool fill = false, unsigned int padding = 0);
-      // template<typename addtype, typename ... restaddtype> void Add(BoxAddType, addtype &w, restaddtype & ... rw, bool expand = false, bool fill = false, unsigned int padding = 0);
-      void Homogeneous(bool homogeneous);
-      bool Homogeneous();
-  };
+	class Box : public Widget, public Container<Box>
+	{
+	public:
+		Box(BoxType type, int spacing);
+		void Add(BoxPackType type, Widget& w, bool expand = false, bool fill = false, unsigned int padding = 0);
+		void AddStart(Widget& w, bool expand = false, bool fill = false, unsigned int padding = 0);
+		void AddEnd(Widget& w, bool expand = false, bool fill = false, unsigned int padding = 0);
+		void Homogeneous(bool homogeneous);
+		bool Homogeneous();
+		void Spacing(bool spacing);
+		bool Spacing();
+		void ReorderChild(Widget& w, int position);
+		void ChildPacking(Widget& w, BoxPackType type, bool expand = false, bool fill = false, unsigned int padding = 0);
+		ChildPackingInfo QueryChildPacking(Widget& w);
+		void BoxBaselinePosition(BaselinePosition position);
+		BaselinePosition BoxBaselinePosition();
+		void CenterWidget(Widget& w);
+		Widget& CenterWidget();
+
+	protected:
+		Widget* center_widget;
+	};
 }

@@ -9,7 +9,7 @@ namespace CGui
 	{
 	public:
 		Grid();
-		template <typename addtype> void Add(addtype &w, int left, int top, int width, int height);
+		template <typename addtype> void Add(addtype& w, int left, int top, int width, int height);
 		void InsertRow(int position);
 		void InsertColumn(int position);
 		void RemoveRow(int position);

@@ -5,13 +5,13 @@
 
 namespace CGui
 {
-  class CssProvider
-  {
-    public:
-      CssProvider(const char *cssfilepath, Priority priority);
-      GtkCssProvider *GetWidget();
+	class CssProvider
+	{
+	public:
+		CssProvider(const char* cssfilepath, Priority priority);
+		GtkCssProvider* GetWidget();
 
-    private:
-      GtkCssProvider *cssProvider;
-  };
+	private:
+		GtkCssProvider* cssProvider;
+	};
 };

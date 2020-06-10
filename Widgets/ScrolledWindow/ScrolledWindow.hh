@@ -5,10 +5,10 @@
 
 namespace CGui
 {
-  class ScrolledWindow : public Widget, public Container<ScrolledWindow>
-  {
-    public:
-      ScrolledWindow(Policy hpolicy, Policy vpolicy);
-      void ScrollPolicy(Policy hpolicy, Policy vpolicy);
-  };
+	class ScrolledWindow : public Widget, public Container<ScrolledWindow>
+	{
+	public:
+		ScrolledWindow(Policy hpolicy, Policy vpolicy);
+		void ScrollPolicy(Policy hpolicy, Policy vpolicy);
+	};
 };

@@ -6,73 +6,115 @@
 
 namespace CGui
 {
-  template <typename WidgetType>
-  class Container
-  {
-    public:
-      Container(WidgetType *w)
-	  {
-		  t_widget = w;
-	  }
+	template <typename WidgetType>
+	class Container
+	{
+	public:
+		Container(WidgetType* w)
+		{
+			t_widget = w;
+		}
 
-	  void Add(Widget& w)
-	  {
-		  gtk_container_add(GTK_CONTAINER(t_widget->GetWidget()), w.GetWidget());
-		  children.Insert((void*)& w);
-	  }
+		virtual void Add(Widget& w)
+		{
+			gtk_container_add(GTK_CONTAINER(t_widget->GetWidget()), w.GetWidget());
+			children.Insert((void*)& w);
+		}
 
-	  void Remove(Widget& w)
-	  {
-		  gtk_container_remove(GTK_CONTAINER(t_widget->GetWidget()), w.GetWidget());
-		  if (children.Exists((void*)& w))
-			  children.Delete((void*)& w);
-	  }
+		virtual void Remove(Widget& w)
+		{
+			gtk_container_remove(GTK_CONTAINER(t_widget->GetWidget()), w.GetWidget());
+			if (children.Exists((void*)& w))
+				children.Delete((void*)& w);
+		}
 
-	  virtual Single::List<void*> *Children()
-	  {
-		  return &children;
-	  }
+		virtual void InternalWidth(unsigned int width) const
+		{
+			gtk_container_set_border_width(GTK_CONTAINER(t_widget->GetWidget()), width);
+		}
 
-    protected:
-	  Single::List<void*> children;
+		virtual unsigned int InternalWidth() const
+		{
+			return gtk_container_get_border_width(GTK_CONTAINER(t_widget->GetWidget()));
+		}
 
-    private:
-      WidgetType *t_widget;
-  };
+		virtual void FocusChild(Widget& w)
+		{
+			gtk_container_set_focus_child(GTK_CONTAINER(t_widget->GetWidget()), w.GetWidget());
+			children.SelectData((void*)& w);
+		}
 
-  template <>
-  class Container<Widget>
-  {
-  public:
-	  Container(GtkWidget *w)
-	  {
-		  t_widget = w;
-	  }
+		virtual Widget& FocusChild()
+		{
+			return *(Widget*)children.SelectedData();
+		}
 
-	  void Add(Widget& w)
-	  {
-		  gtk_container_add(GTK_CONTAINER(t_widget), w.GetWidget());
-		  children.Insert((void*)& w);
-	  }
+		virtual Single::List<void*>* Children()
+		{
+			return &children;
+		}
 
-	  void Remove(Widget& w)
-	  {
-		  gtk_container_remove(GTK_CONTAINER(t_widget), w.GetWidget());
-		  if (children.Exists((void*)& w))
-			  children.Delete((void*)& w);
-	  }
+	protected:
+		Single::List<void*> children;
 
-	  virtual Single::List<void*> *Children()
-	  {
-		  return &children;
-	  }
+	private:
+		WidgetType* t_widget;
+	};
 
-  protected:
-	  Container()
-	  {  }
+	template <>
+	class Container<Widget>
+	{
+	public:
+		Container(GtkWidget* w)
+		{
+			t_widget = w;
+		}
 
-	  GtkWidget* t_widget;
+		virtual void Add(Widget& w)
+		{
+			gtk_container_add(GTK_CONTAINER(t_widget), w.GetWidget());
+			children.Insert((void*)& w);
+		}
 
-	  Single::List<void*> children;
-  };
+		virtual void Remove(Widget& w)
+		{
+			gtk_container_remove(GTK_CONTAINER(t_widget), w.GetWidget());
+			if (children.Exists((void*)& w))
+				children.Delete((void*)& w);
+		}
+
+		virtual void InternalWidth(unsigned int width) const
+		{
+			gtk_container_set_border_width(GTK_CONTAINER(t_widget), width);
+		}
+
+		virtual unsigned int InternalWidth() const
+		{
+			return gtk_container_get_border_width(GTK_CONTAINER(t_widget));
+		}
+
+		virtual void FocusChild(Widget& w)
+		{
+			gtk_container_set_focus_child(GTK_CONTAINER(t_widget), w.GetWidget());
+			children.SelectData((void*)& w);
+		}
+
+		virtual Widget& FocusChild()
+		{
+			return *(Widget*)children.SelectedData();
+		}
+
+		virtual Single::List<void*>* Children()
+		{
+			return &children;
+		}
+
+	protected:
+		Container()
+		{  }
+
+		GtkWidget* t_widget;
+
+		Single::List<void*> children;
+	};
 };

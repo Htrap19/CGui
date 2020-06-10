@@ -8,7 +8,7 @@ namespace CGui
 	class StyleContext
 	{
 	public:
-		StyleContext(GtkWidget *w)
+		StyleContext(GtkWidget* w)
 		{
 			this->SetContext(w);
 		}

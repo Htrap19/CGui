@@ -4,11 +4,11 @@
 
 namespace CGui
 {
-  class Spinner : public Widget
-  {
-    public:
-      Spinner();
-      void Start();
-      void Stop();
-  };
+	class Spinner : public Widget
+	{
+	public:
+		Spinner();
+		void Start();
+		void Stop();
+	};
 };

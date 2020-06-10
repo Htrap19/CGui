@@ -2,33 +2,91 @@
 
 namespace CGui
 {
-  Button::Button() : EventHandler(this), Container(this)
-  {
-    widget = gtk_button_new();
-	this->SetContext(widget);
-  }
+	Button::Button() : EventHandler(this), Container(this)
+	{
+		widget = gtk_button_new();
+		this->SetContext(widget);
+	}
 
-  Button::Button(const char *text) : EventHandler(this), Container(this)
-  {
-    widget = gtk_button_new_with_label(text);
-	this->SetContext(widget);
-  }
+	Button::Button(const char* text) : EventHandler(this), Container(this)
+	{
+		widget = gtk_button_new_with_label(text);
+		this->SetContext(widget);
+	}
 
-  long unsigned int Button::Clicked(void(*func)())
-  { return this->SignalHandler(Events::CLICKED, func); }
+	void Button::Text(const char* text)
+	{
+		gtk_button_set_label(GTK_BUTTON(widget), text);
+	}
 
-  long unsigned int Button::Clicked(void(*func)(Button*))
-  { return this->SignalHandler(Events::CLICKED, func); }
+	const char* Button::Text()
+	{
+		return gtk_button_get_label(GTK_BUTTON(widget));
+	}
 
-  /*template <typename ... Args> long unsigned int Button::Clicked(void(*func)(Button*, Args*...), Args & ... args)
-  { return this->SignalHandler(CLICKED, func, args...); }
+	void Button::Click()
+	{
+		gtk_button_clicked(GTK_BUTTON(widget));
+	}
 
-  template <typename ... Args> long unsigned int Button::Clicked(void(*func)(Args*...), Args & ... args)
-  { return this->SignalHandler(CLICKED, func, args...); }*/
+	void Button::Relief(ReliefStyle style)
+	{
+		gtk_button_set_relief(GTK_BUTTON(widget), (GtkReliefStyle)style);
+	}
 
-  void Button::Text(const char *text)
-  { gtk_button_set_label(GTK_BUTTON(widget), text); }
+	ReliefStyle Button::Relief()
+	{
+		return (ReliefStyle)gtk_button_get_relief(GTK_BUTTON(widget));
+	}
 
-  const char *Button::Text()
-  { return gtk_button_get_label(GTK_BUTTON(widget)); }
+	void Button::UseUnderline(bool use_underline)
+	{
+		gtk_button_set_use_underline(GTK_BUTTON(widget), use_underline);
+	}
+
+	bool Button::UseUnderline()
+	{
+		return gtk_button_get_use_underline(GTK_BUTTON(widget));
+	}
+
+	void Button::ButtonImage(Image& image)
+	{
+		gtk_button_set_image(GTK_BUTTON(widget), image.GetWidget());
+		this->image = &image;
+	}
+
+	Image& Button::ButtonImage()
+	{
+		return *image;
+	}
+
+	void Button::ButtonImagePosition(PositionType position)
+	{
+		gtk_button_set_image_position(GTK_BUTTON(widget), (GtkPositionType)position);
+	}
+
+	PositionType Button::ButtonImagePosition()
+	{
+		return (PositionType)gtk_button_get_image_position(GTK_BUTTON(widget));
+	}
+
+	void Button::AlwaysShowImage(bool always_show_image)
+	{
+		gtk_button_set_always_show_image(GTK_BUTTON(widget), always_show_image);
+	}
+
+	bool Button::AlwaysShowImage()
+	{
+		return gtk_button_get_always_show_image(GTK_BUTTON(widget));
+	}
+
+	long unsigned int Button::Clicked(void(*func)())
+	{
+		return this->SignalHandler(Events::CLICKED, func);
+	}
+
+	long unsigned int Button::Clicked(void(*func)(Button*))
+	{
+		return this->SignalHandler(Events::CLICKED, func);
+	}
 };

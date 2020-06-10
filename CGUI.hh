@@ -25,24 +25,32 @@
 
 namespace CGui
 {
-  struct Init
-  {
-    public:
-      Init(int argc, char *argv[])
-      { gtk_init(&argc, &argv); }
-      ~Init()
-      { gtk_main(); }
-  };
+	struct Init
+	{
+	public:
+		Init(int argc, char* argv[])
+		{
+			gtk_init(&argc, &argv);
+		}
+		~Init()
+		{
+			gtk_main();
+		}
+	};
 
-  static void UpdateUIWhile()
-  {
-    while(gtk_events_pending())
-      gtk_main_iteration();
-  }
+	static void UpdateUIWhile()
+	{
+		while (gtk_events_pending())
+			gtk_main_iteration();
+	}
 
-  static void UpdateUI()
-  { gtk_main_iteration(); }
+	static void UpdateUI()
+	{
+		gtk_main_iteration();
+	}
 
-  static void MainQuit()
-  { gtk_main_quit(); }
+	static void MainQuit()
+	{
+		gtk_main_quit();
+	}
 };

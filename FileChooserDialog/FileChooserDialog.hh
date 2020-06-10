@@ -7,9 +7,9 @@
 
 namespace CGui
 {
-  class FileChooserDialog
-  {
-    public:
-      FileChooserDialog(Action action, Window &window, const char *title);
-  };
+	class FileChooserDialog
+	{
+	public:
+		FileChooserDialog(Action action, Window& window, const char* title);
+	};
 };

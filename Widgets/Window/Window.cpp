@@ -86,9 +86,4 @@ namespace CGui
 	{
 		gtk_window_set_position(GTK_WINDOW(widget), (GtkWindowPosition)pos);
 	}
-
-	void Window::Quit() const
-	{
-		gtk_main_quit();
-	}
 };

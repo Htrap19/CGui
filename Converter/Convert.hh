@@ -1,8 +1,8 @@
 #pragma once
 
-#include <iostream>
+//#include <iostream>
 #include <gtk/gtk.h>
-#include <variant>
+//#include <variant>
 
 namespace CGui
 {
@@ -22,7 +22,9 @@ namespace CGui
 	enum class Alignments { FILL, BEGIN, LAST, CENTER, BASELINE };
 
 	enum class Events { CLICKED, DELETE, TOGGLED, CHANGED, ENTER, ACTIVATE };
+
 	enum class ReliefStyle { NORMAL = 0, NONE = 2 };
+
 	enum class PositionType { LEFT, RIGHT, TOP, BOTTOM };
 
 	enum class RevealerTransition { NONE, CROSSFADE, SLIDE_RIGHT, SLIDE_LEFT, SLIDE_UP, SLIDE_DOWN };
@@ -36,6 +38,32 @@ namespace CGui
 	enum class Priority : unsigned short { FALLBACK = 1, THEME = 200, SETTINGS = 400, APPLICATION = 600, USER = 800 };
 
 	enum class BaselinePosition { TOP, CENTER, BOTTOM };
+
+	enum class EntryIconPosition { PRIMARY, SECONDARY };
+	enum class InputPurpose { FREE_FORM, ALPHA, DIGITS, NUMBER, PHONE, URL, EMAIL, NAME, PASSWORD, PIN, TERMINAL };
+	enum class InputHints { NONE, SPELLCHECK, NO_SPELLCHECK, WORD_COMPLETION, LOWERCASE, UPPERCASE_CHARS, UPPERCASE_WORDS, UPPERCASE_SENTENCES, INHIBIT_OSK, VERTICAL_WRITING, EMOJI, NO_EMOJI };
+
+	class Pixbuf
+	{
+	public:
+		Pixbuf(const char* filename)
+		{
+			pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
+		}
+
+		Pixbuf(const char *filename, int width, int height, bool aspactRatio, GError **error = NULL)
+		{
+			pixbuf = gdk_pixbuf_new_from_file_at_scale(filename, width, height, aspactRatio, error);
+		}
+
+		GdkPixbuf* GetWidget()
+		{
+			return pixbuf;
+		}
+
+	private:
+		GdkPixbuf* pixbuf;
+	};
 
 	namespace Converter
 	{

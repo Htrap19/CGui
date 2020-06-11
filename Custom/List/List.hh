@@ -29,6 +29,7 @@ namespace CGui
 			bool HasSelectedData();
 			Data& SelectedData();
 			bool Exists(Data data);
+			bool Exists(bool(*func)(List<Data>*));
 			template <typename filter> List<filter> Filter(filter(*func)(Node<Data>*));
 			template <typename filter> List<filter> Filter(filter(*func)(Data&));
 			template <typename filter, typename ... Args> List<filter> Filter(filter(*func)(Node<Data>*, Args...), Args& ... args);
@@ -163,6 +164,12 @@ namespace CGui
 			}
 
 			return false;
+		}
+
+		template <typename Data>
+		bool List<Data>::Exists(bool(*func)(List<Data>*))
+		{
+			return func(this);
 		}
 
 		template <typename Data>

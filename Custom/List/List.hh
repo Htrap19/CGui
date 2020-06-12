@@ -28,6 +28,7 @@ namespace CGui
 			bool SelectData(Data data);
 			bool HasSelectedData();
 			Data& SelectedData();
+			void UnselectData();
 			bool Exists(Data data);
 			bool Exists(bool(*func)(List<Data>*));
 			template <typename filter> List<filter> Filter(filter(*func)(Node<Data>*));
@@ -148,6 +149,12 @@ namespace CGui
 		Data& List<Data>::SelectedData()
 		{
 			return *selected_data;
+		}
+
+		template <typename Data>
+		void List<Data>::UnselectData()
+		{
+			selected_data = NULL;
 		}
 
 		template <typename Data>

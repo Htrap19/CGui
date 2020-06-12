@@ -25,5 +25,34 @@ namespace CGui
 		bool SelectFilename(const char* filename);
 		void UnselectFilename(const char* filename);
 		void SelectAll();
+		void UnselectAll();
+		Single::List<const char*> Filenames();
+		bool CurrentFolder(const char* filename);
+		const char* CurrentFolder();
+		void Uri(const char* uri);
+		const char* Uri();
+		bool SelectUri(const char* uri);
+		void UnselectUri(const char* uri);
+		Single::List<const char*> Uris();
+		void PreviewWidget(Widget& w);
+		Widget& PreviewWidget();
+		void PreviewWidgetActive(bool active);
+		bool PreviewWidgetActive();
+		void UsePreviewLabel(bool use_label);
+		bool UsePreviewLabel();
+		const char* PreviewFilename();
+		const char* PreviewUri();
+		void ExtraWidget(Widget& w);
+		Widget& ExtraWidget();
+		bool AddShortcutFolder(const char* folder);
+		bool RemoveShortcutFolder(const char* folder);
+		Single::List<const char*> ListShortcutFolders();
+		bool AddShortcutFolderUri(const char* uri);
+		bool RemoveShortcutFolderUri(const char* uri);
+		Single::List<const char*> ListShortCutFolderUri();
+
+	protected:
+		Widget* m_PreviewWidget;
+		Widget* m_ExtraWidget;
 	};
 };

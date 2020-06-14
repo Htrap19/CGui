@@ -29,6 +29,11 @@ namespace CGui
 			return gtk_widget_get_name(GTK_WIDGET(widget));
 		}
 
+		virtual void AppPaintable(bool paintable)
+		{
+			gtk_widget_set_app_paintable(GTK_WIDGET(widget), paintable);
+		}
+
 		virtual void Sensitive(bool sensitive) const
 		{
 			gtk_widget_set_sensitive(GTK_WIDGET(widget), sensitive);

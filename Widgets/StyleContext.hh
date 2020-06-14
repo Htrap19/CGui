@@ -38,6 +38,8 @@ namespace CGui
 				t_list.Insert((const char*)l->data);
 			}
 
+			g_list_free(g_list);
+
 			return t_list;
 		}
 

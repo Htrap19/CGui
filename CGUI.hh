@@ -22,6 +22,7 @@
 #include "./FileChooserDialog/FileChooserDialog.hh"
 #include "./Widgets/StyleContext.hh"
 #include "./Widgets/Grid/Grid.hh"
+#include "./Pixbuf/Pixbuf.hh"
 
 namespace CGui
 {

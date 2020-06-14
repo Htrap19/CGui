@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../Widget.hh"
+#include "../../Pixbuf/Pixbuf/Pixbuf.hh"
+#include "../../Pixbuf/PixbufAnimation/PixbufAnimation.hh"
 
 namespace CGui
 {

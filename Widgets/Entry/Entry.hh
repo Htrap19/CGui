@@ -3,6 +3,7 @@
 #include "../Widget.hh"
 #include "../EventHandler.hh"
 #include "../../Converter/Convert.hh"
+#include "../../Pixbuf/Pixbuf/Pixbuf.hh"
 
 namespace CGui
 {

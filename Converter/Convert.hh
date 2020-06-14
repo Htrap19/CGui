@@ -43,17 +43,42 @@ namespace CGui
 	enum class InputPurpose { FREE_FORM, ALPHA, DIGITS, NUMBER, PHONE, URL, EMAIL, NAME, PASSWORD, PIN, TERMINAL };
 	enum class InputHints { NONE, SPELLCHECK, NO_SPELLCHECK, WORD_COMPLETION, LOWERCASE, UPPERCASE_CHARS, UPPERCASE_WORDS, UPPERCASE_SENTENCES, INHIBIT_OSK, VERTICAL_WRITING, EMOJI, NO_EMOJI };
 
+	enum class IconSize { INVALID, MENU, SMALL_TOOLBAR, LARGE_TOOLBAR, BUTTON, DND, DIALOG };
+	enum class ImageType { EMPTY, PIXBUF, STOCK, ICON_SET, ANIMATION, ICON_NAME, GICON, SURFACE };
+	struct IconInfo
+	{
+		const char* icon_name;
+		IconSize size;
+	};
+
+	enum class PixbufRotation { NONE, COUNTERCLOCKWISE, UPSIDEDOWN, CLOCKWISE };
+
 	class Pixbuf
 	{
 	public:
-		Pixbuf(const char* filename)
+		Pixbuf(GdkPixbuf* pixbuf)
 		{
-			pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
+			this->pixbuf = pixbuf;
 		}
 
-		Pixbuf(const char *filename, int width, int height, bool aspactRatio, GError **error = NULL)
+		Pixbuf(const char* filename)
 		{
-			pixbuf = gdk_pixbuf_new_from_file_at_scale(filename, width, height, aspactRatio, error);
+			pixbuf = gdk_pixbuf_new_from_file(filename, nullptr);
+		}
+
+		Pixbuf(const char* filename, int width, int height, bool aspactRatio)
+		{
+			pixbuf = gdk_pixbuf_new_from_file_at_scale(filename, width, height, aspactRatio, nullptr);
+		}
+
+		Pixbuf(const char* filename, int width, int height)
+		{
+			pixbuf = gdk_pixbuf_new_from_file_at_size(filename, width, height, nullptr);
+		}
+
+		Pixbuf Rotate(PixbufRotation rotation)
+		{
+			return Pixbuf(gdk_pixbuf_rotate_simple(pixbuf, (GdkPixbufRotation)rotation));
 		}
 
 		GdkPixbuf* GetWidget()
@@ -63,6 +88,80 @@ namespace CGui
 
 	private:
 		GdkPixbuf* pixbuf;
+	};
+
+	class PixbufSimpleAnim
+	{
+	public:
+		PixbufSimpleAnim(int width, int height, float rate)
+		{
+			animation = gdk_pixbuf_simple_anim_new(width, height, rate);
+		}
+
+		void AddFrame(Pixbuf& pixbuf)
+		{
+			gdk_pixbuf_simple_anim_add_frame(animation, pixbuf.GetWidget());
+		}
+
+		void Loop(bool loop)
+		{
+			gdk_pixbuf_simple_anim_set_loop(animation, loop);
+		}
+
+		bool Loop()
+		{
+			return gdk_pixbuf_simple_anim_get_loop(animation);
+		}
+
+		GdkPixbufSimpleAnim* GetWidget()
+		{
+			return animation;
+		}
+
+	protected:
+		GdkPixbufSimpleAnim* animation;
+	};
+
+	class PixbufAnimation
+	{
+	public:
+		PixbufAnimation(PixbufSimpleAnim& animation)
+		{
+			this->animation = GDK_PIXBUF_ANIMATION(animation.GetWidget());
+		}
+
+		PixbufAnimation(const char* filename)
+		{
+			animation = gdk_pixbuf_animation_new_from_file(filename, nullptr);
+		}
+
+		bool IsStaticImage()
+		{
+			return gdk_pixbuf_animation_is_static_image(animation);
+		}
+
+		Pixbuf StaticImage()
+		{
+			return Pixbuf(gdk_pixbuf_animation_get_static_image(animation));
+		}
+
+		int Width()
+		{
+			return gdk_pixbuf_animation_get_width(animation);
+		}
+
+		int Height()
+		{
+			return gdk_pixbuf_animation_get_height(animation);
+		}
+
+		GdkPixbufAnimation* GetWidget()
+		{
+			return animation;
+		}
+
+	protected:
+		GdkPixbufAnimation* animation;
 	};
 
 	namespace Converter

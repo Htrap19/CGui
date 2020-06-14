@@ -9,8 +9,23 @@ namespace CGui
 	{
 	public:
 		Headerbar(const char* title = "", const char* subtitle = "");
+		void Title(const char* title);
+		const char* Title();
+		void SubTitle(const char* subtitle);
+		const char* SubTitle();
+		void HasSubTitle(bool has_subtitle);
+		bool HasSubTitle();
+		void CustomTitle(Widget& w);
+		Widget& CustomTitle();
+		void ShowCloseButton(bool show_close_button);
+		bool ShowCloseButton();
+		void DecorationLayout(const char* layout);
+		const char* DecorationLayout();
 		void Add(BoxPackType type, Widget& w);
 		void AddStart(Widget& w);
 		void AddEnd(Widget& w);
+
+	protected:
+		Widget* m_TitleWidget;
 	};
 }

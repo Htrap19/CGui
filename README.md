@@ -8,7 +8,7 @@
 * gcc on Linux and MSVC on Window
 * Git
 
-For further more experience use the C++ standrard 17 or later.
+For further more experience use the C++ standard 17 or later.
 
 ## Tested on
 * Windows 10 with Visual Studio 2019

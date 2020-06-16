@@ -16,6 +16,8 @@ For further more experience use the C++ standrard 17 or later.
 
 ## Installation
 ### Windows with visual studio
+[Install gtk on windows with vcpkg](https://www.gtk.org/docs/installations/windows/#using-gtk-from-vcpkg-packages)
+
 Clone this repository
 
 ```
@@ -32,7 +34,7 @@ git clone https://github.com/Developmentprogramming/CGui.git
 ### Linux
 Install dependencies for CGui<br>
 ```
-sudo apt-get install g++-8 libgtk-3-dev
+sudo apt-get install g++-8 libgtk-3-dev git make
 ```
 Clone this repository
 ```

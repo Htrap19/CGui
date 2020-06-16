@@ -9,7 +9,7 @@ namespace CGui
 	enum class WindowType { TOPLEVEL, POPUP };
 	enum class WindowPos { NONE, CENTER, MOUSE, CENTER_ALWAYS, CENTER_ON_PARENT };
 
-	enum class BoxType { HORIZONTAL, VERTICAL };
+	enum class Orientation { HORIZONTAL, VERTICAL };
 	enum class BoxPackType { START, END };
 	struct ChildPackingInfo
 	{
@@ -21,7 +21,7 @@ namespace CGui
 
 	enum class Alignments { FILL, BEGIN, LAST, CENTER, BASELINE };
 
-	enum class Events { CLICKED, DELETE, TOGGLED, CHANGED, ENTER, ACTIVATE };
+	enum class Events { CLICKED, DELETE, TOGGLED, CHANGED, ENTER, ACTIVATE, DESTROY };
 
 	enum class ReliefStyle { NORMAL = 0, NONE = 2 };
 
@@ -51,8 +51,12 @@ namespace CGui
 		IconSize size;
 	};
 
-	enum class PixbufRotation { NONE, COUNTERCLOCKWISE, UPSIDEDOWN, CLOCKWISE };
+	enum class PixbufRotation : unsigned short { NONE = 0, COUNTERCLOCKWISE = 90, UPSIDEDOWN = 180, CLOCKWISE = 270 };
 	enum class InterpType { NEAREST, TITLES, BILINEAR, HYPER };
+
+	enum class Justification { LEFT, RIGHT, CENTER, FILL };
+	enum class EllipsizeMode { NONE, START, MIDDLE, END };
+	enum class WrapMode { WORD, CHAR, WORD_CHAR };
 
 	namespace Converter
 	{
@@ -105,9 +109,12 @@ namespace CGui
 				case Events::ACTIVATE:
 					return "activate";
 					break;
+				case Events::DESTROY:
+					return "destroy";
+					break;
 
 				default:
-					return "changed";
+					return NULL;
 				}
 			}
 

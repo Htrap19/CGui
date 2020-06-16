@@ -21,5 +21,8 @@ namespace CGui
 		void Fullscreen() const;
 		void Unfullscreen() const;
 		void Position(WindowPos pos) const;
+
+	private:
+		static unsigned int m_ref_count;
 	};
 }

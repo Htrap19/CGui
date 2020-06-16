@@ -2,7 +2,7 @@
 
 namespace CGui
 {
-	Box::Box(BoxType type, int spacing) : Container(this)
+	Box::Box(Orientation type, int spacing) : Container(this)
 	{
 		widget = gtk_box_new((GtkOrientation)type, spacing);
 		this->SetContext(widget);

@@ -3,21 +3,32 @@
 
 namespace CGui
 {
+	unsigned int Window::m_ref_count = 0;
+
 	Window::Window(WindowType type, const char* title, WindowPos pos) : Container(this)
 	{
 		widget = gtk_window_new((GtkWindowType)type);
+		Window::m_ref_count++;
 
 		auto exit = [](GtkWidget * widget, gpointer data) -> void
 		{
-			auto f = [](KeyValue::Node<const char*, Single::List<std::any>*> * node) -> void
+			if (Window::m_ref_count <= 1)
 			{
-				if (std::string(node->key) == "Instance")
-					delete node->value;
-			};
+				auto f = [](KeyValue::Node<const char*, Single::List<std::any>*> * node) -> void
+				{
+					if (std::string(node->key) == "Instance")
+						delete node->value;
+				};
 
-			Storage::GetInstance().ForEach<const char*, Single::List<std::any>*>(f, "allcallbacks");
-			Storage::GetInstance().Free<const char*, Single::List<std::any>*>("allcallbacks");
-			gtk_main_quit();
+				Storage::GetInstance().ForEach<const char*, Single::List<std::any>*>(f, "allcallbacks");
+				Storage::GetInstance().Free<const char*, Single::List<std::any>*>("allcallbacks");
+				gtk_main_quit();
+			}
+			else
+			{
+				gtk_widget_destroy(widget);
+				Window::m_ref_count--;
+			}
 		};
 		g_signal_connect(G_OBJECT(widget), Converter::Convert::GetInstance().GetGtkCode(Events::DELETE), G_CALLBACK((void(*)(GtkWidget*, gpointer))exit), NULL);
 		this->Title(title);

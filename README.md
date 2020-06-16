@@ -28,7 +28,7 @@ git clone https://github.com/Developmentprogramming/CGui.git
 2. Copy the cloned repository to the **cpp empty console project(CGui)** except Makefile, Main.cc, Examples/, Image/ Readme.md.
 3. Right click **cpp empty console project(CGui)**->Properties->Configuration Properties->General->Configuration Type and select **Static library**.
 4. Create a new **cpp empty console project2(your_project_name)**.
-5. Add a reference of **cpp empty console project** to **cpp empty console project2(your_project_name)**.
+5. Add a reference of **cpp empty console project(CGui)** to **cpp empty console project2(your_project_name)**.
 6. Right click **cpp empty console project2(your_project_name)**->Properties->Configuration Properties->C/C++->General->Additional include directories and add the path of **cpp empty console project(CGui)**.
 
 ### Linux

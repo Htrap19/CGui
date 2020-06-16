@@ -3,11 +3,33 @@
 ### Open Source Library for C++ UI based on GTK 3
 
 ## Requirments
-* A Linux distribution
-* GTK 3 or above
-* 8th generation of C++ compiler(g++-8) with C++ version 17
+* Window 7, 8.1, 10 or Linux distribution
+* GTK+ 3.22 or later
+* gcc on Linux and MSVC on Window
+* Git
+
+For further more experience use the C++ standrard 17 or later.
+
+## Tested on
+* Windows 10 with Visual Studio 2019
+* Ubuntu 18.02 LTS, and Ubuntu 20.04 LTS
 
 ## Installation
+### Windows with visual studio
+Clone this repository
+
+```
+git clone https://github.com/Developmentprogramming/CGui.git
+```
+
+1. Open the visual studio and create a new **cpp empty console project(CGui)**.
+2. Copy the cloned repository to the **cpp empty console project(CGui)** except Makefile, Main.cc, Examples/, Image/ Readme.md.
+3. Right click **cpp empty console project(CGui)**->Properties->Configuration Properties->General->Configuration Type and select **Static library**.
+4. Create a new **cpp empty console project2(your_project_name)**.
+5. Add a reference of **cpp empty console project** to **cpp empty console project2(your_project_name)**.
+6. Right click **cpp empty console project2(your_project_name)**->Properties->Configuration Properties->C/C++->General->Additional include directories and add the path of **cpp empty console project(CGui)**.
+
+### Linux
 Install dependencies for CGui<br>
 ```
 sudo apt-get install g++-8 libgtk-3-dev
@@ -28,14 +50,14 @@ And at last click on install and wait until it finsihes.<br>
 **Note: This installer itself is made using this library(CGui).**<br><br>
 If you want to install in **Preferred Path** location then you must run this installer with root access, and if you want to install it in the **Current Path** location or any other user's location then no need for root access.
 
-## Precompiling headers(Only for development purpose)
+#### Precompiling headers(Only for development purpose)
 ```
 git clone https://github.com/Developmentprogramming/CGui.git
 cd CGui
 make -i PrecompiledHeaders
 ```
 
-## Compilation
+#### Compilation
 For compile any file, use the following command line:<br>
 ```
 g++-8 -std=c++17 file.cc `pkg-config gtk+-3.0 --cflags --libs`
@@ -56,6 +78,8 @@ Result:<br>
 If you see this message **Welcome to CGui**.<br>
 Congratulations!!!, it's working... .
 
+
+
 ## Code Structure
 ```C++
 // Label example
@@ -68,12 +92,12 @@ int main(int argc, char *argv[])
   Init init(argc, argv); // Initialize CGui
   
   // Some code
-  Window window(TOPLEVEL, "CGUI WINDOW", CEN); // Create a new Window
+  Window window(WindowType::TOPLEVEL, "CGUI WINDOW", WindowPos::CENTER); // Create a new Window
   
   Label label("Text");
-  label.Align(CENTER, CENTER); // align the label to center horizontally and vertically
+  label.Align(Alignments::CENTER, Alignments::CENTER); // align the label to center horizontally and vertically
   
-  window.Add<Label>(label); // add label to window
+  window.Add(label); // add label to window
   window.DefaultSize(640, 480); // window default size
   window.InternalWidth(10); // Internal window width
   window.ShowAll(); // Show all widgets
@@ -95,12 +119,13 @@ int main(int argc, char *argv[])
   Init init(argc, argv); // Initialize CGui
   
   // Some Code
-  Window window(TOPLEVEL, "CGUI WINDOW", CEN); // Create a new Window
+  Window window(WindowType::TOPLEVEL, "CGUI WINDOW", WindowPos::CEN); // Create a new Window
   
-  Image image("./Image/yaktocat.png", 400, 400); // create a new image at scale of 400X400
-  image.Align(CENTER, CENTER); // align the image to center horizontally and vertically
+  Pixbuf pixbuf("./Image/yaktocat.png", 400, 400);
+  Image image(pixbuf); // create a new image of size of 400X400
+  image.Align(Alignments::CENTER, Alignments::CENTER); // align the image to center horizontally and vertically
   
-  window.Add<Image>(image); // add image to window
+  window.Add(image); // add image to window
   window.DefaultSize(640, 480); // window default size
   window.InternalWidth(10); // Internal window width
   window.ShowAll(); // Show all widgets 
@@ -128,13 +153,13 @@ int main(int argc, char *argv[])
   Init init(argc, argv); // Initialize CGui
   
   // Some Code
-  Window window(TOPLEVEL, "CGUI WINDOW", CEN); // Create a new Window
+  Window window(WindowType::TOPLEVEL, "CGUI WINDOW", WindowPos::CENTER); // Create a new Window
   
   Button button("Button"); // Create a new button
-  button.Align(CENTER, CENTER); // align button to center horizontally and vertically
+  button.Align(Alignments::CENTER, Alignments::CENTER); // align button to center horizontally and vertically
   button.Clicked(Button_Clicked);
   
-  window.Add<Button>(button); // add button to window
+  window.Add(button); // add button to window
   window.DefaultSize(640, 480); // window default size
   window.InternalWidth(10); // Internal window width
   window.ShowAll(); // Show all widgets

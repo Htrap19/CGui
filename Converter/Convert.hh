@@ -1,8 +1,6 @@
 #pragma once
 
-//#include <iostream>
 #include <gtk/gtk.h>
-//#include <variant>
 
 namespace CGui
 {
@@ -57,6 +55,9 @@ namespace CGui
 	enum class Justification { LEFT, RIGHT, CENTER, FILL };
 	enum class EllipsizeMode { NONE, START, MIDDLE, END };
 	enum class WrapMode { WORD, CHAR, WORD_CHAR };
+
+	enum class CornerType { TOP_LEFT, BOTTOM_LEFT, TOP_RIGHT, BOTTOM_RIGHT };
+	enum class ShadowType { NONE, IN, OUT, ETCHED_IN, ETCHED_OUT };
 
 	namespace Converter
 	{

@@ -2,11 +2,17 @@
 
 namespace CGui
 {
+	Revealer::Revealer() : Container(this)
+	{
+		widget = gtk_revealer_new();
+		this->SetContext(widget);
+	}
+
 	Revealer::Revealer(RevealerTransition transition, unsigned int duration) : Container(this)
 	{
 		widget = gtk_revealer_new();
 		this->Transition(transition);
-		gtk_revealer_set_transition_duration(GTK_REVEALER(widget), duration);
+		this->Duration(duration);
 		this->SetContext(widget);
 	}
 
@@ -38,5 +44,10 @@ namespace CGui
 	bool Revealer::Reveal()
 	{
 		return gtk_revealer_get_reveal_child(GTK_REVEALER(widget));
+	}
+
+	bool Revealer::ChildRevealed()
+	{
+		return gtk_revealer_get_child_revealed(GTK_REVEALER(widget));
 	}
 };

@@ -8,6 +8,7 @@ namespace CGui
 	class Revealer : public Widget, public Container<Revealer>
 	{
 	public:
+		Revealer();
 		Revealer(RevealerTransition transition, unsigned int duration);
 		void Transition(RevealerTransition transition);
 		RevealerTransition Transition();
@@ -15,5 +16,6 @@ namespace CGui
 		unsigned int Duration();
 		void Reveal(bool reveal);
 		bool Reveal();
+		bool ChildRevealed();
 	};
 };

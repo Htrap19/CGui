@@ -12,7 +12,6 @@ namespace CGui
 	{
 		auto func = Converter::Convert::GetInstance().BoxFuncPtr(type);
 		func(GTK_BOX(widget), w.GetWidget(), expand, fill, padding);
-		children.Insert((void*)& w);
 	}
 
 	void Box::AddStart(Widget& w, bool expand, bool fill, unsigned int padding)

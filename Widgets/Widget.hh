@@ -8,6 +8,16 @@ namespace CGui
 	class Widget : public StyleContext
 	{
 	public:
+		Widget()
+		{
+
+		}
+
+		Widget(GtkWidget *w)
+		{
+			this->SetWidget(w);
+		}
+
 		virtual void SetWidget(GtkWidget* widget)
 		{
 			this->widget = widget;

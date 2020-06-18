@@ -31,6 +31,5 @@ namespace CGui
 	template <typename addtype> void Grid::Add(addtype& w, int left, int top, int width, int height)
 	{
 		gtk_grid_attach(GTK_GRID(widget), w.GetWidget(), left, top, width, height);
-		children.Insert((void*)& w);
 	}
 }

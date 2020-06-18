@@ -15,25 +15,30 @@ namespace CGui
 			t_widget = w;
 		}
 
+		~Container()
+		{
+			children.ForEach([](void*& data)
+				{
+					delete data;
+				});
+		}
+
 		virtual void Add(Widget& w)
 		{
 			gtk_container_add(GTK_CONTAINER(t_widget->GetWidget()), w.GetWidget());
-			children.Insert((void*)& w);
 		}
 
 		virtual void Remove(Widget& w)
 		{
 			gtk_container_remove(GTK_CONTAINER(t_widget->GetWidget()), w.GetWidget());
-			if (children.Exists((void*)& w))
-				children.Delete((void*)& w);
 		}
 
-		virtual void InternalWidth(unsigned int width) const
+		virtual void InternalWidth(unsigned int width)
 		{
 			gtk_container_set_border_width(GTK_CONTAINER(t_widget->GetWidget()), width);
 		}
 
-		virtual unsigned int InternalWidth() const
+		virtual unsigned int InternalWidth()
 		{
 			return gtk_container_get_border_width(GTK_CONTAINER(t_widget->GetWidget()));
 		}
@@ -41,6 +46,7 @@ namespace CGui
 		virtual void FocusChild(Widget& w)
 		{
 			gtk_container_set_focus_child(GTK_CONTAINER(t_widget->GetWidget()), w.GetWidget());
+			this->Children();
 			children.SelectData((void*)& w);
 		}
 
@@ -51,6 +57,15 @@ namespace CGui
 
 		virtual Single::List<void*>* Children()
 		{
+			auto g_list = gtk_container_get_children(GTK_CONTAINER(t_widget->GetWidget()));
+
+			for (GList* li = g_list; li != NULL; li = li->next)
+			{
+				children.Insert(new Widget(GTK_WIDGET(li->data)));
+			}
+
+			g_list_free(g_list);
+
 			return &children;
 		}
 
@@ -70,17 +85,22 @@ namespace CGui
 			t_widget = w;
 		}
 
+		~Container()
+		{
+			children.ForEach([](void*& data)
+				{
+					delete data;
+				});
+		}
+
 		virtual void Add(Widget& w)
 		{
 			gtk_container_add(GTK_CONTAINER(t_widget), w.GetWidget());
-			children.Insert((void*)& w);
 		}
 
 		virtual void Remove(Widget& w)
 		{
 			gtk_container_remove(GTK_CONTAINER(t_widget), w.GetWidget());
-			if (children.Exists((void*)& w))
-				children.Delete((void*)& w);
 		}
 
 		virtual void InternalWidth(unsigned int width) const
@@ -96,6 +116,7 @@ namespace CGui
 		virtual void FocusChild(Widget& w)
 		{
 			gtk_container_set_focus_child(GTK_CONTAINER(t_widget), w.GetWidget());
+			this->Children();
 			children.SelectData((void*)& w);
 		}
 
@@ -106,6 +127,15 @@ namespace CGui
 
 		virtual Single::List<void*>* Children()
 		{
+			auto g_list = gtk_container_get_children(GTK_CONTAINER(t_widget));
+
+			for (GList* li = g_list; li != NULL; li = li->next)
+			{
+				children.Insert(new Widget(GTK_WIDGET(li->data)));
+			}
+
+			g_list_free(g_list);
+
 			return &children;
 		}
 

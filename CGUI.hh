@@ -23,35 +23,4 @@
 #include "./Widgets/StyleContext.hh"
 #include "./Widgets/Grid/Grid.hh"
 #include "./Pixbuf/Pixbuf.hh"
-
-namespace CGui
-{
-	struct Init
-	{
-	public:
-		Init(int argc, char* argv[])
-		{
-			gtk_init(&argc, &argv);
-		}
-		~Init()
-		{
-			gtk_main();
-		}
-	};
-
-	static void UpdateUIWhile()
-	{
-		while (gtk_events_pending())
-			gtk_main_iteration();
-	}
-
-	static void UpdateUI()
-	{
-		gtk_main_iteration();
-	}
-
-	static void MainQuit()
-	{
-		gtk_main_quit();
-	}
-};
+#include "./Custom/Initialize/Initialize.hh"

@@ -1,5 +1,5 @@
 #include "./Window.hh"
-#include "../../Custom/Storage/Storage.hh"
+#include "../../Custom/Initialize/Initialize.hh"
 
 namespace CGui
 {
@@ -14,15 +14,7 @@ namespace CGui
 		{
 			if (Window::m_ref_count <= 1)
 			{
-				auto f = [](KeyValue::Node<const char*, Single::List<std::any>*> * node) -> void
-				{
-					if (std::string(node->key) == "Instance")
-						delete node->value;
-				};
-
-				Storage::GetInstance().ForEach<const char*, Single::List<std::any>*>(f, "allcallbacks");
-				Storage::GetInstance().Free<const char*, Single::List<std::any>*>("allcallbacks");
-				gtk_main_quit();
+				CGui::MainQuit();
 			}
 			else
 			{

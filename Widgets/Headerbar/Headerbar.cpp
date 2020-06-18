@@ -74,7 +74,6 @@ namespace CGui
 	{
 		auto func = Converter::Convert::GetInstance().HeaderbarFuncPtr(type);
 		func(GTK_HEADER_BAR(widget), w.GetWidget());
-		children.Insert((void*)& w);
 	}
 
 	void Headerbar::AddStart(Widget& w)

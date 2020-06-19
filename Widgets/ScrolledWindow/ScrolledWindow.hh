@@ -12,7 +12,7 @@ namespace CGui
 		Widget& VScrollbar();
 		Widget& HScrollbar();
 		void ScrollPolicy(Policy hpolicy, Policy vpolicy);
-		std::pair<Policy, Policy> ScrollPolicy();
+		PolicyInfo ScrollPolicy();
 		void Placement(CornerType type);
 		CornerType Placement();
 		void UnsetPlacement();

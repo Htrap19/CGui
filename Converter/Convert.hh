@@ -18,6 +18,11 @@ namespace CGui
 	};
 
 	enum class Alignments { FILL, BEGIN, LAST, CENTER, BASELINE };
+	struct AlignmentsInfo
+	{
+		Alignments halign;
+		Alignments valign;
+	};
 
 	enum class Events { CLICKED, DELETE, TOGGLED, CHANGED, ENTER, ACTIVATE, DESTROY };
 
@@ -30,6 +35,11 @@ namespace CGui
 	enum class MessageType { INFO, WARNING, QUESTION, ERROR, OTHER };
 
 	enum class Policy { ALWAYS, AUTOMATIC, NEVER, EXTERNAL };
+	struct PolicyInfo
+	{
+		Policy hpolicy;
+		Policy vpolicy;
+	};
 
 	enum class Action { OPEN, SAVE, SELECT_FOLDER, CREATE_FOLDER };
 
@@ -58,6 +68,8 @@ namespace CGui
 
 	enum class CornerType { TOP_LEFT, BOTTOM_LEFT, TOP_RIGHT, BOTTOM_RIGHT };
 	enum class ShadowType { NONE, IN, OUT, ETCHED_IN, ETCHED_OUT };
+
+	enum class StateFlags { NORMAL, ACTIVE, PRELIGHT, SELECTED, INSENSITIVE, INCONSISTENT, FOCUSED, BACKDROP, DIR_LTR, DIR_RTL, LINK, VISITED, CHECKED, DROP_ACTIVE };
 
 	namespace Converter
 	{

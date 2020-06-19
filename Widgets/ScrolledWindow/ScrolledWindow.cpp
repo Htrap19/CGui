@@ -2,7 +2,7 @@
 
 namespace CGui
 {
-	ScrolledWindow::ScrolledWindow(Policy hpolicy, Policy vpolicy) : Container(this), m_VScrollbar{NULL}, m_HScrollbar{NULL}
+	ScrolledWindow::ScrolledWindow(Policy hpolicy, Policy vpolicy) : Container(this)
 	{
 		widget = gtk_scrolled_window_new(NULL, NULL);
 		this->ScrollPolicy(hpolicy, vpolicy);
@@ -11,13 +11,13 @@ namespace CGui
 
 	Widget& ScrolledWindow::VScrollbar()
 	{
-		m_VScrollbar->SetWidget(gtk_scrolled_window_get_vscrollbar(GTK_SCROLLED_WINDOW(widget)));
+		m_VScrollbar = &Widget(gtk_scrolled_window_get_vscrollbar(GTK_SCROLLED_WINDOW(widget)));
 		return *m_VScrollbar;
 	}
 
 	Widget& ScrolledWindow::HScrollbar()
 	{
-		m_HScrollbar->SetWidget(gtk_scrolled_window_get_hscrollbar(GTK_SCROLLED_WINDOW(widget)));
+		m_HScrollbar = &Widget(gtk_scrolled_window_get_hscrollbar(GTK_SCROLLED_WINDOW(widget)));
 		return *m_HScrollbar;
 	}
 
@@ -26,12 +26,12 @@ namespace CGui
 		gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(widget), (GtkPolicyType)hpolicy, (GtkPolicyType)vpolicy);
 	}
 
-	std::pair<Policy, Policy> ScrolledWindow::ScrollPolicy()
+	PolicyInfo ScrolledWindow::ScrollPolicy()
 	{
 		GtkPolicyType hp, vp;
 		gtk_scrolled_window_get_policy(GTK_SCROLLED_WINDOW(widget), &hp, &vp);
 
-		return std::make_pair((Policy)hp, (Policy)vp);
+		return { (Policy)hp, (Policy)vp };
 	}
 
 	void ScrolledWindow::Placement(CornerType type)

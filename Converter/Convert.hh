@@ -71,6 +71,14 @@ namespace CGui
 
 	enum class StateFlags { NORMAL, ACTIVE, PRELIGHT, SELECTED, INSENSITIVE, INCONSISTENT, FOCUSED, BACKDROP, DIR_LTR, DIR_RTL, LINK, VISITED, CHECKED, DROP_ACTIVE };
 
+	struct CoordinatesInfo
+	{
+		int x, y;
+	};
+
+	enum class TextDirection { NONE, LTR, RTL };
+	enum class DirectionType { TAB_FORWARD, TAB_BACKWARD, UP, DOWN, LEFT, RIGHT };
+
 	namespace Converter
 	{
 		class Convert

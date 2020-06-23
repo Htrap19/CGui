@@ -2,22 +2,32 @@
 
 namespace CGui
 {
-	ScrolledWindow::ScrolledWindow(Policy hpolicy, Policy vpolicy) : Container(this)
+	ScrolledWindow::ScrolledWindow(Policy hpolicy, Policy vpolicy) : Container(this), m_HScrollbar{NULL}, m_VScrollbar{NULL}
 	{
 		widget = gtk_scrolled_window_new(NULL, NULL);
 		this->ScrollPolicy(hpolicy, vpolicy);
 		this->SetContext(widget);
 	}
 
+	ScrolledWindow::~ScrolledWindow()
+	{
+		delete m_HScrollbar;
+		delete m_VScrollbar;
+	}
+
 	Widget& ScrolledWindow::VScrollbar()
 	{
-		m_VScrollbar = &Widget(gtk_scrolled_window_get_vscrollbar(GTK_SCROLLED_WINDOW(widget)));
+		if (m_VScrollbar != NULL)
+			delete m_VScrollbar;
+		m_VScrollbar = new Widget(gtk_scrolled_window_get_vscrollbar(GTK_SCROLLED_WINDOW(widget)));
 		return *m_VScrollbar;
 	}
 
 	Widget& ScrolledWindow::HScrollbar()
 	{
-		m_HScrollbar = &Widget(gtk_scrolled_window_get_hscrollbar(GTK_SCROLLED_WINDOW(widget)));
+		if (m_HScrollbar != NULL)
+			delete m_HScrollbar;
+		m_HScrollbar = new Widget(gtk_scrolled_window_get_hscrollbar(GTK_SCROLLED_WINDOW(widget)));
 		return *m_HScrollbar;
 	}
 

@@ -9,6 +9,7 @@ namespace CGui
 	{
 	public:
 		ScrolledWindow(Policy hpolicy, Policy vpolicy);
+		~ScrolledWindow();
 		Widget& VScrollbar();
 		Widget& HScrollbar();
 		void ScrollPolicy(Policy hpolicy, Policy vpolicy);

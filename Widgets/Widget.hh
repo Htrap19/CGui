@@ -2,18 +2,19 @@
 
 #include "../Converter/Convert.hh"
 #include "./StyleContext.hh"
+#include "../Custom/List/List.hh"
 
 namespace CGui
 {
 	class Widget : public StyleContext
 	{
 	public:
-		Widget()
+		Widget() : m_parent{ NULL }, m_toplevel{ NULL }, m_custom_tooltip_window{ NULL }
 		{
 
 		}
 
-		Widget(GtkWidget *w)
+		Widget(GtkWidget* w) : m_parent{ NULL }, m_toplevel{ NULL }, m_custom_tooltip_window{ NULL }
 		{
 			this->SetWidget(w);
 		}
@@ -62,6 +63,11 @@ namespace CGui
 		virtual void Sensitive(bool sensitive)
 		{
 			gtk_widget_set_sensitive(GTK_WIDGET(widget), sensitive);
+		}
+
+		virtual bool IsSensitive()
+		{
+			return gtk_widget_is_sensitive(GTK_WIDGET(widget));
 		}
 
 		virtual bool Sensitive()
@@ -146,13 +152,334 @@ namespace CGui
 
 		virtual Widget& Parent()
 		{
-			m_parent = &Widget(gtk_widget_get_parent(GTK_WIDGET(widget)));
+			if (m_parent != NULL)
+				delete m_parent;
+			m_parent = new Widget(gtk_widget_get_parent(GTK_WIDGET(widget)));
 			return *m_parent;
 		}
 
-		virtual bool IsAncestor(Widget& ancestor)
+		virtual void Unparent()
+		{
+			gtk_widget_unparent(GTK_WIDGET(widget));
+		}
+
+		virtual bool IsAncestor(Widget & ancestor)
 		{
 			return gtk_widget_is_ancestor(GTK_WIDGET(widget), ancestor.GetWidget());
+		}
+
+		virtual Widget& Toplevel()
+		{
+			if (m_toplevel != NULL)
+				delete m_toplevel;
+			m_toplevel = new Widget(gtk_widget_get_toplevel(GTK_WIDGET(widget)));
+			return *m_toplevel;
+		}
+
+		virtual bool InDestruction()
+		{
+			return gtk_widget_in_destruction(GTK_WIDGET(widget));
+		}
+
+		virtual bool Activate()
+		{
+			return gtk_widget_activate(GTK_WIDGET(widget));
+		}
+
+		virtual CoordinatesInfo TranslateCoordinates(Widget & w, int src_x, int src_y)
+		{
+			int dest_x, dest_y;
+			gtk_widget_translate_coordinates(GTK_WIDGET(widget), w.GetWidget(), src_x, src_y, &dest_x, &dest_y);
+			return { dest_x, dest_y };
+		}
+
+		virtual bool HideOnDelete()
+		{
+			return gtk_widget_hide_on_delete(GTK_WIDGET(widget));
+		}
+
+		virtual void Direction(TextDirection direction)
+		{
+			gtk_widget_set_direction(GTK_WIDGET(widget), (GtkTextDirection)direction);
+		}
+
+		virtual TextDirection Direction()
+		{
+			return (TextDirection)gtk_widget_get_direction(GTK_WIDGET(widget));
+		}
+
+		virtual void DefaultDirection(TextDirection direction)
+		{
+			gtk_widget_set_default_direction((GtkTextDirection)direction);
+		}
+
+		virtual TextDirection DefaultDirection()
+		{
+			return (TextDirection)gtk_widget_get_default_direction();
+		}
+
+		virtual void RedrawOnAllocate(bool redraw)
+		{
+			gtk_widget_set_redraw_on_allocate(GTK_WIDGET(widget), redraw);
+		}
+
+		virtual void ChildFocus(DirectionType type)
+		{
+			gtk_widget_child_focus(GTK_WIDGET(widget), (GtkDirectionType)type);
+		}
+
+		virtual void ChildVisible(bool visible)
+		{
+			gtk_widget_set_child_visible(GTK_WIDGET(widget), visible);
+		}
+
+		virtual bool ChildVisible()
+		{
+			return gtk_widget_get_child_visible(GTK_WIDGET(widget));
+		}
+
+		virtual void NoShowAll(bool no_show_all)
+		{
+			gtk_widget_set_no_show_all(GTK_WIDGET(widget), no_show_all);
+		}
+
+		virtual bool NoShowAll()
+		{
+			return gtk_widget_get_no_show_all(GTK_WIDGET(widget));
+		}
+
+		virtual Single::List<Widget*>& ListMnemonicLabels()
+		{
+			auto g_list = gtk_widget_list_mnemonic_labels(GTK_WIDGET(widget));
+
+			if (m_list_mnemonic_labels.Size() >= 1)
+			{
+				m_list_mnemonic_labels.ForEach([](Widget * data) -> void
+					{
+						delete data;
+					});
+			}
+
+			for (GList* it = g_list; it != NULL; it = it->next)
+			{
+				m_list_mnemonic_labels.Insert(new Widget(GTK_WIDGET(it->data)));
+			}
+
+			return m_list_mnemonic_labels;
+		}
+
+		virtual void AddMnemonicLabel(Widget & label)
+		{
+			gtk_widget_add_mnemonic_label(GTK_WIDGET(widget), label.GetWidget());
+		}
+
+		virtual void RemoveMnemonicLabel(Widget & label)
+		{
+			gtk_widget_remove_mnemonic_label(GTK_WIDGET(widget), label.GetWidget());
+		}
+
+		virtual void ErrorBell()
+		{
+			gtk_widget_error_bell(GTK_WIDGET(widget));
+		}
+
+		virtual bool KeynavFailed(DirectionType type)
+		{
+			return gtk_widget_keynav_failed(GTK_WIDGET(widget), (GtkDirectionType)type);
+		}
+
+		virtual void TooltipMarkup(const char* markup)
+		{
+			gtk_widget_set_tooltip_markup(GTK_WIDGET(widget), markup);
+		}
+
+		virtual const char* TooltipMarkup()
+		{
+			return gtk_widget_get_tooltip_markup(GTK_WIDGET(widget));
+		}
+
+		virtual void TooltipWindow(Widget & window)
+		{
+			if (GTK_IS_WINDOW(window.GetWidget()))
+				gtk_widget_set_tooltip_window(GTK_WIDGET(widget), GTK_WINDOW(window.GetWidget()));
+		}
+
+		virtual Widget& TooltipWindow()
+		{
+			if (m_custom_tooltip_window != NULL)
+				delete m_custom_tooltip_window;
+			m_custom_tooltip_window = new Widget(GTK_WIDGET(gtk_widget_get_tooltip_window(GTK_WIDGET(widget))));
+			return *m_custom_tooltip_window;
+		}
+
+		virtual void HasTooltip(bool has_tooltip)
+		{
+			gtk_widget_set_has_tooltip(GTK_WIDGET(widget), has_tooltip);
+		}
+
+		virtual bool HasTooltip()
+		{
+			return gtk_widget_get_has_tooltip(GTK_WIDGET(widget));
+		}
+
+		virtual int AllocatedWidth()
+		{
+			return gtk_widget_get_allocated_width(GTK_WIDGET(widget));
+		}
+
+		virtual int AllocatedHeight()
+		{
+			return gtk_widget_get_allocated_height(GTK_WIDGET(widget));
+		}
+
+		virtual int AllocatedBaseline()
+		{
+			return gtk_widget_get_allocated_baseline(GTK_WIDGET(widget));
+		}
+
+		virtual void CanDefault(bool can_default)
+		{
+			gtk_widget_set_can_default(GTK_WIDGET(widget), can_default);
+		}
+
+		virtual bool CanDefault()
+		{
+			return gtk_widget_get_can_default(GTK_WIDGET(widget));
+		}
+
+		virtual bool HasDefault()
+		{
+			return gtk_widget_has_default(GTK_WIDGET(widget));
+		}
+
+		virtual void CanFocus(bool can_focus)
+		{
+			gtk_widget_set_can_focus(GTK_WIDGET(widget), can_focus);
+		}
+
+		virtual bool CanFocus()
+		{
+			return gtk_widget_get_can_focus(GTK_WIDGET(widget));
+		}
+
+		virtual bool HasFocus()
+		{
+			return gtk_widget_has_focus(GTK_WIDGET(widget));
+		}
+
+		virtual bool HasVisibleFocus()
+		{
+			return gtk_widget_has_visible_focus(GTK_WIDGET(widget));
+		}
+
+		virtual bool HasGrab()
+		{
+			return gtk_widget_has_grab(GTK_WIDGET(widget));
+		}
+
+		virtual bool IsDrawable()
+		{
+			return gtk_widget_is_drawable(GTK_WIDGET(widget));
+		}
+
+		virtual bool IsToplevel()
+		{
+			return gtk_widget_is_toplevel(GTK_WIDGET(widget));
+		}
+
+		virtual void FocusOnClick(bool focus_on_click)
+		{
+			gtk_widget_set_focus_on_click(GTK_WIDGET(widget), focus_on_click);
+		}
+
+		virtual bool FocusOnClick()
+		{
+			return gtk_widget_get_focus_on_click(GTK_WIDGET(widget));
+		}
+
+		virtual void Visible(bool visible)
+		{
+			gtk_widget_set_visible(GTK_WIDGET(widget), visible);
+		}
+
+		virtual bool IsVisible()
+		{
+			return gtk_widget_is_visible(GTK_WIDGET(widget));
+		}
+
+		virtual bool Visible()
+		{
+			return gtk_widget_get_visible(GTK_WIDGET(widget));
+		}
+
+		virtual void State(StateFlags flag, bool clear)
+		{
+			gtk_widget_set_state_flags(GTK_WIDGET(widget), (GtkStateFlags)flag, clear);
+		}
+
+		virtual void UnsetState(StateFlags flag)
+		{
+			gtk_widget_unset_state_flags(GTK_WIDGET(widget), (GtkStateFlags)flag);
+		}
+
+		virtual StateFlags State()
+		{
+			return (StateFlags)gtk_widget_get_state_flags(GTK_WIDGET(widget));
+		}
+
+		virtual void ReceviesDefault(bool recevies_default)
+		{
+			gtk_widget_set_receives_default(GTK_WIDGET(widget), recevies_default);
+		}
+
+		virtual bool ReceviesDefault()
+		{
+			return gtk_widget_get_receives_default(GTK_WIDGET(widget));
+		}
+
+		virtual void SupportMultiDevice(bool support_multi_device)
+		{
+			gtk_widget_set_support_multidevice(GTK_WIDGET(widget), support_multi_device);
+		}
+
+		virtual bool SupportMultiDevice()
+		{
+			return gtk_widget_get_support_multidevice(GTK_WIDGET(widget));
+		}
+
+		virtual void Realized(bool realized)
+		{
+			gtk_widget_set_realized(GTK_WIDGET(widget), realized);
+		}
+
+		virtual bool Realized()
+		{
+			return gtk_widget_get_realized(GTK_WIDGET(widget));
+		}
+
+		virtual void Mapped(bool mapped)
+		{
+			gtk_widget_set_mapped(GTK_WIDGET(widget), mapped);
+		}
+
+		virtual bool Mapped()
+		{
+			return gtk_widget_get_mapped(GTK_WIDGET(widget));
+		}
+
+		virtual void Opacity(double opacity)
+		{
+			gtk_widget_set_opacity(GTK_WIDGET(widget), opacity);
+		}
+
+		virtual double Opacity()
+		{
+			return gtk_widget_get_opacity(GTK_WIDGET(widget));
+		}
+
+		virtual void ResetStyle()
+		{
+			gtk_widget_reset_style(GTK_WIDGET(widget));
 		}
 
 		virtual void Destroy()
@@ -166,10 +493,21 @@ namespace CGui
 		}
 
 		virtual ~Widget()
-		{  }
+		{
+			delete m_parent;
+			delete m_toplevel;
+			m_list_mnemonic_labels.ForEach([](Widget * data) -> void
+				{
+					delete data;
+				});
+			delete m_custom_tooltip_window;
+		}
 
 	protected:
 		GtkWidget* widget;
 		Widget* m_parent;
+		Widget* m_toplevel;
+		Single::List<Widget*> m_list_mnemonic_labels;
+		Widget* m_custom_tooltip_window;
 	};
 }

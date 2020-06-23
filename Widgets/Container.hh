@@ -15,9 +15,9 @@ namespace CGui
 			t_widget = w;
 		}
 
-		~Container()
+		virtual ~Container()
 		{
-			children.ForEach([](void*& data)
+			children.ForEach([](void* data)
 				{
 					delete data;
 				});
@@ -59,6 +59,16 @@ namespace CGui
 		{
 			auto g_list = gtk_container_get_children(GTK_CONTAINER(t_widget->GetWidget()));
 
+			if (children.Size() >= 1)
+			{
+				children.ForEach([](void* data) -> void
+					{
+						delete data;
+					});
+
+				children.DeleteAll();
+			}
+
 			for (GList* li = g_list; li != NULL; li = li->next)
 			{
 				children.Insert(new Widget(GTK_WIDGET(li->data)));
@@ -85,9 +95,9 @@ namespace CGui
 			t_widget = w;
 		}
 
-		~Container()
+		virtual ~Container()
 		{
-			children.ForEach([](void*& data)
+			children.ForEach([](void* data)
 				{
 					delete data;
 				});
@@ -128,6 +138,16 @@ namespace CGui
 		virtual Single::List<void*>* Children()
 		{
 			auto g_list = gtk_container_get_children(GTK_CONTAINER(t_widget));
+
+			if (children.Size() >= 1)
+			{
+				children.ForEach([](void* data) -> void
+					{
+						delete data;
+					});
+
+				children.DeleteAll();
+			}
 
 			for (GList* li = g_list; li != NULL; li = li->next)
 			{

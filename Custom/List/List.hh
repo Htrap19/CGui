@@ -38,20 +38,22 @@ namespace CGui
 			Node<Data>* Find(Data data);
 			void ForEach(void(*func)(Node<Data>*));
 			void ForEach(void(*func)(Data&));
+			void ForEach(void(*func)(Data));
 			template <typename ... Args> void ForEach(void(*func)(Node<Data>*, Args...), Args& ... args);
 			template <typename ... Args> void ForEach(void(*func)(Data&, Args...), Args& ... args);
+			template <typename ... Args> void ForEach(void(*func)(Data, Args...), Args& ... args);
 			bool Delete(Data data);
+			void DeleteAll();
 
 			Data& operator[](unsigned int index);
 
 		private:
 			Node<Data>* head;
-			unsigned int size;
 			Data* selected_data;
 		};
 
 		template <typename Data>
-		List<Data>::List() : size{ 0 }, selected_data{ NULL }
+		List<Data>::List() : selected_data{ NULL }
 		{
 			head = NULL;
 		}
@@ -59,15 +61,7 @@ namespace CGui
 		template <typename Data>
 		List<Data>::~List()
 		{
-			Node<Data>* currNode = head;
-			Node<Data>* nextNode = NULL;
-
-			while (currNode != NULL)
-			{
-				nextNode = currNode->next;
-				delete currNode;
-				currNode = nextNode;
-			}
+			this->DeleteAll();
 		}
 
 		template <typename Data>
@@ -91,7 +85,6 @@ namespace CGui
 				currNode->next = newNode;
 			}
 
-			size++;
 			return newNode;
 		}
 
@@ -114,6 +107,18 @@ namespace CGui
 		template <typename Data>
 		unsigned int List<Data>::Size()
 		{
+			if (head == NULL)
+				return 0;
+
+			Node<Data> * currNode = head;
+			unsigned int size = 0;
+
+			while (currNode != NULL)
+			{
+				size++;
+				currNode = currNode->next;
+			}
+
 			return size;
 		}
 
@@ -275,6 +280,17 @@ namespace CGui
 			}
 		}
 
+		template<typename Data>
+		void List<Data>::ForEach(void(*func)(Data))
+		{
+			Node<Data>* currNode = head;
+			while (currNode != NULL)
+			{
+				func(currNode->data);
+				currNode = currNode->next;
+			}
+		}
+
 		template <typename Data>
 		template <typename ... Args> void List<Data>::ForEach(void(*func)(Node<Data>*, Args...), Args & ... args)
 		{
@@ -288,6 +304,17 @@ namespace CGui
 
 		template <typename Data>
 		template <typename ... Args> void List<Data>::ForEach(void(*func)(Data&, Args...), Args & ... args)
+		{
+			Node<Data>* currNode = head;
+			while (currNode != NULL)
+			{
+				func(currNode->data, args...);
+				currNode = currNode->next;
+			}
+		}
+
+		template<typename Data>
+		template<typename ... Args> void List<Data>::ForEach(void(*func)(Data, Args...), Args & ...args)
 		{
 			Node<Data>* currNode = head;
 			while (currNode != NULL)
@@ -319,18 +346,32 @@ namespace CGui
 				{
 					prevNode->next = currNode->next;
 					delete currNode;
-					size--;
 					return true;
 				}
 				else
 				{
 					head = currNode->next;
 					delete currNode;
-					size--;
 					return true;
 				}
 
 			return false;
+		}
+
+		template<typename Data>
+		void List<Data>::DeleteAll()
+		{
+			Node<Data>* currNode = head;
+			Node<Data>* nextNode = NULL;
+
+			while (currNode != NULL)
+			{
+				nextNode = currNode->next;
+				delete currNode;
+				currNode = nextNode;
+			}
+
+			head = NULL;
 		}
 
 		template<typename Data>

@@ -17,10 +17,13 @@ namespace CGui
 
 		virtual ~Container()
 		{
-			children.ForEach([](void* data)
-				{
-					delete data;
-				});
+			if (children.Size() >= 1)
+			{
+				children.ForEach([](void* data)
+					{
+						delete data;
+					});
+			}
 		}
 
 		virtual void Add(Widget& w)
@@ -97,10 +100,13 @@ namespace CGui
 
 		virtual ~Container()
 		{
-			children.ForEach([](void* data)
-				{
-					delete data;
-				});
+			if (children.Size() >= 1)
+			{
+				children.ForEach([](void* data)
+					{
+						delete data;
+					});
+			}
 		}
 
 		virtual void Add(Widget& w)

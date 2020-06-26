@@ -8,18 +8,10 @@ namespace CGui
 	class StyleContext
 	{
 	public:
-		StyleContext(GtkStyleContext *context)
-		{
-			this->stylecontext = context;
-		}
-
 		StyleContext(GtkWidget* w)
 		{
 			this->SetContext(w);
 		}
-
-		virtual ~StyleContext()
-		{  }
 
 		virtual void AddStyleClass(const char* classname) const
 		{
@@ -43,7 +35,7 @@ namespace CGui
 
 			for (GList* l = g_list; l != NULL; l = l->next)
 			{
-				t_list.Insert((const char*&)l->data);
+				t_list.Insert((const char*)l->data);
 			}
 
 			g_list_free(g_list);

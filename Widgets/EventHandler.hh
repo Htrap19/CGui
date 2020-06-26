@@ -17,9 +17,9 @@ namespace CGui
 			t_widget = w;
 		}
 
-		long unsigned int SignalHandler(Events event, void(*func)())
+		/*long unsigned int SignalHandler(Events event, void(*func)())
 		{
-			if (singleCallbackMethods == NULL)
+			if (emptyCallbackMethods == NULL)
 			{
 				emptyCallbackMethods = new Single::List<std::any>;
 				Storage::GetInstance().Add<const char*, Single::List<std::any>*>("Instance", emptyCallbackMethods, "allcallbacks");
@@ -61,7 +61,7 @@ namespace CGui
 			};
 
 			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((void(*)(GtkWidget*, EventHandler*))callback), this));
-		}
+		}*/
 
 		template <typename ... Args> long unsigned int SignalHandler(Events event, void(*func)(WidgetType*, Args* ...), Args& ... args)
 		{
@@ -128,8 +128,8 @@ namespace CGui
 		{  }
 
 	protected:
-		Single::List<std::any>* emptyCallbackMethods = NULL;
-		Single::List<std::any>* singleCallbackMethods = NULL;
+		/*Single::List<std::any>* emptyCallbackMethods = NULL;
+		Single::List<std::any>* singleCallbackMethods = NULL;*/
 		Single::List<std::any>* infiniteCallbackMethods = NULL;
 
 	private:

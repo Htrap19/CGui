@@ -1,6 +1,7 @@
 #pragma once
 #include <gtk/gtk.h>
 #include "../Storage/Storage.hh"
+#include "../../Widgets/EventHandler.hh"
 
 namespace CGui
 {
@@ -38,6 +39,34 @@ namespace CGui
 
 		Storage::GetInstance().ForEach<const char*, Single::List<std::any>*>(f, "allcallbacks");
 		Storage::GetInstance().Free<const char*, Single::List<std::any>*>("allcallbacks");
+
+		auto f2 = [](KeyValue::Node<const char*, void*> * node) -> void
+		{
+			if (std::string(node->key) == "Instance")
+				delete node->value;
+		};
+
+		Storage::GetInstance().ForEach<const char*, void*>(f2, "passingdata");
+		Storage::GetInstance().Free<const char*, void*>("passingdata");
+
+		auto f3 = [](KeyValue::Node<const char*, KeyValue::List<Events, std::any>*> * node) -> void
+		{
+			if (std::string(node->key) == "Instance")
+				delete node->value;
+		};
+
+		Storage::GetInstance().ForEach<const char*, KeyValue::List<Events, std::any>*>(f3, "mainlistevents");
+		Storage::GetInstance().Free<const char*, KeyValue::List<Events, std::any>*>("mainlistevents");
+
+		auto f4 = [](KeyValue::Node<const char*, KeyValue::List<Signals, std::any>*> * node) -> void
+		{
+			if (std::string(node->key) == "Instance")
+				delete node->value;
+		};
+
+		Storage::GetInstance().ForEach<const char*, KeyValue::List<Signals, std::any>*>(f4, "mainlistsignals");
+		Storage::GetInstance().Free<const char*, KeyValue::List<Signals, std::any>*>("mainlistsignals");
+
 		gtk_main_quit();
 	}
 };

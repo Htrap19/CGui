@@ -2,10 +2,11 @@
 
 #include "../Widget.hh"
 #include "../Container.hh"
+#include "../Orientable.hh"
 
 namespace CGui
 {
-	class Box : public Widget, public Container<Box>
+	class Box : public Widget, public Container<Box>, public Orientable
 	{
 	public:
 		Box(Orientation type, int spacing);

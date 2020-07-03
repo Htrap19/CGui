@@ -21,7 +21,7 @@ namespace CGui
 			List(void);
 			~List(void);
 			bool IsEmpty();
-			Node<Data>* Insert(Data data);
+			unsigned int Insert(Data data);
 			Node<Data>* First();
 			Node<Data>* Last();
 			unsigned int Size();
@@ -33,15 +33,15 @@ namespace CGui
 			bool Exists(bool(*func)(List<Data>*));
 			template <typename filter> List<filter> Filter(filter(*func)(Node<Data>*));
 			template <typename filter> List<filter> Filter(filter(*func)(Data&));
-			template <typename filter, typename ... Args> List<filter> Filter(filter(*func)(Node<Data>*, Args...), Args& ... args);
-			template <typename filter, typename ... Args> List<filter> Filter(filter(*func)(Data&, Args...), Args& ... args);
-			Node<Data>* Find(Data data);
+			template <typename filter, typename ... Args> List<filter> Filter(filter(*func)(Node<Data>*, Args...), Args ... args);
+			template <typename filter, typename ... Args> List<filter> Filter(filter(*func)(Data&, Args...), Args ... args);
+			unsigned int Find(Data data);
 			void ForEach(void(*func)(Node<Data>*));
 			void ForEach(void(*func)(Data&));
 			void ForEach(void(*func)(Data));
-			template <typename ... Args> void ForEach(void(*func)(Node<Data>*, Args...), Args& ... args);
-			template <typename ... Args> void ForEach(void(*func)(Data&, Args...), Args& ... args);
-			template <typename ... Args> void ForEach(void(*func)(Data, Args...), Args& ... args);
+			template <typename ... Args> void ForEach(void(*func)(Node<Data>*, Args...), Args ... args);
+			template <typename ... Args> void ForEach(void(*func)(Data&, Args...), Args ... args);
+			template <typename ... Args> void ForEach(void(*func)(Data, Args...), Args ... args);
 			bool Delete(Data data);
 			void DeleteAll();
 
@@ -65,11 +65,16 @@ namespace CGui
 		}
 
 		template <typename Data>
-		Node<Data>* List<Data>::Insert(Data data)
+		unsigned int List<Data>::Insert(Data data)
 		{
 			Node<Data>* currNode = head;
+			unsigned int index = 0;
+
 			while (currNode && currNode->next != NULL)
+			{
 				currNode = currNode->next;
+				index++;
+			}
 
 			Node<Data> * newNode = new Node<Data>;
 			newNode->data = data;
@@ -85,7 +90,7 @@ namespace CGui
 				currNode->next = newNode;
 			}
 
-			return newNode;
+			return index;
 		}
 
 		template <typename Data>
@@ -215,7 +220,7 @@ namespace CGui
 		}
 
 		template <typename Data>
-		template <typename filter, typename ... Args> List<filter> List<Data>::Filter(filter(*func)(Node<Data>*, Args...), Args & ... args)
+		template <typename filter, typename ... Args> List<filter> List<Data>::Filter(filter(*func)(Node<Data>*, Args...), Args ... args)
 		{
 			Node<Data>* currNode = head;
 			List<filter> ret;
@@ -230,7 +235,7 @@ namespace CGui
 		}
 
 		template <typename Data>
-		template <typename filter, typename ... Args> List<filter> List<Data>::Filter(filter(*func)(Data&, Args...), Args & ... args)
+		template <typename filter, typename ... Args> List<filter> List<Data>::Filter(filter(*func)(Data&, Args...), Args ... args)
 		{
 			Node<Data>* currNode = head;
 			List<filter> ret;
@@ -245,17 +250,21 @@ namespace CGui
 		}
 
 		template <typename Data>
-		Node<Data>* List<Data>::Find(Data data)
+		unsigned int List<Data>::Find(Data data)
 		{
 			Node<Data>* currNode = head;
+			unsigned int index = 0;
 
 			while (currNode && currNode != NULL)
 			{
 				if (currNode->data == data)
-					return currNode;
+					return index;
+
+				currNode = currNode->next;
+				index++;
 			}
 
-			return NULL;
+			return 0;
 		}
 
 		template <typename Data>
@@ -292,7 +301,7 @@ namespace CGui
 		}
 
 		template <typename Data>
-		template <typename ... Args> void List<Data>::ForEach(void(*func)(Node<Data>*, Args...), Args & ... args)
+		template <typename ... Args> void List<Data>::ForEach(void(*func)(Node<Data>*, Args...), Args ... args)
 		{
 			Node<Data>* currNode = head;
 			while (currNode != NULL)
@@ -303,7 +312,7 @@ namespace CGui
 		}
 
 		template <typename Data>
-		template <typename ... Args> void List<Data>::ForEach(void(*func)(Data&, Args...), Args & ... args)
+		template <typename ... Args> void List<Data>::ForEach(void(*func)(Data&, Args...), Args ... args)
 		{
 			Node<Data>* currNode = head;
 			while (currNode != NULL)
@@ -314,7 +323,7 @@ namespace CGui
 		}
 
 		template<typename Data>
-		template<typename ... Args> void List<Data>::ForEach(void(*func)(Data, Args...), Args & ...args)
+		template<typename ... Args> void List<Data>::ForEach(void(*func)(Data, Args...), Args ...args)
 		{
 			Node<Data>* currNode = head;
 			while (currNode != NULL)
@@ -417,14 +426,14 @@ namespace CGui
 			List(void);
 			~List(void);
 			bool IsEmpty();
-			Node<Key, Value>* Insert(Key key, Value value);
-			Node<Key, Value>* First();
-			Node<Key, Value>* Last();
+			KeyValueData<Key, Value> Insert(Key key, Value value);
+			KeyValueData<Key, Value> First();
+			KeyValueData<Key, Value> Last();
 			unsigned int Size();
 			bool ExistsValue(Value value);
 			bool ExistsKey(Key key);
-			Node<Key, Value>* FindByKey(Key key);
-			Node<Key, Value>* FindByValue(Value value);
+			KeyValueData<Key, Value> FindByKey(Key key);
+			KeyValueData<Key, Value> FindByValue(Value value);
 			void ForEach(void(*func)(Node<Key, Value>*));
 			void ForEach(void(*func)(Key&, Value&));
 			template <typename ... Args> void ForEach(void(*func)(Node<Key, Value>*, Args...), Args ... args);
@@ -432,15 +441,14 @@ namespace CGui
 			bool DeleteKey(Key key);
 			bool DeleteValue(Value value);
 
-			std::pair<Key, Value> operator[](unsigned int index);
+			KeyValueData<Key, Value> operator[](unsigned int index);
 
 		private:
 			Node<Key, Value>* head;
-			unsigned int size;
 		};
 
 		template <typename Key, typename Value>
-		List<Key, Value>::List() : size{ 0 }
+		List<Key, Value>::List()
 		{
 			head = NULL;
 		}
@@ -465,12 +473,16 @@ namespace CGui
 		}
 
 		template <typename Key, typename Value>
-		Node<Key, Value>* List<Key, Value>::Insert(Key key, Value value)
+		KeyValueData<Key, Value> List<Key, Value>::Insert(Key key, Value value)
 		{
 			Node<Key, Value>* currNode = head;
+			unsigned int index = 0;
 
 			while (currNode && currNode->next != NULL)
+			{
 				currNode = currNode->next;
+				index++;
+			}
 
 			Node<Key, Value> * newNode = new Node<Key, Value>;
 			newNode->key = key;
@@ -487,30 +499,45 @@ namespace CGui
 				currNode->next = newNode;
 			}
 
-			size++;
-			return newNode;
+			return { newNode->key, newNode->value, index };
 		}
 
 		template <typename Key, typename Value>
-		Node<Key, Value>* List<Key, Value>::First()
+		KeyValueData<Key, Value> List<Key, Value>::First()
 		{
-			return head;
+			return { head->key, head->value, 0 };
 		}
 
 		template <typename Key, typename Value>
-		Node<Key, Value>* List<Key, Value>::Last()
+		KeyValueData<Key, Value> List<Key, Value>::Last()
 		{
 			Node<Key, Value>* currNode = head;
+			unsigned int index = 0;
 
 			while (currNode && currNode->next != NULL)
+			{
 				currNode = currNode->next;
+				index++;
+			}
 
-			return currNode;
+			return { currNode->key, currNode->value, index };
 		}
 
 		template <typename Key, typename Value>
 		unsigned int List<Key, Value>::Size()
 		{
+			if (head == NULL)
+				return 0;
+
+			Node<Key, Value> * currNode = head;
+			unsigned int size = 0;
+
+			while (currNode != NULL)
+			{
+				size++;
+				currNode = currNode->next;
+			}
+
 			return size;
 		}
 
@@ -523,6 +550,8 @@ namespace CGui
 			{
 				if (currNode->key == key)
 					return true;
+
+				currNode = currNode->next;
 			}
 
 			return false;
@@ -537,37 +566,47 @@ namespace CGui
 			{
 				if (currNode->value == value)
 					return true;
+
+				currNode = currNode->next;
 			}
 
 			return false;
 		}
 
 		template <typename Key, typename Value>
-		Node<Key, Value>* List<Key, Value>::FindByKey(Key key)
+		KeyValueData<Key, Value> List<Key, Value>::FindByKey(Key key)
 		{
-			Node<Key, Value> currNode = head;
+			Node<Key, Value>* currNode = head;
+			unsigned int index = 0;
 
 			while (currNode && currNode != NULL)
 			{
 				if (currNode->key == key)
-					return currNode;
+					return { currNode->key, currNode->value, index };
+
+				currNode = currNode->next;
+				index++;
 			}
 
-			return NULL;
+			return { };
 		}
 
 		template <typename Key, typename Value>
-		Node<Key, Value>* List<Key, Value>::FindByValue(Value value)
+		KeyValueData<Key, Value> List<Key, Value>::FindByValue(Value value)
 		{
-			Node<Key, Value> currNode = head;
+			Node<Key, Value>* currNode = head;
+			unsigned int index = 0;
 
 			while (currNode && currNode != NULL)
 			{
 				if (currNode->value == value)
-					return currNode;
+					return { currNode->key, currNode->value, index };
+
+				currNode = currNode->next;
+				index++;
 			}
 
-			return NULL;
+			return { };
 		}
 
 		template <typename Key, typename Value>
@@ -640,14 +679,12 @@ namespace CGui
 				{
 					prevNode->next = currNode->next;
 					delete currNode;
-					size--;
 					return true;
 				}
 				else
 				{
 					head = currNode->next;
 					delete currNode;
-					size--;
 					return true;
 				}
 
@@ -676,14 +713,12 @@ namespace CGui
 				{
 					prevNode->next = currNode->next;
 					delete currNode;
-					size--;
 					return true;
 				}
 				else
 				{
 					head = currNode->next;
 					delete currNode;
-					size--;
 					return true;
 				}
 
@@ -691,10 +726,10 @@ namespace CGui
 		}
 
 		template <typename Key, typename Value>
-		std::pair<Key, Value> List<Key, Value>::operator[](unsigned int index)
+		KeyValueData<Key, Value> List<Key, Value>::operator[](unsigned int index)
 		{
 			if (index <= 0)
-				return std::make_pair(head->key, head->value);
+				return { head->key, head->value };
 
 			Node<Key, Value> * currNode = head;
 			unsigned int currIndex = 0;
@@ -711,7 +746,7 @@ namespace CGui
 					break;
 			}
 
-			return std::make_pair(currNode->key, currNode->value);
+			return { currNode->key, currNode->value };
 		}
 	};
 };

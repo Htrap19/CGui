@@ -2,14 +2,14 @@
 
 namespace CGui
 {
-	Infobar::Infobar()
+	Infobar::Infobar() : Orientable(this)
 	{
 		widget = gtk_info_bar_new();
 		t_widget = gtk_info_bar_get_content_area(GTK_INFO_BAR(widget));
 		this->SetContext(widget);
 	}
 
-	Infobar::Infobar(MessageType messagetype, bool showclosebutton)
+	Infobar::Infobar(MessageType messagetype, bool showclosebutton) : Orientable(this)
 	{
 		widget = gtk_info_bar_new();
 		this->MessageBoxType(messagetype);

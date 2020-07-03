@@ -2,10 +2,11 @@
 
 #include "../Widget.hh"
 #include "../Container.hh"
+#include "../Orientable.hh"
 
 namespace CGui
 {
-	class Grid : public Widget, public Container<Grid>
+	class Grid : public Widget, public Container<Grid>, public Orientable
 	{
 	public:
 		Grid();

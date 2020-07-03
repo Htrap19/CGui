@@ -20,11 +20,11 @@ namespace CGui
 
 	template <typename ... Args> long unsigned int CheckButton::Toggled(void(*func)(CheckButton*, Args* ...), Args& ... args)
 	{
-		return this->SignalHandler(Events::TOGGLED, func, args...);
+		return this->SignalHandler(Signals::TOGGLED, func, args...);
 	}
 
 	template <typename ... Args> long unsigned int CheckButton::Toggled(void(*func)(Args* ...), Args& ... args)
 	{
-		return this->SignalHandler(Events::TOGGLED, func, args...);
+		return this->SignalHandler(Signals::TOGGLED, func, args...);
 	}
 };

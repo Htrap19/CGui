@@ -63,11 +63,11 @@ namespace CGui
 
 	template <typename ... Args> long unsigned int Entry::Changed(void(*func)(Entry*, Args* ...), Args& ... args)
 	{
-		return this->SignalHandler(Events::CHANGED, func, args...);
+		return this->SignalHandler(Signals::CHANGED, func, args...);
 	}
 
 	template <typename ... Args> long unsigned int Entry::Changed(void(*func)(Args* ...), Args& ... args)
 	{
-		return this->SignalHandler(Events::CHANGED, func, args...);
+		return this->SignalHandler(Signals::CHANGED, func, args...);
 	}
 }

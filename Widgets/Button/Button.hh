@@ -36,11 +36,11 @@ namespace CGui
 
 	template <typename ... Args> long unsigned int Button::Clicked(void(*func)(Button*, Args* ...), Args& ... args)
 	{
-		return this->SignalHandler(Events::CLICKED, func, args...);
+		return this->SignalHandler(Signals::CLICKED, func, args...);
 	}
 
 	template <typename ... Args> long unsigned int Button::Clicked(void(*func)(Args* ...), Args& ... args)
 	{
-		return this->SignalHandler(Events::CLICKED, func, args...);
+		return this->SignalHandler(Signals::CLICKED, func, args...);
 	}
 }

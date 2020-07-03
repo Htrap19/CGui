@@ -1,10 +1,11 @@
 #pragma once
 
 #include "../Widget.hh"
+#include "../Orientable.hh"
 
 namespace CGui
 {
-	class FileChooser : public Widget
+	class FileChooser : public Widget, public Orientable
 	{
 	public:
 		FileChooser(Action action);

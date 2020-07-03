@@ -22,13 +22,13 @@ namespace CGui
 				Window::m_ref_count--;
 			}
 		};
-		g_signal_connect(G_OBJECT(widget), Converter::Convert::GetInstance().GetGtkCode(Events::DELETE), G_CALLBACK((void(*)(GtkWidget*, gpointer))exit), NULL);
+		g_signal_connect(G_OBJECT(widget), Converter::Convert::GetInstance().GetGtkCode(Signals::DELETE), G_CALLBACK((void(*)(GtkWidget*, gpointer))exit), NULL);
 		this->Title(title);
 		this->Position(pos);
 		this->SetContext(widget);
 	}
 
-	void Window::Icon(const char* iconpath) const
+	void Window::Icon(const char* iconpath)
 	{
 		GError* error = NULL;
 		GdkPixbuf* icon = gdk_pixbuf_new_from_file(iconpath, &error);
@@ -40,52 +40,62 @@ namespace CGui
 		gtk_window_set_icon(GTK_WINDOW(widget), icon);
 	}
 
-	void Window::DefaultSize(unsigned int xsize, unsigned int ysize) const
+	void Window::DefaultSize(unsigned int xsize, unsigned int ysize)
 	{
 		gtk_window_set_default_size(GTK_WINDOW(widget), xsize, ysize);
 	}
 
-	void Window::CustomHeaderbar(Headerbar & hb) const
+	void Window::CustomHeaderbar(Headerbar & hb)
 	{
 		gtk_window_set_titlebar(GTK_WINDOW(widget), hb.GetWidget());
 	}
 
-	void Window::Resizable(bool resizable) const
+	void Window::Resizable(bool resizable)
 	{
 		gtk_window_set_resizable(GTK_WINDOW(widget), resizable);
 	}
 
-	void Window::Title(const char* title) const
+	void Window::Title(const char* title)
 	{
 		gtk_window_set_title(GTK_WINDOW(widget), title);
 	}
 
-	const char* Window::Title() const
+	const char* Window::Title()
 	{
 		return gtk_window_get_title(GTK_WINDOW(widget));
 	}
 
-	void Window::Maximize() const
+	void Window::Maximize()
 	{
 		gtk_window_maximize(GTK_WINDOW(widget));
 	}
 
-	void Window::Unmaximize() const
+	void Window::Unmaximize()
 	{
 		gtk_window_unmaximize(GTK_WINDOW(widget));
 	}
 
-	void Window::Fullscreen() const
+	void Window::Fullscreen()
 	{
 		gtk_window_fullscreen(GTK_WINDOW(widget));
 	}
 
-	void Window::Unfullscreen() const
+	void Window::Unfullscreen()
 	{
 		gtk_window_unfullscreen(GTK_WINDOW(widget));
 	}
 
-	void Window::Position(WindowPos pos) const
+	void Window::IConify()
+	{
+		gtk_window_iconify(GTK_WINDOW(widget));
+	}
+
+	void Window::Deiconify()
+	{
+		gtk_window_deiconify(GTK_WINDOW(widget));
+	}
+
+	void Window::Position(WindowPos pos)
 	{
 		gtk_window_set_position(GTK_WINDOW(widget), (GtkWindowPosition)pos);
 	}

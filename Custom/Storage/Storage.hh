@@ -16,7 +16,7 @@ namespace CGui
 
 		~Storage()
 		{
-			delete std::any_cast<KeyValue::List<std::any, std::any>*>(l_instance->First()->value);
+			delete std::any_cast<KeyValue::List<std::any, std::any>*>(l_instance->First().value);
 			delete l_instance;
 		}
 
@@ -24,7 +24,7 @@ namespace CGui
 		{
 			if (passkey == NULL)
 			{
-				auto innerList = std::any_cast<KeyValue::List<std::any, std::any>*>(l_instance->First()->value);
+				auto innerList = std::any_cast<KeyValue::List<std::any, std::any>*>(l_instance->First().value);
 				innerList->Insert(key, value);
 			}
 			else
@@ -53,7 +53,7 @@ namespace CGui
 		{
 			if (passkey == NULL || std::string(passkey) == "NULL")
 			{
-				auto innerList = std::any_cast<KeyValue::List<Key, Value>*>(l_instance->First()->value);
+				auto innerList = std::any_cast<KeyValue::List<Key, Value>*>(l_instance->First().value);
 				innerList->ForEach(func);
 			}
 			else

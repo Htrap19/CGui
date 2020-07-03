@@ -26,11 +26,11 @@ namespace CGui
 
 	long unsigned int CheckButton::Toggled(void(*func)())
 	{
-		return this->SignalHandler(Events::TOGGLED, func);
+		return this->SignalHandler(Signals::TOGGLED, func);
 	}
 
 	long unsigned int CheckButton::Toggled(void(*func)(CheckButton*))
 	{
-		return this->SignalHandler(Events::TOGGLED, func);
+		return this->SignalHandler(Signals::TOGGLED, func);
 	}
 };

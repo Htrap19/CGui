@@ -1,10 +1,11 @@
 #pragma once
 
 #include "../Widget.hh"
+#include "../Orientable.hh"
 
 namespace CGui
 {
-	class Progressbar : public Widget
+	class Progressbar : public Widget, public Orientable
 	{
 	public:
 		Progressbar();

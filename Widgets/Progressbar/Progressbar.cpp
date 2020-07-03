@@ -2,13 +2,13 @@
 
 namespace CGui
 {
-	Progressbar::Progressbar()
+	Progressbar::Progressbar() : Orientable(this)
 	{
 		widget = gtk_progress_bar_new();
 		this->SetContext(widget);
 	}
 
-	Progressbar::Progressbar(const char* text)
+	Progressbar::Progressbar(const char* text) : Orientable(this)
 	{
 		widget = gtk_progress_bar_new();
 		this->ShowText(true);

@@ -24,7 +24,9 @@ namespace CGui
 		Alignments valign;
 	};
 
-	enum class Events { CLICKED, DELETE, TOGGLED, CHANGED, ENTER, ACTIVATE, DESTROY };
+	enum class Events { EVENT, BUTTON_PRESS, BUTTON_RELEASE, SCROLL, MOTION_NOTIFY, EXPOSE, KEY_PRESS, KEY_RELEASE, ENTER_NOTIFY, LEAVE_NOTIFY, CONFIGURE, FOCUS_IN, FOCUS_OUT, MAP, UNMAP, PROPERTY_NOTIFY, SELECTION_CLEAR, SELECTION_REQUEST, SELECTION_NOTIFY, PROXIMITY_IN, PROXIMITY_OUT, VISIBLITY_NOTIFY, CLIENT, NO_EXPOSE, WINDOW_STATE, SELECTION_RECEIVED, SELECTION_GET, DRAG_BEGIN, DRAG_END, DRAG_DATA_DELETE, DRAG_MOTION, DRAG_DROP, DRAG_DATA_GET, DRAG_DATA_RECEIVED };
+
+	enum class Signals { CLICKED, DELETE, TOGGLED, CHANGED, ENTER, ACTIVATE, DESTROY, };
 
 	enum class ReliefStyle { NORMAL = 0, NONE = 2 };
 
@@ -79,6 +81,14 @@ namespace CGui
 	enum class TextDirection { NONE, LTR, RTL };
 	enum class DirectionType { TAB_FORWARD, TAB_BACKWARD, UP, DOWN, LEFT, RIGHT };
 
+	template <typename Key, typename Value>
+	struct KeyValueData
+	{
+		Key key;
+		Value value;
+		unsigned int index;
+	};
+
 	namespace Converter
 	{
 		class Convert
@@ -108,30 +118,181 @@ namespace CGui
 				return retValue;
 			}*/
 
+			const char* GetGtkCode(Signals signals)
+			{
+				switch (signals)
+				{
+				case Signals::CLICKED:
+					return "clicked";
+					break;
+
+				case Signals::DELETE:
+					return "delete-event";
+					break;
+
+				case Signals::TOGGLED:
+					return "toggled";
+					break;
+
+				case Signals::CHANGED:
+					return "changed";
+					break;
+
+				case Signals::ENTER:
+					return "enter";
+					break;
+
+				case Signals::ACTIVATE:
+					return "activate";
+					break;
+
+				case Signals::DESTROY:
+					return "destroy";
+					break;
+
+				default:
+					return NULL;
+				}
+			}
+
 			const char* GetGtkCode(Events event)
 			{
 				switch (event)
 				{
-				case Events::CLICKED:
-					return "clicked";
+				case Events::EVENT:
+					return "event";
 					break;
-				case Events::DELETE:
-					return "delete-event";
+
+				case Events::BUTTON_PRESS:
+					return "button_press_event";
 					break;
-				case Events::TOGGLED:
-					return "toggled";
+
+				case Events::BUTTON_RELEASE:
+					return "button_release_event";
 					break;
-				case Events::CHANGED:
-					return "changed";
+
+				case Events::SCROLL:
+					return "scroll_event";
 					break;
-				case Events::ENTER:
-					return "enter";
+
+				case Events::MOTION_NOTIFY:
+					return "motion_notify_event";
 					break;
-				case Events::ACTIVATE:
-					return "activate";
+
+				case Events::EXPOSE:
+					return "expose_event";
 					break;
-				case Events::DESTROY:
-					return "destroy";
+
+				case Events::KEY_PRESS:
+					return "key_press_event";
+					break;
+
+				case Events::KEY_RELEASE:
+					return "key_release_event";
+					break;
+
+				case Events::ENTER_NOTIFY:
+					return "enter_notify_event";
+					break;
+
+				case Events::LEAVE_NOTIFY:
+					return "leave_notify_event";
+					break;
+
+				case Events::CONFIGURE:
+					return "configure_event";
+					break;
+
+				case Events::FOCUS_IN:
+					return "focus_in_event";
+					break;
+
+				case Events::FOCUS_OUT:
+					return "focus_out_event";
+					break;
+
+				case Events::MAP:
+					return "map_event";
+					break;
+
+				case Events::UNMAP:
+					return "unmap_event";
+					break;
+
+				case Events::PROPERTY_NOTIFY:
+					return "property_notify_event";
+					break;
+
+				case Events::SELECTION_CLEAR:
+					return "selection_clear_event";
+					break;
+
+				case Events::SELECTION_REQUEST:
+					return "selection_request_event";
+					break;
+
+				case Events::SELECTION_NOTIFY:
+					return "selection_notify_event";
+					break;
+
+				case Events::PROXIMITY_IN:
+					return "proximity_in_event";
+					break;
+
+				case Events::PROXIMITY_OUT:
+					return "proximity_out_event";
+					break;
+
+				case Events::VISIBLITY_NOTIFY:
+					return "visibility_notify_event";
+					break;
+
+				case Events::CLIENT:
+					return "client_event";
+					break;
+
+				case Events::NO_EXPOSE:
+					return "no_expose_event";
+					break;
+
+				case Events::WINDOW_STATE:
+					return "window_state_event";
+					break;
+
+				case Events::SELECTION_RECEIVED:
+					return "selection_received";
+					break;
+
+				case Events::SELECTION_GET:
+					return "selection_get";
+					break;
+
+				case Events::DRAG_BEGIN:
+					return "drag_begin_event";
+					break;
+
+				case Events::DRAG_END:
+					return "drag_end_event";
+					break;
+
+				case Events::DRAG_DATA_DELETE:
+					return "drag_data_delete";
+					break;
+
+				case Events::DRAG_MOTION:
+					return "drag_motion";
+					break;
+
+				case Events::DRAG_DROP:
+					return "drag_drop";
+					break;
+
+				case Events::DRAG_DATA_GET:
+					return "drag_data_get";
+					break;
+
+				case Events::DRAG_DATA_RECEIVED:
+					return "drag_data_received";
 					break;
 
 				default:

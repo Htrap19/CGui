@@ -82,11 +82,11 @@ namespace CGui
 
 	long unsigned int Button::Clicked(void(*func)())
 	{
-		return this->SignalHandler(Events::CLICKED, func);
+		return this->SignalHandler(Signals::CLICKED, func);
 	}
 
 	long unsigned int Button::Clicked(void(*func)(Button*))
 	{
-		return this->SignalHandler(Events::CLICKED, func);
+		return this->SignalHandler(Signals::CLICKED, func);
 	}
 };

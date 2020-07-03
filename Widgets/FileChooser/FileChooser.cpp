@@ -2,7 +2,7 @@
 
 namespace CGui
 {
-	FileChooser::FileChooser(Action action) : m_PreviewWidget{NULL}, m_ExtraWidget{NULL}
+	FileChooser::FileChooser(Action action) : m_PreviewWidget{NULL}, m_ExtraWidget{NULL}, Orientable(this)
 	{
 		widget = gtk_file_chooser_widget_new((GtkFileChooserAction)action);
 		this->SetContext(widget);

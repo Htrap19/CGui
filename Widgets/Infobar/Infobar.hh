@@ -2,11 +2,11 @@
 
 #include "../Widget.hh"
 #include "../Container.hh"
-#include "../Revealer/Revealer.hh"
+#include "../Orientable.hh"
 
 namespace CGui
 {
-	class Infobar : public Widget, public Container<Widget>
+	class Infobar : public Widget, public Container<Widget>, public Orientable
 	{
 	public:
 		Infobar();

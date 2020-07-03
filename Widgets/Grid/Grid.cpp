@@ -2,7 +2,7 @@
 
 namespace CGui
 {
-	Grid::Grid() : Container(this)
+	Grid::Grid() : Container(this), Orientable(this)
 	{
 		widget = gtk_grid_new();
 		this->SetContext(widget);

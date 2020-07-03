@@ -217,12 +217,12 @@ namespace CGui
 
 	long unsigned int Entry::Changed(void(*func)())
 	{
-		return this->SignalHandler(Events::CHANGED, func);
+		return this->SignalHandler(Signals::CHANGED, func);
 	}
 
 	long unsigned int Entry::Changed(void(*func)(Entry*))
 	{
-		return this->SignalHandler(Events::CHANGED, func);
+		return this->SignalHandler(Signals::CHANGED, func);
 	}
 
 	/*template <typename ... Args> long unsigned int Entry::Changed(void(*func)(Entry*, Args*...), Args & ... args)

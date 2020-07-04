@@ -31,7 +31,7 @@ namespace CGui
 
 	static void MainQuit()
 	{
-		auto f = [](KeyValue::Node<const char*, Single::List<std::any>*> * node) -> void
+		/*auto f = [](KeyValue::Node<const char*, Single::List<std::any>*> * node) -> void
 		{
 			if (std::string(node->key) == "Instance")
 				delete node->value;
@@ -65,7 +65,16 @@ namespace CGui
 		};
 
 		Storage::GetInstance().ForEach<const char*, KeyValue::List<Signals, std::any>*>(f4, "mainlistsignals");
-		Storage::GetInstance().Free<const char*, KeyValue::List<Signals, std::any>*>("mainlistsignals");
+		Storage::GetInstance().Free<const char*, KeyValue::List<Signals, std::any>*>("mainlistsignals");*/
+
+		auto free = [](KeyValue::Node<const char*, void*> * node) -> void
+		{
+			if (std::string(node->key) == "Instance")
+				delete node->value;
+		};
+
+		Storage::GetInstance().ForEach<const char*, void*>(free, "deleteonquit");
+		Storage::GetInstance().Free<const char*, void*>("deleteonquit");
 
 		gtk_main_quit();
 	}

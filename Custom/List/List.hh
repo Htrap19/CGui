@@ -22,8 +22,8 @@ namespace CGui
 			~List(void);
 			bool IsEmpty();
 			unsigned int Insert(Data data);
-			Node<Data>* First();
-			Node<Data>* Last();
+			Data First();
+			Data Last();
 			unsigned int Size();
 			bool SelectData(Data data);
 			bool HasSelectedData();
@@ -94,19 +94,19 @@ namespace CGui
 		}
 
 		template <typename Data>
-		Node<Data>* List<Data>::First()
+		Data List<Data>::First()
 		{
-			return head;
+			return head->data;
 		}
 
 		template <typename Data>
-		Node<Data>* List<Data>::Last()
+		Data List<Data>::Last()
 		{
 			Node<Data>* currNode = head;
 			while (currNode && currNode->next != NULL)
 				currNode = currNode->next;
 
-			return currNode;
+			return currNode->data;
 		}
 
 		template <typename Data>

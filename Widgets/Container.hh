@@ -3,6 +3,7 @@
 #include <gtk/gtk.h>
 #include "./Widget.hh"
 #include "../Custom/List/List.hh"
+#include "../Custom/Storage/Storage.hh"
 
 namespace CGui
 {
@@ -13,6 +14,7 @@ namespace CGui
 		Container(WidgetType* w)
 		{
 			t_widget = w;
+			Storage::GetInstance().MakePrivate<const char*, void*>("deleteonquit");
 		}
 
 		virtual ~Container()
@@ -21,7 +23,7 @@ namespace CGui
 			{
 				children.ForEach([](void* data)
 					{
-						delete data;
+						Storage::GetInstance().Add<const char*, void*>("Instance", data, "deleteonquit");
 					});
 			}
 		}
@@ -96,6 +98,7 @@ namespace CGui
 		Container(GtkWidget* w)
 		{
 			t_widget = w;
+			Storage::GetInstance().MakePrivate<const char*, void*>("deleteonquit");
 		}
 
 		virtual ~Container()
@@ -104,7 +107,7 @@ namespace CGui
 			{
 				children.ForEach([](void* data)
 					{
-						delete data;
+						Storage::GetInstance().Add<const char*, void*>("Instance", data, "deleteonquit");
 					});
 			}
 		}
@@ -167,7 +170,9 @@ namespace CGui
 
 	protected:
 		Container()
-		{  }
+		{
+			Storage::GetInstance().MakePrivate<const char*, void*>("deleteonquit");
+		}
 
 		GtkWidget* t_widget;
 

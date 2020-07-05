@@ -18,7 +18,7 @@ namespace CGui
 	};
 
 	enum class Alignments { FILL, BEGIN, LAST, CENTER, BASELINE };
-	struct AlignmentsInfo
+	struct AlignmentsData
 	{
 		Alignments halign;
 		Alignments valign;
@@ -88,6 +88,54 @@ namespace CGui
 		Value value;
 		unsigned int index;
 	};
+
+	struct PreferredHeightData
+	{
+		int minimum_height;
+		int natural_height;
+	};
+
+	struct PreferredWidthData
+	{
+		int minimum_width;
+		int natural_width;
+	};
+
+	struct PreferredBaselineData
+	{
+		int minimum_baseline;
+		int natural_baseline;
+	};
+
+	struct HeightAndBaslineData
+	{
+		PreferredHeightData height;
+		PreferredBaselineData baseline;
+	};
+
+	struct Requisition
+	{
+		int width, height;
+	};
+
+	struct PreferredSizeData
+	{
+		Requisition minimum_size, natural_size;
+	};
+
+	struct WidgetMargin
+	{
+		int start, end, top, bottom;
+	};
+
+	struct WidgetExpand
+	{
+		bool hexpand, vexpand;
+	};
+
+	enum class SizeRequestMode { HEIGHT_FOR_WIDTH, WIDTH_FOR_HEIGHT, CONSTANT_SIZE };
+
+	enum class Gravity { NORTH_WEST = 1, NORTH, NORTH_EAST, WEST, CENTER, EAST, SOUTH_WEST, SOUTH, SOUTH_EAST, STATIC };
 
 	namespace Converter
 	{

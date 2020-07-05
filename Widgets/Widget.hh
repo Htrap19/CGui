@@ -29,15 +29,40 @@ namespace CGui
 			return widget;
 		}
 
-		virtual void Align(Alignments halign, Alignments valign)
+		virtual void HAlign(Alignments align)
 		{
-			gtk_widget_set_halign(GTK_WIDGET(widget), (GtkAlign)halign);
-			gtk_widget_set_valign(GTK_WIDGET(widget), (GtkAlign)valign);
+			gtk_widget_set_halign(GTK_WIDGET(widget), (GtkAlign)align);
 		}
 
-		virtual AlignmentsInfo Align()
+		virtual Alignments HAlign()
 		{
-			return { (Alignments)gtk_widget_get_halign(GTK_WIDGET(widget)), (Alignments)gtk_widget_get_valign(GTK_WIDGET(widget)) };
+			return (Alignments)gtk_widget_get_halign(GTK_WIDGET(widget));
+		}
+
+		virtual void VAlign(Alignments align)
+		{
+			gtk_widget_set_valign(GTK_WIDGET(widget), (GtkAlign)align);
+		}
+
+		virtual Alignments VAlign()
+		{
+			return (Alignments)gtk_widget_get_valign(GTK_WIDGET(widget));
+		}
+
+		virtual void Align(Alignments halign, Alignments valign)
+		{
+			this->HAlign(halign);
+			this->VAlign(valign);
+		}
+
+		virtual AlignmentsData Align()
+		{
+			return { this->HAlign(), this->VAlign() };
+		}
+
+		virtual Alignments VAlignWithBaseline()
+		{
+			return (Alignments)gtk_widget_get_valign_with_baseline(GTK_WIDGET(widget));
 		}
 
 		virtual void Name(const char* name)
@@ -475,6 +500,179 @@ namespace CGui
 		virtual double Opacity()
 		{
 			return gtk_widget_get_opacity(GTK_WIDGET(widget));
+		}
+
+		virtual PreferredHeightData PreferredHeight()
+		{
+			int min_h, nat_h;
+			gtk_widget_get_preferred_height(GTK_WIDGET(widget), &min_h, &nat_h);
+
+			return { min_h, nat_h };
+		}
+
+		virtual PreferredWidthData PreferredWidth()
+		{
+			int min_w, nat_h;
+			gtk_widget_get_preferred_width(GTK_WIDGET(widget), &min_w, &nat_h);
+
+			return { min_w, nat_h };
+		}
+
+		virtual PreferredHeightData PreferredHeightForWidth(int width)
+		{
+			int min_h, nat_h;
+			gtk_widget_get_preferred_height_for_width(GTK_WIDGET(widget), width, &min_h, &nat_h);
+
+			return { min_h, nat_h };
+		}
+
+		virtual PreferredWidthData PreferredWidthForHeight(int height)
+		{
+			int min_w, nat_w;
+			gtk_widget_get_preferred_width_for_height(GTK_WIDGET(widget), height, &min_w, &nat_w);
+
+			return { min_w, nat_w };
+		}
+
+		virtual HeightAndBaslineData PreferredHeightAndBaselineForWidth(int width)
+		{
+			int min_h, nat_h, min_b, nat_b;
+			gtk_widget_get_preferred_height_and_baseline_for_width(GTK_WIDGET(widget), width, &min_h, &nat_h, &min_b, &nat_b);
+
+			return { { min_h, nat_b }, { min_b, nat_b } };
+		}
+
+		virtual SizeRequestMode RequestMode()
+		{
+			return (SizeRequestMode)gtk_widget_get_request_mode(GTK_WIDGET(widget));
+		}
+
+		virtual PreferredSizeData PreferredSize()
+		{
+			GtkRequisition minimum_size, natural_size;
+			gtk_widget_get_preferred_size(GTK_WIDGET(widget), &minimum_size, &natural_size);
+
+			return { { minimum_size.width, minimum_size.height }, { natural_size.width, natural_size.height } };
+		}
+
+		virtual void MarginStart(int margin)
+		{
+			gtk_widget_set_margin_start(GTK_WIDGET(widget), margin);
+		}
+
+		virtual int MarginStart()
+		{
+			return gtk_widget_get_margin_start(GTK_WIDGET(widget));
+		}
+
+		virtual void MarginEnd(int margin)
+		{
+			gtk_widget_set_margin_end(GTK_WIDGET(widget), margin);
+		}
+
+		virtual int MarginEnd()
+		{
+			return gtk_widget_get_margin_end(GTK_WIDGET(widget));
+		}
+
+		virtual void MarginTop(int margin)
+		{
+			gtk_widget_set_margin_top(GTK_WIDGET(widget), margin);
+		}
+
+		virtual int MarginTop()
+		{
+			return gtk_widget_get_margin_top(GTK_WIDGET(widget));
+		}
+
+		virtual void MarginBottom(int margin)
+		{
+			gtk_widget_set_margin_bottom(GTK_WIDGET(widget), margin);
+		}
+
+		virtual int MarginBottom()
+		{
+			return gtk_widget_get_margin_bottom(GTK_WIDGET(widget));
+		}
+
+		virtual void Margin(WidgetMargin margin)
+		{
+			this->MarginStart(margin.start);
+			this->MarginEnd(margin.end);
+			this->MarginTop(margin.top);
+			this->MarginBottom(margin.bottom);
+		}
+
+		virtual WidgetMargin Margin()
+		{
+			return { this->MarginStart(), this->MarginEnd(), this->MarginTop(), this->MarginBottom() };
+		}
+
+		virtual void HExpand(bool expand)
+		{
+			gtk_widget_set_hexpand(GTK_WIDGET(widget), expand);
+		}
+
+		virtual bool HExpand()
+		{
+			return gtk_widget_get_hexpand(GTK_WIDGET(widget));
+		}
+
+		virtual void HExpandSet(bool set)
+		{
+			gtk_widget_set_hexpand_set(GTK_WIDGET(widget), set);
+		}
+
+		virtual bool HExpandSet()
+		{
+			return gtk_widget_get_hexpand_set(GTK_WIDGET(widget));
+		}
+
+		virtual void VExpand(bool expand)
+		{
+			gtk_widget_set_vexpand(GTK_WIDGET(widget), expand);
+		}
+
+		virtual bool VExpand()
+		{
+			return gtk_widget_get_vexpand(GTK_WIDGET(widget));
+		}
+
+		virtual void VExpandSet(bool set)
+		{
+			gtk_widget_set_vexpand_set(GTK_WIDGET(widget), set);
+		}
+
+		virtual bool VExpandSet()
+		{
+			return gtk_widget_get_vexpand_set(GTK_WIDGET(widget));
+		}
+
+		virtual void Expand(bool hexpand, bool vexpand)
+		{
+			this->HExpand(hexpand);
+			this->VExpand(vexpand);
+		}
+
+		virtual void Expand(WidgetExpand expand)
+		{
+			this->HExpand(expand.hexpand);
+			this->VExpand(expand.vexpand);
+		}
+
+		virtual WidgetExpand Expand()
+		{
+			return { this->HExpand(), this->VExpand() };
+		}
+
+		virtual void QueueComputeExpand()
+		{
+			gtk_widget_queue_compute_expand(GTK_WIDGET(widget));
+		}
+
+		virtual bool ComputeExpand(Orientation orientation)
+		{
+			return gtk_widget_compute_expand(GTK_WIDGET(widget), (GtkOrientation)orientation);
 		}
 
 		virtual void ResetStyle()

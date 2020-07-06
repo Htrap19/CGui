@@ -136,6 +136,12 @@ namespace CGui
 	enum class SizeRequestMode { HEIGHT_FOR_WIDTH, WIDTH_FOR_HEIGHT, CONSTANT_SIZE };
 
 	enum class Gravity { NORTH_WEST = 1, NORTH, NORTH_EAST, WEST, CENTER, EAST, SOUTH_WEST, SOUTH, SOUTH_EAST, STATIC };
+	
+	struct WindowPositionData
+	{
+		int root_x;
+		int root_y;
+	};
 
 	namespace Converter
 	{

@@ -9,6 +9,7 @@ namespace CGui
 	{
 	public:
 		Headerbar(const char* title = "", const char* subtitle = "");
+		Headerbar(GtkHeaderBar* headerbar);
 		void Title(const char* title);
 		const char* Title();
 		void SubTitle(const char* subtitle);

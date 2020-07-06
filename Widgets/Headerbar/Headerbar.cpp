@@ -10,6 +10,12 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
+	Headerbar::Headerbar(GtkHeaderBar* headerbar) : Container(this)
+	{
+		widget = GTK_WIDGET(headerbar);
+		this->SetContext(widget);
+	}
+
 	void Headerbar::Title(const char* title)
 	{
 		gtk_header_bar_set_title(GTK_HEADER_BAR(widget), title);

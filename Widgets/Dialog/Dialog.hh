@@ -17,5 +17,12 @@ namespace CGui
 		void Modal(bool modal);
 		bool Modal();
 		void Parent(Window& window);
+		ResponseType Run();
+		void ActionWidget(Widget& action_widget, ResponseType res_type);
+		Widget AddButton(const char* button_text, ResponseType res_type);
+		void DefaultResponse(ResponseType res_type);
+		void ResponseSensitive(ResponseType res_type, bool sensitive);
+		ResponseType ResponseForWidget(Widget& w);
+		Widget WidgetForResponse(ResponseType res_type);
 	};
 };

@@ -22,5 +22,6 @@
 #include "./FileChooserDialog/FileChooserDialog.hh"
 #include "./Widgets/StyleContext.hh"
 #include "./Widgets/Grid/Grid.hh"
+#include "./Widgets/MessageDialog/MessageDialog.hh"
 #include "./Pixbuf/Pixbuf.hh"
 #include "./Custom/Initialize/Initialize.hh"

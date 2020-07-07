@@ -51,4 +51,39 @@ namespace CGui
 	{
 		gtk_window_set_transient_for(GTK_WINDOW(widget), GTK_WINDOW(window.GetWidget()));
 	}
+
+	ResponseType Dialog::Run()
+	{
+		return (ResponseType)gtk_dialog_run(GTK_DIALOG(widget));
+	}
+
+	void Dialog::ActionWidget(Widget& action_widget, ResponseType res_type)
+	{
+		gtk_dialog_add_action_widget(GTK_DIALOG(widget), action_widget.GetWidget(), (int)res_type);
+	}
+
+	Widget Dialog::AddButton(const char* button_text, ResponseType res_type)
+	{
+		return Widget(gtk_dialog_add_button(GTK_DIALOG(widget), button_text, (int)res_type));
+	}
+
+	void Dialog::DefaultResponse(ResponseType res_type)
+	{
+		gtk_dialog_set_default_response(GTK_DIALOG(widget), (int)res_type);
+	}
+
+	void Dialog::ResponseSensitive(ResponseType res_type, bool sensitive)
+	{
+		gtk_dialog_set_response_sensitive(GTK_DIALOG(widget), (int)res_type, sensitive);
+	}
+
+	ResponseType Dialog::ResponseForWidget(Widget& w)
+	{
+		return (ResponseType)gtk_dialog_get_response_for_widget(GTK_DIALOG(widget), w.GetWidget());
+	}
+
+	Widget Dialog::WidgetForResponse(ResponseType res_type)
+	{
+		return Widget(gtk_dialog_get_widget_for_response(GTK_DIALOG(widget), (int)res_type));
+	}
 };

@@ -26,7 +26,7 @@ namespace CGui
 
 	enum class Events { EVENT, BUTTON_PRESS, BUTTON_RELEASE, SCROLL, MOTION_NOTIFY, EXPOSE, KEY_PRESS, KEY_RELEASE, ENTER_NOTIFY, LEAVE_NOTIFY, CONFIGURE, FOCUS_IN, FOCUS_OUT, MAP, UNMAP, PROPERTY_NOTIFY, SELECTION_CLEAR, SELECTION_REQUEST, SELECTION_NOTIFY, PROXIMITY_IN, PROXIMITY_OUT, VISIBLITY_NOTIFY, CLIENT, NO_EXPOSE, WINDOW_STATE, SELECTION_RECEIVED, SELECTION_GET, DRAG_BEGIN, DRAG_END, DRAG_DATA_DELETE, DRAG_MOTION, DRAG_DROP, DRAG_DATA_GET, DRAG_DATA_RECEIVED };
 
-	enum class Signals { CLICKED, DELETE, TOGGLED, CHANGED, ENTER, ACTIVATE, DESTROY, RESPONSE };
+	enum class Signals { CLICKED, DELETE, TOGGLED, CHANGED, ENTER, ACTIVATE, DESTROY, RESPONSE, CLOSE, CANCEL };
 
 	enum class ReliefStyle { NORMAL = 0, NONE = 2 };
 
@@ -149,6 +149,8 @@ namespace CGui
 
 	enum class ResponseType { NONE = -1, REJECT = -2, ACCEPT = -3, DELETE = -4, OK = -5, CANCEL = -6, CLOSE = -7, YES = -8, NO = -9, APPLY = -10, HELP = -11 };
 
+	enum class AssistantPageType { CONTENT, INTRO, CONFIRM, SUMMARY, PROGRESS, CUSTOM };
+
 	namespace Converter
 	{
 		class Convert
@@ -212,6 +214,14 @@ namespace CGui
 
 				case Signals::RESPONSE:
 					return "response";
+					break;
+
+				case Signals::CLOSE:
+					return "close";
+					break;
+
+				case Signals::CANCEL:
+					return "cancel";
 					break;
 
 				default:

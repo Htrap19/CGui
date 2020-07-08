@@ -30,8 +30,7 @@ namespace CGui
 
 	Window::Window(GtkWindow* window) : Container(this), error{ NULL }
 	{
-		widget = GTK_WIDGET(window);
-		this->SetContext(widget);
+		this->SetWindow(window);
 	}
 
 	void Window::Icon(const char* filename)
@@ -494,5 +493,14 @@ namespace CGui
 	bool Window::HasError()
 	{
 		return (error != NULL);
+	}
+
+	Window::Window() : Container(this), error{ NULL }
+	{ }
+
+	void Window::SetWindow(GtkWindow * window)
+	{
+		this->widget = GTK_WIDGET(window);
+		this->SetContext(widget);
 	}
 };

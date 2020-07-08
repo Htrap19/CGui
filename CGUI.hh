@@ -23,5 +23,6 @@
 #include "./Widgets/StyleContext.hh"
 #include "./Widgets/Grid/Grid.hh"
 #include "./Widgets/MessageDialog/MessageDialog.hh"
+#include "./Widgets/Assistant/Assistant.hh"
 #include "./Pixbuf/Pixbuf.hh"
 #include "./Custom/Initialize/Initialize.hh"

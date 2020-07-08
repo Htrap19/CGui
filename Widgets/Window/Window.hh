@@ -98,6 +98,9 @@ namespace CGui
 
 	protected:
 		GError* error;
+		Window();
+
+		void SetWindow(GtkWindow* window);
 
 	private:
 		static unsigned int m_ref_count;

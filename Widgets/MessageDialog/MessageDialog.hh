@@ -2,19 +2,17 @@
 
 #include "../Widget.hh"
 #include "../Window/Window.hh"
-#include "../../Converter/Convert.hh"
-#include "../Container.hh"
+#include "../Dialog/Dialog.hh"
 
 namespace CGui
 {
-	class MessageDialog : public Widget, public Container<Widget>
+	class MessageDialog : public Dialog
 	{
 	public:
 		MessageDialog(Window& parent, DialogFlags flags, MessageType message_type, ButtonsType buttons_type);
 		void Markup(const char* str);
 		template <typename ... Args> void SecondaryText(const char* fmt, Args ... args);
 		template <typename ... Args> void SecondaryTextMarkup(const char* fmt, Args ... args);
-		ResponseType Run();
 	};
 
 	template<typename ... Args>

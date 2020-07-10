@@ -155,6 +155,11 @@ namespace CGui
 
 	enum class StackTransitionType { NONE, CROSSFADE, SLIDE_RIGHT, SLIDE_LEFT, SLIDE_UP, SLIDE_DOWN, SLIDE_LEFT_RIGHT, SLIDE_UP_DOWN, OVER_UP, OVER_DOWN, OVER_LEFT, OVER_RIGHT, UNDER_UP, UNDER_DOWN, UNDER_LEFT, UNDER_RIGHT, OVER_UP_DOWN, OVER_DOWM_UP, OVER_LEFT_RIGHT, OVER_RIGHT_LEFT };
 
+	struct LabelAlignData
+	{
+		float xalign, yalign;
+	};
+
 	namespace Converter
 	{
 		class Convert

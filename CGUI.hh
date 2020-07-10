@@ -30,5 +30,7 @@
 #include "./Widgets/Stack/Stack/Stack.hh"
 #include "./Widgets/Stack/StackSwitcher/StackSwitcher.hh"
 #include "./Widgets/Stack/StackSidebar/StackSidebar.hh"
+#include "./Widgets/Paned/Paned.hh"
+#include "./Widgets/Frame/Frame.hh"
 #include "./Pixbuf/Pixbuf.hh"
 #include "./Custom/Initialize/Initialize.hh"

@@ -8,9 +8,9 @@ namespace CGui
 	class FileChooser : public Widget, public Orientable
 	{
 	public:
-		FileChooser(Action action);
-		void ChooseAction(Action action);
-		Action ChooseAction();
+		FileChooser(FileChooserAction action);
+		void ChooseAction(FileChooserAction action);
+		FileChooserAction ChooseAction();
 		void LocalOnly(bool local_only);
 		bool LocalOnly();
 		void SelectMultiple(bool select_multiple);
@@ -36,7 +36,7 @@ namespace CGui
 		void UnselectUri(const char* uri);
 		Single::List<const char*> Uris();
 		void PreviewWidget(Widget& w);
-		Widget& PreviewWidget();
+		Widget PreviewWidget();
 		void PreviewWidgetActive(bool active);
 		bool PreviewWidgetActive();
 		void UsePreviewLabel(bool use_label);
@@ -44,7 +44,7 @@ namespace CGui
 		const char* PreviewFilename();
 		const char* PreviewUri();
 		void ExtraWidget(Widget& w);
-		Widget& ExtraWidget();
+		Widget ExtraWidget();
 		bool AddShortcutFolder(const char* folder);
 		bool RemoveShortcutFolder(const char* folder);
 		Single::List<const char*> ListShortcutFolders();
@@ -53,7 +53,7 @@ namespace CGui
 		Single::List<const char*> ListShortCutFolderUri();
 
 	protected:
-		Widget* m_PreviewWidget;
-		Widget* m_ExtraWidget;
+		FileChooser();
+		void SetFileChooser(GtkFileChooser* filechooser);
 	};
 };

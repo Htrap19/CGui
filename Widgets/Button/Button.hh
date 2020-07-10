@@ -1,13 +1,13 @@
 #pragma once
 
 #include "../Widget.hh"
-#include "../EventHandler.hh"
+#include "../Handler.hh"
 #include "../Container.hh"
 #include "../Image/Image.hh"
 
 namespace CGui
 {
-	class Button : public Widget, public EventHandler<Button>, public Container<Button>
+	class Button : public Widget, public Handler<Button>, public Container<Button>
 	{
 	public:
 		Button();

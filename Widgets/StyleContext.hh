@@ -13,17 +13,17 @@ namespace CGui
 			this->SetContext(w);
 		}
 
-		virtual void AddStyleClass(const char* classname) const
+		virtual void AddStyleClass(const char* classname)
 		{
 			gtk_style_context_add_class(GTK_STYLE_CONTEXT(stylecontext), classname);
 		}
 
-		virtual void RemoveStyleClass(const char* classname) const
+		virtual void RemoveStyleClass(const char* classname)
 		{
 			gtk_style_context_remove_class(GTK_STYLE_CONTEXT(stylecontext), classname);
 		}
 
-		virtual bool HasStyleClass(const char* classname) const
+		virtual bool HasStyleClass(const char* classname)
 		{
 			return gtk_style_context_has_class(GTK_STYLE_CONTEXT(stylecontext), classname);
 		}

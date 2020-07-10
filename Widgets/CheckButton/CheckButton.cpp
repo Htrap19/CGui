@@ -2,13 +2,13 @@
 
 namespace CGui
 {
-	CheckButton::CheckButton() : EventHandler(this)
+	CheckButton::CheckButton() : Handler(this)
 	{
 		widget = gtk_check_button_new();
 		this->SetContext(widget);
 	}
 
-	CheckButton::CheckButton(const char* text) : EventHandler(this)
+	CheckButton::CheckButton(const char* text) : Handler(this)
 	{
 		widget = gtk_check_button_new_with_label(text);
 		this->SetContext(widget);

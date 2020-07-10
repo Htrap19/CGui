@@ -49,17 +49,27 @@ namespace CGui
 
 	void Dialog::Add(Widget& child)
 	{
-		gtk_container_add(GTK_CONTAINER(Container<Widget>::t_widget), child.GetWidget());
-	}
-
-	void Dialog::InternalWidth(unsigned int width)
-	{
-		gtk_container_set_border_width(GTK_CONTAINER(Container<Widget>::t_widget), width);
+		this->Container<Widget>::Add(child);
 	}
 
 	void Dialog::Remove(Widget& child)
 	{
-		gtk_container_remove(GTK_CONTAINER(Container<Widget>::t_widget), child.GetWidget());
+		this->Container<Widget>::Remove(child);
+	}
+
+	void Dialog::InternalWidth(unsigned int width)
+	{
+		this->Container<Widget>::InternalWidth(width);
+	}
+
+	unsigned int Dialog::InternalWidth()
+	{
+		return this->Container<Widget>::InternalWidth();
+	}
+
+	Single::List<void*>* Dialog::Children()
+	{
+		return this->Container<Widget>::Children();
 	}
 
 	Dialog::Dialog()

@@ -1,13 +1,13 @@
 #pragma once
 
 #include "../Widget.hh"
-#include "../EventHandler.hh"
+#include "../Handler.hh"
 #include "../../Converter/Convert.hh"
 #include "../../Pixbuf/Pixbuf/Pixbuf.hh"
 
 namespace CGui
 {
-	class Entry : public Widget, public EventHandler<Entry>
+	class Entry : public Widget, public Handler<Entry>
 	{
 	public:
 		Entry();

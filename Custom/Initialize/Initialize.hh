@@ -1,7 +1,6 @@
 #pragma once
 #include <gtk/gtk.h>
 #include "../Storage/Storage.hh"
-#include "../../Widgets/EventHandler.hh"
 
 namespace CGui
 {

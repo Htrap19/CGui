@@ -10,7 +10,7 @@ namespace CGui
 	{
 	public:
 		Grid();
-		template <typename addtype> void Add(addtype& w, int left, int top, int width, int height);
+		void Add(Widget& w, int left, int top, int width, int height);
 		void InsertRow(int position);
 		void InsertColumn(int position);
 		void RemoveRow(int position);
@@ -28,9 +28,4 @@ namespace CGui
 		void RowBaselinePosition(int row, BaselinePosition pos);
 		BaselinePosition RowBaselinePosition(int row);
 	};
-
-	template <typename addtype> void Grid::Add(addtype& w, int left, int top, int width, int height)
-	{
-		gtk_grid_attach(GTK_GRID(widget), w.GetWidget(), left, top, width, height);
-	}
 }

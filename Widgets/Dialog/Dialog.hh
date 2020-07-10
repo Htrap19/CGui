@@ -18,8 +18,10 @@ namespace CGui
 		ResponseType ResponseForWidget(Widget& w);
 		Widget WidgetForResponse(ResponseType res_type);
 		void Add(Widget& child) override;
-		void InternalWidth(unsigned int width) override;
 		void Remove(Widget& child) override;
+		void InternalWidth(unsigned int width) override;
+		unsigned int InternalWidth() override;
+		Single::List<void*>* Children() override;
 
 	protected:
 		Dialog();

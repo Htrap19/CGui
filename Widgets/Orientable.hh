@@ -14,12 +14,12 @@ namespace CGui
 			this->m_widget = w;
 		}
 
-		void ROrientation(Orientation orientation)
+		virtual void ROrientation(Orientation orientation)
 		{
 			gtk_orientable_set_orientation(GTK_ORIENTABLE(m_widget->GetWidget()), (GtkOrientation)orientation);
 		}
 
-		Orientation ROrientation()
+		virtual Orientation ROrientation()
 		{
 			return (Orientation)gtk_orientable_get_orientation(GTK_ORIENTABLE(m_widget->GetWidget()));
 		}

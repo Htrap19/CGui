@@ -2,20 +2,20 @@
 
 namespace CGui
 {
-	FileChooser::FileChooser(Action action) : m_PreviewWidget{NULL}, m_ExtraWidget{NULL}, Orientable(this)
+	FileChooser::FileChooser(FileChooserAction action) : Orientable(this)
 	{
 		widget = gtk_file_chooser_widget_new((GtkFileChooserAction)action);
 		this->SetContext(widget);
 	}
 
-	void FileChooser::ChooseAction(Action action)
+	void FileChooser::ChooseAction(FileChooserAction action)
 	{
 		gtk_file_chooser_set_action(GTK_FILE_CHOOSER(widget), (GtkFileChooserAction)action);
 	}
 
-	Action FileChooser::ChooseAction()
+	FileChooserAction FileChooser::ChooseAction()
 	{
-		return (Action)gtk_file_chooser_get_action(GTK_FILE_CHOOSER(widget));
+		return (FileChooserAction)gtk_file_chooser_get_action(GTK_FILE_CHOOSER(widget));
 	}
 
 	void FileChooser::LocalOnly(bool local_only)
@@ -161,12 +161,11 @@ namespace CGui
 	void FileChooser::PreviewWidget(Widget& w)
 	{
 		gtk_file_chooser_set_preview_widget(GTK_FILE_CHOOSER(widget), w.GetWidget());
-		m_PreviewWidget = &w;
 	}
 
-	Widget& FileChooser::PreviewWidget()
+	Widget FileChooser::PreviewWidget()
 	{
-		return *m_PreviewWidget;
+		return Widget(gtk_file_chooser_get_preview_widget(GTK_FILE_CHOOSER(widget)));
 	}
 
 	void FileChooser::PreviewWidgetActive(bool active)
@@ -202,12 +201,11 @@ namespace CGui
 	void FileChooser::ExtraWidget(Widget& w)
 	{
 		gtk_file_chooser_set_extra_widget(GTK_FILE_CHOOSER(widget), w.GetWidget());
-		m_ExtraWidget = &w;
 	}
 
-	Widget& FileChooser::ExtraWidget()
+	Widget FileChooser::ExtraWidget()
 	{
-		return *m_ExtraWidget;
+		return Widget(gtk_file_chooser_get_extra_widget(GTK_FILE_CHOOSER(widget)));
 	}
 
 	bool FileChooser::AddShortcutFolder(const char* folder)
@@ -290,5 +288,14 @@ namespace CGui
 		g_slist_free(list);
 
 		return ret;
+	}
+
+	FileChooser::FileChooser() : Orientable(this)
+	{ }
+
+	void FileChooser::SetFileChooser(GtkFileChooser* filechooser)
+	{
+		this->widget = GTK_WIDGET(filechooser);
+		this->SetContext(widget);
 	}
 };

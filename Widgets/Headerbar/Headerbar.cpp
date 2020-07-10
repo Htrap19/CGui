@@ -76,7 +76,7 @@ namespace CGui
 		return gtk_header_bar_get_decoration_layout(GTK_HEADER_BAR(widget));
 	}
 
-	void Headerbar::Add(BoxPackType type, Widget& w)
+	void Headerbar::Add(PackType type, Widget& w)
 	{
 		auto func = Converter::Convert::GetInstance().HeaderbarFuncPtr(type);
 		func(GTK_HEADER_BAR(widget), w.GetWidget());
@@ -84,11 +84,11 @@ namespace CGui
 
 	void Headerbar::AddStart(Widget& w)
 	{
-		this->Add(BoxPackType::START, w);
+		this->Add(PackType::START, w);
 	}
 
 	void Headerbar::AddEnd(Widget& w)
 	{
-		this->Add(BoxPackType::END, w);
+		this->Add(PackType::END, w);
 	}
 };

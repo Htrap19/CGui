@@ -2,13 +2,13 @@
 
 namespace CGui
 {
-	Entry::Entry() : EventHandler(this)
+	Entry::Entry() : Handler(this)
 	{
 		widget = gtk_entry_new();
 		this->SetContext(widget);
 	}
 
-	Entry::Entry(const char* placeholdertext) : EventHandler(this)
+	Entry::Entry(const char* placeholdertext) : Handler(this)
 	{
 		widget = gtk_entry_new();
 		gtk_entry_set_placeholder_text(GTK_ENTRY(widget), placeholdertext);

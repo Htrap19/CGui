@@ -8,7 +8,7 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
-	void Box::Add(BoxPackType type, Widget& w, bool expand, bool fill, unsigned int padding)
+	void Box::Add(PackType type, Widget& w, bool expand, bool fill, unsigned int padding)
 	{
 		auto func = Converter::Convert::GetInstance().BoxFuncPtr(type);
 		func(GTK_BOX(widget), w.GetWidget(), expand, fill, padding);
@@ -16,12 +16,12 @@ namespace CGui
 
 	void Box::AddStart(Widget& w, bool expand, bool fill, unsigned int padding)
 	{
-		this->Add(BoxPackType::START, w, expand, fill, padding);
+		this->Add(PackType::START, w, expand, fill, padding);
 	}
 
 	void Box::AddEnd(Widget& w, bool expand, bool fill, unsigned int padding)
 	{
-		this->Add(BoxPackType::END, w, expand, fill, padding);
+		this->Add(PackType::END, w, expand, fill, padding);
 	}
 
 	void Box::Homogeneous(bool homogeneous)
@@ -49,7 +49,7 @@ namespace CGui
 		gtk_box_reorder_child(GTK_BOX(widget), w.GetWidget(), position);
 	}
 
-	void Box::ChildPacking(Widget& w, BoxPackType type, bool expand, bool fill, unsigned int padding)
+	void Box::ChildPacking(Widget& w, PackType type, bool expand, bool fill, unsigned int padding)
 	{
 		gtk_box_set_child_packing(GTK_BOX(widget), w.GetWidget(), expand, fill, padding, (GtkPackType)type);
 	}
@@ -62,7 +62,7 @@ namespace CGui
 
 		gtk_box_query_child_packing(GTK_BOX(widget), w.GetWidget(), &expand, &fill, &padding, &type);
 
-		return { (BoxPackType)type, (bool)expand, (bool)fill, padding };
+		return { (PackType)type, (bool)expand, (bool)fill, padding };
 	}
 
 	void Box::BoxBaselinePosition(BaselinePosition position)
@@ -78,11 +78,19 @@ namespace CGui
 	void Box::CenterWidget(Widget& w)
 	{
 		gtk_box_set_center_widget(GTK_BOX(widget), w.GetWidget());
-		center_widget = &w;
 	}
 
-	Widget& Box::CenterWidget()
+	Widget Box::CenterWidget()
 	{
-		return *center_widget;
+		return Widget(gtk_box_get_center_widget(GTK_BOX(widget)));
+	}
+
+	Box::Box() : Container(this), Orientable(this)
+	{ }
+
+	void Box::SetBox(GtkBox* box)
+	{
+		this->widget = GTK_WIDGET(box);
+		this->SetContext(widget);
 	}
 };

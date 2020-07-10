@@ -2,13 +2,13 @@
 
 namespace CGui
 {
-	Button::Button() : EventHandler(this), Container(this)
+	Button::Button() : Handler(this), Container(this)
 	{
 		widget = gtk_button_new();
 		this->SetContext(widget);
 	}
 
-	Button::Button(const char* text) : EventHandler(this), Container(this)
+	Button::Button(const char* text) : Handler(this), Container(this)
 	{
 		widget = gtk_button_new_with_label(text);
 		this->SetContext(widget);

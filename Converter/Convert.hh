@@ -8,10 +8,10 @@ namespace CGui
 	enum class WindowPos { NONE, CENTER, MOUSE, CENTER_ALWAYS, CENTER_ON_PARENT };
 
 	enum class Orientation { HORIZONTAL, VERTICAL };
-	enum class BoxPackType { START, END };
+	enum class PackType { START, END };
 	struct ChildPackingInfo
 	{
-		BoxPackType pack_type;
+		PackType pack_type;
 		bool expand;
 		bool fill;
 		unsigned int padding;
@@ -43,7 +43,7 @@ namespace CGui
 		Policy vpolicy;
 	};
 
-	enum class Action { OPEN, SAVE, SELECT_FOLDER, CREATE_FOLDER };
+	enum class FileChooserAction { OPEN, SAVE, SELECT_FOLDER, CREATE_FOLDER };
 
 	enum class Priority : unsigned short { FALLBACK = 1, THEME = 200, SETTINGS = 400, APPLICATION = 600, USER = 800 };
 
@@ -150,6 +150,10 @@ namespace CGui
 	enum class ResponseType { NONE = -1, REJECT = -2, ACCEPT = -3, DELETE = -4, OK = -5, CANCEL = -6, CLOSE = -7, YES = -8, NO = -9, APPLY = -10, HELP = -11 };
 
 	enum class AssistantPageType { CONTENT, INTRO, CONFIRM, SUMMARY, PROGRESS, CUSTOM };
+
+	enum class ButtonBoxStyle { SPREAD = 1, EDGE, START, END, CENTER, EXPAND };
+
+	enum class StackTransitionType { NONE, CROSSFADE, SLIDE_RIGHT, SLIDE_LEFT, SLIDE_UP, SLIDE_DOWN, SLIDE_LEFT_RIGHT, SLIDE_UP_DOWN, OVER_UP, OVER_DOWN, OVER_LEFT, OVER_RIGHT, UNDER_UP, UNDER_DOWN, UNDER_LEFT, UNDER_RIGHT, OVER_UP_DOWN, OVER_DOWM_UP, OVER_LEFT_RIGHT, OVER_RIGHT_LEFT };
 
 	namespace Converter
 	{
@@ -374,15 +378,15 @@ namespace CGui
 				}
 			}
 
-			auto BoxFuncPtr(BoxPackType type)
+			auto BoxFuncPtr(PackType type)
 			{
 				switch (type)
 				{
-				case BoxPackType::START:
+				case PackType::START:
 					return gtk_box_pack_start;
 					break;
 
-				case BoxPackType::END:
+				case PackType::END:
 					return gtk_box_pack_end;
 					break;
 
@@ -391,19 +395,37 @@ namespace CGui
 				}
 			}
 
-			auto HeaderbarFuncPtr(BoxPackType type)
+			auto HeaderbarFuncPtr(PackType type)
 			{
 				switch (type)
 				{
-				case BoxPackType::START:
+				case PackType::START:
 					return gtk_header_bar_pack_start;
 					break;
-				case BoxPackType::END:
+				case PackType::END:
 					return gtk_header_bar_pack_end;
 					break;
 
 				default:
 					return gtk_header_bar_pack_start;
+				}
+			}
+
+			auto ActionbarFuncPtr(PackType type)
+			{
+				switch (type)
+				{
+				case PackType::START:
+					return gtk_action_bar_pack_start;
+					break;
+
+				case PackType::END:
+					return gtk_action_bar_pack_end;
+					break;
+
+				default:
+					return gtk_action_bar_pack_start;
+					break;
 				}
 			}
 

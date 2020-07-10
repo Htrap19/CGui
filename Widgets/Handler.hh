@@ -8,10 +8,10 @@
 namespace CGui
 {
 	template <typename WidgetType>
-	class EventHandler
+	class Handler
 	{
 	public:
-		EventHandler(WidgetType* w)
+		Handler(WidgetType* w)
 		{
 			/*Storage::GetInstance().MakePrivate<const char*, Single::List<std::any>*>("allcallbacks");
 			Storage::GetInstance().MakePrivate<const char*, void*>("passingdata");
@@ -257,7 +257,7 @@ namespace CGui
 			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(signal), G_CALLBACK((void(*)(GtkWidget*, PassingDataByFunc*))callback), pass));
 		}
 
-		long unsigned int EventListener(Events event, void(*func)())
+		long unsigned int EventHandler(Events event, void(*func)())
 		{
 			/*if (emptyEventsCallbacks == NULL)
 			{
@@ -312,7 +312,7 @@ namespace CGui
 			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((void(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
 		}
 
-		long unsigned int EventListener(Events event, void(*func)(WidgetType*))
+		long unsigned int EventHandler(Events event, void(*func)(WidgetType*))
 		{
 			/*if (singleEventsCallbacks == NULL)
 			{
@@ -367,7 +367,7 @@ namespace CGui
 			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((void(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
 		}
 
-		template <typename ... Args> long unsigned int EventListener(Events event, void(*func)(WidgetType*, Args* ...), Args& ... args)
+		template <typename ... Args> long unsigned int EventHandler(Events event, void(*func)(WidgetType*, Args* ...), Args& ... args)
 		{
 			/*if (infiniteEventsCallbacks == NULL)
 			{
@@ -430,7 +430,7 @@ namespace CGui
 			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((void(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
 		}
 
-		template <typename ... Args> long unsigned int EventListener(Events event, void(*func)(Args* ...), Args& ... args)
+		template <typename ... Args> long unsigned int EventHandler(Events event, void(*func)(Args* ...), Args& ... args)
 		{
 			/*if (infiniteEventsCallbacks == NULL)
 			{
@@ -498,7 +498,7 @@ namespace CGui
 			g_signal_handler_disconnect(t_widget->GetWidget(), *(gulong*)&id);
 		}
 
-		virtual ~EventHandler()
+		virtual ~Handler()
 		{  }
 
 	protected:

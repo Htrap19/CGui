@@ -1,11 +1,11 @@
 #pragma once
 
 #include "../Widget.hh"
-#include "../EventHandler.hh"
+#include "../Handler.hh"
 
 namespace CGui
 {
-	class CheckButton : public Widget, public EventHandler<CheckButton>
+	class CheckButton : public Widget, public Handler<CheckButton>
 	{
 	public:
 		CheckButton();

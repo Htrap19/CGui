@@ -22,7 +22,7 @@ namespace CGui
 		bool ShowCloseButton();
 		void DecorationLayout(const char* layout);
 		const char* DecorationLayout();
-		void Add(BoxPackType type, Widget& w);
+		void Add(PackType type, Widget& w);
 		void AddStart(Widget& w);
 		void AddEnd(Widget& w);
 

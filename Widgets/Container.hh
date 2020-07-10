@@ -51,13 +51,11 @@ namespace CGui
 		virtual void FocusChild(Widget& w)
 		{
 			gtk_container_set_focus_child(GTK_CONTAINER(t_widget->GetWidget()), w.GetWidget());
-			this->Children();
-			children.SelectData((void*)& w);
 		}
 
-		virtual Widget& FocusChild()
+		virtual Widget FocusChild()
 		{
-			return *(Widget*)children.SelectedData();
+			return Widget(gtk_container_get_focus_child(GTK_CONTAINER(t_widget->GetWidget())));
 		}
 
 		virtual Single::List<void*>* Children()
@@ -122,12 +120,12 @@ namespace CGui
 			gtk_container_remove(GTK_CONTAINER(t_widget), w.GetWidget());
 		}
 
-		virtual void InternalWidth(unsigned int width) const
+		virtual void InternalWidth(unsigned int width)
 		{
 			gtk_container_set_border_width(GTK_CONTAINER(t_widget), width);
 		}
 
-		virtual unsigned int InternalWidth() const
+		virtual unsigned int InternalWidth()
 		{
 			return gtk_container_get_border_width(GTK_CONTAINER(t_widget));
 		}
@@ -135,13 +133,11 @@ namespace CGui
 		virtual void FocusChild(Widget& w)
 		{
 			gtk_container_set_focus_child(GTK_CONTAINER(t_widget), w.GetWidget());
-			this->Children();
-			children.SelectData((void*)& w);
 		}
 
-		virtual Widget& FocusChild()
+		virtual Widget FocusChild()
 		{
-			return *(Widget*)children.SelectedData();
+			return Widget(gtk_container_get_focus_child(GTK_CONTAINER(t_widget)));
 		}
 
 		virtual Single::List<void*>* Children()

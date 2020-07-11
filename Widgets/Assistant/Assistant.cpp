@@ -36,7 +36,7 @@ namespace CGui
 		return gtk_assistant_get_current_page(GTK_ASSISTANT(widget));
 	}
 
-	int Assistant::NumPage()
+	int Assistant::NumPages()
 	{
 		return gtk_assistant_get_n_pages(GTK_ASSISTANT(widget));
 	}

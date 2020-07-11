@@ -11,7 +11,7 @@ namespace CGui
 		Stack();
 		Stack(GtkStack* stack);
 		void AddNamed(Widget& child, const char* name);
-		void AddTilted(Widget& child, const char* name, const char* titled);
+		void AddTilted(Widget& child, const char* name, const char* title);
 		Widget ChildByName(const char* name);
 		void VisibleChild(Widget& child);
 		Widget VisibleChild();

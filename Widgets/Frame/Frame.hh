@@ -17,5 +17,9 @@ namespace CGui
 		LabelAlignData LabelAlign();
 		void Shadow(ShadowType type);
 		ShadowType Shadow();
+
+	protected:
+		Frame();
+		void SetFrame(GtkFrame* frame);
 	};
 }

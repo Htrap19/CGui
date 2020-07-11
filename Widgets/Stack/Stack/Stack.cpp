@@ -19,9 +19,9 @@ namespace CGui
 		gtk_stack_add_named(GTK_STACK(widget), child.GetWidget(), name);
 	}
 
-	void Stack::AddTilted(Widget& child, const char* name, const char* titled)
+	void Stack::AddTilted(Widget& child, const char* name, const char* title)
 	{
-		gtk_stack_add_titled(GTK_STACK(widget), child.GetWidget(), name, titled);
+		gtk_stack_add_titled(GTK_STACK(widget), child.GetWidget(), name, title);
 	}
 
 	Widget Stack::ChildByName(const char* name)

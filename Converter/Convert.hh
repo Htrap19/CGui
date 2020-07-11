@@ -2,6 +2,10 @@
 
 #include <gtk/gtk.h>
 
+#ifndef nameof
+#define nameof(name) CGui::Converter::Convert::RetName(#name)
+#endif
+
 namespace CGui
 {
 	enum class WindowType { TOPLEVEL, POPUP };
@@ -160,6 +164,14 @@ namespace CGui
 		float xalign, yalign;
 	};
 
+	enum class LevelbarMode { CONTINUOUS, DISCRETE };
+
+	struct LevelbarOffsetData
+	{
+		bool found;
+		double value;
+	};
+
 	namespace Converter
 	{
 		class Convert
@@ -188,6 +200,11 @@ namespace CGui
 					return GetGtkCode(std::get<Action>(data));
 				return retValue;
 			}*/
+
+			static const char* RetName(const char* name)
+			{
+				return name;
+			}
 
 			const char* GetGtkCode(Signals signals)
 			{

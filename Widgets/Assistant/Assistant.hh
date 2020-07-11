@@ -11,7 +11,7 @@ namespace CGui
 		Assistant();
 		void CurrentPage(int page);
 		int CurrentPage();
-		int NumPage();
+		int NumPages();
 		Widget NthPage(int page);
 		int PrependPage(Widget& page);
 		int AppendPage(Widget& page);

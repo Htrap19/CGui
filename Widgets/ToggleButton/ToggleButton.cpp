@@ -1,0 +1,67 @@
+#include "./ToggleButton.hh"
+
+namespace CGui
+{
+	ToggleButton::ToggleButton() : Handler<ToggleButton>::Handler(this)
+	{
+		widget = gtk_toggle_button_new();
+		this->SetButton(GTK_BUTTON(widget));
+	}
+
+	ToggleButton::ToggleButton(const char* label) : Handler<ToggleButton>::Handler(this)
+	{
+		widget = gtk_toggle_button_new_with_label(label);
+		this->SetButton(GTK_BUTTON(widget));
+	}
+
+	void ToggleButton::Mode(bool draw_indicator)
+	{
+		gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(widget), draw_indicator);
+	}
+
+	bool ToggleButton::Mode()
+	{
+		return gtk_toggle_button_get_mode(GTK_TOGGLE_BUTTON(widget));
+	}
+
+	void ToggleButton::Toggled()
+	{
+		gtk_toggle_button_toggled(GTK_TOGGLE_BUTTON(widget));
+	}
+
+	void ToggleButton::Active(bool active)
+	{
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget), active);
+	}
+
+	bool ToggleButton::Active()
+	{
+		return gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+	}
+
+	void ToggleButton::Inconsistant(bool inconsistant)
+	{
+		gtk_toggle_button_set_inconsistent(GTK_TOGGLE_BUTTON(widget), inconsistant);
+	}
+
+	bool ToggleButton::Inconsistant()
+	{
+		return gtk_toggle_button_get_inconsistent(GTK_TOGGLE_BUTTON(widget));
+	}
+
+	void ToggleButton::SetToggleButton(GtkToggleButton* togglebutton)
+	{
+		this->widget = GTK_WIDGET(togglebutton);
+		this->SetButton(GTK_BUTTON(widget));
+	}
+
+	long unsigned int ToggleButton::Toggled(void(*func)())
+	{
+		return this->Handler<ToggleButton>::SignalHandler(Signals::TOGGLED, func);
+	}
+
+	long unsigned int ToggleButton::Toggled(void(*func)(ToggleButton*))
+	{
+		return this->Handler<ToggleButton>::SignalHandler(Signals::TOGGLED, func);
+	}
+}

@@ -1,30 +1,31 @@
 #pragma once
 
-#include "../Widget.hh"
+#include "../ToggleButton/ToggleButton.hh"
 #include "../Handler.hh"
 
 namespace CGui
 {
-	class CheckButton : public Widget, public Handler<CheckButton>
+	class CheckButton : public ToggleButton, public Handler<CheckButton>
 	{
 	public:
 		CheckButton();
 		CheckButton(const char* text);
-		void Checked(bool active);
-		bool Checked();
 		long unsigned int Toggled(void(*func)());
 		long unsigned int Toggled(void(*func)(CheckButton*));
 		template <typename ... Args> long unsigned int Toggled(void(*func)(CheckButton*, Args* ...), Args& ... args);
 		template <typename ... Args> long unsigned int Toggled(void(*func)(Args* ...), Args& ... args);
+
+	protected:
+		void SetCheckButton(GtkCheckButton* checkbutton);
 	};
 
 	template <typename ... Args> long unsigned int CheckButton::Toggled(void(*func)(CheckButton*, Args* ...), Args& ... args)
 	{
-		return this->SignalHandler(Signals::TOGGLED, func, args...);
+		return this->Handler<CheckButton>::SignalHandler(Signals::TOGGLED, func, args...);
 	}
 
 	template <typename ... Args> long unsigned int CheckButton::Toggled(void(*func)(Args* ...), Args& ... args)
 	{
-		return this->SignalHandler(Signals::TOGGLED, func, args...);
+		return this->Handler<CheckButton>::SignalHandler(Signals::TOGGLED, func, args...);
 	}
 };

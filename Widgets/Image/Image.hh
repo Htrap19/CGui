@@ -10,6 +10,7 @@ namespace CGui
 	{
 	public:
 		Image();
+		Image(GtkImage* image);
 		Image(const char* filename);
 		Image(Pixbuf& pixbuf);
 		Image(PixbufAnimation& pixbuf_animation);

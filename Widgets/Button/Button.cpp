@@ -52,12 +52,11 @@ namespace CGui
 	void Button::ButtonImage(Image& image)
 	{
 		gtk_button_set_image(GTK_BUTTON(widget), image.GetWidget());
-		this->image = &image;
 	}
 
-	Image& Button::ButtonImage()
+	Image Button::ButtonImage()
 	{
-		return *image;
+		return Image(GTK_IMAGE(gtk_button_get_image(GTK_BUTTON(widget))));
 	}
 
 	void Button::ButtonImagePosition(PositionType position)
@@ -88,5 +87,11 @@ namespace CGui
 	long unsigned int Button::Clicked(void(*func)(Button*))
 	{
 		return this->SignalHandler(Signals::CLICKED, func);
+	}
+
+	void Button::SetButton(GtkButton* button)
+	{
+		this->widget = GTK_WIDGET(button);
+		this->SetContext(widget);
 	}
 };

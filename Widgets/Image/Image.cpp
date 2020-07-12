@@ -8,6 +8,12 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
+	Image::Image(GtkImage* image)
+	{
+		this->widget = GTK_WIDGET(image);
+		this->SetContext(widget);
+	}
+
 	Image::Image(const char* filename)
 	{
 		widget = gtk_image_new_from_file(filename);

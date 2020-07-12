@@ -20,7 +20,7 @@ namespace CGui
 		void UseUnderline(bool use_underline);
 		bool UseUnderline();
 		void ButtonImage(Image& image);
-		Image& ButtonImage();
+		Image ButtonImage();
 		void ButtonImagePosition(PositionType position);
 		PositionType ButtonImagePosition();
 		void AlwaysShowImage(bool always_show_image);
@@ -31,7 +31,7 @@ namespace CGui
 		template <typename ... Args> long unsigned int Clicked(void(*func)(Args* ...), Args& ... args);
 
 	protected:
-		Image* image;
+		void SetButton(GtkButton* button);
 	};
 
 	template <typename ... Args> long unsigned int Button::Clicked(void(*func)(Button*, Args* ...), Args& ... args)

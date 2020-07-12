@@ -37,5 +37,7 @@
 #include "./Widgets/Notebook/Notebook.hh"
 #include "./Widgets/Levelbar/Levelbar.hh"
 #include "./Widgets/Statusbar/Statusbar.hh"
+#include "./Widgets/ToggleButton/ToggleButton.hh"
+#include "./Widgets/RadioButton/RadioButton.hh"
 #include "./Pixbuf/Pixbuf.hh"
 #include "./Custom/Initialize/Initialize.hh"

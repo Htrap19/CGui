@@ -2,33 +2,54 @@
 
 namespace CGui
 {
-	ScrolledWindow::ScrolledWindow(Policy hpolicy, Policy vpolicy) : Container(this), m_HScrollbar{NULL}, m_VScrollbar{NULL}
+	ScrolledWindow::ScrolledWindow(Policy hpolicy, Policy vpolicy) : Container(this)
 	{
 		widget = gtk_scrolled_window_new(NULL, NULL);
 		this->ScrollPolicy(hpolicy, vpolicy);
 		this->SetContext(widget);
 	}
 
-	ScrolledWindow::~ScrolledWindow()
+	ScrolledWindow::ScrolledWindow(Adjustment hadjustment, Adjustment vadjustment) : Container(this)
 	{
-		delete m_HScrollbar;
-		delete m_VScrollbar;
+		widget = gtk_scrolled_window_new(hadjustment.GetAdjustment(), vadjustment.GetAdjustment());
+		this->SetContext(widget);
 	}
 
-	Widget& ScrolledWindow::VScrollbar()
+	ScrolledWindow::ScrolledWindow(Adjustment hadjustment, Policy hpolicy, Adjustment vadjustment, Policy vpolicy) : Container(this)
 	{
-		if (m_VScrollbar != NULL)
-			delete m_VScrollbar;
-		m_VScrollbar = new Widget(gtk_scrolled_window_get_vscrollbar(GTK_SCROLLED_WINDOW(widget)));
-		return *m_VScrollbar;
+		widget = gtk_scrolled_window_new(hadjustment.GetAdjustment(), vadjustment.GetAdjustment());
+		this->SetContext(widget);
+		this->ScrollPolicy(hpolicy, vpolicy);
 	}
 
-	Widget& ScrolledWindow::HScrollbar()
+	void ScrolledWindow::HAdjustment(Adjustment hadjustment)
 	{
-		if (m_HScrollbar != NULL)
-			delete m_HScrollbar;
-		m_HScrollbar = new Widget(gtk_scrolled_window_get_hscrollbar(GTK_SCROLLED_WINDOW(widget)));
-		return *m_HScrollbar;
+		gtk_scrolled_window_set_hadjustment(GTK_SCROLLED_WINDOW(widget), hadjustment.GetAdjustment());
+	}
+
+	Adjustment ScrolledWindow::HAdjustment()
+	{
+		return Adjustment(gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(widget)));
+	}
+
+	void ScrolledWindow::VAdjustment(Adjustment vadjustment)
+	{
+		gtk_scrolled_window_set_vadjustment(GTK_SCROLLED_WINDOW(widget), vadjustment.GetAdjustment());
+	}
+
+	Adjustment ScrolledWindow::VAdjustment()
+	{
+		return Adjustment(gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(widget)));
+	}
+
+	Widget ScrolledWindow::VScrollbar()
+	{
+		return Widget(gtk_scrolled_window_get_vscrollbar(GTK_SCROLLED_WINDOW(widget)));
+	}
+
+	Widget ScrolledWindow::HScrollbar()
+	{
+		return Widget(gtk_scrolled_window_get_hscrollbar(GTK_SCROLLED_WINDOW(widget)));
 	}
 
 	void ScrolledWindow::ScrollPolicy(Policy hpolicy, Policy vpolicy)

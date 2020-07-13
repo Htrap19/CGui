@@ -44,3 +44,4 @@
 #include "./Pixbuf/Pixbuf.hh"
 #include "./Custom/Initialize/Initialize.hh"
 #include "./Widgets/Entry/EntryBuffer/EntryBuffer.hh"
+#include "./Misc/Adjustment/Adjustment.hh"

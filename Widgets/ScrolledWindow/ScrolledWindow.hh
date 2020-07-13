@@ -2,6 +2,7 @@
 
 #include "../Widget.hh"
 #include "../Container.hh"
+#include "../../Misc/Adjustment/Adjustment.hh"
 
 namespace CGui
 {
@@ -9,9 +10,14 @@ namespace CGui
 	{
 	public:
 		ScrolledWindow(Policy hpolicy, Policy vpolicy);
-		~ScrolledWindow();
-		Widget& VScrollbar();
-		Widget& HScrollbar();
+		ScrolledWindow(Adjustment hadjustment, Adjustment vadjustment);
+		ScrolledWindow(Adjustment hadjustment, Policy hpolicy, Adjustment vadjustment, Policy vpolicy);
+		void HAdjustment(Adjustment hadjustment);
+		Adjustment HAdjustment();
+		void VAdjustment(Adjustment vadjustment);
+		Adjustment VAdjustment();
+		Widget VScrollbar();
+		Widget HScrollbar();
 		void ScrollPolicy(Policy hpolicy, Policy vpolicy);
 		PolicyInfo ScrollPolicy();
 		void Placement(CornerType type);
@@ -37,9 +43,5 @@ namespace CGui
 		bool PropagateNaturalWidth();
 		void PropagateNaturalHeight(bool propagate_height);
 		bool PropagateNaturalHeight();
-
-	private:
-		Widget* m_HScrollbar;
-		Widget* m_VScrollbar;
 	};
 };

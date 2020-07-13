@@ -10,6 +10,7 @@ namespace CGui
 	{
 	public:
 		AboutDialog();
+		AboutDialog(Window& parent);
 		void ProgramName(const char* name);
 		const char* ProgramName();
 		void Version(const char* version);
@@ -28,11 +29,11 @@ namespace CGui
 		const char* Website();
 		void WebsiteLabel(const char* label);
 		const char* WebsiteLabel();
-		void Authors(const char* authors[]);
+		void Authors(const char** authors);
 		const char* const* Authors();
-		void Artists(const char* artists[]);
+		void Artists(const char** artists);
 		const char* const* Artists();
-		void Documenters(const char* documenters[]);
+		void Documenters(const char** documenters);
 		const char* const* Documenters();
 		void TranslatorCredits(const char* credits);
 		const char* TranslatorCredits();
@@ -40,6 +41,6 @@ namespace CGui
 		Pixbuf Logo();
 		void LogoIconname(const char* iconname);
 		const char* LogoIconname();
-		void AddCreditSection(const char* section_name, const char* people[]);
+		void AddCreditSection(const char* section_name, const char** people);
 	};
 }

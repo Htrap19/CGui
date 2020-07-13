@@ -180,6 +180,13 @@ namespace CGui
 
 	enum class License { UNKNOWN, CUSTOM, GPL_2_0, GPL_3_0, LGPL_2_1, LGPL_3_0, BSD, MIT_X11, ARTISTIC, GPL_2_0_ONLY, GPL_3_0_ONLY, AGPL_3_0, AGPL_3_0_ONLY, BSD_3, APACHE_2_0, MPL_2_0 };
 
+	enum class SensitivityType { AUTO, ON, OFF };
+
+	struct SliderRangeData
+	{
+		int slider_start, slider_end;
+	};
+
 	namespace Converter
 	{
 		class Convert

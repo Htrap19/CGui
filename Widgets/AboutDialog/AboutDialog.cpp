@@ -8,6 +8,13 @@ namespace CGui
 		this->SetDialog(GTK_DIALOG(widget));
 	}
 
+	AboutDialog::AboutDialog(Window& parent)
+	{
+		widget = gtk_about_dialog_new();
+		this->SetDialog(GTK_DIALOG(widget));
+		this->TransientFor(parent);
+	}
+
 	void AboutDialog::ProgramName(const char* name)
 	{
 		gtk_about_dialog_set_program_name(GTK_ABOUT_DIALOG(widget), name);
@@ -98,7 +105,7 @@ namespace CGui
 		return gtk_about_dialog_get_website_label(GTK_ABOUT_DIALOG(widget));
 	}
 
-	void AboutDialog::Authors(const char* authors[])
+	void AboutDialog::Authors(const char** authors)
 	{
 		if (authors[sizeof(authors) - 1] != NULL)
 			authors[sizeof(authors)] = NULL;
@@ -111,7 +118,7 @@ namespace CGui
 		return gtk_about_dialog_get_authors(GTK_ABOUT_DIALOG(widget));
 	}
 
-	void AboutDialog::Artists(const char* artists[])
+	void AboutDialog::Artists(const char** artists)
 	{
 		if (artists[sizeof(artists) - 1] != NULL)
 			artists[sizeof(artists)] = NULL;
@@ -124,7 +131,7 @@ namespace CGui
 		return gtk_about_dialog_get_artists(GTK_ABOUT_DIALOG(widget));
 	}
 
-	void AboutDialog::Documenters(const char* documenters[])
+	void AboutDialog::Documenters(const char** documenters)
 	{
 		if (documenters[sizeof(documenters) - 1] != NULL)
 			documenters[sizeof(documenters)] = NULL;
@@ -167,7 +174,7 @@ namespace CGui
 		return gtk_about_dialog_get_logo_icon_name(GTK_ABOUT_DIALOG(widget));
 	}
 
-	void AboutDialog::AddCreditSection(const char* section_name, const char* people[])
+	void AboutDialog::AddCreditSection(const char* section_name, const char** people)
 	{
 		if (people[sizeof(people) - 1] != NULL)
 			people[sizeof(people)] = NULL;

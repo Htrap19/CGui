@@ -39,5 +39,8 @@
 #include "./Widgets/Statusbar/Statusbar.hh"
 #include "./Widgets/ToggleButton/ToggleButton.hh"
 #include "./Widgets/RadioButton/RadioButton.hh"
+#include "./Widgets/LinkButton/LinkButton.hh"
+#include "./Widgets/AboutDialog/AboutDialog.hh"
 #include "./Pixbuf/Pixbuf.hh"
 #include "./Custom/Initialize/Initialize.hh"
+#include "./Widgets/Entry/EntryBuffer/EntryBuffer.hh"

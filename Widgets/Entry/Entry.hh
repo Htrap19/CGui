@@ -4,16 +4,19 @@
 #include "../Handler.hh"
 #include "../../Converter/Convert.hh"
 #include "../../Pixbuf/Pixbuf/Pixbuf.hh"
+#include "./EntryBuffer/EntryBuffer.hh"
+#include "../Editable.hh"
 
 namespace CGui
 {
-	class Entry : public Widget, public Handler<Entry>
+	class Entry : public Widget, public Handler<Entry>, public Editable
 	{
 	public:
 		Entry();
 		Entry(const char* placeholdertext);
-		void Editable(bool editable);
-		bool Editable();
+		Entry(EntryBuffer buffer);
+		void Buffer(EntryBuffer buffer);
+		EntryBuffer Buffer();
 		void Visibility(bool visibility);
 		bool Visibility();
 		void MaxLength(int max);
@@ -37,7 +40,7 @@ namespace CGui
 		void ProgressPulseStep(double fraction);
 		double ProgressPulseStep();
 		void Icon(EntryIconPosition pos, Pixbuf& pixbuf);
-		Pixbuf& Icon();
+		Pixbuf Icon(EntryIconPosition pos);
 		void IconActivatable(EntryIconPosition pos, bool activatable);
 		bool IconActivatable(EntryIconPosition pos);
 		void IconSensitive(EntryIconPosition pos, bool sensitive);
@@ -56,9 +59,6 @@ namespace CGui
 		long unsigned int Changed(void(*func)(Entry*));
 		template <typename ... Args> long unsigned int Changed(void(*func)(Entry*, Args* ...), Args& ... args);
 		template <typename ... Args> long unsigned int Changed(void(*func)(Args* ...), Args& ... args);
-
-	protected:
-		Pixbuf* m_pixbuf;
 	};
 
 	template <typename ... Args> long unsigned int Entry::Changed(void(*func)(Entry*, Args* ...), Args& ... args)

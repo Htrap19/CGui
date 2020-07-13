@@ -6,6 +6,7 @@ namespace CGui
 	{
 		widget = gtk_entry_new();
 		this->SetContext(widget);
+		this->SetEditable(*this);
 	}
 
 	Entry::Entry(const char* placeholdertext) : Handler(this)
@@ -13,16 +14,24 @@ namespace CGui
 		widget = gtk_entry_new();
 		gtk_entry_set_placeholder_text(GTK_ENTRY(widget), placeholdertext);
 		this->SetContext(widget);
+		this->SetEditable(*this);
 	}
 
-	void Entry::Editable(bool editable)
+	Entry::Entry(EntryBuffer buffer) : Handler(this)
 	{
-		gtk_editable_set_editable(GTK_EDITABLE(widget), editable);
+		widget = gtk_entry_new_with_buffer(buffer.GetEntryBuffer());
+		this->SetContext(widget);
+		this->SetEditable(*this);
 	}
 
-	bool Entry::Editable()
+	void Entry::Buffer(EntryBuffer buffer)
 	{
-		return gtk_editable_get_editable(GTK_EDITABLE(widget));
+		gtk_entry_set_buffer(GTK_ENTRY(widget), buffer.GetEntryBuffer());
+	}
+
+	EntryBuffer Entry::Buffer()
+	{
+		return EntryBuffer(gtk_entry_get_buffer(GTK_ENTRY(widget)));
 	}
 
 	void Entry::Visibility(bool visibility)
@@ -140,9 +149,9 @@ namespace CGui
 		gtk_entry_set_icon_from_pixbuf(GTK_ENTRY(widget), (GtkEntryIconPosition)pos, pixbuf.GetWidget());
 	}
 
-	Pixbuf& Entry::Icon()
+	Pixbuf Entry::Icon(EntryIconPosition pos)
 	{
-		return *m_pixbuf;
+		return Pixbuf(gtk_entry_get_icon_pixbuf(GTK_ENTRY(widget), (GtkEntryIconPosition)pos));
 	}
 
 	void Entry::IconActivatable(EntryIconPosition pos, bool activatable)

@@ -20,7 +20,7 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
-	Image::Image(Pixbuf& pixbuf)
+	Image::Image(CGui::Pixbuf& pixbuf)
 	{
 		widget = gtk_image_new_from_pixbuf(pixbuf.GetWidget());
 		this->SetContext(widget);
@@ -43,26 +43,24 @@ namespace CGui
 		gtk_image_set_from_file(GTK_IMAGE(widget), filename);
 	}
 
-	void Image::ImagePixbuf(Pixbuf& pixbuf)
+	void Image::Pixbuf(CGui::Pixbuf& pixbuf)
 	{
 		gtk_image_set_from_pixbuf(GTK_IMAGE(widget), pixbuf.GetWidget());
-		m_ImagePixbuf = &pixbuf;
 	}
 
-	Pixbuf& Image::ImagePixbuf()
+	CGui::Pixbuf Image::Pixbuf()
 	{
-		return *m_ImagePixbuf;
+		return CGui::Pixbuf(gtk_image_get_pixbuf(GTK_IMAGE(widget)));
 	}
 
 	void Image::Animation(PixbufAnimation& pixbuf_animation)
 	{
 		gtk_image_set_from_animation(GTK_IMAGE(widget), pixbuf_animation.GetWidget());
-		m_PixbufAnimation = &pixbuf_animation;
 	}
 
-	PixbufAnimation& Image::Animation()
+	PixbufAnimation Image::Animation()
 	{
-		return *m_PixbufAnimation;
+		return PixbufAnimation(gtk_image_get_animation(GTK_IMAGE(widget)));
 	}
 
 	void Image::Iconname(const char* icon_name, IconSize size)

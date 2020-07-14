@@ -12,6 +12,7 @@ namespace CGui
 	public:
 		Button();
 		Button(const char* text);
+		Button(GtkButton* button);
 		void Text(const char* text);
 		const char* Text();
 		void Click();
@@ -19,10 +20,10 @@ namespace CGui
 		ReliefStyle Relief();
 		void UseUnderline(bool use_underline);
 		bool UseUnderline();
-		void ButtonImage(Image& image);
-		Image ButtonImage();
-		void ButtonImagePosition(PositionType position);
-		PositionType ButtonImagePosition();
+		void Image(CGui::Image& image);
+		CGui::Image Image();
+		void ImagePosition(PositionType position);
+		PositionType ImagePosition();
 		void AlwaysShowImage(bool always_show_image);
 		bool AlwaysShowImage();
 		long unsigned int Clicked(void(*func)());

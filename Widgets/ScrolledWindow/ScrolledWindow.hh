@@ -18,8 +18,8 @@ namespace CGui
 		Adjustment VAdjustment();
 		Widget VScrollbar();
 		Widget HScrollbar();
-		void ScrollPolicy(Policy hpolicy, Policy vpolicy);
-		PolicyInfo ScrollPolicy();
+		void Policy(CGui::Policy hpolicy, CGui::Policy vpolicy);
+		PolicyInfo Policy();
 		void Placement(CornerType type);
 		CornerType Placement();
 		void UnsetPlacement();

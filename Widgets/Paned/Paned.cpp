@@ -2,7 +2,7 @@
 
 namespace CGui
 {
-	Paned::Paned(Orientation orientation) : Container(this), Orientable(this)
+	Paned::Paned(CGui::Orientation orientation) : Container(this), Orientable(this)
 	{
 		widget = gtk_paned_new((GtkOrientation)orientation);
 		this->SetContext(widget);

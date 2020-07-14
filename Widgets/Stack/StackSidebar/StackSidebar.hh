@@ -9,7 +9,7 @@ namespace CGui
 	{
 	public:
 		StackSidebar();
-		void SidebarStack(Stack& stack);
-		Stack SidebarStack();
+		void Stack(CGui::Stack& stack);
+		CGui::Stack Stack();
 	};
 }

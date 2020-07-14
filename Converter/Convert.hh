@@ -187,6 +187,16 @@ namespace CGui
 		int slider_start, slider_end;
 	};
 
+	enum class ScrollablePolicy { MINIMUM = 0, NATURAL };
+
+	struct Border
+	{
+		signed short left;
+		signed short right;
+		signed short top;
+		signed short bottom;
+	};
+
 	namespace Converter
 	{
 		class Convert

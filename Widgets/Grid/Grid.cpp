@@ -83,13 +83,13 @@ namespace CGui
 		return gtk_grid_get_baseline_row(GTK_GRID(widget));
 	}
 
-	void Grid::RowBaselinePosition(int row, BaselinePosition pos)
+	void Grid::BaselinePosition(int row, CGui::BaselinePosition pos)
 	{
 		gtk_grid_set_row_baseline_position(GTK_GRID(widget), row, (GtkBaselinePosition)pos);
 	}
 
-	BaselinePosition Grid::RowBaselinePosition(int row)
+	CGui::BaselinePosition Grid::BaselinePosition(int row)
 	{
-		return (BaselinePosition)gtk_grid_get_row_baseline_position(GTK_GRID(widget), row);
+		return (CGui::BaselinePosition)gtk_grid_get_row_baseline_position(GTK_GRID(widget), row);
 	}
 }

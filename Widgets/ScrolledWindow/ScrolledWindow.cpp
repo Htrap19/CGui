@@ -2,10 +2,10 @@
 
 namespace CGui
 {
-	ScrolledWindow::ScrolledWindow(Policy hpolicy, Policy vpolicy) : Container(this)
+	ScrolledWindow::ScrolledWindow(CGui::Policy hpolicy, CGui::Policy vpolicy) : Container(this)
 	{
 		widget = gtk_scrolled_window_new(NULL, NULL);
-		this->ScrollPolicy(hpolicy, vpolicy);
+		this->Policy(hpolicy, vpolicy);
 		this->SetContext(widget);
 	}
 
@@ -15,11 +15,11 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
-	ScrolledWindow::ScrolledWindow(Adjustment hadjustment, Policy hpolicy, Adjustment vadjustment, Policy vpolicy) : Container(this)
+	ScrolledWindow::ScrolledWindow(Adjustment hadjustment, CGui::Policy hpolicy, Adjustment vadjustment, CGui::Policy vpolicy) : Container(this)
 	{
 		widget = gtk_scrolled_window_new(hadjustment.GetAdjustment(), vadjustment.GetAdjustment());
 		this->SetContext(widget);
-		this->ScrollPolicy(hpolicy, vpolicy);
+		this->Policy(hpolicy, vpolicy);
 	}
 
 	void ScrolledWindow::HAdjustment(Adjustment hadjustment)
@@ -52,17 +52,17 @@ namespace CGui
 		return Widget(gtk_scrolled_window_get_hscrollbar(GTK_SCROLLED_WINDOW(widget)));
 	}
 
-	void ScrolledWindow::ScrollPolicy(Policy hpolicy, Policy vpolicy)
+	void ScrolledWindow::Policy(CGui::Policy hpolicy, CGui::Policy vpolicy)
 	{
 		gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(widget), (GtkPolicyType)hpolicy, (GtkPolicyType)vpolicy);
 	}
 
-	PolicyInfo ScrolledWindow::ScrollPolicy()
+	PolicyInfo ScrolledWindow::Policy()
 	{
 		GtkPolicyType hp, vp;
 		gtk_scrolled_window_get_policy(GTK_SCROLLED_WINDOW(widget), &hp, &vp);
 
-		return { (Policy)hp, (Policy)vp };
+		return { (CGui::Policy)hp, (CGui::Policy)vp };
 	}
 
 	void ScrolledWindow::Placement(CornerType type)

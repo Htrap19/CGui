@@ -140,9 +140,9 @@ namespace CGui
 	{
 	}
 
-	void Range::SetRange(Widget& w)
+	void Range::SetRange(GtkRange* range)
 	{
-		this->widget = w.GetWidget();
+		this->widget = GTK_WIDGET(range);
 		this->SetContext(widget);
 	}
 

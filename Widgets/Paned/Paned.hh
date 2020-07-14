@@ -9,7 +9,7 @@ namespace CGui
 	class Paned : public Widget, public Container<Paned>, public Orientable
 	{
 	public:
-		Paned(Orientation orientation);
+		Paned(CGui::Orientation orientation);
 		void Add1(Widget& child);
 		void Add2(Widget& child);
 		void Pack1(Widget& child, bool resize, bool shrink);

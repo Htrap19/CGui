@@ -8,13 +8,13 @@ namespace CGui
 		this->SetBox(GTK_BOX(widget));
 	}
 
-	void StackSwitcher::SwitcherStack(Stack& stack)
+	void StackSwitcher::Stack(CGui::Stack& stack)
 	{
 		gtk_stack_switcher_set_stack(GTK_STACK_SWITCHER(widget), GTK_STACK(stack.GetWidget()));
 	}
 
-	Stack StackSwitcher::SwitcherStack()
+	CGui::Stack StackSwitcher::Stack()
 	{
-		return Stack(gtk_stack_switcher_get_stack(GTK_STACK_SWITCHER(widget)));
+		return CGui::Stack(gtk_stack_switcher_get_stack(GTK_STACK_SWITCHER(widget)));
 	}
 }

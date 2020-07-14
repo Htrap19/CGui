@@ -8,6 +8,7 @@ namespace CGui
 	class PixbufAnimation
 	{
 	public:
+		PixbufAnimation(GdkPixbufAnimation* animation);
 		PixbufAnimation(PixbufSimpleAnim& animation);
 		PixbufAnimation(const char* filename);
 		bool IsStaticImage();

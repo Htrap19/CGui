@@ -9,7 +9,7 @@ namespace CGui
 	class Box : public Widget, public Container<Box>, public Orientable
 	{
 	public:
-		Box(Orientation type, int spacing);
+		Box(CGui::Orientation type, int spacing);
 		void Add(PackType type, Widget& w, bool expand = false, bool fill = false, unsigned int padding = 0);
 		void AddStart(Widget& w, bool expand = false, bool fill = false, unsigned int padding = 0);
 		void AddEnd(Widget& w, bool expand = false, bool fill = false, unsigned int padding = 0);
@@ -20,8 +20,8 @@ namespace CGui
 		void ReorderChild(Widget& w, int position);
 		void ChildPacking(Widget& w, PackType type, bool expand = false, bool fill = false, unsigned int padding = 0);
 		ChildPackingInfo QueryChildPacking(Widget& w);
-		void BoxBaselinePosition(BaselinePosition position);
-		BaselinePosition BoxBaselinePosition();
+		void BaselinePosition(CGui::BaselinePosition position);
+		CGui::BaselinePosition BaselinePosition();
 		void CenterWidget(Widget& w);
 		Widget CenterWidget();
 

@@ -7,7 +7,7 @@ namespace CGui
 	class ButtonBox : public Box
 	{
 	public:
-		ButtonBox(Orientation orientation);
+		ButtonBox(CGui::Orientation orientation);
 		void Layout(ButtonBoxStyle style);
 		ButtonBoxStyle Layout();
 		void ChildSecondary(Widget& child, bool is_secondary);

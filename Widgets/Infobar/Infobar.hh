@@ -10,9 +10,9 @@ namespace CGui
 	{
 	public:
 		Infobar();
-		Infobar(MessageType messagetype, bool showclosebutton);
-		void MessageBoxType(MessageType messagetype);
-		MessageType MessageBoxType();
+		Infobar(CGui::MessageType messagetype, bool showclosebutton);
+		void MessageType(CGui::MessageType messagetype);
+		CGui::MessageType MessageType();
 		void ShowCloseButton(bool showclosebutton);
 		bool ShowCloseButton();
 	};

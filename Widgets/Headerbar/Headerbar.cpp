@@ -48,12 +48,11 @@ namespace CGui
 	void Headerbar::CustomTitle(Widget& w)
 	{
 		gtk_header_bar_set_custom_title(GTK_HEADER_BAR(widget), w.GetWidget());
-		m_TitleWidget = &w;
 	}
 
-	Widget& Headerbar::CustomTitle()
+	Widget Headerbar::CustomTitle()
 	{
-		return *m_TitleWidget;
+		return Widget(gtk_header_bar_get_custom_title(GTK_HEADER_BAR(widget)));
 	}
 
 	void Headerbar::ShowCloseButton(bool show_close_button)

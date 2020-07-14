@@ -38,6 +38,6 @@ namespace CGui
 
 	protected:
 		Range();
-		void SetRange(Widget& w);
+		void SetRange(GtkRange* range);
 	};
 }

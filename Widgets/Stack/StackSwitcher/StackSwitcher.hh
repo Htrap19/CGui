@@ -9,7 +9,7 @@ namespace CGui
 	{
 	public:
 		StackSwitcher();
-		void SwitcherStack(Stack& stack);
-		Stack SwitcherStack();
+		void Stack(CGui::Stack& stack);
+		CGui::Stack Stack();
 	};
 }

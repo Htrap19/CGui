@@ -2,7 +2,7 @@
 
 namespace CGui
 {
-	Box::Box(Orientation type, int spacing) : Container(this), Orientable(this)
+	Box::Box(CGui::Orientation type, int spacing) : Container(this), Orientable(this)
 	{
 		widget = gtk_box_new((GtkOrientation)type, spacing);
 		this->SetContext(widget);
@@ -65,14 +65,14 @@ namespace CGui
 		return { (PackType)type, (bool)expand, (bool)fill, padding };
 	}
 
-	void Box::BoxBaselinePosition(BaselinePosition position)
+	void Box::BaselinePosition(CGui::BaselinePosition position)
 	{
 		gtk_box_set_baseline_position(GTK_BOX(widget), (GtkBaselinePosition)position);
 	}
 
-	BaselinePosition Box::BoxBaselinePosition()
+	CGui::BaselinePosition Box::BaselinePosition()
 	{
-		return (BaselinePosition)gtk_box_get_baseline_position(GTK_BOX(widget));
+		return (CGui::BaselinePosition)gtk_box_get_baseline_position(GTK_BOX(widget));
 	}
 
 	void Box::CenterWidget(Widget& w)

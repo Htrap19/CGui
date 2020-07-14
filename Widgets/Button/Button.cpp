@@ -14,6 +14,12 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
+	Button::Button(GtkButton* button) : Handler(this), Container(this)
+	{
+		this->widget = GTK_WIDGET(button);
+		this->SetContext(widget);
+	}
+
 	void Button::Text(const char* text)
 	{
 		gtk_button_set_label(GTK_BUTTON(widget), text);
@@ -49,22 +55,22 @@ namespace CGui
 		return gtk_button_get_use_underline(GTK_BUTTON(widget));
 	}
 
-	void Button::ButtonImage(Image& image)
+	void Button::Image(CGui::Image& image)
 	{
 		gtk_button_set_image(GTK_BUTTON(widget), image.GetWidget());
 	}
 
-	Image Button::ButtonImage()
+	CGui::Image Button::Image()
 	{
-		return Image(GTK_IMAGE(gtk_button_get_image(GTK_BUTTON(widget))));
+		return CGui::Image(GTK_IMAGE(gtk_button_get_image(GTK_BUTTON(widget))));
 	}
 
-	void Button::ButtonImagePosition(PositionType position)
+	void Button::ImagePosition(PositionType position)
 	{
 		gtk_button_set_image_position(GTK_BUTTON(widget), (GtkPositionType)position);
 	}
 
-	PositionType Button::ButtonImagePosition()
+	PositionType Button::ImagePosition()
 	{
 		return (PositionType)gtk_button_get_image_position(GTK_BUTTON(widget));
 	}

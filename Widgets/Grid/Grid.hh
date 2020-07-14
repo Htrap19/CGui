@@ -25,7 +25,7 @@ namespace CGui
 		bool ColumnSpacing();
 		void BaselineRow(int row);
 		int BaselineRow();
-		void RowBaselinePosition(int row, BaselinePosition pos);
-		BaselinePosition RowBaselinePosition(int row);
+		void BaselinePosition(int row, CGui::BaselinePosition pos);
+		CGui::BaselinePosition BaselinePosition(int row);
 	};
 }

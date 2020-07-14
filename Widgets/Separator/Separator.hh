@@ -8,6 +8,6 @@ namespace CGui
 	class Separator : public Widget, public Orientable
 	{
 	public:
-		Separator(Orientation orientation);
+		Separator(CGui::Orientation orientation);
 	};
 }

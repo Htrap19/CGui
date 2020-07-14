@@ -51,14 +51,14 @@ namespace CGui
 		return { width, height };
 	}
 
-	void Window::CustomHeaderbar(Headerbar& hb)
+	void Window::Headerbar(CGui::Headerbar& hb)
 	{
 		gtk_window_set_titlebar(GTK_WINDOW(widget), hb.GetWidget());
 	}
 
-	Headerbar Window::CustomHeaderbar()
+	CGui::Headerbar Window::Headerbar()
 	{
-		return Headerbar(GTK_HEADER_BAR(gtk_window_get_titlebar(GTK_WINDOW(widget))));
+		return CGui::Headerbar(GTK_HEADER_BAR(gtk_window_get_titlebar(GTK_WINDOW(widget))));
 	}
 
 	void Window::Resizable(bool resizable)

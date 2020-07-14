@@ -16,10 +16,10 @@ namespace CGui
 		Image(PixbufAnimation& pixbuf_animation);
 		Image(const char* icon_name, IconSize size);
 		void File(const char* filename);
-		void ImagePixbuf(Pixbuf& pixbuf);
-		Pixbuf& ImagePixbuf();
+		void Pixbuf(CGui::Pixbuf& pixbuf);
+		CGui::Pixbuf Pixbuf();
 		void Animation(PixbufAnimation& pixbuf_animation);
-		PixbufAnimation& Animation();
+		PixbufAnimation Animation();
 		void Iconname(const char* icon_name, IconSize size);
 		IconInfo Iconname();
 		void Resource(const char* resource_path);
@@ -27,9 +27,5 @@ namespace CGui
 		void Clear();
 		void PixelSize(int pixel_size);
 		int PixelSize();
-
-	protected:
-		Pixbuf* m_ImagePixbuf;
-		PixbufAnimation* m_PixbufAnimation;
 	};
 }

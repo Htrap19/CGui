@@ -17,7 +17,7 @@ namespace CGui
 		void HasSubTitle(bool has_subtitle);
 		bool HasSubTitle();
 		void CustomTitle(Widget& w);
-		Widget& CustomTitle();
+		Widget CustomTitle();
 		void ShowCloseButton(bool show_close_button);
 		bool ShowCloseButton();
 		void DecorationLayout(const char* layout);
@@ -25,8 +25,5 @@ namespace CGui
 		void Add(PackType type, Widget& w);
 		void AddStart(Widget& w);
 		void AddEnd(Widget& w);
-
-	protected:
-		Widget* m_TitleWidget;
 	};
 }

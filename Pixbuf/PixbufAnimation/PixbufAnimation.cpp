@@ -2,6 +2,11 @@
 
 namespace CGui
 {
+	PixbufAnimation::PixbufAnimation(GdkPixbufAnimation* animation)
+	{
+		this->animation = animation;
+	}
+
 	PixbufAnimation::PixbufAnimation(PixbufSimpleAnim& animation)
 	{
 		this->animation = GDK_PIXBUF_ANIMATION(animation.GetWidget());

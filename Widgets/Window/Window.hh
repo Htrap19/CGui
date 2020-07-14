@@ -15,8 +15,8 @@ namespace CGui
 		void Icon(const char* filename);
 		void DefaultSize(unsigned int width, unsigned int height);
 		Requisition DefaultSize();
-		void CustomHeaderbar(Headerbar& hb);
-		Headerbar CustomHeaderbar();
+		void Headerbar(CGui::Headerbar& hb);
+		CGui::Headerbar Headerbar();
 		void Resizable(bool resizable);
 		bool Resizable();
 		void Title(const char* title);

@@ -8,13 +8,13 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
-	void StackSidebar::SidebarStack(Stack& stack)
+	void StackSidebar::Stack(CGui::Stack& stack)
 	{
 		gtk_stack_sidebar_set_stack(GTK_STACK_SIDEBAR(widget), GTK_STACK(stack.GetWidget()));
 	}
 
-	Stack StackSidebar::SidebarStack()
+	Stack StackSidebar::Stack()
 	{
-		return Stack(gtk_stack_sidebar_get_stack(GTK_STACK_SIDEBAR(widget)));
+		return CGui::Stack(gtk_stack_sidebar_get_stack(GTK_STACK_SIDEBAR(widget)));
 	}
 }

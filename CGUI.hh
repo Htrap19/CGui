@@ -45,6 +45,8 @@
 #include "./Widgets/Scale/Scale.hh"
 #include "./Widgets/Switch/Switch.hh"
 #include "./Widgets/ScaleButton/ScaleButton.hh"
+#include "./Widgets/Layout/Layout.hh"
+#include "./Widgets/Expander/Expander.hh"
 #include "./Pixbuf/Pixbuf.hh"
 #include "./Custom/Initialize/Initialize.hh"
 #include "./Widgets/Entry/EntryBuffer/EntryBuffer.hh"

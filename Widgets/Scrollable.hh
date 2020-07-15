@@ -62,6 +62,16 @@ namespace CGui
 		}
 
 	protected:
+		Scrollable()
+		{
+
+		}
+
+		void SetScrollable(GtkScrollable* scrollable)
+		{
+			this->scrollable = scrollable;
+		}
+
 		GtkScrollable* scrollable;
 	};
 }

@@ -59,6 +59,9 @@ namespace CGui
 		long unsigned int Changed(void(*func)(Entry*));
 		template <typename ... Args> long unsigned int Changed(void(*func)(Entry*, Args* ...), Args& ... args);
 		template <typename ... Args> long unsigned int Changed(void(*func)(Args* ...), Args& ... args);
+
+	protected:
+		void SetEntry(GtkEntry* entry);
 	};
 
 	template <typename ... Args> long unsigned int Entry::Changed(void(*func)(Entry*, Args* ...), Args& ... args)

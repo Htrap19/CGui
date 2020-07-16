@@ -234,9 +234,10 @@ namespace CGui
 		return this->SignalHandler(Signals::CHANGED, func);
 	}
 
-	/*template <typename ... Args> long unsigned int Entry::Changed(void(*func)(Entry*, Args*...), Args & ... args)
-	{ return this->SignalHandler(CHANGED, func, args...); }
-
-	template <typename ... Args> long unsigned int Entry::Changed(void(*func)(Args*...), Args & ... args)
-	{ return this->SignalHandler(CHANGED, func, args...); }*/
+	void Entry::SetEntry(GtkEntry* entry)
+	{
+		this->widget = GTK_WIDGET(entry);
+		this->SetContext(widget);
+		this->SetEditable(*this);
+	}
 };

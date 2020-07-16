@@ -2,7 +2,7 @@
 
 namespace CGui
 {
-	ScaleButton::ScaleButton(IconSize size, double min, double max, double step, const char** icons)
+	ScaleButton::ScaleButton(IconSize size, double min, double max, double step, const char** icons) : Orientable(this)
 	{
 		widget = gtk_scale_button_new((GtkIconSize)size, min, max, step, icons);
 		this->SetButton(GTK_BUTTON(widget));
@@ -46,6 +46,16 @@ namespace CGui
 	Button ScaleButton::MinusButton()
 	{
 		return Button(GTK_BUTTON(gtk_scale_button_get_minus_button(GTK_SCALE_BUTTON(widget))));
+	}
+
+	ScaleButton::ScaleButton() : Orientable(this)
+	{
+	}
+
+	void ScaleButton::SetScaleButton(GtkScaleButton* scalebutton)
+	{
+		this->widget = GTK_WIDGET(scalebutton);
+		this->SetButton(GTK_BUTTON(widget));
 	}
 
 }

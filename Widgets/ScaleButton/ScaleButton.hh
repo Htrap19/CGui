@@ -2,10 +2,11 @@
 
 #include "../Button/Button.hh"
 #include "../../Misc/Adjustment/Adjustment.hh"
+#include "../Orientable.hh"
 
 namespace CGui
 {
-	class ScaleButton : public Button
+	class ScaleButton : public Button, public Orientable
 	{
 	public:
 		ScaleButton(IconSize size, double min, double max, double step, const char** icons);
@@ -17,5 +18,9 @@ namespace CGui
 		Widget Popup();
 		Button PlusButton();
 		Button MinusButton();
+
+	protected:
+		ScaleButton();
+		void SetScaleButton(GtkScaleButton* scalebutton);
 	};
 }

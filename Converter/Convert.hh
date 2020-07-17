@@ -197,6 +197,10 @@ namespace CGui
 		signed short bottom;
 	};
 
+	enum class ToolbarStyle { ICONS, TEXT, BOTH, BOTH_HORIZ };
+
+	enum class SizeGroupMode { NONE, VERTICAL, HORIZONTAL, BOTH };
+
 	namespace Converter
 	{
 		class Convert

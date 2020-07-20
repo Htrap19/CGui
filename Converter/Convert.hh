@@ -201,6 +201,28 @@ namespace CGui
 
 	enum class SizeGroupMode { NONE, VERTICAL, HORIZONTAL, BOTH };
 
+	enum class DestDefaults { MOTION = 1 << 0, HIGHLIGHT = 1 << 1, DROP = 1 << 2, ALL = 0x07 };
+
+	enum class ToolPaletteDragTargets { ITEMS = (1 << 0), GROUPS = (1 << 1) };
+
+	enum class DragAction { DEFAULT = 1 << 0, COPY = 1 << 1, MOVE = 1 << 2, LINK = 1 << 3, PRIVATE = 1 << 4, ASK = 1 << 5 };
+
+	enum class SpinButtonUpdatePolicy { ALWAYS, IF_VALID };
+
+	enum class SpinType { STEP_FORWARD, STEP_BACKWARD, PAGE_FORWARD, PAGE_BACKWARD, HOME, END, USER_DEFINED };
+
+	struct IncrementsData
+	{
+		double step, page;
+	};
+
+	struct RangeData
+	{
+		double min, max;
+	};
+
+	enum class SelectionMode { NONE, SINGLE, BROWSE, MULTIPLE };
+
 	namespace Converter
 	{
 		class Convert

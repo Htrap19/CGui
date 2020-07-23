@@ -37,10 +37,8 @@ namespace CGui
 			template <typename filter, typename ... Args> List<filter> Filter(filter(*func)(Data&, Args...), Args ... args);
 			unsigned int Find(Data data);
 			void ForEach(void(*func)(Node<Data>*));
-			void ForEach(void(*func)(Data&));
 			void ForEach(void(*func)(Data));
 			template <typename ... Args> void ForEach(void(*func)(Node<Data>*, Args...), Args ... args);
-			template <typename ... Args> void ForEach(void(*func)(Data&, Args...), Args ... args);
 			template <typename ... Args> void ForEach(void(*func)(Data, Args...), Args ... args);
 			bool Delete(Data data);
 			void DeleteAll();
@@ -278,17 +276,6 @@ namespace CGui
 			}
 		}
 
-		template <typename Data>
-		void List<Data>::ForEach(void(*func)(Data&))
-		{
-			Node<Data>* currNode = head;
-			while (currNode != NULL)
-			{
-				func(currNode->data);
-				currNode = currNode->next;
-			}
-		}
-
 		template<typename Data>
 		void List<Data>::ForEach(void(*func)(Data))
 		{
@@ -307,17 +294,6 @@ namespace CGui
 			while (currNode != NULL)
 			{
 				func(currNode, args...);
-				currNode = currNode->next;
-			}
-		}
-
-		template <typename Data>
-		template <typename ... Args> void List<Data>::ForEach(void(*func)(Data&, Args...), Args ... args)
-		{
-			Node<Data>* currNode = head;
-			while (currNode != NULL)
-			{
-				func(currNode->data, args...);
 				currNode = currNode->next;
 			}
 		}

@@ -66,7 +66,7 @@ namespace CGui
 
 	RadioButton::~RadioButton()
 	{
-		group.ForEach([](RadioButton * &data)
+		group.ForEach([](RadioButton* data)
 			{
 				delete data;
 			});
@@ -92,7 +92,7 @@ namespace CGui
 	{
 		GSList* g = gtk_radio_button_get_group(GTK_RADIO_BUTTON(widget));
 
-		group.ForEach([](RadioButton * &data)
+		group.ForEach([](RadioButton* data)
 			{
 				delete data;
 			});

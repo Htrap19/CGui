@@ -34,8 +34,8 @@ namespace CGui
 		bool ActivateDefault();
 		void Modal(bool modal);
 		bool Modal();
-		void WindowGravity(Gravity gravity);
-		Gravity WindowGravity();
+		void Gravity(CGui::Gravity gravity);
+		CGui::Gravity Gravity();
 		void TransientFor(Window& parent);
 		Window TransientFor();
 		void AttachedTo(Widget& attach_widget);

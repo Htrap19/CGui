@@ -10,7 +10,7 @@ namespace CGui
 		widget = gtk_window_new((GtkWindowType)type);
 		Window::m_ref_count++;
 
-		auto exit = [](GtkWidget * widget, Window * ins) -> void
+		auto exit = [](GtkWidget* widget, Window* ins) -> void
 		{
 			if (Window::m_ref_count <= 1)
 			{
@@ -149,14 +149,14 @@ namespace CGui
 		return gtk_window_get_modal(GTK_WINDOW(widget));
 	}
 
-	void Window::WindowGravity(Gravity gravity)
+	void Window::Gravity(CGui::Gravity gravity)
 	{
 		gtk_window_set_gravity(GTK_WINDOW(widget), (GdkGravity)gravity);
 	}
 
-	Gravity Window::WindowGravity()
+	CGui::Gravity Window::Gravity()
 	{
-		return (Gravity)gtk_window_get_gravity(GTK_WINDOW(widget));
+		return (CGui::Gravity)gtk_window_get_gravity(GTK_WINDOW(widget));
 	}
 
 	void Window::TransientFor(Window& parent)
@@ -498,7 +498,7 @@ namespace CGui
 	Window::Window() : Container(this), error{ NULL }
 	{ }
 
-	void Window::SetWindow(GtkWindow * window)
+	void Window::SetWindow(GtkWindow* window)
 	{
 		this->widget = GTK_WIDGET(window);
 		this->SetContext(widget);

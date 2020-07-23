@@ -127,12 +127,12 @@ namespace CGui
 		Requisition minimum_size, natural_size;
 	};
 
-	struct WidgetMargin
+	struct Margin
 	{
 		int start, end, top, bottom;
 	};
 
-	struct WidgetExpand
+	struct Expand
 	{
 		bool hexpand, vexpand;
 	};

@@ -56,6 +56,7 @@
 #include "./Widgets/ToolItemGroup/ToolItemGroup.hh"
 #include "./Widgets/SpinButton/SpinButton.hh"
 #include "./Widgets/ListBox/ListBox.hh"
+#include "./Widgets/FlowBox/FlowBox.hh"
 #include "./Pixbuf/Pixbuf.hh"
 #include "./Custom/Initialize/Initialize.hh"
 #include "./Widgets/Entry/EntryBuffer/EntryBuffer.hh"

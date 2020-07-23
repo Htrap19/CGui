@@ -579,7 +579,7 @@ namespace CGui
 			return gtk_widget_get_margin_bottom(GTK_WIDGET(widget));
 		}
 
-		virtual void Margin(WidgetMargin margin)
+		virtual void Margin(CGui::Margin margin)
 		{
 			this->MarginStart(margin.start);
 			this->MarginEnd(margin.end);
@@ -587,7 +587,7 @@ namespace CGui
 			this->MarginBottom(margin.bottom);
 		}
 
-		virtual WidgetMargin Margin()
+		virtual CGui::Margin Margin()
 		{
 			return { this->MarginStart(), this->MarginEnd(), this->MarginTop(), this->MarginBottom() };
 		}
@@ -638,13 +638,13 @@ namespace CGui
 			this->VExpand(vexpand);
 		}
 
-		virtual void Expand(WidgetExpand expand)
+		virtual void Expand(CGui::Expand expand)
 		{
 			this->HExpand(expand.hexpand);
 			this->VExpand(expand.vexpand);
 		}
 
-		virtual WidgetExpand Expand()
+		virtual CGui::Expand Expand()
 		{
 			return { this->HExpand(), this->VExpand() };
 		}

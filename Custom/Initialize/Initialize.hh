@@ -1,6 +1,6 @@
 #pragma once
 #include <gtk/gtk.h>
-#include "../Storage/Storage.hh"
+#include "../DeleteOnQuit/DeleteOnQuit.hh"
 
 namespace CGui
 {
@@ -65,15 +65,6 @@ namespace CGui
 
 		Storage::GetInstance().ForEach<const char*, KeyValue::List<Signals, std::any>*>(f4, "mainlistsignals");
 		Storage::GetInstance().Free<const char*, KeyValue::List<Signals, std::any>*>("mainlistsignals");*/
-
-		auto free = [](KeyValue::Node<const char*, void*> * node) -> void
-		{
-			if (std::string(node->key) == "Instance")
-				delete node->value;
-		};
-
-		Storage::GetInstance().ForEach<const char*, void*>(free, "deleteonquit");
-		Storage::GetInstance().Free<const char*, void*>("deleteonquit");
 
 		gtk_main_quit();
 	}

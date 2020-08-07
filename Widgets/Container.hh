@@ -3,7 +3,7 @@
 #include <gtk/gtk.h>
 #include "./Widget.hh"
 #include "../Custom/List/List.hh"
-#include "../Custom/Storage/Storage.hh"
+#include "../Custom/DeleteOnQuit/DeleteOnQuit.hh"
 
 namespace CGui
 {
@@ -14,7 +14,7 @@ namespace CGui
 		Container(WidgetType* w)
 		{
 			t_widget = w;
-			Storage::GetInstance().MakePrivate<const char*, void*>("deleteonquit");
+			/*Storage::GetInstance().MakePrivate<const char*, void*>("deleteonquit");*/
 		}
 
 		virtual ~Container()
@@ -23,7 +23,7 @@ namespace CGui
 			{
 				children.ForEach([](void* data)
 					{
-						Storage::GetInstance().Add<const char*, void*>("Instance", data, "deleteonquit");
+						DeleteOnQuit::GetInstance().Add(data);
 					});
 			}
 		}
@@ -96,7 +96,6 @@ namespace CGui
 		Container(GtkWidget* w)
 		{
 			t_widget = w;
-			Storage::GetInstance().MakePrivate<const char*, void*>("deleteonquit");
 		}
 
 		virtual ~Container()
@@ -105,7 +104,7 @@ namespace CGui
 			{
 				children.ForEach([](void* data)
 					{
-						Storage::GetInstance().Add<const char*, void*>("Instance", data, "deleteonquit");
+						DeleteOnQuit::GetInstance().Add(data);
 					});
 			}
 		}
@@ -167,7 +166,6 @@ namespace CGui
 	protected:
 		Container()
 		{
-			Storage::GetInstance().MakePrivate<const char*, void*>("deleteonquit");
 		}
 
 		GtkWidget* t_widget;

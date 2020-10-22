@@ -17,5 +17,6 @@ namespace CGui
 		void Reveal(bool reveal);
 		bool Reveal();
 		bool ChildRevealed();
+		bool IsRevealer();
 	};
 };

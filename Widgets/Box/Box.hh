@@ -9,6 +9,7 @@ namespace CGui
 	class Box : public Widget, public Container<Box>, public Orientable
 	{
 	public:
+		Box(GtkBox* box);
 		Box(CGui::Orientation type, int spacing);
 		void Add(PackType type, Widget& w, bool expand = false, bool fill = false, unsigned int padding = 0);
 		void AddStart(Widget& w, bool expand = false, bool fill = false, unsigned int padding = 0);
@@ -24,6 +25,7 @@ namespace CGui
 		CGui::BaselinePosition BaselinePosition();
 		void CenterWidget(Widget& w);
 		Widget CenterWidget();
+		bool IsBox();
 
 	protected:
 		Box();

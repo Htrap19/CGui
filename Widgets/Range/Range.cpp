@@ -136,6 +136,11 @@ namespace CGui
 		return gtk_range_get_slider_size_fixed(GTK_RANGE(widget));
 	}
 
+	bool Range::IsRange()
+	{
+		return GTK_IS_RANGE(widget);
+	}
+
 	Range::Range() : Orientable(this)
 	{
 	}

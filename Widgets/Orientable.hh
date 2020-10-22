@@ -24,6 +24,11 @@ namespace CGui
 			return (CGui::Orientation)gtk_orientable_get_orientation(GTK_ORIENTABLE(m_widget->GetWidget()));
 		}
 
+		bool IsOrientable()
+		{
+			return GTK_IS_ORIENTABLE(m_widget->GetWidget());
+		}
+
 	private:
 		Widget* m_widget;
 	};

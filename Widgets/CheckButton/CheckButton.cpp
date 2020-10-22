@@ -4,6 +4,8 @@ namespace CGui
 {
 	CheckButton::CheckButton() : Handler<CheckButton>::Handler(this)
 	{
+		if (widget != nullptr)
+			gtk_widget_destroy(widget);
 		widget = gtk_check_button_new();
 		this->SetToggleButton(GTK_TOGGLE_BUTTON(widget));
 	}
@@ -22,6 +24,11 @@ namespace CGui
 	long unsigned int CheckButton::Toggled(void(*func)(CheckButton*))
 	{
 		return this->Handler<CheckButton>::SignalHandler(Signals::TOGGLED, func);
+	}
+
+	bool CheckButton::IsCheckButton()
+	{
+		return GTK_IS_CHECK_BUTTON(widget);
 	}
 
 	void CheckButton::SetCheckButton(GtkCheckButton* checkbutton)

@@ -31,6 +31,7 @@ namespace CGui
 		void Commit();
 		void NextPage();
 		void PrevPage();
+		bool IsAssistant();
 
 	private:
 		static unsigned int m_ref_count;

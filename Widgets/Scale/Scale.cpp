@@ -70,4 +70,9 @@ namespace CGui
 		gtk_scale_clear_marks(GTK_SCALE(widget));
 	}
 
+	bool Scale::IsScale()
+	{
+		return GTK_IS_SCALE(widget);
+	}
+
 }

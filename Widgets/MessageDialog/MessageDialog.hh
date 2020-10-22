@@ -13,6 +13,7 @@ namespace CGui
 		void Markup(const char* str);
 		template <typename ... Args> void SecondaryText(const char* fmt, Args ... args);
 		template <typename ... Args> void SecondaryTextMarkup(const char* fmt, Args ... args);
+		bool IsMessageDialog();
 	};
 
 	template<typename ... Args>

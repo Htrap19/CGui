@@ -213,4 +213,9 @@ namespace CGui
 		return Widget(gtk_notebook_get_action_widget(GTK_NOTEBOOK(widget), (GtkPackType)type));
 	}
 
+	bool Notebook::IsNotebook()
+	{
+		return GTK_IS_NOTEBOOK(widget);
+	}
+
 }

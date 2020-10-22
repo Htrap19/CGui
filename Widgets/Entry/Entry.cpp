@@ -234,6 +234,11 @@ namespace CGui
 		return this->SignalHandler(Signals::CHANGED, func);
 	}
 
+	bool Entry::IsEntry()
+	{
+		return GTK_IS_ENTRY(widget);
+	}
+
 	void Entry::SetEntry(GtkEntry* entry)
 	{
 		this->widget = GTK_WIDGET(entry);

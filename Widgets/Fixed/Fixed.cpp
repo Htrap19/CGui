@@ -17,4 +17,8 @@ namespace CGui
 	{
 		gtk_fixed_move(GTK_FIXED(widget), child.GetWidget(), x, y);
 	}
+	bool Fixed::IsFixed()
+	{
+		return GTK_IS_FIXED(widget);
+	}
 }

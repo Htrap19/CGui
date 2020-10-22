@@ -39,4 +39,9 @@ namespace CGui
 		return { (int)w, (int)h };
 	}
 
+	bool Layout::IsLayout()
+	{
+		return GTK_IS_LAYOUT(widget);
+	}
+
 }

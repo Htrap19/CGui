@@ -37,6 +37,11 @@ namespace CGui
 		return gdk_pixbuf_animation_get_height(animation);
 	}
 
+	bool PixbufAnimation::IsPixbufAnimation()
+	{
+		return GDK_IS_PIXBUF_ANIMATION(animation);
+	}
+
 	GdkPixbufAnimation* PixbufAnimation::GetWidget()
 	{
 		return animation;

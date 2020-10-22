@@ -12,6 +12,7 @@ namespace CGui
 		long unsigned int Changed(void(*func)(SearchEntry*));
 		template <typename ... Args> long unsigned int Changed(void(*func)(SearchEntry*, Args* ...), Args& ... args);
 		template <typename ... Args> long unsigned int Changed(void(*func)(Args* ...), Args& ... args);
+		bool IsSearchEntry();
 	};
 
 	template <typename ... Args> long unsigned int SearchEntry::Changed(void(*func)(SearchEntry*, Args* ...), Args& ... args)

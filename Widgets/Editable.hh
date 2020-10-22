@@ -97,6 +97,11 @@ namespace CGui
 			return m_editable;
 		}
 
+		bool IsEditable()
+		{
+			return GTK_IS_EDITABLE(m_editable);
+		}
+
 	protected:
 		GtkEditable* m_editable;
 	};

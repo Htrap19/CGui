@@ -29,6 +29,7 @@ namespace CGui
 		const char* ErrorMessage();
 		int ErrorDomain();
 		int ErrorCode();
+		bool IsPixbuf();
 		GdkPixbuf* GetWidget();
 
 	private:

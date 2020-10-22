@@ -89,4 +89,9 @@ namespace CGui
 		gtk_tool_item_group_insert(GTK_TOOL_ITEM_GROUP(widget), GTK_TOOL_ITEM(item.GetWidget()), pos);
 	}
 
+	bool ToolItemGroup::IsToolItemGroup()
+	{
+		return GTK_IS_TOOL_ITEM_GROUP(widget);
+	}
+
 }

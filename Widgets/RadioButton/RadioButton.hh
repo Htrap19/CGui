@@ -23,6 +23,7 @@ namespace CGui
 		long unsigned int Toggled(void(*func)(RadioButton*));
 		template <typename ... Args> long unsigned int Toggled(void(*func)(RadioButton*, Args* ...), Args& ... args);
 		template <typename ... Args> long unsigned int Toggled(void(*func)(Args* ...), Args& ... args);
+		bool IsRadioButton();
 
 	protected:
 		Single::List<RadioButton*> group;

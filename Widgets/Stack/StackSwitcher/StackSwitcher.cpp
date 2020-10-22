@@ -15,6 +15,11 @@ namespace CGui
 
 	CGui::Stack StackSwitcher::Stack()
 	{
-		return CGui::Stack(gtk_stack_switcher_get_stack(GTK_STACK_SWITCHER(widget)));
+		return CGui::Stack(GTK_STACK(gtk_stack_switcher_get_stack(GTK_STACK_SWITCHER(widget))));
+	}
+
+	bool StackSwitcher::IsStackSwitcher()
+	{
+		return GTK_IS_STACK_SWITCHER(widget);
 	}
 }

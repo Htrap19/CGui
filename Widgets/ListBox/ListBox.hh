@@ -25,6 +25,7 @@ namespace CGui
 			bool Activatable();
 			void Selectable(bool selectable);
 			bool Selectable();
+			bool IsRow();
 		};
 
 		ListBox();
@@ -50,5 +51,6 @@ namespace CGui
 		void InvalidateSort();
 		void DragHighlightRow(ListBox::Row& row);
 		void DragUnhighlightRow(ListBox::Row& row);
+		bool IsListBox();
 	};
 }

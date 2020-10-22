@@ -258,6 +258,23 @@ namespace CGui
 			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(signal), G_CALLBACK((void(*)(GtkWidget*, PassingDataByFunc*))callback), pass));
 		}
 
+		long unsigned int EventHandler(Events event, int(*func)())
+		{
+			PassingDataByFunc* pass = new PassingDataByFunc
+			{
+				func, t_widget
+			};
+			DeleteOnQuit::GetInstance().Add(pass);
+
+			auto callback = [](GtkWidget* widget, GdkEvent* user_event, PassingDataByFunc* func_data) -> gint
+			{
+				auto user_func = std::any_cast<int(*)()>(func_data->func);
+				return user_func();
+			};
+
+			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((gint(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
+		}
+
 		long unsigned int EventHandler(Events event, void(*func)())
 		{
 			/*if (emptyEventsCallbacks == NULL)
@@ -313,6 +330,24 @@ namespace CGui
 			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((void(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
 		}
 
+		long unsigned int EventHandler(Events event, int(*func)(WidgetType*))
+		{
+			PassingDataByFunc* pass = new PassingDataByFunc
+			{
+				func, t_widget
+			};
+			DeleteOnQuit::GetInstance().Add(pass);
+
+			auto callback = [](GtkWidget* widget, GdkEvent* user_event, PassingDataByFunc* func_data) -> gint
+			{
+				auto user_func = std::any_cast<int(*)(WidgetType*)>(func_data->func);
+				return user_func(func_data->ins);
+			};
+
+			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((gint(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
+
+		}
+
 		long unsigned int EventHandler(Events event, void(*func)(WidgetType*))
 		{
 			/*if (singleEventsCallbacks == NULL)
@@ -366,6 +401,28 @@ namespace CGui
 			};
 
 			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((void(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
+		}
+
+		template <typename ... Args> long unsigned int EventHandler(Events event, int(*func)(WidgetType*, Args*...), Args& ... args)
+		{
+			PassingDataByFunc* pass = new PassingDataByFunc
+			{
+				std::make_tuple(func, &args...), t_widget
+			};
+			DeleteOnQuit::GetInstance().Add(pass);
+
+			auto callback = [](GtkWidget* widget, GdkEvent* user_event, PassingDataByFunc* func_data) -> gint
+			{
+				auto apply_f = [&func_data](int(*user_func)(WidgetType*, Args* ...), Args* ... user_data)
+				{
+					return user_func(func_data->ins, user_data...);
+				};
+
+				return std::apply(apply_f, std::any_cast<std::tuple<int(*)(WidgetType*, Args* ...), Args* ...>>(func_data->func));
+			};
+
+			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((gint(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
+
 		}
 
 		template <typename ... Args> long unsigned int EventHandler(Events event, void(*func)(WidgetType*, Args* ...), Args& ... args)
@@ -429,6 +486,28 @@ namespace CGui
 			};
 
 			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((void(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
+		}
+
+		template <typename ... Args> long unsigned int EventHandler(Events event, int(*func)(Args*...), Args& ... args)
+		{
+			PassingDataByFunc* pass = new PassingDataByFunc
+			{
+				std::make_tuple(func, &args...), t_widget
+			};
+			DeleteOnQuit::GetInstance().Add(pass);
+
+			auto callback = [](GtkWidget* widget, GdkEvent* user_event, PassingDataByFunc* func_data) -> gint
+			{
+				auto apply_f = [](int(*user_func)(Args* ...), Args* ... user_data)
+				{
+					return user_func(user_data...);
+				};
+
+				return std::apply(apply_f, std::any_cast<std::tuple<int(*)(Args* ...), Args* ...>>(func_data->func));
+			};
+
+			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((gint(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
+
 		}
 
 		template <typename ... Args> long unsigned int EventHandler(Events event, void(*func)(Args* ...), Args& ... args)

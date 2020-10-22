@@ -17,4 +17,9 @@ namespace CGui
 	{
 		gtk_spinner_stop(GTK_SPINNER(widget));
 	}
+
+	bool Spinner::IsSpinner()
+	{
+		return GTK_IS_SPINNER(widget);
+	}
 };

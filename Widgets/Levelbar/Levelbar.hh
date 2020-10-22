@@ -23,5 +23,6 @@ namespace CGui
 		void AddOffsetValue(const char* name, double value);
 		void RemoveOffsetValue(const char* name);
 		LevelbarOffsetData OffsetValue(const char* name);
+		bool IsLevelbar();
 	};
 }

@@ -11,5 +11,6 @@ namespace CGui
 		StackSidebar();
 		void Stack(CGui::Stack& stack);
 		CGui::Stack Stack();
+		bool IsStackSidebar();
 	};
 }

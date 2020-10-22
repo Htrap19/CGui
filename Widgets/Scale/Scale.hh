@@ -20,5 +20,6 @@ namespace CGui
 		PositionType ValuePos();
 		void AddMark(double value, PositionType position, const char* markup);
 		void ClearMarks();
+		bool IsScale();
 	};
 }

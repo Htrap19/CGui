@@ -27,5 +27,6 @@ namespace CGui
 		void Clear();
 		void PixelSize(int pixel_size);
 		int PixelSize();
+		bool IsImage();
 	};
 }

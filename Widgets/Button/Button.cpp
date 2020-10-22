@@ -95,6 +95,11 @@ namespace CGui
 		return this->SignalHandler(Signals::CLICKED, func);
 	}
 
+	bool Button::IsButton()
+	{
+		return GTK_IS_BUTTON(widget);
+	}
+
 	void Button::SetButton(GtkButton* button)
 	{
 		this->widget = GTK_WIDGET(button);

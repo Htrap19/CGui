@@ -101,4 +101,9 @@ namespace CGui
 	{
 		return gtk_image_get_pixel_size(GTK_IMAGE(widget));
 	}
+
+	bool Image::IsImage()
+	{
+		return GTK_IS_IMAGE(widget);
+	}
 };

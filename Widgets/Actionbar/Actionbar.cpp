@@ -33,4 +33,8 @@ namespace CGui
 	{
 		return Widget(gtk_action_bar_get_center_widget(GTK_ACTION_BAR(widget)));
 	}
+	bool Actionbar::IsActionbar()
+	{
+		return GTK_IS_ACTION_BAR(widget);
+	}
 }

@@ -17,6 +17,7 @@ namespace CGui
 		LabelAlignData LabelAlign();
 		void Shadow(ShadowType type);
 		ShadowType Shadow();
+		bool IsFrame();
 
 	protected:
 		Frame();

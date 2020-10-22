@@ -14,5 +14,6 @@ namespace CGui
 		bool ChildSecondary(Widget& child);
 		void ChildNonHomogeneous(Widget& child, bool non_homogeneous);
 		bool ChildNonHomogeneous(Widget& child);
+		bool IsButtonBox();
 	};
 }

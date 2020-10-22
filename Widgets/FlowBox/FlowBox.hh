@@ -19,6 +19,7 @@ namespace CGui
 			int Index();
 			bool IsSelected();
 			void Changed();
+			bool IsChild();
 		};
 
 		FlowBox();
@@ -46,5 +47,6 @@ namespace CGui
 		void UnselectAll();
 		void SelectionMode(CGui::SelectionMode mode);
 		CGui::SelectionMode SelectionMode();
+		bool IsFlowBox();
 	};
 }

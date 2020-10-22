@@ -50,5 +50,6 @@ namespace CGui
 		const char* GroupName();
 		void ActionWidget(Widget& child, PackType type);
 		Widget ActionWidget(PackType type);
+		bool IsNotebook();
 	};
 }

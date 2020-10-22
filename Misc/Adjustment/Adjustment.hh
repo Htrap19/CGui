@@ -24,6 +24,7 @@ namespace CGui
 		double MinimumIncrement();
 		void Upper(double upper);
 		double Upper();
+		bool IsAdjustment();
 
 		GtkAdjustment* GetAdjustment();
 

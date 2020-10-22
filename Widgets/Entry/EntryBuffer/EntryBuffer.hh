@@ -19,6 +19,7 @@ namespace CGui
 		void DeleteText(int position, int n_chars);
 		void EmitInsertText(int position, const char* chars, int n_chars);
 		void EmitDeleteText(int position, int n_chars);
+		bool IsEntryBuffer();
 
 		GtkEntryBuffer* GetEntryBuffer();
 

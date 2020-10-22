@@ -5,24 +5,28 @@ namespace CGui
 {
 	unsigned int Window::m_ref_count = 0;
 
-	Window::Window(WindowType type, const char* title, WindowPos pos) : Container(this), error{ NULL }
+	Window::Window(WindowType type, const char* title, WindowPos pos, bool initialize) : Container(this), error{ NULL }
 	{
 		widget = gtk_window_new((GtkWindowType)type);
 		Window::m_ref_count++;
 
-		auto exit = [](GtkWidget* widget, Window* ins) -> void
+		if (initialize)
 		{
-			if (Window::m_ref_count <= 1)
+			auto exit = [](GtkWidget* widget, Window* ins) -> void
 			{
-				CGui::MainQuit();
-			}
-			else
-			{
-				ins->Close();
-				Window::m_ref_count--;
-			}
-		};
-		g_signal_connect(G_OBJECT(widget), Converter::Convert::GetInstance().GetGtkCode(Signals::DELETE), G_CALLBACK((void(*)(GtkWidget*, Window*))exit), this);
+				if (Window::m_ref_count <= 1)
+				{
+					CGui::MainQuit();
+				}
+				else
+				{
+					ins->Close();
+					Window::m_ref_count--;
+				}
+			};
+			g_signal_connect(G_OBJECT(widget), Converter::Convert::GetInstance().GetGtkCode(Events::DELETE), G_CALLBACK((void(*)(GtkWidget*, Window*))exit), this);
+		}
+
 		this->Title(title);
 		this->Position(pos);
 		this->SetContext(widget);
@@ -434,6 +438,11 @@ namespace CGui
 	void Window::HasUserRefCount(bool has)
 	{
 		gtk_window_set_has_user_ref_count(GTK_WINDOW(widget), has);
+	}
+
+	bool Window::IsWindow()
+	{
+		return GTK_IS_WINDOW(widget);
 	}
 
 	void Window::DefaultIconList(Single::List<Pixbuf*>& list)

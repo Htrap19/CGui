@@ -20,5 +20,6 @@ namespace CGui
 		int Position();
 		void WideHandle(bool handle);
 		bool WideHandle();
+		bool IsPaned();
 	};
 }

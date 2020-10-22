@@ -2,6 +2,11 @@
 
 namespace CGui
 {
+	Box::Box(GtkBox* box) : Container(this), Orientable(this)
+	{
+		this->SetBox(box);
+	}
+
 	Box::Box(CGui::Orientation type, int spacing) : Container(this), Orientable(this)
 	{
 		widget = gtk_box_new((GtkOrientation)type, spacing);
@@ -83,6 +88,11 @@ namespace CGui
 	Widget Box::CenterWidget()
 	{
 		return Widget(gtk_box_get_center_widget(GTK_BOX(widget)));
+	}
+
+	bool Box::IsBox()
+	{
+		return GTK_IS_BOX(widget);
 	}
 
 	Box::Box() : Container(this), Orientable(this)

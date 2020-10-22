@@ -27,5 +27,6 @@ namespace CGui
 		int BaselineRow();
 		void BaselinePosition(int row, CGui::BaselinePosition pos);
 		CGui::BaselinePosition BaselinePosition(int row);
+		bool IsGrid();
 	};
 }

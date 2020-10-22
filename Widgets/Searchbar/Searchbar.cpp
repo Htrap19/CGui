@@ -33,4 +33,9 @@ namespace CGui
 		return gtk_search_bar_get_show_close_button(GTK_SEARCH_BAR(widget));
 	}
 
+	bool Searchbar::IsSearchbar()
+	{
+		return GTK_IS_SEARCH_BAR(widget);
+	}
+
 }

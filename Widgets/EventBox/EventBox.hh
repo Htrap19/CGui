@@ -15,5 +15,6 @@ namespace CGui
 		bool VisibleWindow();
 		void AboveChild(bool above);
 		bool AboveChild();
+		bool IsEventBox();
 	};
 }

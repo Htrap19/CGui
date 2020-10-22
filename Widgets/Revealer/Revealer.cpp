@@ -50,4 +50,8 @@ namespace CGui
 	{
 		return gtk_revealer_get_child_revealed(GTK_REVEALER(widget));
 	}
+	bool Revealer::IsRevealer()
+	{
+		return GTK_IS_REVEALER(widget);
+	}
 };

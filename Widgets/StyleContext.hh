@@ -43,6 +43,11 @@ namespace CGui
 			return t_list;
 		}
 
+		bool IsStyleContext()
+		{
+			return GTK_IS_STYLE_CONTEXT(stylecontext);
+		}
+
 	protected:
 		StyleContext()
 		{  }

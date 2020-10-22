@@ -72,6 +72,11 @@ namespace CGui
 		return this->Container<Widget>::Children();
 	}
 
+	bool Dialog::IsDialog()
+	{
+		return GTK_IS_DIALOG(widget);
+	}
+
 	Dialog::Dialog()
 	{ }
 

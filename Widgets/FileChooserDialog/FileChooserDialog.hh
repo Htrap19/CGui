@@ -11,5 +11,10 @@ namespace CGui
 	{
 	public:
 		FileChooserDialog(Window& parent, const char* title, FileChooserAction action);
+		bool IsFileChooserDialog();
+
+	protected:
+		FileChooserDialog();
+		void SetFileChooserDialog(GtkFileChooserDialog* dialog);
 	};
 }

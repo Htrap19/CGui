@@ -42,5 +42,6 @@ namespace CGui
 		void LogoIconname(const char* iconname);
 		const char* LogoIconname();
 		void AddCreditSection(const char* section_name, const char** people);
+		bool IsAboutDialog();
 	};
 }

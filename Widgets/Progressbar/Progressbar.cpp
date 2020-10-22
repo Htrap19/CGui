@@ -92,4 +92,8 @@ namespace CGui
 	{
 		this->Fraction(this->Fraction() + this->Fraction());
 	}
+	bool Progressbar::IsProgressbar()
+	{
+		return GTK_IS_PROGRESS_BAR(widget);
+	}
 };

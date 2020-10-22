@@ -104,4 +104,9 @@ namespace CGui
 		gtk_tool_item_toolbar_reconfigured(GTK_TOOL_ITEM(widget));
 	}
 
+	bool ToolItem::IsToolItem()
+	{
+		return GTK_IS_TOOL_ITEM(widget);
+	}
+
 }

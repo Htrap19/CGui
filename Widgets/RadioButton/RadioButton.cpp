@@ -123,4 +123,9 @@ namespace CGui
 		return this->Handler<RadioButton>::SignalHandler(Signals::TOGGLED, func);
 	}
 
+	bool RadioButton::IsRadioButton()
+	{
+		return GTK_IS_RADIO_BUTTON(widget);
+	}
+
 }

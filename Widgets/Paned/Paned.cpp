@@ -57,4 +57,8 @@ namespace CGui
 	{
 		return gtk_paned_get_wide_handle(GTK_PANED(widget));
 	}
+	bool Paned::IsPaned()
+	{
+		return GTK_IS_PANED(widget);
+	}
 }

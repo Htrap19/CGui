@@ -9,6 +9,7 @@ namespace CGui
 	{
 	public:
 		CssProvider(const char* cssfilepath, Priority priority);
+		bool IsCssProvider();
 		GtkCssProvider* GetWidget();
 
 	private:

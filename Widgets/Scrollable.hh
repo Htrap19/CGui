@@ -61,6 +61,11 @@ namespace CGui
 			return { border.left, border.right, border.top, border.bottom };
 		}
 
+		bool IsScrollable()
+		{
+			return GTK_IS_SCROLLABLE(scrollable);
+		}
+
 	protected:
 		Scrollable()
 		{

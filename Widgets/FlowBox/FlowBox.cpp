@@ -29,6 +29,11 @@ namespace CGui
 		gtk_flow_box_child_changed(GTK_FLOW_BOX_CHILD(widget));
 	}
 
+	bool FlowBox::Child::IsChild()
+	{
+		return GTK_IS_FLOW_BOX_CHILD(widget);
+	}
+
 	FlowBox::FlowBox() : Container(this), Orientable(this)
 	{
 		widget = gtk_flow_box_new();
@@ -162,6 +167,11 @@ namespace CGui
 	CGui::SelectionMode FlowBox::SelectionMode()
 	{
 		return (CGui::SelectionMode)gtk_flow_box_get_selection_mode(GTK_FLOW_BOX(widget));
+	}
+
+	bool FlowBox::IsFlowBox()
+	{
+		return GTK_IS_FLOW_BOX(widget);
 	}
 
 }

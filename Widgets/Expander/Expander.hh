@@ -8,6 +8,7 @@ namespace CGui
 	class Expander : public Widget, public Container<Expander>
 	{
 	public:
+		Expander(GtkExpander* expander);
 		Expander(const char* label);
 		void Expanded(bool expanded);
 		bool Expanded();
@@ -23,5 +24,6 @@ namespace CGui
 		bool LabelFill();
 		void ResizeToplevel(bool resize);
 		bool ResizeToplevel();
+		bool IsExpander();
 	};
 }

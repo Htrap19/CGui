@@ -22,6 +22,7 @@ namespace CGui
 		virtual void SetWidget(GtkWidget* widget)
 		{
 			this->widget = widget;
+			this->SetContext(widget);
 		}
 
 		virtual GtkWidget* GetWidget()
@@ -672,6 +673,11 @@ namespace CGui
 		virtual void ShowAll()
 		{
 			gtk_widget_show_all(GTK_WIDGET(widget));
+		}
+
+		bool IsWidget()
+		{
+			return GTK_IS_WIDGET(widget);
 		}
 
 		virtual ~Widget()

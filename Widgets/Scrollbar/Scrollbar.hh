@@ -10,5 +10,6 @@ namespace CGui
 	public:
 		Scrollbar(CGui::Orientation orientation, CGui::Adjustment adjustment);
 		Scrollbar(GtkScrollbar* scrollbar);
+		bool IsScrollbar();
 	};
 }

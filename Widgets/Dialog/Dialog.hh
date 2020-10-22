@@ -22,6 +22,7 @@ namespace CGui
 		void InternalWidth(unsigned int width) override;
 		unsigned int InternalWidth() override;
 		Single::List<void*>* Children() override;
+		bool IsDialog();
 
 	protected:
 		Dialog();

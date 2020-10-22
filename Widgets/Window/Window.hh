@@ -10,7 +10,7 @@ namespace CGui
 	class Window : public Widget, public Container<Window>
 	{
 	public:
-		Window(WindowType type, const char* title, WindowPos pos);
+		Window(WindowType type, const char* title, WindowPos pos, bool initialize = true);
 		Window(GtkWindow* window);
 		void Icon(const char* filename);
 		void DefaultSize(unsigned int width, unsigned int height);
@@ -85,6 +85,7 @@ namespace CGui
 		void FocusVisible(bool visible);
 		bool FocusVisible();
 		void HasUserRefCount(bool has);
+		bool IsWindow();
 
 		static void DefaultIconList(Single::List<Pixbuf*>& list);
 		static Single::List<Pixbuf*> DefaultIconList();

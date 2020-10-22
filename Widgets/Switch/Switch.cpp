@@ -28,4 +28,9 @@ namespace CGui
 		return gtk_switch_get_state(GTK_SWITCH(widget));
 	}
 
+	bool Switch::IsSwitch()
+	{
+		return GTK_IS_SWITCH(widget);
+	}
+
 }

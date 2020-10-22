@@ -89,4 +89,9 @@ namespace CGui
 		gtk_tool_palette_set_drag_source(GTK_TOOL_PALETTE(widget), (GtkToolPaletteDragTargets)targets);
 	}
 
+	bool ToolPalette::IsToolPalette()
+	{
+		return GTK_IS_TOOL_PALETTE(widget);
+	}
+
 }

@@ -28,5 +28,6 @@ namespace CGui
 		void ProxyMenuItem(const char* menu_id, Widget& child);
 		Widget ProxyMenuItem(const char* menu_id);
 		void ToolbarReconfigured();
+		bool IsToolItem();
 	};
 }

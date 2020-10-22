@@ -82,4 +82,9 @@ namespace CGui
 		return { found, value };
 	}
 
+	bool Levelbar::IsLevelbar()
+	{
+		return GTK_IS_LEVEL_BAR(widget);
+	}
+
 }

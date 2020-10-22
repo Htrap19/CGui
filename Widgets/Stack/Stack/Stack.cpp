@@ -19,7 +19,7 @@ namespace CGui
 		gtk_stack_add_named(GTK_STACK(widget), child.GetWidget(), name);
 	}
 
-	void Stack::AddTilted(Widget& child, const char* name, const char* title)
+	void Stack::AddTitled(Widget& child, const char* name, const char* title)
 	{
 		gtk_stack_add_titled(GTK_STACK(widget), child.GetWidget(), name, title);
 	}
@@ -117,5 +117,10 @@ namespace CGui
 	bool Stack::InterpolateSize()
 	{
 		return gtk_stack_get_interpolate_size(GTK_STACK(widget));
+	}
+
+	bool Stack::IsStack()
+	{
+		return GTK_IS_STACK(widget);
 	}
 }

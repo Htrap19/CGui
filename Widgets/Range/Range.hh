@@ -35,6 +35,7 @@ namespace CGui
 		SliderRangeData SliderRage();
 		void SliderSizeFixed(bool fixed);
 		bool SliderSizefixed();
+		bool IsRange();
 
 	protected:
 		Range();

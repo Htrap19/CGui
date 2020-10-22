@@ -21,6 +21,7 @@ namespace CGui
 		long unsigned int Toggled(void(*func)(ToggleButton*));
 		template <typename ... Args> long unsigned int Toggled(void(*func)(ToggleButton*, Args* ...), Args& ... args);
 		template <typename ... Args> long unsigned int Toggled(void(*func)(Args* ...), Args& ... args);
+		bool IsToggleButton();
 
 	protected:
 		void SetToggleButton(GtkToggleButton* togglebutton);

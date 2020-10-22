@@ -193,4 +193,9 @@ namespace CGui
 	{
 		return gtk_label_get_track_visited_links(GTK_LABEL(widget));
 	}
+
+	bool Label::IsLabel()
+	{
+		return GTK_IS_LABEL(widget);
+	}
 };

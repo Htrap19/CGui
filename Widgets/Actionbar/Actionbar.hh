@@ -14,5 +14,6 @@ namespace CGui
 		void AddEnd(Widget& child);
 		void CenterWidget(Widget& child);
 		Widget CenterWidget();
+		bool IsActionbar();
 	};
 }

@@ -37,4 +37,8 @@ namespace CGui
 	{
 		return gtk_button_box_get_child_non_homogeneous(GTK_BUTTON_BOX(widget), child.GetWidget());
 	}
+	bool ButtonBox::IsButtonBox()
+	{
+		return GTK_IS_BUTTON_BOX(widget);
+	}
 }

@@ -51,6 +51,7 @@ namespace CGui
 		bool AddShortcutFolderUri(const char* uri);
 		bool RemoveShortcutFolderUri(const char* uri);
 		Single::List<const char*> ListShortCutFolderUri();
+		bool IsFileChooser();
 
 	protected:
 		FileChooser();

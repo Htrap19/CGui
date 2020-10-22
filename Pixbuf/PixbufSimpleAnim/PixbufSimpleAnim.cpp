@@ -22,6 +22,11 @@ namespace CGui
 		return gdk_pixbuf_simple_anim_get_loop(animation);
 	}
 
+	bool PixbufSimpleAnim::IsPixbufSimpleAnim()
+	{
+		return GDK_IS_PIXBUF_SIMPLE_ANIM(animation);
+	}
+
 	GdkPixbufSimpleAnim* PixbufSimpleAnim::GetWidget()
 	{
 		return animation;

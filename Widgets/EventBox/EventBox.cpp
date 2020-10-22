@@ -34,4 +34,8 @@ namespace CGui
 	{
 		return gtk_event_box_get_above_child(GTK_EVENT_BOX(widget));
 	}
+	bool EventBox::IsEventBox()
+	{
+		return GTK_IS_EVENT_BOX(widget);
+	}
 }

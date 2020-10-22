@@ -32,5 +32,6 @@ namespace CGui
 		void SnapToTicks(bool snap_to_ticks);
 		bool SnapToTicks();
 		void Update();
+		bool IsSpinButton();
 	};
 }

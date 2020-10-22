@@ -18,6 +18,7 @@ namespace CGui
 		Widget Popup();
 		Button PlusButton();
 		Button MinusButton();
+		bool IsScaleButton();
 
 	protected:
 		ScaleButton();

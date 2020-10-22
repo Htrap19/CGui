@@ -10,5 +10,6 @@ namespace CGui
 		Spinner();
 		void Start();
 		void Stop();
+		bool IsSpinner();
 	};
 };

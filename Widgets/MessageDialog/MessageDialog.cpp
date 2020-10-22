@@ -13,4 +13,8 @@ namespace CGui
 	{
 		gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(widget), str);
 	}
+	bool MessageDialog::IsMessageDialog()
+	{
+		return GTK_IS_MESSAGE_DIALOG(widget);
+	}
 }

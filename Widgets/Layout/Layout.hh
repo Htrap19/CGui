@@ -15,5 +15,6 @@ namespace CGui
 		void Move(Widget& child, int x, int y);
 		void Size(unsigned int width, unsigned int height);
 		Requisition Size();
+		bool IsLayout();
 	};
 }

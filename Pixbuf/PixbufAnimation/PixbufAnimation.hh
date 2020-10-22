@@ -15,6 +15,7 @@ namespace CGui
 		Pixbuf StaticImage();
 		int Width();
 		int Height();
+		bool IsPixbufAnimation();
 		GdkPixbufAnimation* GetWidget();
 
 	protected:

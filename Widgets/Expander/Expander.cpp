@@ -2,6 +2,12 @@
 
 namespace CGui
 {
+	Expander::Expander(GtkExpander* expander) : Container(this)
+	{
+		widget = GTK_WIDGET(expander);
+		this->SetContext(widget);
+	}
+
 	Expander::Expander(const char* label) : Container(this)
 	{
 		widget = gtk_expander_new(label);
@@ -76,6 +82,11 @@ namespace CGui
 	bool Expander::ResizeToplevel()
 	{
 		return gtk_expander_get_resize_toplevel(GTK_EXPANDER(widget));
+	}
+
+	bool Expander::IsExpander()
+	{
+		return GTK_IS_EXPANDER(widget);
 	}
 
 }

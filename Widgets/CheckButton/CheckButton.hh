@@ -14,6 +14,7 @@ namespace CGui
 		long unsigned int Toggled(void(*func)(CheckButton*));
 		template <typename ... Args> long unsigned int Toggled(void(*func)(CheckButton*, Args* ...), Args& ... args);
 		template <typename ... Args> long unsigned int Toggled(void(*func)(Args* ...), Args& ... args);
+		bool IsCheckButton();
 
 	protected:
 		void SetCheckButton(GtkCheckButton* checkbutton);

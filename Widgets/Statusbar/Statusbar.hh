@@ -16,5 +16,6 @@ namespace CGui
 		void Pop(int context_id);
 		void Remove(int context_id, int message_id);
 		void RemoveAll(int context_id);
+		bool IsStatusbar();
 	};
 }

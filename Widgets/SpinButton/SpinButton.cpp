@@ -2,14 +2,18 @@
 
 namespace CGui
 {
-	SpinButton::SpinButton(CGui::Adjustment adjustment, double climb_rate, unsigned int digits) : Orientable(*this)
+	SpinButton::SpinButton(CGui::Adjustment adjustment, double climb_rate, unsigned int digits) : Orientable(this)
 	{
+		if (widget != nullptr)
+			gtk_widget_destroy(widget);
 		widget = gtk_spin_button_new(adjustment.GetAdjustment(), climb_rate, digits);
 		this->SetEntry(GTK_ENTRY(widget));
 	}
 
-	SpinButton::SpinButton(double min, double max, double step) : Orientable(*this)
+	SpinButton::SpinButton(double min, double max, double step) : Orientable(this)
 	{
+		if (widget != nullptr)
+			gtk_widget_destroy(widget);
 		widget = gtk_spin_button_new_with_range(min, max, step);
 		this->SetEntry(GTK_ENTRY(widget));
 	}
@@ -123,6 +127,11 @@ namespace CGui
 	void SpinButton::Update()
 	{
 		gtk_spin_button_update(GTK_SPIN_BUTTON(widget));
+	}
+
+	bool SpinButton::IsSpinButton()
+	{
+		return GTK_IS_SPIN_BUTTON(widget);
 	}
 
 }

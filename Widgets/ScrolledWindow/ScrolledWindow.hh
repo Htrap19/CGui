@@ -43,5 +43,6 @@ namespace CGui
 		bool PropagateNaturalWidth();
 		void PropagateNaturalHeight(bool propagate_height);
 		bool PropagateNaturalHeight();
+		bool IsScrolledWindow();
 	};
 };

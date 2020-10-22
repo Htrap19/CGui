@@ -12,4 +12,8 @@ namespace CGui
 	{
 		gtk_aspect_frame_set(GTK_ASPECT_FRAME(widget), xalign, yalign, ratio, obey_child);
 	}
+	bool AspectFrame::IsAspectFrame()
+	{
+		return GTK_IS_ASPECT_FRAME(widget);
+	}
 }

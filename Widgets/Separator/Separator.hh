@@ -9,5 +9,6 @@ namespace CGui
 	{
 	public:
 		Separator(CGui::Orientation orientation);
+		bool IsSeparator();
 	};
 }

@@ -11,5 +11,6 @@ namespace CGui
 		Fixed();
 		void Put(Widget& child, int x, int y);
 		void Move(Widget& child, int x, int y);
+		bool IsFixed();
 	};
 }

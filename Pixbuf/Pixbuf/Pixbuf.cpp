@@ -119,6 +119,11 @@ namespace CGui
 		return error->code;
 	}
 
+	bool Pixbuf::IsPixbuf()
+	{
+		return GDK_IS_PIXBUF(pixbuf);
+	}
+
 	GdkPixbuf* Pixbuf::GetWidget()
 	{
 		return pixbuf;

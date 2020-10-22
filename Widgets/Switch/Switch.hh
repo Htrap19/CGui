@@ -12,5 +12,6 @@ namespace CGui
 		bool Active();
 		void SwitchState(bool state);
 		bool SwitchState();
+		bool IsSwitch();
 	};
 }

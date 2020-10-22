@@ -25,5 +25,6 @@ namespace CGui
 		void Add(PackType type, Widget& w);
 		void AddStart(Widget& w);
 		void AddEnd(Widget& w);
+		bool IsHeaderbar();
 	};
 }

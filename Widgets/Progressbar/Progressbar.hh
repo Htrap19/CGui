@@ -25,5 +25,6 @@ namespace CGui
 		EllipsizeMode Ellipsize();
 		void Increment(double fraction);
 		void Increment();
+		bool IsProgressbar();
 	};
 }

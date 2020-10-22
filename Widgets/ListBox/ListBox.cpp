@@ -59,6 +59,11 @@ namespace CGui
 		return gtk_list_box_row_get_selectable(GTK_LIST_BOX_ROW(widget));
 	}
 
+	bool ListBox::Row::IsRow()
+	{
+		return GTK_IS_LIST_BOX_ROW(widget);
+	}
+
 	ListBox::ListBox() : Container(this)
 	{
 		widget = gtk_list_box_new();
@@ -183,6 +188,11 @@ namespace CGui
 	void ListBox::DragUnhighlightRow(ListBox::Row& row)
 	{
 		gtk_list_box_drag_unhighlight_row(GTK_LIST_BOX(widget));
+	}
+
+	bool ListBox::IsListBox()
+	{
+		return GTK_IS_LIST_BOX(widget);
 	}
 
 }

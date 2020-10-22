@@ -290,6 +290,11 @@ namespace CGui
 		return ret;
 	}
 
+	bool FileChooser::IsFileChooser()
+	{
+		return GTK_IS_FILE_CHOOSER(widget);
+	}
+
 	FileChooser::FileChooser() : Orientable(this)
 	{ }
 

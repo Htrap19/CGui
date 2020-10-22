@@ -45,5 +45,6 @@ namespace CGui
 		const char* CurrentUri();
 		void TrackVisitedLinks(bool track_links);
 		bool TrackVisitedLinks();
+		bool IsLabel();
 	};
 };

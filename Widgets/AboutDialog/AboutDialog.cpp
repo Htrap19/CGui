@@ -182,4 +182,9 @@ namespace CGui
 		gtk_about_dialog_add_credit_section(GTK_ABOUT_DIALOG(widget), section_name, people);
 	}
 
+	bool AboutDialog::IsAboutDialog()
+	{
+		return GTK_IS_ABOUT_DIALOG(widget);
+	}
+
 }

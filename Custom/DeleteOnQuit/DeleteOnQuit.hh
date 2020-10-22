@@ -52,4 +52,52 @@ namespace CGui
 
 		Single::List<void*>* l_instance;
 	};
+
+	class DeleteOnQuitArray
+	{
+	public:
+		DeleteOnQuitArray(const DeleteOnQuitArray&) = delete;
+		DeleteOnQuitArray(const DeleteOnQuitArray&&) = delete;
+		DeleteOnQuitArray& operator=(const DeleteOnQuitArray&) = delete;
+		DeleteOnQuitArray& operator=(const DeleteOnQuitArray&&) = delete;
+		DeleteOnQuitArray& operator==(const DeleteOnQuitArray&) = delete;
+		DeleteOnQuitArray& operator==(const DeleteOnQuitArray&&) = delete;
+
+		static DeleteOnQuitArray& GetInstance()
+		{
+			static DeleteOnQuitArray instance;
+			return instance;
+		}
+
+		void Add(void* data)
+		{
+			l_instance->Insert(data);
+		}
+
+		void ForEach(void(*func)(void*))
+		{
+			l_instance->ForEach(func);
+		}
+
+		Single::List<void*>* list()
+		{
+			return l_instance;
+		}
+
+		~DeleteOnQuitArray()
+		{
+			l_instance->ForEach([](void* data) -> void
+				{
+					delete[] data;
+				});
+			delete l_instance;
+		}
+
+	private:
+		DeleteOnQuitArray() : l_instance{ new Single::List<void*> }
+		{
+		}
+
+		Single::List<void*>* l_instance;
+	};
 };

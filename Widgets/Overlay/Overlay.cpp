@@ -2,7 +2,7 @@
 
 namespace CGui
 {
-	Overlay::Overlay()
+	Overlay::Overlay() : Container(this)
 	{
 		widget = gtk_overlay_new();
 		this->SetContext(widget);
@@ -26,5 +26,9 @@ namespace CGui
 	bool Overlay::OverlayPassThrough(Widget& child)
 	{
 		return gtk_overlay_get_overlay_pass_through(GTK_OVERLAY(widget), child.GetWidget());
+	}
+	bool Overlay::IsOverlay()
+	{
+		return GTK_IS_OVERLAY(widget);
 	}
 }

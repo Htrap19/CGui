@@ -74,4 +74,9 @@ namespace CGui
 		gtk_toolbar_unset_style(GTK_TOOLBAR(widget));
 	}
 
+	bool Toolbar::IsToolbar()
+	{
+		return GTK_IS_TOOLBAR(widget);
+	}
+
 }

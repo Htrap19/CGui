@@ -90,4 +90,8 @@ namespace CGui
 	{
 		this->Add(PackType::END, w);
 	}
+	bool Headerbar::IsHeaderbar()
+	{
+		return GTK_IS_HEADER_BAR(widget);
+	}
 };

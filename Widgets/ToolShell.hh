@@ -59,8 +59,14 @@ namespace CGui
 			return SizeGroup(gtk_tool_shell_get_text_size_group(m_tool_shell));
 		}
 
+		bool IsToolShell()
+		{
+			return GTK_IS_TOOL_SHELL(m_tool_shell);
+		}
+
 	protected:
 		GtkToolShell* m_tool_shell;
+
 		ToolShell()
 		{
 		}

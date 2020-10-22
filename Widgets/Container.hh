@@ -23,8 +23,10 @@ namespace CGui
 			{
 				children.ForEach([](void* data)
 					{
-						DeleteOnQuit::GetInstance().Add(data);
+						//DeleteOnQuit::GetInstance().Add(data);
+						delete data;
 					});
+				children.DeleteAll();
 			}
 		}
 
@@ -82,6 +84,11 @@ namespace CGui
 			return &children;
 		}
 
+		bool IsContainer()
+		{
+			return GTK_IS_CONTAINER(t_widget->GetWidget());
+		}
+
 	protected:
 		Single::List<void*> children;
 
@@ -104,8 +111,10 @@ namespace CGui
 			{
 				children.ForEach([](void* data)
 					{
-						DeleteOnQuit::GetInstance().Add(data);
+						//DeleteOnQuit::GetInstance().Add(data);
+						delete data;
 					});
+				children.DeleteAll();
 			}
 		}
 
@@ -161,6 +170,11 @@ namespace CGui
 			g_list_free(g_list);
 
 			return &children;
+		}
+
+		bool IsContainer()
+		{
+			return GTK_IS_CONTAINER(t_widget);
 		}
 
 	protected:

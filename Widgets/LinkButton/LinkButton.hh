@@ -13,5 +13,6 @@ namespace CGui
 		const char* Uri();
 		void Visited(bool visited);
 		bool Visited();
+		bool IsLinkButton();
 	};
 }

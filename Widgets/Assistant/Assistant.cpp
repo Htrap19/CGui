@@ -23,7 +23,7 @@ namespace CGui
 			}
 		};
 
-		g_signal_connect(G_OBJECT(widget), Converter::Convert::GetInstance().GetGtkCode(Signals::DELETE), G_CALLBACK((void(*)(GtkWidget*, Assistant*))exit), this);
+		g_signal_connect(G_OBJECT(widget), Converter::Convert::GetInstance().GetGtkCode(Events::DELETE), G_CALLBACK((void(*)(GtkWidget*, Assistant*))exit), this);
 	}
 
 	void Assistant::CurrentPage(int page)
@@ -134,5 +134,9 @@ namespace CGui
 	void Assistant::PrevPage()
 	{
 		gtk_assistant_previous_page(GTK_ASSISTANT(widget));
+	}
+	bool Assistant::IsAssistant()
+	{
+		return GTK_IS_ASSISTANT(widget);
 	}
 }

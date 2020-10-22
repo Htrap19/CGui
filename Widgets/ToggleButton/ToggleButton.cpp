@@ -4,6 +4,8 @@ namespace CGui
 {
 	ToggleButton::ToggleButton() : Handler<ToggleButton>::Handler(this)
 	{
+		if (widget != nullptr)
+			gtk_widget_destroy(widget);
 		widget = gtk_toggle_button_new();
 		this->SetButton(GTK_BUTTON(widget));
 	}
@@ -63,5 +65,10 @@ namespace CGui
 	long unsigned int ToggleButton::Toggled(void(*func)(ToggleButton*))
 	{
 		return this->Handler<ToggleButton>::SignalHandler(Signals::TOGGLED, func);
+	}
+
+	bool ToggleButton::IsToggleButton()
+	{
+		return GTK_IS_TOGGLE_BUTTON(widget);
 	}
 }

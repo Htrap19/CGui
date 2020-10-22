@@ -179,4 +179,8 @@ namespace CGui
 	{
 		return gtk_scrolled_window_get_propagate_natural_height(GTK_SCROLLED_WINDOW(widget));
 	}
+	bool ScrolledWindow::IsScrolledWindow()
+	{
+		return GTK_IS_SCROLLED_WINDOW(widget);
+	}
 };

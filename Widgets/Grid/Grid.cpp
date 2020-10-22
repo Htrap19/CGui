@@ -92,4 +92,8 @@ namespace CGui
 	{
 		return (CGui::BaselinePosition)gtk_grid_get_row_baseline_position(GTK_GRID(widget), row);
 	}
+	bool Grid::IsGrid()
+	{
+		return GTK_IS_GRID(widget);
+	}
 }

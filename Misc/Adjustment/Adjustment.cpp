@@ -87,6 +87,11 @@ namespace CGui
 		return gtk_adjustment_get_upper(adjustment);
 	}
 
+	bool Adjustment::IsAdjustment()
+	{
+		return GTK_IS_ADJUSTMENT(adjustment);
+	}
+
 	GtkAdjustment* Adjustment::GetAdjustment()
 	{
 		return adjustment;

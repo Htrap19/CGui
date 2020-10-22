@@ -51,6 +51,11 @@ namespace CGui
 		return (ShadowType)gtk_frame_get_shadow_type(GTK_FRAME(widget));
 	}
 
+	bool Frame::IsFrame()
+	{
+		return GTK_IS_FRAME(widget);
+	}
+
 	Frame::Frame() : Container(this)
 	{
 

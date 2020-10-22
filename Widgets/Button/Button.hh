@@ -30,6 +30,7 @@ namespace CGui
 		long unsigned int Clicked(void(*func)(Button*));
 		template <typename ... Args> long unsigned int Clicked(void(*func)(Button*, Args* ...), Args& ... args);
 		template <typename ... Args> long unsigned int Clicked(void(*func)(Args* ...), Args& ... args);
+		bool IsButton();
 
 	protected:
 		void SetButton(GtkButton* button);

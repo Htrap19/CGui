@@ -15,5 +15,6 @@ namespace CGui
 		bool SearchMode();
 		void ShowCloseButton(bool show);
 		bool ShowCloseButton();
+		bool IsSearchbar();
 	};
 }

@@ -14,4 +14,8 @@ namespace CGui
 		this->SetContext(widget);
 		this->SetRange(GTK_RANGE(widget));
 	}
+	bool Scrollbar::IsScrollbar()
+	{
+		return GTK_IS_SCROLLBAR(widget);
+	}
 }

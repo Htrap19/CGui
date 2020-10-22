@@ -17,4 +17,9 @@ namespace CGui
 	{
 		return CGui::Stack(gtk_stack_sidebar_get_stack(GTK_STACK_SIDEBAR(widget)));
 	}
+
+	bool StackSidebar::IsStackSidebar()
+	{
+		return GTK_IS_STACK_SIDEBAR(widget);
+	}
 }

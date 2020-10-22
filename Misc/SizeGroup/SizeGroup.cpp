@@ -47,4 +47,9 @@ namespace CGui
 		return ret;
 	}
 
+	bool SizeGroup::IsSizeGroup()
+	{
+		return GTK_IS_SIZE_GROUP(m_sizegroup);
+	}
+
 }

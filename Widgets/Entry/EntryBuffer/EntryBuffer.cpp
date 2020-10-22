@@ -62,6 +62,11 @@ namespace CGui
 		gtk_entry_buffer_emit_deleted_text(GTK_ENTRY_BUFFER(m_entry_buffer), position, n_chars);
 	}
 
+	bool EntryBuffer::IsEntryBuffer()
+	{
+		return GTK_IS_ENTRY_BUFFER(m_entry_buffer);
+	}
+
 	GtkEntryBuffer* EntryBuffer::GetEntryBuffer()
 	{
 		return m_entry_buffer;

@@ -44,4 +44,9 @@ namespace CGui
 		gtk_statusbar_remove_all(GTK_STATUSBAR(widget), context_id);
 	}
 
+	bool Statusbar::IsStatusbar()
+	{
+		return GTK_IS_STATUSBAR(widget);
+	}
+
 }

@@ -17,6 +17,7 @@ namespace CGui
 		void AddWidget(Widget& widget);
 		void RemoveWidget(Widget& widget);
 		Single::List<Widget> Widgets();
+		bool IsSizeGroup();
 
 	protected:
 		GtkSizeGroup* m_sizegroup;

@@ -12,6 +12,7 @@ namespace CGui
 		void AddFrame(Pixbuf& pixbuf);
 		void Loop(bool loop);
 		bool Loop();
+		bool IsPixbufSimpleAnim();
 		GdkPixbufSimpleAnim* GetWidget();
 
 	protected:

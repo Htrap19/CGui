@@ -9,6 +9,11 @@ namespace CGui
 		gtk_css_provider_load_from_path(GTK_CSS_PROVIDER(cssProvider), cssfilepath, NULL);
 	}
 
+	bool CssProvider::IsCssProvider()
+	{
+		return GTK_IS_CSS_PROVIDER(cssProvider);
+	}
+
 	GtkCssProvider* CssProvider::GetWidget()
 	{
 		return cssProvider;

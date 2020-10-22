@@ -4,6 +4,8 @@ namespace CGui
 {
 	LinkButton::LinkButton(const char* uri)
 	{
+		if (widget != nullptr)
+			gtk_widget_destroy(widget);
 		widget = gtk_link_button_new(uri);
 		this->SetButton(GTK_BUTTON(widget));
 	}
@@ -32,6 +34,11 @@ namespace CGui
 	bool LinkButton::Visited()
 	{
 		return gtk_link_button_get_visited(GTK_LINK_BUTTON(widget));
+	}
+
+	bool LinkButton::IsLinkButton()
+	{
+		return GTK_IS_LINK_BUTTON(widget);
 	}
 
 }

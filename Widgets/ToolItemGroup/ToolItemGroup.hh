@@ -27,5 +27,6 @@ namespace CGui
 		unsigned int NumItems();
 		ToolItem NthItem(int index);
 		void Insert(ToolItem& item, int pos);
+		bool IsToolItemGroup();
 	};
 }

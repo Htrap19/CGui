@@ -8,5 +8,6 @@ namespace CGui
 	{
 	public:
 		VolumeButton();
+		bool IsVolumeButton();
 	};
 }

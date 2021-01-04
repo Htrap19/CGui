@@ -5,7 +5,7 @@
 ## Requirments
 * Window 7, 8.1, 10 or Linux distribution
 * GTK+ 3.22 or later
-* gcc on Linux and MSVC on Window
+* gcc on Linux or MSVC on Window
 * Git
 
 For further more experience use the C++ standard 17 or later.

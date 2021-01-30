@@ -5,11 +5,10 @@ namespace CGui
 {
 	unsigned int Assistant::m_ref_count;
 
-	Assistant::Assistant()
+	Assistant::Assistant() : Window::Container(this)
 	{
 		widget = gtk_assistant_new();
 		this->SetContext(widget);
-		this->SetWindow(GTK_WINDOW(widget));
 		Assistant::m_ref_count++;
 
 		auto exit = [](GtkWidget * widget, Assistant * ins)
@@ -24,6 +23,12 @@ namespace CGui
 		};
 
 		g_signal_connect(G_OBJECT(widget), Converter::Convert::GetInstance().GetGtkCode(Events::DELETE), G_CALLBACK((void(*)(GtkWidget*, Assistant*))exit), this);
+	}
+
+	Assistant::Assistant(GtkAssistant* assistant) : Window::Container(this)
+	{
+		widget = GTK_WIDGET(assistant);
+		this->SetContext(widget);
 	}
 
 	void Assistant::CurrentPage(int page)

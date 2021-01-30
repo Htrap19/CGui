@@ -5,10 +5,11 @@
 
 namespace CGui
 {
-	class Revealer : public Widget, public Container<Revealer>
+	class Revealer : public virtual Widget, public virtual Container<Revealer>
 	{
 	public:
 		Revealer();
+		Revealer(GtkRevealer* revealer);
 		Revealer(RevealerTransition transition, unsigned int duration);
 		void Transition(RevealerTransition transition);
 		RevealerTransition Transition();

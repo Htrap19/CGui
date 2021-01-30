@@ -5,10 +5,11 @@
 
 namespace CGui
 {
-	class Notebook : public Widget, public Container<Notebook>
+	class Notebook : public virtual Widget, public virtual Container<Notebook>
 	{
 	public:
 		Notebook();
+		Notebook(GtkNotebook* notebook);
 		void AppendPage(Widget& child, Widget& tab_label);
 		void AppendPageMenu(Widget& child, Widget& tab_label, Widget& menu_label);
 		void PrependPage(Widget& child, Widget& tab_label);

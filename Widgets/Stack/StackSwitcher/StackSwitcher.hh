@@ -5,10 +5,11 @@
 
 namespace CGui
 {
-	class StackSwitcher : public Box
+	class StackSwitcher : public virtual Box
 	{
 	public:
 		StackSwitcher();
+		StackSwitcher(GtkStackSwitcher* stack_switcher);
 		void Stack(CGui::Stack& stack);
 		CGui::Stack Stack();
 		bool IsStackSwitcher();

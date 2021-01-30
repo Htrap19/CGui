@@ -6,9 +6,10 @@
 
 namespace CGui
 {
-	class Searchbar : public Widget, public Container<Searchbar>
+	class Searchbar : public virtual Widget, public virtual Container<Searchbar>
 	{
 	public:
+		Searchbar(GtkSearchBar* search_bar);
 		Searchbar();
 		void Connect(Entry& entry);
 		void SearchMode(bool mode);

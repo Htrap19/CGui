@@ -2,22 +2,28 @@
 
 namespace CGui
 {
-	Scale::Scale(CGui::Orientation orientation)
+	Scale::Scale(GtkScale* scale) : Range::Orientable(this)
+	{
+		widget = GTK_WIDGET(scale);
+		this->SetContext(widget);
+	}
+	
+	Scale::Scale(CGui::Orientation orientation) : Range::Orientable(this)
 	{
 		widget = gtk_scale_new((GtkOrientation)orientation, NULL);
-		this->SetRange(GTK_RANGE(widget));
+		this->SetContext(widget);
 	}
 
-	Scale::Scale(CGui::Orientation orientation, CGui::Adjustment adjustment)
+	Scale::Scale(CGui::Orientation orientation, CGui::Adjustment adjustment) : Range::Orientable(this)
 	{
 		widget = gtk_scale_new((GtkOrientation)orientation, adjustment.GetAdjustment());
-		this->SetRange(GTK_RANGE(widget));
+		this->SetContext(widget);
 	}
 
-	Scale::Scale(CGui::Orientation orientation, double min, double max, double step)
+	Scale::Scale(CGui::Orientation orientation, double min, double max, double step) : Range::Orientable(this)
 	{
 		widget = gtk_scale_new_with_range((GtkOrientation)orientation, min, max, step);
-		this->SetRange(GTK_RANGE(widget));
+		this->SetContext(widget);
 	}
 
 	void Scale::Digits(int digits)

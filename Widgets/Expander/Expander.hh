@@ -5,7 +5,7 @@
 
 namespace CGui
 {
-	class Expander : public Widget, public Container<Expander>
+	class Expander : public virtual Widget, public virtual Container<Expander>
 	{
 	public:
 		Expander(GtkExpander* expander);

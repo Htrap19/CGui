@@ -72,10 +72,10 @@ namespace CGui
 			IndicesAndDepthData IndicesWithDepth()
 			{
 				int* indices;
-				int* depth;
+				int depth;
 
-				indices = gtk_tree_path_get_indices_with_depth(path, depth);
-				return { indices, depth };
+				indices = gtk_tree_path_get_indices_with_depth(path, &depth);
+				return { indices, &depth };
 			}
 
 			void Free()
@@ -221,18 +221,18 @@ namespace CGui
 
 		IterData Iter()
 		{
-			GtkTreeIter* iter;
-			GtkTreePath* path;
+			GtkTreeIter iter;
+			GtkTreePath* path = nullptr;
 			bool was_set;
 
-			was_set = gtk_tree_model_get_iter(modal, iter, path);
+			was_set = gtk_tree_model_get_iter(modal, &iter, path);
 
-			return { TreeModal::TreeIter(iter), TreeModal::TreePath(path), was_set };
+			return { TreeModal::TreeIter(&iter), TreeModal::TreePath(path), was_set };
 		}
 
 		IterListData IterFromString(const char* path_string)
 		{
-			GtkTreeIter* iter;
+			GtkTreeIter* iter = nullptr;
 			bool was_set;
 
 			was_set = gtk_tree_model_get_iter_from_string(modal, iter, path_string);
@@ -242,7 +242,7 @@ namespace CGui
 
 		IterListData IterFirst()
 		{
-			GtkTreeIter* iter;
+			GtkTreeIter* iter = nullptr;
 			bool was_set;
 
 			was_set = gtk_tree_model_get_iter_first(modal, iter);

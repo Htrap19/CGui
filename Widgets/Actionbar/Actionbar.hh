@@ -5,10 +5,11 @@
 
 namespace CGui
 {
-	class Actionbar : public Widget, public Container<Actionbar>
+	class Actionbar : public virtual Widget, public virtual Container<Actionbar>
 	{
 	public:
 		Actionbar();
+		Actionbar(GtkActionBar* actionbar);
 		void Add(PackType type, Widget& child);
 		void AddStart(Widget& child);
 		void AddEnd(Widget& child);

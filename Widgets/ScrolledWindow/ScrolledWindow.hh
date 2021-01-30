@@ -6,9 +6,10 @@
 
 namespace CGui
 {
-	class ScrolledWindow : public Widget, public Container<ScrolledWindow>
+	class ScrolledWindow : public virtual Widget, public virtual Container<ScrolledWindow>
 	{
 	public:
+		ScrolledWindow(GtkScrolledWindow* scrolled_window);
 		ScrolledWindow(Policy hpolicy, Policy vpolicy);
 		ScrolledWindow(Adjustment hadjustment, Adjustment vadjustment);
 		ScrolledWindow(Adjustment hadjustment, Policy hpolicy, Adjustment vadjustment, Policy vpolicy);

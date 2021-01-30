@@ -8,10 +8,11 @@
 
 namespace CGui
 {
-	class ToolPalette : public Widget, public Container<ToolPalette>, public Orientable, public Scrollable
+	class ToolPalette : public virtual Widget, public virtual Container<ToolPalette>, public virtual Orientable, public virtual Scrollable
 	{
 	public:
 		ToolPalette();
+		ToolPalette(GtkToolPalette* tool_palette);
 		void Exclusive(ToolItemGroup& group, bool exclusive);
 		bool Exclusive(ToolItemGroup& group);
 		void Expand(ToolItemGroup& group, bool expand);

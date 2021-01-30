@@ -4,10 +4,11 @@
 
 namespace CGui
 {
-	class ComboBoxText : public ComboBox
+	class ComboBoxText : public virtual ComboBox
 	{
 	public:
 		ComboBoxText(bool with_entry = false);
+		ComboBoxText(GtkComboBoxText* combo_box_text);
 		void Append(const char* id, const char* text);
 		void Prepend(const char* id, const char* text);
 		void Insert(int position, const char* id, const char* text);

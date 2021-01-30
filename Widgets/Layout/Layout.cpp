@@ -9,6 +9,13 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
+	Layout::Layout(GtkLayout* layout)
+	{
+		widget = GTK_WIDGET(layout);
+		this->SetContext(widget);
+		this->SetScrollable(GTK_SCROLLABLE(widget));
+	}
+
 	Layout::Layout(Adjustment hadjustment, Adjustment vadjustment)
 	{
 		widget = gtk_layout_new(hadjustment.GetAdjustment(), vadjustment.GetAdjustment());

@@ -4,14 +4,13 @@
 #include "../Container.hh"
 #include "../../Custom/List/List.hh"
 #include "../../Misc/Adjustment/Adjustment.hh"
-#include <any>
 
 namespace CGui
 {
-	class ListBox : public Widget, public Container<ListBox>
+	class ListBox : public virtual Widget, public virtual Container<ListBox>
 	{
 	public:
-		class Row : public Widget, public Container<Row>
+		class Row : public virtual Widget, public virtual Container<Row>
 		{
 		public:
 			Row();
@@ -29,6 +28,7 @@ namespace CGui
 		};
 
 		ListBox();
+		ListBox(GtkListBox* list_box);
 		void Prepend(Widget& child);
 		void Insert(Widget& child, int pos);
 		void SelectRow(Row& row);

@@ -13,22 +13,22 @@ namespace CGui
 			this->SetContext(w);
 		}
 
-		virtual void AddStyleClass(const char* classname)
+		virtual void AddStyleClass(const char* classname) const
 		{
 			gtk_style_context_add_class(GTK_STYLE_CONTEXT(stylecontext), classname);
 		}
 
-		virtual void RemoveStyleClass(const char* classname)
+		virtual void RemoveStyleClass(const char* classname) const
 		{
 			gtk_style_context_remove_class(GTK_STYLE_CONTEXT(stylecontext), classname);
 		}
 
-		virtual bool HasStyleClass(const char* classname)
+		virtual bool HasStyleClass(const char* classname) const
 		{
 			return gtk_style_context_has_class(GTK_STYLE_CONTEXT(stylecontext), classname);
 		}
 
-		virtual Single::List<const char*> ListStyleClasses()
+		virtual Single::List<const char*> ListStyleClasses() const
 		{
 			Single::List<const char*> t_list;
 			auto g_list = gtk_style_context_list_classes(GTK_STYLE_CONTEXT(stylecontext));
@@ -43,21 +43,21 @@ namespace CGui
 			return t_list;
 		}
 
-		bool IsStyleContext()
+		bool IsStyleContext() const
 		{
 			return GTK_IS_STYLE_CONTEXT(stylecontext);
 		}
 
 	protected:
-		StyleContext()
+		StyleContext() : stylecontext{NULL}
 		{  }
 
-		void SetContext(GtkWidget* w)
+		void SetContext(GtkWidget* w) const
 		{
 			stylecontext = gtk_widget_get_style_context(GTK_WIDGET(w));
 		}
 
 	private:
-		GtkStyleContext* stylecontext;
+		mutable GtkStyleContext* stylecontext;
 	};
 }

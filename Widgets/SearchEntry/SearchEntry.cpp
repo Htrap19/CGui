@@ -2,12 +2,20 @@
 
 namespace CGui
 {
-	SearchEntry::SearchEntry() : Handler<SearchEntry>::Handler(this)
+	SearchEntry::SearchEntry() : Handler<SearchEntry>::Handler(this), Handler<Entry>::Handler(this)
 	{
 		if (widget != nullptr)
 			gtk_widget_destroy(widget);
 		widget = gtk_search_entry_new();
-		this->SetEntry(GTK_ENTRY(widget));
+		this->SetContext(widget);
+	}
+
+	SearchEntry::SearchEntry(GtkSearchEntry* search_entry) : Handler<SearchEntry>::Handler(this), Handler<Entry>::Handler(this)
+	{
+		if (widget != nullptr)
+			gtk_widget_destroy(widget);
+		widget = GTK_WIDGET(search_entry);
+		this->SetContext(widget);
 	}
 
 	long unsigned int SearchEntry::Changed(void(*func)())

@@ -6,7 +6,7 @@
 
 namespace CGui
 {
-	class Image : public Widget
+	class Image : public virtual Widget
 	{
 	public:
 		Image();

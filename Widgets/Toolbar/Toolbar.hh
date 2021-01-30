@@ -8,10 +8,11 @@
 
 namespace CGui
 {
-	class Toolbar : public Widget, public Container<Toolbar>, public Orientable, public ToolShell
+	class Toolbar : public virtual Widget, public virtual Container<Toolbar>, public virtual Orientable, public virtual ToolShell
 	{
 	public:
 		Toolbar();
+		Toolbar(GtkToolbar* tool_bar);
 		void Insert(ToolItem& item, int pos);
 		int ItemIndex(ToolItem& item);
 		int NumItems();

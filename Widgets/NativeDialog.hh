@@ -13,57 +13,57 @@ namespace CGui
 			this->SetNativeDialog(dialog);
 		}
 
-		void Show()
+		virtual void Show()
 		{
 			gtk_native_dialog_show(dialog);
 		}
 
-		void Hide()
+		virtual void Hide()
 		{
 			gtk_native_dialog_hide(dialog);
 		}
 
-		void Destroy()
+		virtual void Destroy()
 		{
 			gtk_native_dialog_destroy(dialog);
 		}
 
-		bool Visible()
+		virtual bool Visible()
 		{
 			return gtk_native_dialog_get_visible(dialog);
 		}
 
-		void Modal(bool modal)
+		virtual void Modal(bool modal)
 		{
 			gtk_native_dialog_set_modal(dialog, modal);
 		}
 
-		bool Modal()
+		virtual bool Modal()
 		{
 			return gtk_native_dialog_get_modal(dialog);
 		}
 
-		void Title(const char* title)
+		virtual void Title(const char* title)
 		{
 			gtk_native_dialog_set_title(dialog, title);
 		}
 
-		const char* Title()
+		virtual const char* Title()
 		{
 			return gtk_native_dialog_get_title(dialog);
 		}
 
-		void TransientFor(Window& window)
+		virtual void TransientFor(Window& window)
 		{
 			gtk_native_dialog_set_transient_for(dialog, GTK_WINDOW(window.GetWidget()));
 		}
 
-		Window TransientFor()
+		virtual Window TransientFor()
 		{
 			return Window(gtk_native_dialog_get_transient_for(dialog));
 		}
 
-		ResponseType Run()
+		virtual ResponseType Run()
 		{
 			return (ResponseType)gtk_native_dialog_run(dialog);
 		}
@@ -74,7 +74,7 @@ namespace CGui
 		}
 
 	protected:
-		NativeDialog()
+		NativeDialog() : dialog{NULL}
 		{
 		}
 

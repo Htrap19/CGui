@@ -6,9 +6,10 @@
 
 namespace CGui
 {
-	class SpinButton : public Entry, public Orientable
+	class SpinButton : public virtual Entry, public virtual Orientable
 	{
 	public:
+		SpinButton(GtkSpinButton* spin_button);
 		SpinButton(CGui::Adjustment adjustment, double climb_rate, unsigned int digits);
 		SpinButton(double min, double max, double step);
 		void Adjustment(CGui::Adjustment adjustment);

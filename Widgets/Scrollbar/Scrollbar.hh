@@ -5,7 +5,7 @@
 
 namespace CGui
 {
-	class Scrollbar : public Range
+	class Scrollbar : public virtual Range
 	{
 	public:
 		Scrollbar(CGui::Orientation orientation, CGui::Adjustment adjustment);

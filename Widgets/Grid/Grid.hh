@@ -6,10 +6,11 @@
 
 namespace CGui
 {
-	class Grid : public Widget, public Container<Grid>, public Orientable
+	class Grid : public virtual Widget, public virtual Container<Grid>, public virtual Orientable
 	{
 	public:
 		Grid();
+		Grid(GtkGrid* grid);
 		void Add(Widget& w, int left, int top, int width, int height);
 		void InsertRow(int position);
 		void InsertColumn(int position);

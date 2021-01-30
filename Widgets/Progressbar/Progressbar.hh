@@ -5,10 +5,11 @@
 
 namespace CGui
 {
-	class Progressbar : public Widget, public Orientable
+	class Progressbar : public virtual Widget, public virtual Orientable
 	{
 	public:
 		Progressbar();
+		Progressbar(GtkProgressBar* progressbar);
 		Progressbar(const char* text);
 		void Pulse();
 		void PulseStep(double fraction);

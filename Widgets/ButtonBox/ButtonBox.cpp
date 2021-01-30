@@ -2,10 +2,16 @@
 
 namespace CGui
 {
-	ButtonBox::ButtonBox(CGui::Orientation orientation)
+	ButtonBox::ButtonBox(CGui::Orientation orientation) : Box::Container(this), Box::Orientable(this)
 	{
 		widget = gtk_button_box_new((GtkOrientation)orientation);
-		this->SetBox(GTK_BOX(widget));
+		this->SetContext(widget);
+	}
+
+	ButtonBox::ButtonBox(GtkButtonBox* buttonbox) : Box::Container(this), Box::Orientable(this)
+	{
+		widget = GTK_WIDGET(buttonbox);
+		this->SetContext(widget);
 	}
 
 	void ButtonBox::Layout(ButtonBoxStyle style)

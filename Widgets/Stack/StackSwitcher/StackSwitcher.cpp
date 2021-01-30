@@ -2,10 +2,16 @@
 
 namespace CGui
 {
-	StackSwitcher::StackSwitcher()
+	StackSwitcher::StackSwitcher() : Box::Container(this), Box::Orientable(this)
 	{
 		widget = gtk_stack_switcher_new();
-		this->SetBox(GTK_BOX(widget));
+		this->SetContext(widget);
+	}
+
+	StackSwitcher::StackSwitcher(GtkStackSwitcher* stack_switcher) : Box::Container(this), Box::Orientable(this)
+	{
+		widget = GTK_WIDGET(stack_switcher);
+		this->SetContext(widget);
 	}
 
 	void StackSwitcher::Stack(CGui::Stack& stack)

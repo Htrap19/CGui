@@ -2,18 +2,23 @@
 
 namespace CGui
 {
-	CheckButton::CheckButton() : Handler<CheckButton>::Handler(this)
+	CheckButton::CheckButton() : Handler<CheckButton>::Handler(this), Handler<ToggleButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this)
 	{
 		if (widget != nullptr)
 			gtk_widget_destroy(widget);
 		widget = gtk_check_button_new();
-		this->SetToggleButton(GTK_TOGGLE_BUTTON(widget));
+		this->SetContext(widget);
 	}
 
-	CheckButton::CheckButton(const char* text) : Handler<CheckButton>::Handler(this)
+	CheckButton::CheckButton(const char* text) : Handler<CheckButton>::Handler(this), Handler<ToggleButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this)
 	{
 		widget = gtk_check_button_new_with_label(text);
-		this->SetToggleButton(GTK_TOGGLE_BUTTON(widget));
+		this->SetContext(widget);
+	}
+
+	CheckButton::CheckButton(GtkCheckButton* checkbutton) : Handler<CheckButton>::Handler(this), Handler<ToggleButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this)
+	{
+		this->SetCheckButton(GTK_CHECK_BUTTON(widget));
 	}
 
 	long unsigned int CheckButton::Toggled(void(*func)())
@@ -34,6 +39,6 @@ namespace CGui
 	void CheckButton::SetCheckButton(GtkCheckButton* checkbutton)
 	{
 		this->widget = GTK_WIDGET(checkbutton);
-		this->SetToggleButton(GTK_TOGGLE_BUTTON(widget));
+		this->SetContext(widget);
 	}
 };

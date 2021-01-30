@@ -8,6 +8,12 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
+	Overlay::Overlay(GtkOverlay* overlay) : Container(this)
+	{
+		widget = GTK_WIDGET(overlay);
+		this->SetContext(widget);
+	}
+
 	void Overlay::AddOverlay(Widget& child)
 	{
 		gtk_overlay_add_overlay(GTK_OVERLAY(widget), child.GetWidget());

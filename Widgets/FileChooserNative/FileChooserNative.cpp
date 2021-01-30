@@ -2,9 +2,16 @@
 
 namespace CGui
 {
+	FileChooserNative::FileChooserNative(GtkFileChooserNative* file_chooser_native)
+	{
+		this->SetNativeDialog(GTK_NATIVE_DIALOG(file_chooser_native));
+		this->SetFileChooser(GTK_FILE_CHOOSER(dialog));
+	}
+
 	FileChooserNative::FileChooserNative(const char* title, Window& parent, FileChooserAction action, const char* accept_label, const char* cancel_label)
 	{
 		dialog = GTK_NATIVE_DIALOG(gtk_file_chooser_native_new(title, GTK_WINDOW(parent.GetWidget()), (GtkFileChooserAction)action, accept_label, cancel_label));
+		this->SetNativeDialog(dialog);
 		this->SetFileChooser(GTK_FILE_CHOOSER(dialog));
 	}
 
@@ -29,6 +36,6 @@ namespace CGui
 	}
 	bool FileChooserNative::IsFileChooserNative()
 	{
-		return GTK_IS_FILE_CHOOSER_NATIVE(widget);
+		return GTK_IS_FILE_CHOOSER_NATIVE(dialog);
 	}
 }

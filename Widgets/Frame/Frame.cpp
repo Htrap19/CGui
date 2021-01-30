@@ -8,6 +8,11 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
+	Frame::Frame(GtkFrame* frame) : Container(this)
+	{
+		this->SetFrame(frame);
+	}
+
 	void Frame::Label(const char* label)
 	{
 		gtk_frame_set_label(GTK_FRAME(widget), label);

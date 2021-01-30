@@ -24,6 +24,11 @@ namespace CGui
 		this->SetEditable(*this);
 	}
 
+	Entry::Entry(GtkEntry* entry) : Handler(this)
+	{
+		this->SetEntry(entry);
+	}
+
 	void Entry::Buffer(EntryBuffer buffer)
 	{
 		gtk_entry_set_buffer(GTK_ENTRY(widget), buffer.GetEntryBuffer());

@@ -5,7 +5,7 @@
 
 namespace CGui
 {
-	class RadioButton : public CheckButton, public Handler<RadioButton>
+	class RadioButton : public virtual CheckButton, public virtual Handler<RadioButton>
 	{
 	public:
 		RadioButton();

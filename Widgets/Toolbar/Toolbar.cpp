@@ -9,6 +9,13 @@ namespace CGui
 		this->SetToolShell(GTK_TOOL_SHELL(widget));
 	}
 
+	Toolbar::Toolbar(GtkToolbar* tool_bar) : Container(this), Orientable(this)
+	{
+		widget = GTK_WIDGET(tool_bar);
+		this->SetContext(widget);
+		this->SetToolShell(GTK_TOOL_SHELL(widget));
+	}
+
 	void Toolbar::Insert(ToolItem& item, int pos)
 	{
 		gtk_toolbar_insert(GTK_TOOLBAR(widget), GTK_TOOL_ITEM(item.GetWidget()), pos);

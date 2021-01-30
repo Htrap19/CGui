@@ -2,18 +2,25 @@
 
 namespace CGui
 {
-	ToggleButton::ToggleButton() : Handler<ToggleButton>::Handler(this)
+	ToggleButton::ToggleButton() : Handler<ToggleButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this)
 	{
 		if (widget != nullptr)
 			gtk_widget_destroy(widget);
 		widget = gtk_toggle_button_new();
-		this->SetButton(GTK_BUTTON(widget));
+		this->SetContext(widget);
 	}
 
-	ToggleButton::ToggleButton(const char* label) : Handler<ToggleButton>::Handler(this)
+	ToggleButton::ToggleButton(GtkToggleButton* toggle_button) : Handler<ToggleButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this)
+	{
+		if (widget != nullptr)
+			gtk_widget_destroy(widget);
+		this->SetToggleButton(toggle_button);
+	}
+
+	ToggleButton::ToggleButton(const char* label) : Handler<ToggleButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this)
 	{
 		widget = gtk_toggle_button_new_with_label(label);
-		this->SetButton(GTK_BUTTON(widget));
+		this->SetContext(widget);
 	}
 
 	void ToggleButton::Mode(bool draw_indicator)
@@ -54,7 +61,7 @@ namespace CGui
 	void ToggleButton::SetToggleButton(GtkToggleButton* togglebutton)
 	{
 		this->widget = GTK_WIDGET(togglebutton);
-		this->SetButton(GTK_BUTTON(widget));
+		this->SetContext(widget);
 	}
 
 	long unsigned int ToggleButton::Toggled(void(*func)())

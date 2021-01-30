@@ -6,9 +6,10 @@
 
 namespace CGui
 {
-	class Range : public Widget, public Orientable
+	class Range : public virtual Widget, public virtual Orientable
 	{
 	public:
+		Range(GtkRange* range);
 		Range(Widget& w);
 		void FillLevel(double fill_level);
 		double FillLevel();

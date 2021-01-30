@@ -6,9 +6,10 @@
 
 namespace CGui
 {
-	class MessageDialog : public Dialog
+	class MessageDialog : public virtual Dialog
 	{
 	public:
+		MessageDialog(GtkMessageDialog* message_dialog);
 		MessageDialog(Window& parent, DialogFlags flags, MessageType message_type, ButtonsType buttons_type);
 		void Markup(const char* str);
 		template <typename ... Args> void SecondaryText(const char* fmt, Args ... args);
@@ -22,7 +23,7 @@ namespace CGui
 		gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(widget), fmt, args...);
 	}
 
-	template<typename ...Args>
+	template<typename ... Args>
 	void MessageDialog::SecondaryTextMarkup(const char* fmt, Args ...args)
 	{
 		gtk_message_dialog_format_secondary_markup(GTK_MESSAGE_DIALOG(widget), fmt, args...);

@@ -4,10 +4,11 @@
 
 namespace CGui
 {
-	class VolumeButton : public ScaleButton
+	class VolumeButton : public virtual ScaleButton
 	{
 	public:
 		VolumeButton();
+		VolumeButton(GtkVolumeButton* volume_button);
 		bool IsVolumeButton();
 	};
 }

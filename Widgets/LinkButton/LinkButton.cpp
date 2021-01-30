@@ -2,18 +2,26 @@
 
 namespace CGui
 {
-	LinkButton::LinkButton(const char* uri)
+	LinkButton::LinkButton(GtkLinkButton* link_button) : Button::Container(this), Button::Handler(this)
+	{
+		if (widget != nullptr)
+			gtk_widget_destroy(widget);
+		widget = GTK_WIDGET(link_button);
+		this->SetContext(widget);
+	}
+
+	LinkButton::LinkButton(const char* uri) : Button::Container(this), Handler<Button>::Handler(this)
 	{
 		if (widget != nullptr)
 			gtk_widget_destroy(widget);
 		widget = gtk_link_button_new(uri);
-		this->SetButton(GTK_BUTTON(widget));
+		this->SetContext(widget);
 	}
 
-	LinkButton::LinkButton(const char* uri, const char* label)
+	LinkButton::LinkButton(const char* uri, const char* label) : Button::Container(this), Button::Handler(this)
 	{
 		widget = gtk_link_button_new_with_label(uri, label);
-		this->SetButton(GTK_BUTTON(widget));
+		this->SetContext(widget);
 	}
 
 	void LinkButton::Uri(const char* uri)

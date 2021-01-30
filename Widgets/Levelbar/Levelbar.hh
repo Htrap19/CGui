@@ -5,10 +5,11 @@
 
 namespace CGui
 {
-	class Levelbar : public Widget, public Orientable
+	class Levelbar : public virtual Widget, public virtual Orientable
 	{
 	public:
 		Levelbar();
+		Levelbar(GtkLevelBar* level_bar);
 		Levelbar(double min_value, double max_value);
 		void Mode(LevelbarMode mode);
 		LevelbarMode Mode();

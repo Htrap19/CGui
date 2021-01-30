@@ -8,6 +8,12 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
+	Switch::Switch(GtkSwitch* Switch)
+	{
+		widget = GTK_WIDGET(Switch);
+		this->SetContext(widget);
+	}
+
 	void Switch::Active(bool active)
 	{
 		gtk_switch_set_active(GTK_SWITCH(widget), active);

@@ -220,7 +220,8 @@ namespace CGui
 
 		for (GList* it = g_list; it != NULL; it = it->next)
 		{
-			ret.Insert(&Window((GtkWindow*)it->data));
+			auto temp_data = Window((GtkWindow*)it->data);
+			ret.Insert(&temp_data);
 		}
 
 		g_list_free(g_list);
@@ -384,7 +385,8 @@ namespace CGui
 
 		for (GList* it = glist; it != NULL; it = g_list_next(glist))
 		{
-			ret.Insert(&Pixbuf((GdkPixbuf*)it->data, true));
+			auto temp_data = Pixbuf((GdkPixbuf*)it->data, true);
+			ret.Insert(&temp_data);
 		}
 
 		g_list_free(glist);
@@ -466,7 +468,8 @@ namespace CGui
 
 		for (GList* it = glist; it != NULL; it = g_list_next(glist))
 		{
-			ret.Insert(&Pixbuf((GdkPixbuf*)it->data, true));
+			auto temp_data = Pixbuf((GdkPixbuf*)it->data, true);
+			ret.Insert(&temp_data);
 		}
 
 		g_list_free(glist);

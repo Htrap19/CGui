@@ -15,6 +15,12 @@ namespace CGui
 		this->Add(w);
 	}
 
+	EventBox::EventBox(GtkEventBox* event_box) : Container(this), Handler(this)
+	{
+		widget = GTK_WIDGET(event_box);
+		this->SetContext(widget);
+	}
+
 	void EventBox::VisibleWindow(bool visible)
 	{
 		gtk_event_box_set_visible_window(GTK_EVENT_BOX(widget), visible);

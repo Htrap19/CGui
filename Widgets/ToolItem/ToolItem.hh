@@ -5,7 +5,7 @@
 
 namespace CGui
 {
-	class ToolItem : public Widget, public Container<ToolItem>
+	class ToolItem : public virtual Widget, public virtual Container<ToolItem>
 	{
 	public:
 		ToolItem();

@@ -1,14 +1,15 @@
 #pragma once
 
-#include "../FileChooser/FileChooser.hh"
+#include "../FileChooser.hh"
 #include "../NativeDialog.hh"
 #include "../Window/Window.hh"
 
 namespace CGui
 {
-	class FileChooserNative : public FileChooser, public NativeDialog
+	class FileChooserNative : public virtual FileChooser, public virtual NativeDialog
 	{
 	public:
+		FileChooserNative(GtkFileChooserNative* file_chooser_native);
 		FileChooserNative(const char* title, Window& parent, FileChooserAction action, const char* accept_label, const char* cancel_label);
 		void AcceptLabel(const char* label);
 		const char* AcceptLabel();

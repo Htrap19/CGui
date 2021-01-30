@@ -8,6 +8,12 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
+	Separator::Separator(GtkSeparator* separator) : Orientable(this)
+	{
+		widget = GTK_WIDGET(separator);
+		this->SetContext(widget);
+	}
+
 	bool Separator::IsSeparator()
 	{
 		return GTK_IS_SEPARATOR(widget);

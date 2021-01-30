@@ -2,6 +2,12 @@
 
 namespace CGui
 {
+	Label::Label(GtkLabel* label)
+	{
+		widget = GTK_WIDGET(widget);
+		this->SetContext(widget);
+	}
+
 	Label::Label(const char* text)
 	{
 		widget = gtk_label_new(text);

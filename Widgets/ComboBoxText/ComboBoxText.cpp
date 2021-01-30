@@ -2,14 +2,21 @@
 
 namespace CGui
 {
-	ComboBoxText::ComboBoxText(bool with_entry) : ComboBox(with_entry)
+	ComboBoxText::ComboBoxText(bool with_entry) : ComboBox(with_entry), ComboBox::Container(this)
 	{
 		gtk_widget_destroy(widget);
 		if (with_entry)
 			widget = gtk_combo_box_text_new_with_entry();
 		else
 			widget = gtk_combo_box_text_new();
-		this->SetComboBox(GTK_COMBO_BOX(widget));
+		this->SetContext(widget);
+	}
+
+	ComboBoxText::ComboBoxText(GtkComboBoxText* combo_box_text) : ComboBox(true), ComboBox::Container(this)
+	{
+		gtk_widget_destroy(widget);
+		widget = GTK_WIDGET(combo_box_text);
+		this->SetContext(widget);
 	}
 
 	void ComboBoxText::Append(const char* id, const char* text)

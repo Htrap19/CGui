@@ -2,6 +2,11 @@
 
 namespace CGui
 {
+	Range::Range(GtkRange* range) : Orientable(this)
+	{
+		this->SetRange(range);
+	}
+
 	Range::Range(Widget& w) : Orientable(this)
 	{
 		widget = w.GetWidget();

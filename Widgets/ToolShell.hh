@@ -67,7 +67,7 @@ namespace CGui
 	protected:
 		GtkToolShell* m_tool_shell;
 
-		ToolShell()
+		ToolShell() : m_tool_shell{NULL}
 		{
 		}
 

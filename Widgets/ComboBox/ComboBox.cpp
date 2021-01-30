@@ -17,6 +17,11 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
+	ComboBox::ComboBox(GtkComboBox* combobox) : Container(this)
+	{
+		this->SetComboBox(GTK_COMBO_BOX(combobox));
+	}
+
 	void ComboBox::WrapWidth(int width)
 	{
 		gtk_combo_box_set_wrap_width(GTK_COMBO_BOX(widget), width);

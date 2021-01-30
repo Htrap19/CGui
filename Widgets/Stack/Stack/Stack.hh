@@ -5,7 +5,7 @@
 
 namespace CGui
 {
-	class Stack : public Widget, public Container<Stack>
+	class Stack : public virtual Widget, public virtual Container<Stack>
 	{
 	public:
 		Stack();

@@ -6,10 +6,11 @@
 
 namespace CGui
 {
-	class Layout : public Widget, public Scrollable
+	class Layout : public virtual Widget, public virtual Scrollable
 	{
 	public:
 		Layout();
+		Layout(GtkLayout* layout);
 		Layout(Adjustment hadjustment, Adjustment vadjustment);
 		void Put(Widget& child, int x, int y);
 		void Move(Widget& child, int x, int y);

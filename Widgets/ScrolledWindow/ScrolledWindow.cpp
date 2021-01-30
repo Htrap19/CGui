@@ -2,6 +2,12 @@
 
 namespace CGui
 {
+	ScrolledWindow::ScrolledWindow(GtkScrolledWindow* scrolled_window) : Container(this)
+	{
+		widget = GTK_WIDGET(scrolled_window);
+		this->SetContext(widget);
+	}
+	
 	ScrolledWindow::ScrolledWindow(CGui::Policy hpolicy, CGui::Policy vpolicy) : Container(this)
 	{
 		widget = gtk_scrolled_window_new(NULL, NULL);

@@ -8,6 +8,12 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
+	Grid::Grid(GtkGrid* grid) : Container(this), Orientable(this)
+	{
+		widget = GTK_WIDGET(grid);
+		this->SetContext(widget);
+	}
+
 	void Grid::Add(Widget& w, int left, int top, int width, int height)
 	{
 		gtk_grid_attach(GTK_GRID(widget), w.GetWidget(), left, top, width, height);

@@ -7,7 +7,7 @@
 
 namespace CGui
 {
-	class Button : public Widget, public Handler<Button>, public Container<Button>
+	class Button : public virtual Widget, public virtual Handler<Button>, public virtual Container<Button>
 	{
 	public:
 		Button();

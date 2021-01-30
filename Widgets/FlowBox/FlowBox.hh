@@ -8,10 +8,10 @@
 
 namespace CGui
 {
-	class FlowBox : public Widget, public Container<FlowBox>, public Orientable
+	class FlowBox : public virtual Widget, public virtual Container<FlowBox>, public virtual Orientable
 	{
 	public:
-		class Child : public Widget, public Container<Child>
+		class Child : public virtual Widget, public virtual Container<Child>
 		{
 		public:
 			Child();
@@ -23,6 +23,7 @@ namespace CGui
 		};
 
 		FlowBox();
+		FlowBox(GtkFlowBox* flow_box);
 		void Insert(Widget& child, int position);
 		FlowBox::Child ChildAtIndex(int index);
 		FlowBox::Child ChildAtPos(int x, int y);

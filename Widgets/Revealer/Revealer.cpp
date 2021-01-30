@@ -2,6 +2,12 @@
 
 namespace CGui
 {
+	Revealer::Revealer(GtkRevealer* revealer) : Container(this)
+	{
+		widget = GTK_WIDGET(revealer);
+		this->SetContext(widget);
+	}
+
 	Revealer::Revealer() : Container(this)
 	{
 		widget = gtk_revealer_new();

@@ -2,6 +2,12 @@
 
 namespace CGui
 {
+	Searchbar::Searchbar(GtkSearchBar* search_bar) : Container(this)
+	{
+		widget = GTK_WIDGET(search_bar);
+		this->SetContext(widget);
+	}
+	
 	Searchbar::Searchbar() : Container(this)
 	{
 		widget = gtk_search_bar_new();

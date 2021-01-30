@@ -14,7 +14,6 @@ namespace CGui
 		Container(WidgetType* w)
 		{
 			t_widget = w;
-			/*Storage::GetInstance().MakePrivate<const char*, void*>("deleteonquit");*/
 		}
 
 		virtual ~Container()
@@ -178,7 +177,7 @@ namespace CGui
 		}
 
 	protected:
-		Container()
+		Container() : t_widget{NULL}
 		{
 		}
 

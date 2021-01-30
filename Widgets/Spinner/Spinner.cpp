@@ -8,6 +8,12 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
+	Spinner::Spinner(GtkSpinner* spinner)
+	{
+		widget = GTK_WIDGET(spinner);
+		this->SetContext(widget);
+	}
+
 	void Spinner::Start()
 	{
 		gtk_spinner_start(GTK_SPINNER(widget));

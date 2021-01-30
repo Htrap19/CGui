@@ -8,6 +8,12 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
+	Notebook::Notebook(GtkNotebook* notebook) : Container(this)
+	{
+		widget = GTK_WIDGET(notebook);
+		this->SetContext(widget);
+	}
+
 	void Notebook::AppendPage(Widget& child, Widget& tab_label)
 	{
 		gtk_notebook_append_page(GTK_NOTEBOOK(widget), child.GetWidget(), tab_label.GetWidget());

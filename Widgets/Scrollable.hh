@@ -13,47 +13,47 @@ namespace CGui
 			scrollable = GTK_SCROLLABLE(w.GetWidget());
 		}
 
-		void HAdjustment(Adjustment adjustment)
+		virtual void HAdjustment(Adjustment adjustment)
 		{
 			gtk_scrollable_set_hadjustment(scrollable, adjustment.GetAdjustment());
 		}
 
-		Adjustment HAdjustment()
+		virtual Adjustment HAdjustment()
 		{
 			return Adjustment(gtk_scrollable_get_hadjustment(scrollable));
 		}
 
-		void VAdjustment(Adjustment adjustment)
+		virtual void VAdjustment(Adjustment adjustment)
 		{
 			gtk_scrollable_set_vadjustment(scrollable, adjustment.GetAdjustment());
 		}
 
-		Adjustment VAdjustment()
+		virtual Adjustment VAdjustment()
 		{
 			return Adjustment(gtk_scrollable_get_vadjustment(scrollable));
 		}
 
-		void HScrollPolicy(ScrollablePolicy policy)
+		virtual void HScrollPolicy(ScrollablePolicy policy)
 		{
 			gtk_scrollable_set_hscroll_policy(scrollable, (GtkScrollablePolicy)policy);
 		}
 
-		ScrollablePolicy HScrollPolicy()
+		virtual ScrollablePolicy HScrollPolicy()
 		{
 			return (ScrollablePolicy)gtk_scrollable_get_hscroll_policy(scrollable);
 		}
 
-		void VScrollPolicy(ScrollablePolicy policy)
+		virtual void VScrollPolicy(ScrollablePolicy policy)
 		{
 			gtk_scrollable_set_vscroll_policy(scrollable, (GtkScrollablePolicy)policy);
 		}
 
-		ScrollablePolicy VScrollPolicy()
+		virtual ScrollablePolicy VScrollPolicy()
 		{
 			return (ScrollablePolicy)gtk_scrollable_get_vscroll_policy(scrollable);
 		}
 
-		CGui::Border Border()
+		virtual CGui::Border Border()
 		{
 			GtkBorder border;
 			gtk_scrollable_get_border(scrollable, &border);
@@ -67,7 +67,7 @@ namespace CGui
 		}
 
 	protected:
-		Scrollable()
+		Scrollable() : scrollable{NULL}
 		{
 
 		}

@@ -5,11 +5,12 @@
 
 namespace CGui
 {
-	class CheckButton : public ToggleButton, public Handler<CheckButton>
+	class CheckButton : public virtual ToggleButton, public virtual Handler<CheckButton>
 	{
 	public:
 		CheckButton();
 		CheckButton(const char* text);
+		CheckButton(GtkCheckButton* checkbutton);
 		long unsigned int Toggled(void(*func)());
 		long unsigned int Toggled(void(*func)(CheckButton*));
 		template <typename ... Args> long unsigned int Toggled(void(*func)(CheckButton*, Args* ...), Args& ... args);

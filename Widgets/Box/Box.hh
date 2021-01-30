@@ -6,7 +6,7 @@
 
 namespace CGui
 {
-	class Box : public Widget, public Container<Box>, public Orientable
+	class Box : public virtual Widget, public virtual Container<Box>, public virtual Orientable
 	{
 	public:
 		Box(GtkBox* box);

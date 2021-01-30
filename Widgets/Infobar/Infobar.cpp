@@ -2,27 +2,27 @@
 
 namespace CGui
 {
-	Infobar::Infobar()
+	Infobar::Infobar() : Box::Container(this), Box::Orientable(this)
 	{
 		widget = gtk_info_bar_new();
 		Container<Widget>::t_widget = gtk_info_bar_get_content_area(GTK_INFO_BAR(widget));
-		this->SetBox(GTK_BOX(widget));
+		this->SetContext(widget);
 	}
 
-	Infobar::Infobar(GtkInfoBar* infobar)
+	Infobar::Infobar(GtkInfoBar* infobar) : Box::Container(this), Box::Orientable(this)
 	{
-		this->widget = GTK_WIDGET(infobar);
-		this->SetBox(GTK_BOX(widget));
+		widget = GTK_WIDGET(infobar);
 		Container<Widget>::t_widget = gtk_info_bar_get_content_area(GTK_INFO_BAR(widget));
+		this->SetContext(widget);
 	}
 
-	Infobar::Infobar(CGui::MessageType messagetype, bool showclosebutton)
+	Infobar::Infobar(CGui::MessageType messagetype, bool showclosebutton) : Box::Container(this), Box::Orientable(this)
 	{
 		widget = gtk_info_bar_new();
 		this->MessageType(messagetype);
 		this->ShowCloseButton(showclosebutton);
 		Container<Widget>::t_widget = gtk_info_bar_get_content_area(GTK_INFO_BAR(widget));
-		this->SetBox(GTK_BOX(widget));
+		this->SetContext(widget);
 	}
 
 	void Infobar::MessageType(CGui::MessageType messagetype)

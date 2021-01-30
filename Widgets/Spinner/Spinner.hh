@@ -4,10 +4,11 @@
 
 namespace CGui
 {
-	class Spinner : public Widget
+	class Spinner : public virtual Widget
 	{
 	public:
 		Spinner();
+		Spinner(GtkSpinner* spinner);
 		void Start();
 		void Stop();
 		bool IsSpinner();

@@ -9,6 +9,13 @@ namespace CGui
 		this->SetScrollable(GTK_SCROLLABLE(widget));
 	}
 
+	ToolPalette::ToolPalette(GtkToolPalette* tool_palette) : Container(this), Orientable(this)
+	{
+		widget = GTK_WIDGET(tool_palette);
+		this->SetContext(widget);
+		this->SetScrollable(GTK_SCROLLABLE(tool_palette));
+	}
+
 	void ToolPalette::Exclusive(ToolItemGroup& group, bool exclusive)
 	{
 		gtk_tool_palette_set_exclusive(GTK_TOOL_PALETTE(widget), GTK_TOOL_ITEM_GROUP(group.GetWidget()), exclusive);

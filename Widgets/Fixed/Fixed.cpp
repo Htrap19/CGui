@@ -8,6 +8,12 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
+	Fixed::Fixed(GtkFixed* fixed) : Container(this)
+	{
+		widget = GTK_WIDGET(fixed);
+		this->SetContext(widget);
+	}
+
 	void Fixed::Put(Widget& child, int x, int y)
 	{
 		gtk_fixed_put(GTK_FIXED(widget), child.GetWidget(), x, y);

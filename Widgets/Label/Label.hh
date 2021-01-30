@@ -4,9 +4,10 @@
 
 namespace CGui
 {
-	class Label : public Widget
+	class Label : public virtual Widget
 	{
 	public:
+		Label(GtkLabel* label);
 		Label(const char* text);
 		void Text(const char* text);
 		const char* Text();

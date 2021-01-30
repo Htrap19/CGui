@@ -18,8 +18,8 @@ namespace CGui
 		class List
 		{
 		public:
-			List(void);
-			~List(void);
+			List();
+			virtual ~List();
 			bool IsEmpty();
 			unsigned int Insert(Data data);
 			Data First();
@@ -430,7 +430,7 @@ namespace CGui
 		{
 		public:
 			List(void);
-			~List(void);
+			virtual ~List(void);
 			bool IsEmpty();
 			KeyValueData<Key, Value> Insert(Key key, Value value);
 			KeyValueData<Key, Value> First();

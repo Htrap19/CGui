@@ -5,7 +5,7 @@
 
 namespace CGui
 {
-	class Infobar : public Box, public Container<Widget>
+	class Infobar : public virtual Box, public virtual Container<Widget>
 	{
 	public:
 		Infobar();

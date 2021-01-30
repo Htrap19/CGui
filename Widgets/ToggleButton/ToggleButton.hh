@@ -5,10 +5,11 @@
 
 namespace CGui
 {
-	class ToggleButton : public Button, public Handler<ToggleButton>
+	class ToggleButton : public virtual Button, public virtual Handler<ToggleButton>
 	{
 	public:
 		ToggleButton();
+		ToggleButton(GtkToggleButton* toggle_button);
 		ToggleButton(const char* label);
 		void Mode(bool draw_indicator);
 		bool Mode();

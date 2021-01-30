@@ -6,11 +6,12 @@
 
 namespace CGui
 {
-	class EventBox : public Widget, public Container<EventBox>, public Handler<EventBox>
+	class EventBox : public virtual Widget, public virtual Container<EventBox>, public virtual Handler<EventBox>
 	{
 	public:
 		EventBox();
 		EventBox(Widget& w);
+		EventBox(GtkEventBox* event_box);
 		void VisibleWindow(bool visible);
 		bool VisibleWindow();
 		void AboveChild(bool above);

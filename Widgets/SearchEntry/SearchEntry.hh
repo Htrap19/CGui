@@ -4,10 +4,11 @@
 
 namespace CGui
 {
-	class SearchEntry : public Entry, public Handler<SearchEntry>
+	class SearchEntry : public virtual Entry, public virtual Handler<SearchEntry>
 	{
 	public:
 		SearchEntry();
+		SearchEntry(GtkSearchEntry* search_entry);
 		long unsigned int Changed(void(*func)());
 		long unsigned int Changed(void(*func)(SearchEntry*));
 		template <typename ... Args> long unsigned int Changed(void(*func)(SearchEntry*, Args* ...), Args& ... args);

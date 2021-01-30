@@ -8,6 +8,12 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
+	Actionbar::Actionbar(GtkActionBar* actionbar) : Container(this)
+	{
+		widget = GTK_WIDGET(actionbar);
+		this->SetContext(widget);
+	}
+
 	void Actionbar::Add(PackType type, Widget& child)
 	{
 		auto func = Converter::Convert::GetInstance().ActionbarFuncPtr(type);

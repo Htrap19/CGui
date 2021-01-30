@@ -2,10 +2,16 @@
 
 namespace CGui
 {
-	VolumeButton::VolumeButton()
+	VolumeButton::VolumeButton() : Handler<Button>::Handler(this), Button::Container(this), ScaleButton::Orientable(this)
 	{
 		widget = gtk_volume_button_new();
-		this->SetScaleButton(GTK_SCALE_BUTTON(widget));
+		this->SetContext(widget);
+	}
+
+	VolumeButton::VolumeButton(GtkVolumeButton* volume_button) : Handler<Button>::Handler(this), Button::Container(this), ScaleButton::Orientable(this)
+	{
+		widget = GTK_WIDGET(volume_button);
+		this->SetContext(widget);
 	}
 
 	bool VolumeButton::IsVolumeButton()

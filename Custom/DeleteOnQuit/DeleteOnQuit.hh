@@ -21,9 +21,9 @@ namespace CGui
 			return instance;
 		}
 
-		void Add(void* data)
+		unsigned int Add(void* data)
 		{
-			l_instance->Insert(data);
+			return l_instance->Insert(data);
 		}
 
 		void ForEach(void(*func)(void*))
@@ -41,6 +41,7 @@ namespace CGui
 			l_instance->ForEach([](void* data) -> void
 				{
 					delete data;
+					data = nullptr;
 				});
 			delete l_instance;
 		}
@@ -89,6 +90,7 @@ namespace CGui
 			l_instance->ForEach([](void* data) -> void
 				{
 					delete[] data;
+					data = nullptr;
 				});
 			delete l_instance;
 		}

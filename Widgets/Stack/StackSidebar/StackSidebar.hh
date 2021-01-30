@@ -5,10 +5,11 @@
 
 namespace CGui
 {
-	class StackSidebar : public Widget
+	class StackSidebar : public virtual Widget
 	{
 	public:
 		StackSidebar();
+		StackSidebar(GtkStackSidebar* stack_sidebar);
 		void Stack(CGui::Stack& stack);
 		CGui::Stack Stack();
 		bool IsStackSidebar();

@@ -7,6 +7,13 @@ namespace CGui
 		widget = gtk_level_bar_new();
 		this->SetContext(widget);
 	}
+
+	Levelbar::Levelbar(GtkLevelBar* level_bar) : Orientable(this)
+	{
+		widget = GTK_WIDGET(level_bar);
+		this->SetContext(widget);
+	}
+
 	Levelbar::Levelbar(double min_value, double max_value) : Orientable(this)
 	{
 		widget = gtk_level_bar_new_for_interval(min_value, max_value);

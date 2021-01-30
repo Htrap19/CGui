@@ -2,18 +2,18 @@
 
 namespace CGui
 {
-	Scrollbar::Scrollbar(CGui::Orientation orientation, CGui::Adjustment adjustment)
+	Scrollbar::Scrollbar(CGui::Orientation orientation, CGui::Adjustment adjustment) : Range::Orientable(this)
 	{
 		widget = gtk_scrollbar_new((GtkOrientation)orientation, adjustment.GetAdjustment());
-		this->SetRange(GTK_RANGE(widget));
+		this->SetContext(widget);
 	}
 
-	Scrollbar::Scrollbar(GtkScrollbar* scrollbar)
+	Scrollbar::Scrollbar(GtkScrollbar* scrollbar) : Range::Orientable(this)
 	{
 		this->widget = GTK_WIDGET(scrollbar);
 		this->SetContext(widget);
-		this->SetRange(GTK_RANGE(widget));
 	}
+
 	bool Scrollbar::IsScrollbar()
 	{
 		return GTK_IS_SCROLLBAR(widget);

@@ -5,10 +5,11 @@
 
 namespace CGui
 {
-	class Separator : public Widget, public Orientable
+	class Separator : public virtual Widget, public virtual Orientable
 	{
 	public:
 		Separator(CGui::Orientation orientation);
+		Separator(GtkSeparator* separator);
 		bool IsSeparator();
 	};
 }

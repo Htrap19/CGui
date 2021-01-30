@@ -5,10 +5,11 @@
 
 namespace CGui
 {
-	class Frame : public Widget, public Container<Frame>
+	class Frame : public virtual Widget, public virtual Container<Frame>
 	{
 	public:
 		Frame(const char* label);
+		Frame(GtkFrame* frame);
 		void Label(const char* label);
 		const char* Label();
 		void LabelWidget(Widget& label);

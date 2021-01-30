@@ -40,6 +40,12 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
+	FlowBox::FlowBox(GtkFlowBox* flow_box) : Container(this), Orientable(this)
+	{
+		widget = GTK_WIDGET(flow_box);
+		this->SetContext(widget);
+	}
+
 	void FlowBox::Insert(Widget& child, int position)
 	{
 		gtk_flow_box_insert(GTK_FLOW_BOX(widget), child.GetWidget(), position);

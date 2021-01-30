@@ -6,10 +6,11 @@
 
 namespace CGui
 {
-	class Dialog : public Window, public Container<Widget>
+	class Dialog : public virtual Window, public virtual Container<Widget>
 	{
 	public:
 		Dialog(Window& window, bool modal, const char* title = "");
+		Dialog(GtkDialog* dialog);
 		ResponseType Run();
 		void ActionWidget(Widget& action_widget, ResponseType res_type);
 		Widget AddButton(const char* button_text, ResponseType res_type);

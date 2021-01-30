@@ -9,12 +9,13 @@
 
 namespace CGui
 {
-	class Entry : public Widget, public Handler<Entry>, public Editable
+	class Entry : public virtual Widget, public virtual Handler<Entry>, public virtual Editable
 	{
 	public:
 		Entry();
 		Entry(const char* placeholdertext);
 		Entry(EntryBuffer buffer);
+		Entry(GtkEntry* entry);
 		void Buffer(EntryBuffer buffer);
 		EntryBuffer Buffer();
 		void Visibility(bool visibility);

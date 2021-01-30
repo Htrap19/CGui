@@ -6,11 +6,12 @@
 
 namespace CGui
 {
-	class ComboBox : public Widget, public Container<ComboBox>
+	class ComboBox : public virtual Widget, public virtual Container<ComboBox>
 	{
 	public:
 		ComboBox(bool with_entry = false);
 		ComboBox(TreeModal& tree_modal);
+		ComboBox(GtkComboBox* combobox);
 		void WrapWidth(int width);
 		int WropWidth();
 		void RowSpanColumn(int row_span);

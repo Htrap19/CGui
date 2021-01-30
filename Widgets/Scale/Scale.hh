@@ -4,9 +4,10 @@
 
 namespace CGui
 {
-	class Scale : public Range
+	class Scale : public virtual Range
 	{
 	public:
+		Scale(GtkScale* scale);
 		Scale(CGui::Orientation orientation);
 		Scale(CGui::Orientation orientation, CGui::Adjustment adjustment);
 		Scale(CGui::Orientation orientation, double min, double max, double step);

@@ -6,10 +6,11 @@
 
 namespace CGui
 {
-	class AboutDialog : public Dialog
+	class AboutDialog : public virtual Dialog
 	{
 	public:
 		AboutDialog();
+		AboutDialog(GtkAboutDialog* dialog);
 		AboutDialog(Window& parent);
 		void ProgramName(const char* name);
 		const char* ProgramName();

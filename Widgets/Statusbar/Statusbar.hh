@@ -5,10 +5,11 @@
 
 namespace CGui
 {
-	class Statusbar : public Box, public Container<Widget>
+	class Statusbar : public virtual Box, public virtual Container<Widget>
 	{
 	public:
 		Statusbar();
+		Statusbar(GtkStatusbar* status_bar);
 		void Add(Widget& child) override;
 		void Remove(Widget& child) override;
 		int ContextID(const char* context_description);

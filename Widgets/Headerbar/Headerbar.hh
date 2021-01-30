@@ -5,7 +5,7 @@
 
 namespace CGui
 {
-	class Headerbar : public Widget, public Container<Headerbar>
+	class Headerbar : public virtual Widget, public virtual Container<Headerbar>
 	{
 	public:
 		Headerbar(const char* title = "", const char* subtitle = "");

@@ -2,19 +2,19 @@
 
 namespace CGui
 {
-	RadioButton::RadioButton() : Handler<RadioButton>::Handler(this)
+	RadioButton::RadioButton() : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
 	{
 		widget = gtk_radio_button_new(NULL);
-		this->SetCheckButton(GTK_CHECK_BUTTON(widget));
+		this->SetContext(widget);
 	}
 
-	RadioButton::RadioButton(GtkRadioButton* radiobutton) : Handler<RadioButton>::Handler(this)
+	RadioButton::RadioButton(GtkRadioButton* radiobutton) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
 	{
 		this->widget = GTK_WIDGET(radiobutton);
-		this->SetCheckButton(GTK_CHECK_BUTTON(widget));
+		this->SetContext(widget);
 	}
 
-	RadioButton::RadioButton(Single::List<RadioButton>& group) : Handler<RadioButton>::Handler(this)
+	RadioButton::RadioButton(Single::List<RadioButton>& group) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
 	{
 		GSList* g = NULL;
 
@@ -25,18 +25,18 @@ namespace CGui
 		}
 
 		widget = gtk_radio_button_new(g);
-		this->SetCheckButton(GTK_CHECK_BUTTON(widget));
+		this->SetContext(widget);
 
 		g_slist_free(g);
 	}
 
-	RadioButton::RadioButton(RadioButton& radiobutton) : Handler<RadioButton>::Handler(this)
+	RadioButton::RadioButton(RadioButton& radiobutton) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
 	{
 		widget = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(radiobutton.GetWidget()));
-		this->SetCheckButton(GTK_CHECK_BUTTON(widget));
+		this->SetContext(widget);
 	}
 
-	RadioButton::RadioButton(Single::List<RadioButton>& group, const char* label) : Handler<RadioButton>::Handler(this)
+	RadioButton::RadioButton(Single::List<RadioButton>& group, const char* label) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
 	{
 		GSList* g = NULL;
 
@@ -47,21 +47,21 @@ namespace CGui
 		}
 
 		widget = gtk_radio_button_new_with_label(g, label);
-		this->SetCheckButton(GTK_CHECK_BUTTON(widget));
+		this->SetContext(widget);
 
 		g_slist_free(g);
 	}
 
-	RadioButton::RadioButton(const char* label) : Handler<RadioButton>::Handler(this)
+	RadioButton::RadioButton(const char* label) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
 	{
 		widget = gtk_radio_button_new_with_label(NULL, label);
-		this->SetCheckButton(GTK_CHECK_BUTTON(widget));
+		this->SetContext(widget);
 	}
 
-	RadioButton::RadioButton(RadioButton& radiobutton, const char* label) : Handler<RadioButton>::Handler(this)
+	RadioButton::RadioButton(RadioButton& radiobutton, const char* label) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
 	{
 		widget = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radiobutton.GetWidget()), label);
-		this->SetCheckButton(GTK_CHECK_BUTTON(widget));
+		this->SetContext(widget);
 	}
 
 	RadioButton::~RadioButton()

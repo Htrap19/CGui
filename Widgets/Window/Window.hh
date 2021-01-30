@@ -7,7 +7,7 @@
 
 namespace CGui
 {
-	class Window : public Widget, public Container<Window>
+	class Window : public virtual Widget, public virtual Container<Window>
 	{
 	public:
 		Window(WindowType type, const char* title, WindowPos pos, bool initialize = true);

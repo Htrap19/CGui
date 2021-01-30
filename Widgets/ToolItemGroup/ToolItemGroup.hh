@@ -7,7 +7,7 @@
 
 namespace CGui
 {
-	class ToolItemGroup : public Widget, public Container<ToolItemGroup>, public ToolShell
+	class ToolItemGroup : public virtual Widget, public virtual Container<ToolItemGroup>, public virtual ToolShell
 	{
 	public:
 		ToolItemGroup(GtkToolItemGroup* group);

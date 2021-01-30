@@ -2,12 +2,20 @@
 
 namespace CGui
 {
-	ScaleButton::ScaleButton(IconSize size, double min, double max, double step, const char** icons) : Orientable(this)
+	ScaleButton::ScaleButton(GtkScaleButton* scale_button) : Orientable(this), Handler<Button>::Handler(this), Button::Container(this)
+	{
+		if (widget != nullptr)
+			gtk_widget_destroy(widget);
+		widget = GTK_WIDGET(scale_button);
+		this->SetContext(widget);
+	}
+
+	ScaleButton::ScaleButton(IconSize size, double min, double max, double step, const char** icons) : Orientable(this), Handler<Button>::Handler(this), Button::Container(this)
 	{
 		if (widget != nullptr)
 			gtk_widget_destroy(widget);
 		widget = gtk_scale_button_new((GtkIconSize)size, min, max, step, icons);
-		this->SetButton(GTK_BUTTON(widget));
+		this->SetContext(widget);
 	}
 
 	void ScaleButton::Adjustment(CGui::Adjustment adjustment)
@@ -55,14 +63,13 @@ namespace CGui
 		return GTK_IS_SCALE_BUTTON(widget);
 	}
 
-	ScaleButton::ScaleButton() : Orientable(this)
+	ScaleButton::ScaleButton() : Orientable(this), Handler<Button>::Handler(this), Button::Container(this)
 	{
 	}
 
 	void ScaleButton::SetScaleButton(GtkScaleButton* scalebutton)
 	{
 		this->widget = GTK_WIDGET(scalebutton);
-		this->SetButton(GTK_BUTTON(widget));
 	}
 
 }

@@ -4,10 +4,11 @@
 
 namespace CGui
 {
-	class ButtonBox : public Box
+	class ButtonBox : public virtual Box
 	{
 	public:
 		ButtonBox(CGui::Orientation orientation);
+		ButtonBox(GtkButtonBox* buttonbox);
 		void Layout(ButtonBoxStyle style);
 		ButtonBoxStyle Layout();
 		void ChildSecondary(Widget& child, bool is_secondary);

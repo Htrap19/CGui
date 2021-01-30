@@ -5,10 +5,11 @@
 
 namespace CGui
 {
-	class Assistant : public Window
+	class Assistant : public virtual Window
 	{
 	public:
 		Assistant();
+		Assistant(GtkAssistant* assistant);
 		void CurrentPage(int page);
 		int CurrentPage();
 		int NumPages();

@@ -2,14 +2,19 @@
 
 namespace CGui
 {
-	Dialog::Dialog(Window& window, bool modal, const char* title)
+	Dialog::Dialog(Window& window, bool modal, const char* title) : Window::Container(this)
 	{
 		widget = gtk_dialog_new();
 		Container<Widget>::t_widget = gtk_dialog_get_content_area(GTK_DIALOG(widget));
 		this->TransientFor(window);
 		this->Modal(modal);
 		this->Title(title);
-		this->SetWindow(GTK_WINDOW(widget));
+		this->SetContext(widget);
+	}
+
+	Dialog::Dialog(GtkDialog* dialog) : Window::Container(this)
+	{
+		this->SetDialog(dialog);
 	}
 
 	ResponseType Dialog::Run()
@@ -77,14 +82,14 @@ namespace CGui
 		return GTK_IS_DIALOG(widget);
 	}
 
-	Dialog::Dialog()
+	Dialog::Dialog() : Window::Container(this)
 	{ }
 
 	void Dialog::SetDialog(GtkDialog* dialog)
 	{
 		this->widget = GTK_WIDGET(dialog);
-		this->SetWindow(GTK_WINDOW(widget));
 		Container<Widget>::t_widget = gtk_dialog_get_content_area(GTK_DIALOG(widget));
+		this->SetContext(widget);
 	}
 
 };

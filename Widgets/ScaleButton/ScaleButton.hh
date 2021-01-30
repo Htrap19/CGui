@@ -6,9 +6,10 @@
 
 namespace CGui
 {
-	class ScaleButton : public Button, public Orientable
+	class ScaleButton : public virtual Button, public virtual Orientable
 	{
 	public:
+		ScaleButton(GtkScaleButton* scale_button);
 		ScaleButton(IconSize size, double min, double max, double step, const char** icons);
 		void Adjustment(CGui::Adjustment adjustment);
 		CGui::Adjustment Adjustment();

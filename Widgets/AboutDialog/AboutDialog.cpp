@@ -2,16 +2,22 @@
 
 namespace CGui
 {
-	AboutDialog::AboutDialog()
+	AboutDialog::AboutDialog() : Window::Container(this)
 	{
 		widget = gtk_about_dialog_new();
-		this->SetDialog(GTK_DIALOG(widget));
+		this->SetContext(widget);
 	}
 
-	AboutDialog::AboutDialog(Window& parent)
+	AboutDialog::AboutDialog(GtkAboutDialog* dialog) : Window::Container(this)
+	{
+		widget = GTK_WIDGET(dialog);
+		this->SetContext(widget);
+	}
+
+	AboutDialog::AboutDialog(Window& parent) : Window::Container(this)
 	{
 		widget = gtk_about_dialog_new();
-		this->SetDialog(GTK_DIALOG(widget));
+		this->SetContext(widget);
 		this->TransientFor(parent);
 	}
 

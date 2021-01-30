@@ -2,10 +2,17 @@
 
 namespace CGui
 {
-	Statusbar::Statusbar()
+	Statusbar::Statusbar() : Box::Container(this), Box::Orientable(this)
 	{
 		widget = gtk_statusbar_new();
-		this->SetBox(GTK_BOX(widget));
+		this->SetContext(widget);
+		Container<Widget>::t_widget = gtk_statusbar_get_message_area(GTK_STATUSBAR(widget));
+	}
+
+	Statusbar::Statusbar(GtkStatusbar* status_bar) : Box::Container(this), Box::Orientable(this)
+	{
+		widget = GTK_WIDGET(status_bar);
+		this->SetContext(widget);
 		Container<Widget>::t_widget = gtk_statusbar_get_message_area(GTK_STATUSBAR(widget));
 	}
 

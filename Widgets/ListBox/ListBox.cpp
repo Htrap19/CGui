@@ -70,6 +70,12 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
+	ListBox::ListBox(GtkListBox* list_box) : Container(this)
+	{
+		widget = GTK_WIDGET(list_box);
+		this->SetContext(widget);
+	}
+
 	void ListBox::Prepend(Widget& child)
 	{
 		gtk_list_box_prepend(GTK_LIST_BOX(widget), child.GetWidget());

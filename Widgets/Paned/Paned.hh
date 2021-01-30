@@ -6,10 +6,11 @@
 
 namespace CGui
 {
-	class Paned : public Widget, public Container<Paned>, public Orientable
+	class Paned : public virtual Widget, public virtual Container<Paned>, public virtual Orientable
 	{
 	public:
 		Paned(CGui::Orientation orientation);
+		Paned(GtkPaned* paned);
 		void Add1(Widget& child);
 		void Add2(Widget& child);
 		void Pack1(Widget& child, bool resize, bool shrink);

@@ -4,9 +4,10 @@
 
 namespace CGui
 {
-	class LinkButton : public Button
+	class LinkButton : public virtual Button
 	{
 	public:
+		LinkButton(GtkLinkButton* link_button);
 		LinkButton(const char* uri);
 		LinkButton(const char* uri, const char* label);
 		void Uri(const char* uri);

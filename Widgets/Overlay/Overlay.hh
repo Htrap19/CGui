@@ -5,10 +5,11 @@
 
 namespace CGui
 {
-	class Overlay : public Widget, public Container<Overlay>
+	class Overlay : public virtual Widget, public virtual Container<Overlay>
 	{
 	public:
 		Overlay();
+		Overlay(GtkOverlay* overlay);
 		void AddOverlay(Widget& child);
 		void ReorderOverlay(Widget& child, int position);
 		void OverlayPassThrough(Widget& child, bool pass);

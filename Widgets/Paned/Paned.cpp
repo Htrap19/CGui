@@ -8,6 +8,12 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
+	Paned::Paned(GtkPaned* paned) : Container(this), Orientable(this)
+	{
+		widget = GTK_WIDGET(paned);
+		this->SetContext(widget);
+	}
+
 	void Paned::Add1(Widget& child)
 	{
 		gtk_paned_add1(GTK_PANED(widget), child.GetWidget());

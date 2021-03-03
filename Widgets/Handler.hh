@@ -132,127 +132,171 @@ namespace CGui
 			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(signal), G_CALLBACK((void(*)(GtkWidget*, PassingDataByFunc*))callback), pass));
 		}
 
-		template <typename ... Args> long unsigned int SignalHandler(Signals signal, void(*func)(WidgetType*, Args* ...), Args& ... args)
+		//template <typename ... Args> long unsigned int SignalHandler(Signals signal, void(*func)(WidgetType*, Args* ...), Args& ... args)
+		//{
+		//	/*if (infiniteCallbackMethods == NULL)
+		//	{
+		//		infiniteCallbackMethods = new KeyValue::List<Signals, std::any>;
+		//		Storage::GetInstance().Add<const char*, KeyValue::List<Signals, std::any>*>("Instance", infiniteCallbackMethods, "mainlistsignals");
+		//	}
+
+		//	PassingDataSignals* pass = new PassingDataSignals
+		//	{
+		//		this, signal, t_widget
+		//	};
+		//	Storage::GetInstance().Add<const char*, void*>("Instance", pass, "passingdata");
+
+		//	if (!infiniteCallbackMethods->ExistsKey(signal))
+		//	{
+		//		auto temp = new Single::List<std::any>;
+		//		infiniteCallbackMethods->Insert(signal, temp);
+		//		Storage::GetInstance().Add<const char*, Single::List<std::any>*>("Instance", temp, "allcallbacks");
+		//		temp->Insert(std::make_tuple(func, &args...));
+		//	}
+		//	else
+		//	{
+		//		KeyValueData keyvaluedata = infiniteCallbackMethods->FindByKey(signal);
+		//		std::any_cast<Single::List<std::any>*>(keyvaluedata.value)->Insert(std::make_tuple(func, &args...));
+		//	}
+
+		//	auto callback = [](GtkWidget * widget, PassingDataSignals * d)
+		//	{
+		//		KeyValueData keyvaluedata = d->data->infiniteCallbackMethods->FindByKey(d->signal);
+
+		//		auto f = [](Single::Node<std::any> * node, WidgetType * ins)
+		//		{
+		//			auto apply_f = [&ins](void(*func)(WidgetType*, Args * ...), Args * ... user_data)
+		//			{
+		//				func(ins, user_data...);
+		//			};
+
+		//			std::apply(apply_f, std::any_cast<std::tuple<void(*)(WidgetType*, Args * ...), Args * ...>>(node->data));
+		//		};
+
+		//		std::any_cast<Single::List<std::any>*>(keyvaluedata.value)->ForEach((void(*)(Single::Node<std::any>*, WidgetType*))f, d->ins);
+		//	};*/
+
+		//	PassingDataByFunc* pass = new PassingDataByFunc
+		//	{
+		//		std::make_tuple(func, &args...), t_widget
+		//	};
+		//	DeleteOnQuit::GetInstance().Add(pass);
+
+		//	auto callback = [](GtkWidget* widget, PassingDataByFunc* func_data)
+		//	{
+		//		auto apply_f = [&func_data](void(*user_func)(WidgetType*, Args* ...), Args* ... user_data)
+		//		{
+		//			user_func(func_data->ins, user_data...);
+		//		};
+
+		//		std::apply(apply_f, std::any_cast<std::tuple<void(*)(WidgetType*, Args* ...), Args* ...>>(func_data->func));
+		//	};
+
+		//	return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(signal), G_CALLBACK((void(*)(GtkWidget*, PassingDataByFunc*))callback), pass));
+		//}
+
+		template <typename ... Args>
+		long unsigned int SignalHandler(Signals signal, void(*func)(WidgetType*, Args...), Args ... args)
 		{
-			/*if (infiniteCallbackMethods == NULL)
-			{
-				infiniteCallbackMethods = new KeyValue::List<Signals, std::any>;
-				Storage::GetInstance().Add<const char*, KeyValue::List<Signals, std::any>*>("Instance", infiniteCallbackMethods, "mainlistsignals");
-			}
-
-			PassingDataSignals* pass = new PassingDataSignals
-			{
-				this, signal, t_widget
-			};
-			Storage::GetInstance().Add<const char*, void*>("Instance", pass, "passingdata");
-
-			if (!infiniteCallbackMethods->ExistsKey(signal))
-			{
-				auto temp = new Single::List<std::any>;
-				infiniteCallbackMethods->Insert(signal, temp);
-				Storage::GetInstance().Add<const char*, Single::List<std::any>*>("Instance", temp, "allcallbacks");
-				temp->Insert(std::make_tuple(func, &args...));
-			}
-			else
-			{
-				KeyValueData keyvaluedata = infiniteCallbackMethods->FindByKey(signal);
-				std::any_cast<Single::List<std::any>*>(keyvaluedata.value)->Insert(std::make_tuple(func, &args...));
-			}
-
-			auto callback = [](GtkWidget * widget, PassingDataSignals * d)
-			{
-				KeyValueData keyvaluedata = d->data->infiniteCallbackMethods->FindByKey(d->signal);
-
-				auto f = [](Single::Node<std::any> * node, WidgetType * ins)
-				{
-					auto apply_f = [&ins](void(*func)(WidgetType*, Args * ...), Args * ... user_data)
-					{
-						func(ins, user_data...);
-					};
-
-					std::apply(apply_f, std::any_cast<std::tuple<void(*)(WidgetType*, Args * ...), Args * ...>>(node->data));
-				};
-
-				std::any_cast<Single::List<std::any>*>(keyvaluedata.value)->ForEach((void(*)(Single::Node<std::any>*, WidgetType*))f, d->ins);
-			};*/
-
 			PassingDataByFunc* pass = new PassingDataByFunc
 			{
-				std::make_tuple(func, &args...), t_widget
+				std::make_tuple(func, args...), t_widget
 			};
 			DeleteOnQuit::GetInstance().Add(pass);
 
 			auto callback = [](GtkWidget* widget, PassingDataByFunc* func_data)
 			{
-				auto apply_f = [&func_data](void(*user_func)(WidgetType*, Args* ...), Args* ... user_data)
+				auto apply_f = [&func_data](void(*user_func)(WidgetType*, Args ...), Args ... user_data)
 				{
 					user_func(func_data->ins, user_data...);
 				};
 
-				std::apply(apply_f, std::any_cast<std::tuple<void(*)(WidgetType*, Args* ...), Args* ...>>(func_data->func));
+				std::apply(apply_f, std::any_cast<std::tuple<void(*)(WidgetType*, Args ...), Args ...>>(func_data->func));
 			};
 
 			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(signal), G_CALLBACK((void(*)(GtkWidget*, PassingDataByFunc*))callback), pass));
 		}
 
-		template <typename ... Args> long unsigned int SignalHandler(Signals signal, void(*func)(Args* ...), Args& ... args)
+		//template <typename ... Args> long unsigned int SignalHandler(Signals signal, void(*func)(Args* ...), Args& ... args)
+		//{
+		//	/*if (infiniteCallbackMethods == NULL)
+		//	{
+		//		infiniteCallbackMethods = new KeyValue::List<Signals, std::any>;
+		//		Storage::GetInstance().Add<const char*, KeyValue::List<Signals, std::any>*>("Instance", infiniteCallbackMethods, "mainlistsignals");
+		//	}
+
+		//	PassingDataSignals* pass = new PassingDataSignals
+		//	{
+		//		this, signal, t_widget
+		//	};
+		//	Storage::GetInstance().Add<const char*, void*>("Instance", pass, "passingdata");
+
+		//	if (!infiniteCallbackMethods->ExistsKey(signal))
+		//	{
+		//		auto temp = new Single::List<std::any>;
+		//		infiniteCallbackMethods->Insert(signal, temp);
+		//		Storage::GetInstance().Add<const char*, Single::List<std::any>*>("Instance", temp, "allcallbacks");
+		//		temp->Insert(std::make_tuple(func, &args...));
+		//	}
+		//	else
+		//	{
+		//		KeyValueData keyvaluedata = infiniteCallbackMethods->FindByKey(signal);
+		//		std::any_cast<Single::List<std::any>*>(keyvaluedata.value)->Insert(std::make_tuple(func, &args...));
+		//	}
+
+		//	auto callback = [](GtkWidget * widget, PassingDataSignals * d)
+		//	{
+		//		KeyValueData keyvaluedata = d->data->infiniteCallbackMethods->FindByKey(d->signal);
+
+		//		auto f = [](Single::Node<std::any> * node)
+		//		{
+		//			auto apply_f = [](void(*func)(Args * ...), Args * ... user_data)
+		//			{
+		//				func(user_data...);
+		//			};
+
+		//			std::apply(apply_f, std::any_cast<std::tuple<void(*)(Args * ...), Args * ...>>(node->data));
+		//		};
+
+		//		std::any_cast<Single::List<std::any>*>(keyvaluedata.value)->ForEach(f);
+		//	};*/
+
+		//	PassingDataByFunc* pass = new PassingDataByFunc
+		//	{
+		//		std::make_tuple(func, &args...), t_widget
+		//	};
+		//	DeleteOnQuit::GetInstance().Add(pass);
+
+		//	auto callback = [](GtkWidget* widget, PassingDataByFunc* func_data)
+		//	{
+		//		auto apply_f = [](void(*user_func)(Args* ...), Args* ... user_data)
+		//		{
+		//			user_func(user_data...);
+		//		};
+
+		//		std::apply(apply_f, std::any_cast<std::tuple<void(*)(Args* ...), Args* ...>>(func_data->func));
+		//	};
+
+		//	return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(signal), G_CALLBACK((void(*)(GtkWidget*, PassingDataByFunc*))callback), pass));
+		//}
+
+		template <typename ... Args>
+		long unsigned int SignalHandler(Signals signal, void(*func)(Args...), Args ... args)
 		{
-			/*if (infiniteCallbackMethods == NULL)
-			{
-				infiniteCallbackMethods = new KeyValue::List<Signals, std::any>;
-				Storage::GetInstance().Add<const char*, KeyValue::List<Signals, std::any>*>("Instance", infiniteCallbackMethods, "mainlistsignals");
-			}
-
-			PassingDataSignals* pass = new PassingDataSignals
-			{
-				this, signal, t_widget
-			};
-			Storage::GetInstance().Add<const char*, void*>("Instance", pass, "passingdata");
-
-			if (!infiniteCallbackMethods->ExistsKey(signal))
-			{
-				auto temp = new Single::List<std::any>;
-				infiniteCallbackMethods->Insert(signal, temp);
-				Storage::GetInstance().Add<const char*, Single::List<std::any>*>("Instance", temp, "allcallbacks");
-				temp->Insert(std::make_tuple(func, &args...));
-			}
-			else
-			{
-				KeyValueData keyvaluedata = infiniteCallbackMethods->FindByKey(signal);
-				std::any_cast<Single::List<std::any>*>(keyvaluedata.value)->Insert(std::make_tuple(func, &args...));
-			}
-
-			auto callback = [](GtkWidget * widget, PassingDataSignals * d)
-			{
-				KeyValueData keyvaluedata = d->data->infiniteCallbackMethods->FindByKey(d->signal);
-
-				auto f = [](Single::Node<std::any> * node)
-				{
-					auto apply_f = [](void(*func)(Args * ...), Args * ... user_data)
-					{
-						func(user_data...);
-					};
-
-					std::apply(apply_f, std::any_cast<std::tuple<void(*)(Args * ...), Args * ...>>(node->data));
-				};
-
-				std::any_cast<Single::List<std::any>*>(keyvaluedata.value)->ForEach(f);
-			};*/
-
 			PassingDataByFunc* pass = new PassingDataByFunc
 			{
-				std::make_tuple(func, &args...), t_widget
+				std::make_tuple(func, args...), t_widget
 			};
 			DeleteOnQuit::GetInstance().Add(pass);
 
 			auto callback = [](GtkWidget* widget, PassingDataByFunc* func_data)
 			{
-				auto apply_f = [](void(*user_func)(Args* ...), Args* ... user_data)
+				auto apply_f = [](void(*user_func)(Args ...), Args ... user_data)
 				{
 					user_func(user_data...);
 				};
 
-				std::apply(apply_f, std::any_cast<std::tuple<void(*)(Args* ...), Args* ...>>(func_data->func));
+				std::apply(apply_f, std::any_cast<std::tuple<void(*)(Args ...), Args ...>>(func_data->func));
 			};
 
 			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(signal), G_CALLBACK((void(*)(GtkWidget*, PassingDataByFunc*))callback), pass));
@@ -403,29 +447,29 @@ namespace CGui
 			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((void(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
 		}
 
-		template <typename ... Args> long unsigned int EventHandler(Events event, int(*func)(WidgetType*, Args*...), Args& ... args)
+		template <typename ... Args> long unsigned int EventHandler(Events event, int(*func)(WidgetType*, Args...), Args ... args)
 		{
 			PassingDataByFunc* pass = new PassingDataByFunc
 			{
-				std::make_tuple(func, &args...), t_widget
+				std::make_tuple(func, args...), t_widget
 			};
 			DeleteOnQuit::GetInstance().Add(pass);
 
 			auto callback = [](GtkWidget* widget, GdkEvent* user_event, PassingDataByFunc* func_data) -> gint
 			{
-				auto apply_f = [&func_data](int(*user_func)(WidgetType*, Args* ...), Args* ... user_data)
+				auto apply_f = [&func_data](int(*user_func)(WidgetType*, Args ...), Args ... user_data)
 				{
 					return user_func(func_data->ins, user_data...);
 				};
 
-				return std::apply(apply_f, std::any_cast<std::tuple<int(*)(WidgetType*, Args* ...), Args* ...>>(func_data->func));
+				return std::apply(apply_f, std::any_cast<std::tuple<int(*)(WidgetType, Args ...), Args ...>>(func_data->func));
 			};
 
 			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((gint(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
 
 		}
 
-		template <typename ... Args> long unsigned int EventHandler(Events event, void(*func)(WidgetType*, Args* ...), Args& ... args)
+		template <typename ... Args> long unsigned int EventHandler(Events event, void(*func)(WidgetType*, Args ...), Args ... args)
 		{
 			/*if (infiniteEventsCallbacks == NULL)
 			{
@@ -471,46 +515,46 @@ namespace CGui
 
 			PassingDataByFunc* pass = new PassingDataByFunc
 			{
-				std::make_tuple(func, &args...), t_widget
+				std::make_tuple(func, args...), t_widget
 			};
 			DeleteOnQuit::GetInstance().Add(pass);
 
 			auto callback = [](GtkWidget* widget, GdkEvent* user_event, PassingDataByFunc* func_data)
 			{
-				auto apply_f = [&func_data](void(*user_func)(WidgetType*, Args* ...), Args* ... user_data)
+				auto apply_f = [&func_data](void(*user_func)(WidgetType*, Args ...), Args ... user_data)
 				{
 					user_func(func_data->ins, user_data...);
 				};
 
-				std::apply(apply_f, std::any_cast<std::tuple<void(*)(WidgetType*, Args* ...), Args* ...>>(func_data->func));
+				std::apply(apply_f, std::any_cast<std::tuple<void(*)(WidgetType*, Args ...), Args ...>>(func_data->func));
 			};
 
 			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((void(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
 		}
 
-		template <typename ... Args> long unsigned int EventHandler(Events event, int(*func)(Args*...), Args& ... args)
+		template <typename ... Args> long unsigned int EventHandler(Events event, int(*func)(Args...), Args ... args)
 		{
 			PassingDataByFunc* pass = new PassingDataByFunc
 			{
-				std::make_tuple(func, &args...), t_widget
+				std::make_tuple(func, args...), t_widget
 			};
 			DeleteOnQuit::GetInstance().Add(pass);
 
 			auto callback = [](GtkWidget* widget, GdkEvent* user_event, PassingDataByFunc* func_data) -> gint
 			{
-				auto apply_f = [](int(*user_func)(Args* ...), Args* ... user_data)
+				auto apply_f = [](int(*user_func)(Args ...), Args ... user_data)
 				{
 					return user_func(user_data...);
 				};
 
-				return std::apply(apply_f, std::any_cast<std::tuple<int(*)(Args* ...), Args* ...>>(func_data->func));
+				return std::apply(apply_f, std::any_cast<std::tuple<int(*)(Args ...), Args ...>>(func_data->func));
 			};
 
 			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((gint(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
 
 		}
 
-		template <typename ... Args> long unsigned int EventHandler(Events event, void(*func)(Args* ...), Args& ... args)
+		template <typename ... Args> long unsigned int EventHandler(Events event, void(*func)(Args ...), Args ... args)
 		{
 			/*if (infiniteEventsCallbacks == NULL)
 			{
@@ -556,18 +600,18 @@ namespace CGui
 
 			PassingDataByFunc* pass = new PassingDataByFunc
 			{
-				std::make_tuple(func, &args...), t_widget
+				std::make_tuple(func, args...), t_widget
 			};
 			DeleteOnQuit::GetInstance().Add(pass);
 
 			auto callback = [](GtkWidget* widget, GdkEvent* user_event, PassingDataByFunc* func_data)
 			{
-				auto apply_f = [](void(*user_func)(Args* ...), Args* ... user_data)
+				auto apply_f = [](void(*user_func)(Args ...), Args ... user_data)
 				{
 					user_func(user_data...);
 				};
 
-				std::apply(apply_f, std::any_cast<std::tuple<void(*)(Args* ...), Args* ...>>(func_data->func));
+				std::apply(apply_f, std::any_cast<std::tuple<void(*)(Args ...), Args ...>>(func_data->func));
 			};
 
 			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((void(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));

@@ -12,9 +12,9 @@ namespace CGui
 		RadioButton(GtkRadioButton* radiobutton);
 		RadioButton(Single::List<RadioButton>& group);
 		RadioButton(RadioButton& radiobutton);
-		RadioButton(Single::List<RadioButton>& group, const char* label);
-		RadioButton(const char* label);
-		RadioButton(RadioButton& radiobutton, const char* label);
+		RadioButton(Single::List<RadioButton>& group, const char* label, bool mnemonic = false);
+		RadioButton(const char* label, bool mnemonic = false);
+		RadioButton(RadioButton& radiobutton, const char* label, bool mnemonic = false);
 		~RadioButton();
 		void Group(Single::List<RadioButton>& group);
 		Single::List<RadioButton*> Group();

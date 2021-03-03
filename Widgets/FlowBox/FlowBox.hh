@@ -25,6 +25,7 @@ namespace CGui
 		FlowBox();
 		FlowBox(GtkFlowBox* flow_box);
 		void Insert(Widget& child, int position);
+		void Append(Widget& child);
 		FlowBox::Child ChildAtIndex(int index);
 		FlowBox::Child ChildAtPos(int x, int y);
 		void HAdjustment(Adjustment adjustment);

@@ -51,6 +51,11 @@ namespace CGui
 		gtk_flow_box_insert(GTK_FLOW_BOX(widget), child.GetWidget(), position);
 	}
 
+	void FlowBox::Append(Widget& child)
+	{
+		this->Insert(child, -1);
+	}
+
 	FlowBox::Child FlowBox::ChildAtIndex(int index)
 	{
 		return FlowBox::Child(gtk_flow_box_get_child_at_index(GTK_FLOW_BOX(widget), index));

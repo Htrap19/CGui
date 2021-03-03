@@ -70,7 +70,7 @@ namespace CGui
 
 	enum class Justification { LEFT, RIGHT, CENTER, FILL };
 	enum class EllipsizeMode { NONE, START, MIDDLE, END };
-	enum class WrapMode { WORD, CHAR, WORD_CHAR };
+	enum class WrapMode { NONE, WORD, CHAR, WORD_CHAR };
 
 	enum class CornerType { TOP_LEFT, BOTTOM_LEFT, TOP_RIGHT, BOTTOM_RIGHT };
 	enum class ShadowType { NONE, IN, OUT, ETCHED_IN, ETCHED_OUT };
@@ -159,7 +159,7 @@ namespace CGui
 
 	enum class StackTransitionType { NONE, CROSSFADE, SLIDE_RIGHT, SLIDE_LEFT, SLIDE_UP, SLIDE_DOWN, SLIDE_LEFT_RIGHT, SLIDE_UP_DOWN, OVER_UP, OVER_DOWN, OVER_LEFT, OVER_RIGHT, UNDER_UP, UNDER_DOWN, UNDER_LEFT, UNDER_RIGHT, OVER_UP_DOWN, OVER_DOWM_UP, OVER_LEFT_RIGHT, OVER_RIGHT_LEFT };
 
-	struct LabelAlignData
+	struct AlignData
 	{
 		float xalign, yalign;
 	};
@@ -229,7 +229,155 @@ namespace CGui
 		int* depth;
 	};
 
-	enum class TreeModalFlags { ITERS_PERSIST = 1 << 0, LIST_ONLY = 1 << 1 };
+	enum class TreeModelFlags { ITERS_PERSIST = 1 << 0, LIST_ONLY = 1 << 1 };
+
+	enum class AccelFlags { VISIBLE = 1 << 0, LOCKED = 1 << 1, MASK = 0x07 };
+
+	enum class ModifierType { SHIFT_MASK = 1 << 0, LOCK_MASK = 1 << 1, CONTROL_MASK = 1 << 2, MOD1_MASK = 1 << 3, MOD2_MASK = 1 << 4, MOD3_MASK = 1 << 5, MOD4_MASK = 1 << 6, MOD5_MASK = 1 << 7, BUTTON1_MASK = 1 << 8, BUTTON2_MASK = 1 << 9, BUTTON3_MASK = 1 << 10, BUTTON4_MASK = 1 << 11, BUTTON5_MASK = 1 << 12, MODIFIER_RESERVED_13_MASK = 1 << 13, MODIFIER_RESERVED_14_MASK = 1 << 14, MODIFIER_RESERVED_15_MASK = 1 << 15, MODIFIER_RESERVED_16_MASK = 1 << 16, MODIFIER_RESERVED_17_MASK = 1 << 17, MODIFIER_RESERVED_18_MASK = 1 << 18, MODIFIER_RESERVED_19_MASK = 1 << 19, MODIFIER_RESERVED_20_MASK = 1 << 20, MODIFIER_RESERVED_21_MASK = 1 << 21, MODIFIER_RESERVED_22_MASK = 1 << 22, MODIFIER_RESERVED_23_MASK = 1 << 23, MODIFIER_RESERVED_24_MASK = 1 << 24, MODIFIER_RESERVED_25_MASK = 1 << 25, SUPER_MASK = 1 << 26, HYPER_MASK = 1 << 27, META_MASK = 1 << 28, MODIFIER_RESERVED_29_MASK = 1 << 29, RELEASE_MASK = 1 << 30, MODIFIER_MASK = 0x5c001fff };
+
+	struct AcceleratorParseData
+	{
+		unsigned int accelerator_key;
+		ModifierType accelerator_mods;
+	};
+
+	struct AcceleratorParseWithKeyCode
+	{
+		unsigned int accelerator_key;
+		unsigned int* accelerator_codes;
+		ModifierType accelerator_mods;
+	};
+
+	struct Rectangle
+	{
+		CoordinatesInfo coord_info;
+		Requisition requisition;
+	};
+
+	enum class TextWindowType { PRVIATE, WIDGET, TEXT, LEFT, RIGHT, TOP, BOTTOM };
+
+	struct PointingToData
+	{
+		bool was_set;
+		Rectangle rect;
+	};
+
+	enum class PopoverConstraint { NONE, WINDOW };
+
+	enum class Type : GType { INVALID = G_TYPE_INVALID, NONE = G_TYPE_NONE, INTERFACE = G_TYPE_INTERFACE, CHAR = G_TYPE_CHAR, UCHAR = G_TYPE_UCHAR, BOOLEAN = G_TYPE_BOOLEAN, INT = G_TYPE_INT, UINT = G_TYPE_UINT, LONG = G_TYPE_LONG, ULONG = G_TYPE_ULONG, INT64 = G_TYPE_INT64, UINT64 = G_TYPE_UINT64, ENUM = G_TYPE_ENUM, FLAGS = G_TYPE_FLAGS, FLOAT = G_TYPE_FLOAT, DOUBLE = G_TYPE_DOUBLE, STRING = G_TYPE_STRING, POINTER = G_TYPE_POINTER, BOXED = G_TYPE_BOXED, PARAM = G_TYPE_PARAM, OBJECT = G_TYPE_OBJECT, VARIANT = G_TYPE_VARIANT };
+
+	enum class CellRendererState { SELECTED = 1 << 0, PRELIT = 1 << 1, INSENSITIVE = 1 << 2, SORTED = 1 << 3, FOCUSED = 1 << 4, EXPANDABLE = 1 << 5, EXPANDED = 1 << 6 };
+
+	struct PaddingData
+	{
+		int xpad;
+		int ypad;
+	};
+
+	enum class TreeViewColumnSizing { GROW_ONLY, AUTOSIZE, FIXED };
+
+	enum class SortType { ASCENDING, DESCENDING };
+
+	struct CellPositionData
+	{
+		int x_offset, width;
+		bool belongs_to;
+	};
+
+	enum class TreeViewDropPosition { DROP_BEFORE, DROP_AFTER, DROP_INTO_OR_BEFORE, DROP_INTO_OR_AFTER };
+
+	enum class TreeViewGridLines { NONE, HORIZONTAL, VERTICAL, BOTH };
+
+	enum class CellRenderersTypes { TEXT };
+
+	class Value
+	{
+	public:
+		static bool type_compatible(Type src_type, Type dest_type)
+		{
+			return g_value_type_compatible((GType)src_type, (GType)dest_type);
+		}
+
+		static bool type_transformable(Type src_type, Type dest_type)
+		{
+			return g_value_type_transformable((GType)src_type, (GType)dest_type);
+		}
+
+		static bool transform(Value src_value, Value dest_value)
+		{
+			return g_value_transform(src_value.GetGValue(), dest_value.GetGValue());
+		}
+
+		Value(const Value& src)
+		{
+			g_value_copy(const_cast<Value&>(src).GetGValue(), ins);
+		}
+
+		Value(const Value&& src) noexcept
+		{
+			auto src_object = const_cast<Value&&>(src).GetGValue();
+			this->ins = src_object;
+			src_object = nullptr;
+		}
+
+		Value(GValue* value)
+		{
+			this->ins = value;
+		}
+
+		Value(Type type)
+		{
+			this->ins = g_value_init(ins, (GType)type);
+		}
+
+		Value(void* instance)
+		{
+			g_value_init_from_instance(ins, instance);
+		}
+
+		~Value()
+		{
+			this->unset();
+		}
+
+		void reset()
+		{
+			this->ins = g_value_reset(ins);
+		}
+
+		void unset()
+		{
+			g_value_unset(ins);
+		}
+
+		void instance(void* instance)
+		{
+			g_value_set_instance(ins, instance);
+		}
+
+		bool fits_pointer(const Value& value)
+		{
+			return g_value_fits_pointer(const_cast<Value&>(value).GetGValue());
+		}
+
+		bool peek_pointer(const Value& value)
+		{
+			return g_value_peek_pointer(const_cast<Value&>(value).GetGValue());
+		}
+
+		GValue* GetGValue()
+		{
+			return ins;
+		}
+
+		const char* strdup_value_contents()
+		{
+			return g_strdup_value_contents(ins);
+		}
+
+	private:
+		GValue* ins;
+	};
 
 	namespace Converter
 	{
@@ -260,9 +408,34 @@ namespace CGui
 				return retValue;
 			}*/
 
+			GdkRectangle ConvertFromRectangle(Rectangle rect)
+			{
+				GdkRectangle retValue;
+				retValue.x = rect.coord_info.x;
+				retValue.y = rect.coord_info.y;
+				retValue.width = rect.requisition.width;
+				retValue.height = rect.requisition.height;
+
+				return retValue;
+			}
+
 			static const char* RetName(const char* name)
 			{
 				return name;
+			}
+
+			const char* GetGtkCode(CellRenderersTypes type)
+			{
+				switch (type)
+				{
+				case CGui::CellRenderersTypes::TEXT:
+					return "text";
+					break;
+
+				default:
+					return "text";
+					break;
+				}
 			}
 
 			const char* GetGtkCode(Signals signals)

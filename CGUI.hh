@@ -1,6 +1,19 @@
 #pragma once
 
+/*
+	GTK+
+*/
+
 #include <gtk/gtk.h>
+
+/*
+	Cell
+*/
+#include "./Cell/CellRenderer/CellRenderer.hh"
+#include "./Cell/CellRenderer/CellRendererText/CellRendererText.hh"
+#include "./Cell/CellRenderer/CellRendererAccel/CellRendererAccel.hh"
+#include "./Cell/CellRenderer/CellRendererCombo/CellRendererCombo.hh"
+#include "./Cell/CellRenderer/CellRendererSpin/CellRendererSpin.hh"
 
 /*
 	Convert(er)
@@ -20,7 +33,7 @@
 #include "./Widgets/Scrollable.hh"
 #include "./Widgets/StyleContext.hh"
 #include "./Widgets/ToolShell.hh"
-#include "./Widgets/TreeModal.hh"
+#include "./Widgets/TreeModel.hh"
 #include "./Widgets/Widget.hh"
 #include "./Widgets/WidgetCast.hh"
 #include "./Widgets/FileChooser.hh"
@@ -63,6 +76,8 @@
 #include "./Widgets/Notebook/Notebook.hh"
 #include "./Widgets/Overlay/Overlay.hh"
 #include "./Widgets/Paned/Paned.hh"
+#include "./Widgets/Popover/Popover.hh"
+#include "./Widgets/PopoverMenu/PopoverMenu.hh"
 #include "./Widgets/Progressbar/Progressbar.hh"
 #include "./Widgets/RadioButton/RadioButton.hh"
 #include "./Widgets/Range/Range.hh"
@@ -81,11 +96,18 @@
 #include "./Widgets/Stack/StackSwitcher/StackSwitcher.hh"
 #include "./Widgets/Statusbar/Statusbar.hh"
 #include "./Widgets/Switch/Switch.hh"
+#include "./Widgets/TextView/TextView.hh"
+#include "./Widgets/TextView/TextBuffer/TextBuffer.hh"
+#include "./Widgets/TextView/TextMark/TextMark.hh"
 #include "./Widgets/ToggleButton/ToggleButton.hh"
 #include "./Widgets/Toolbar/Toolbar.hh"
 #include "./Widgets/ToolItem/ToolItem.hh"
 #include "./Widgets/ToolItemGroup/ToolItemGroup.hh"
 #include "./Widgets/ToolPalette/ToolPalette.hh"
+#include "./Widgets/TreeView/TreeView.hh"
+#include "./Widgets/TreeView/ListStore/ListStore.hh"
+#include "./Widgets/TreeView/TreeSelection/TreeSelection.hh"
+#include "./Widgets/TreeView/TreeViewColumn/TreeViewColumn.hh"
 #include "./Widgets/VolumeButton/VolumeButton.hh"
 #include "./Widgets/Window/Window.hh"
 
@@ -99,6 +121,7 @@
 	Custom
 */
 
+#include "./Custom/Array/Array.hh"
 #include "./Custom/DeleteOnQuit/DeleteOnQuit.hh"
 #include "./Custom/Initialize/Initialize.hh"
 #include "./Custom/List/List.hh"
@@ -115,3 +138,4 @@
 
 #include "./Misc/Adjustment/Adjustment.hh"
 #include "./Misc/SizeGroup/SizeGroup.hh"
+#include "./Misc/AccelGroup/AccelGroup.hh"

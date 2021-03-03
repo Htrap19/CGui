@@ -10,9 +10,12 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
-	CheckButton::CheckButton(const char* text) : Handler<CheckButton>::Handler(this), Handler<ToggleButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this)
+	CheckButton::CheckButton(const char* text, bool mnemonic) : Handler<CheckButton>::Handler(this), Handler<ToggleButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this)
 	{
-		widget = gtk_check_button_new_with_label(text);
+		if (mnemonic)
+			widget = gtk_check_button_new_with_mnemonic(text);
+		else
+			widget = gtk_check_button_new_with_label(text);
 		this->SetContext(widget);
 	}
 

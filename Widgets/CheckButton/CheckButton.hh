@@ -9,7 +9,7 @@ namespace CGui
 	{
 	public:
 		CheckButton();
-		CheckButton(const char* text);
+		CheckButton(const char* text, bool mnemonic = false);
 		CheckButton(GtkCheckButton* checkbutton);
 		long unsigned int Toggled(void(*func)());
 		long unsigned int Toggled(void(*func)(CheckButton*));

@@ -34,6 +34,8 @@
 #include "Notebook/Notebook.hh"
 #include "Overlay/Overlay.hh"
 #include "Paned/Paned.hh"
+#include "Popover/Popover.hh"
+#include "PopoverMenu/PopoverMenu.hh"
 #include "Progressbar/Progressbar.hh"
 #include "RadioButton/RadioButton.hh"
 #include "Range/Range.hh"
@@ -52,11 +54,13 @@
 #include "Stack/StackSwitcher/StackSwitcher.hh"
 #include "Statusbar/Statusbar.hh"
 #include "Switch/Switch.hh"
+#include "TextView/TextView.hh"
 #include "ToggleButton/ToggleButton.hh"
 #include "Toolbar/Toolbar.hh"
 #include "ToolItem/ToolItem.hh"
 #include "ToolItemGroup/ToolItemGroup.hh"
 #include "ToolPalette/ToolPalette.hh"
+#include "TreeView/TreeView.hh"
 #include "VolumeButton/VolumeButton.hh"
 #include "Window/Window.hh"
 
@@ -171,6 +175,12 @@ namespace CGui
 		static Paned Cast<Paned>(const CGui::Widget& widget);
 
 		template <>
+		static Popover Cast<Popover>(const CGui::Widget& widget);
+
+		template <>
+		static PopoverMenu Cast<PopoverMenu>(const CGui::Widget& widget);
+
+		template <>
 		static Progressbar Cast<Progressbar>(const CGui::Widget& widget);
 
 		template <>
@@ -225,6 +235,9 @@ namespace CGui
 		static Switch Cast<Switch>(const CGui::Widget& widget);
 
 		template <>
+		static TextView Cast<TextView>(const CGui::Widget& widget);
+
+		template <>
 		static ToggleButton Cast<ToggleButton>(const CGui::Widget& widget);
 
 		template <>
@@ -238,6 +251,9 @@ namespace CGui
 
 		template <>
 		static ToolPalette Cast<ToolPalette>(const CGui::Widget& widget);
+
+		template <>
+		static TreeView Cast<TreeView>(const CGui::Widget& widget);
 
 		template <>
 		static VolumeButton Cast<VolumeButton>(const CGui::Widget& widget);
@@ -445,6 +461,18 @@ namespace CGui
 	}
 
 	template<>
+	inline Popover WidgetCast::Cast(const CGui::Widget& widget)
+	{
+		return Popover(GTK_POPOVER(widget.GetWidget()));
+	}
+
+	template<>
+	inline PopoverMenu WidgetCast::Cast(const CGui::Widget& widget)
+	{
+		return PopoverMenu(GTK_POPOVER_MENU(widget.GetWidget()));
+	}
+
+	template<>
 	inline Progressbar WidgetCast::Cast(const CGui::Widget& widget)
 	{
 		return Progressbar(GTK_PROGRESS_BAR(widget.GetWidget()));
@@ -553,6 +581,12 @@ namespace CGui
 	}
 
 	template<>
+	inline TextView WidgetCast::Cast(const CGui::Widget& widget)
+	{
+		return TextView(GTK_TEXT_VIEW(widget.GetWidget()));
+	}
+
+	template<>
 	inline ToggleButton WidgetCast::Cast(const CGui::Widget& widget)
 	{
 		return ToggleButton(GTK_TOGGLE_BUTTON(widget.GetWidget()));
@@ -580,6 +614,12 @@ namespace CGui
 	inline ToolPalette WidgetCast::Cast(const CGui::Widget& widget)
 	{
 		return ToolPalette(GTK_TOOL_PALETTE(widget.GetWidget()));
+	}
+
+	template<>
+	inline TreeView WidgetCast::Cast(const CGui::Widget& widget)
+	{
+		return TreeView(GTK_TREE_VIEW(widget.GetWidget()));
 	}
 
 	template<>

@@ -10,7 +10,7 @@ namespace CGui
 	public:
 		ToggleButton();
 		ToggleButton(GtkToggleButton* toggle_button);
-		ToggleButton(const char* label);
+		ToggleButton(const char* label, bool mnemonic = false);
 		void Mode(bool draw_indicator);
 		bool Mode();
 		void Toggled();

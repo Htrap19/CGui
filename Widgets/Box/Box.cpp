@@ -39,12 +39,12 @@ namespace CGui
 		return gtk_box_get_homogeneous(GTK_BOX(widget));
 	}
 
-	void Box::Spacing(bool spacing)
+	void Box::Spacing(int spacing)
 	{
 		gtk_box_set_spacing(GTK_BOX(widget), spacing);
 	}
 
-	bool Box::Spacing()
+	int Box::Spacing()
 	{
 		return gtk_box_get_spacing(GTK_BOX(widget));
 	}

@@ -162,9 +162,9 @@ namespace CGui
 			return gtk_widget_get_scale_factor(GTK_WIDGET(widget));
 		}
 
-		virtual void IsFocus() const 
+		virtual bool IsFocus() const 
 		{
-			gtk_widget_is_focus(GTK_WIDGET(widget));
+			return gtk_widget_is_focus(GTK_WIDGET(widget));
 		}
 
 		virtual void GrabFocus() const
@@ -284,6 +284,7 @@ namespace CGui
 				ret.Insert(Widget(GTK_WIDGET(it->data)));
 			}
 
+			g_list_free(g_list);
 			return ret;
 		}
 

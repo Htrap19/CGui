@@ -1,0 +1,65 @@
+#pragma once
+
+#include <vector>
+#include "../../../Converter/Convert.hh"
+#include "../../TreeModel.hh"
+#include "../../../Custom/List/List.hh"
+
+namespace CGui
+{
+	class ListStore : public virtual TreeModel
+	{
+	public:
+		ListStore(Type types[], int n_columns);
+		ListStore(std::vector<Type> types);
+		void ColumnTypes(Type types[], int n_columns);
+		bool Remove(TreeIter& iter);
+		template <typename N> // Only for determination of missing value args
+		void Set(TreeModel::TreeIter& iter, N column);
+		template <typename N, typename value>
+		void Set(TreeModel::TreeIter& iter, N column, value data);
+		template <typename N, typename value, typename ... RS>
+		void Set(TreeModel::TreeIter& iter, N column, value data, RS ... rest);
+		TreeModel::TreeIter Insert(int position);
+		TreeModel::TreeIter InsertBefore(TreeIter& sibling);
+		TreeModel::TreeIter InsertAfter(TreeIter& sibling);
+		TreeModel::TreeIter Append();
+		TreeModel::TreeIter Prepend();
+		void Clear();
+		bool IterIsValid(TreeIter& iter);
+		void Reorder(int new_order[]);
+		void Swap(TreeIter& a, TreeIter& b);
+		void MoveAfter(TreeIter& iter, TreeIter& position);
+		void MoveBefore(TreeIter& iter, TreeIter& position);
+
+		GtkListStore* GetWidget();
+
+		bool IsListStore();
+
+	protected:
+		ListStore() = default;
+		GtkListStore* store;
+	};
+
+	template <typename N>
+	// Only for determination of missing value args
+	void CGui::ListStore::Set(TreeModel::TreeIter& iter, N column)
+	{
+		static_assert(false, "[Setter]: Missing value parameter!");
+	}
+
+	template <typename N, typename value>
+	void CGui::ListStore::Set(TreeModel::TreeIter& iter, N column, value data)
+	{
+		static_assert(std::is_same_v<int, N>, "[Setter]: Unknown type of indexing column.");
+
+		gtk_list_store_set(store, iter.GetWidget(), column, data, -1);
+	}
+
+	template <typename N, typename value, typename ... RS>
+	void CGui::ListStore::Set(TreeModel::TreeIter& iter, N column, value data, RS ... rest)
+	{
+		Set(iter, column, data);
+		Set(iter, rest...);
+	}
+}

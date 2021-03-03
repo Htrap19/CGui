@@ -17,9 +17,12 @@ namespace CGui
 		this->SetToggleButton(toggle_button);
 	}
 
-	ToggleButton::ToggleButton(const char* label) : Handler<ToggleButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this)
+	ToggleButton::ToggleButton(const char* label, bool mnemonic) : Handler<ToggleButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this)
 	{
-		widget = gtk_toggle_button_new_with_label(label);
+		if (mnemonic)
+			widget = gtk_toggle_button_new_with_mnemonic(label);
+		else
+			widget = gtk_toggle_button_new_with_label(label);
 		this->SetContext(widget);
 	}
 

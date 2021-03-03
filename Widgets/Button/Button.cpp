@@ -8,9 +8,12 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
-	Button::Button(const char* text) : Handler(this), Container(this)
+	Button::Button(const char* text, bool mnemonic) : Handler(this), Container(this)
 	{
-		widget = gtk_button_new_with_label(text);
+		if (mnemonic)
+			widget = gtk_button_new_with_mnemonic(text);
+		else
+			widget = gtk_button_new_with_label(text);
 		this->SetContext(widget);
 	}
 
@@ -63,6 +66,12 @@ namespace CGui
 	CGui::Image Button::Image()
 	{
 		return CGui::Image(GTK_IMAGE(gtk_button_get_image(GTK_BUTTON(widget))));
+	}
+
+	void Button::Image(CGui::Pixbuf& pixbuf)
+	{
+		CGui::Image temp_image(pixbuf);
+		this->Image(temp_image);
 	}
 
 	void Button::ImagePosition(PositionType position)

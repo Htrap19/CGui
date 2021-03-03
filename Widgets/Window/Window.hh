@@ -4,6 +4,7 @@
 #include "../Container.hh"
 #include "../Headerbar/Headerbar.hh"
 #include "../../Pixbuf/Pixbuf/Pixbuf.hh"
+#include "../../Misc/AccelGroup/AccelGroup.hh"
 
 namespace CGui
 {
@@ -19,6 +20,8 @@ namespace CGui
 		CGui::Headerbar Headerbar();
 		void Resizable(bool resizable);
 		bool Resizable();
+		void AddAccelGroup(AccelGroup group);
+		void RemoveAccelGroup(AccelGroup group);
 		void Title(const char* title);
 		const char* Title();
 		void Maximize();

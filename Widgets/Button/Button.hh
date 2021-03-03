@@ -11,7 +11,7 @@ namespace CGui
 	{
 	public:
 		Button();
-		Button(const char* text);
+		Button(const char* text, bool mnemonic = false);
 		Button(GtkButton* button);
 		void Text(const char* text);
 		const char* Text();
@@ -21,6 +21,7 @@ namespace CGui
 		void UseUnderline(bool use_underline);
 		bool UseUnderline();
 		void Image(CGui::Image& image);
+		void Image(CGui::Pixbuf& pixbuf);
 		CGui::Image Image();
 		void ImagePosition(PositionType position);
 		PositionType ImagePosition();

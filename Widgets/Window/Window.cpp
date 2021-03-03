@@ -8,10 +8,10 @@ namespace CGui
 	Window::Window(WindowType type, const char* title, WindowPos pos, bool initialize) : Container(this), error{ NULL }
 	{
 		widget = gtk_window_new((GtkWindowType)type);
-		Window::m_ref_count++;
 
 		if (initialize)
 		{
+			Window::m_ref_count++;
 			auto exit = [](GtkWidget* widget, Window* ins) -> void
 			{
 				if (Window::m_ref_count <= 1)
@@ -20,11 +20,16 @@ namespace CGui
 				}
 				else
 				{
-					ins->Close();
-					Window::m_ref_count--;
+					ins->Destroy();
 				}
 			};
 			g_signal_connect(G_OBJECT(widget), Converter::Convert::GetInstance().GetGtkCode(Events::DELETE), G_CALLBACK((void(*)(GtkWidget*, Window*))exit), this);
+
+			auto destroy_callback = [](GtkWidget* widget, gpointer data) -> void
+			{
+				Window::m_ref_count--;
+			};
+			g_signal_connect(G_OBJECT(widget), Converter::Convert::GetInstance().GetGtkCode(Signals::DESTROY), G_CALLBACK((void(*)(GtkWidget*, gpointer))destroy_callback), NULL);
 		}
 
 		this->Title(title);
@@ -73,6 +78,16 @@ namespace CGui
 	bool Window::Resizable()
 	{
 		return gtk_window_get_resizable(GTK_WINDOW(widget));
+	}
+
+	void Window::AddAccelGroup(AccelGroup group)
+	{
+		gtk_window_add_accel_group(GTK_WINDOW(widget), group.GetWidget());
+	}
+
+	void Window::RemoveAccelGroup(AccelGroup group)
+	{
+		gtk_window_remove_accel_group(GTK_WINDOW(widget), group.GetWidget());
 	}
 
 	void Window::Title(const char* title)

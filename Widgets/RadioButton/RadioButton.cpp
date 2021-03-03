@@ -36,7 +36,7 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
-	RadioButton::RadioButton(Single::List<RadioButton>& group, const char* label) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
+	RadioButton::RadioButton(Single::List<RadioButton>& group, const char* label, bool mnemonic) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
 	{
 		GSList* g = NULL;
 
@@ -46,21 +46,30 @@ namespace CGui
 			g = g->next;
 		}
 
-		widget = gtk_radio_button_new_with_label(g, label);
+		if (mnemonic)
+			widget = gtk_radio_button_new_with_mnemonic(g, label);
+		else
+			widget = gtk_radio_button_new_with_label(g, label);
 		this->SetContext(widget);
 
 		g_slist_free(g);
 	}
 
-	RadioButton::RadioButton(const char* label) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
+	RadioButton::RadioButton(const char* label, bool mnemonic) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
 	{
-		widget = gtk_radio_button_new_with_label(NULL, label);
+		if (mnemonic)
+			widget = gtk_radio_button_new_with_mnemonic(NULL, label);
+		else
+			widget = gtk_radio_button_new_with_label(NULL, label);
 		this->SetContext(widget);
 	}
 
-	RadioButton::RadioButton(RadioButton& radiobutton, const char* label) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
+	RadioButton::RadioButton(RadioButton& radiobutton, const char* label, bool mnemonic) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
 	{
-		widget = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radiobutton.GetWidget()), label);
+		if (mnemonic)
+			widget = gtk_radio_button_new_with_mnemonic_from_widget(GTK_RADIO_BUTTON(radiobutton.GetWidget()), label);
+		else
+			widget = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radiobutton.GetWidget()), label);
 		this->SetContext(widget);
 	}
 

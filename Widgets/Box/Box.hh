@@ -16,8 +16,8 @@ namespace CGui
 		void AddEnd(Widget& w, bool expand = false, bool fill = false, unsigned int padding = 0);
 		void Homogeneous(bool homogeneous);
 		bool Homogeneous();
-		void Spacing(bool spacing);
-		bool Spacing();
+		void Spacing(int spacing);
+		int Spacing();
 		void ReorderChild(Widget& w, int position);
 		void ChildPacking(Widget& w, PackType type, bool expand = false, bool fill = false, unsigned int padding = 0);
 		ChildPackingInfo QueryChildPacking(Widget& w);

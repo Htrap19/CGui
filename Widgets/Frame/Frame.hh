@@ -15,7 +15,7 @@ namespace CGui
 		void LabelWidget(Widget& label);
 		Widget LabelWidget();
 		void LabelAlign(float xalign, float yalign);
-		LabelAlignData LabelAlign();
+		AlignData LabelAlign();
 		void Shadow(ShadowType type);
 		ShadowType Shadow();
 		bool IsFrame();

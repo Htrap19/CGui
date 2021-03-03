@@ -2,7 +2,7 @@
 
 #include "../Widget.hh"
 #include "../Container.hh"
-#include "../TreeModal.hh"
+#include "../TreeModel.hh"
 
 namespace CGui
 {
@@ -10,7 +10,7 @@ namespace CGui
 	{
 	public:
 		ComboBox(bool with_entry = false);
-		ComboBox(TreeModal& tree_modal);
+		ComboBox(TreeModel& tree_modal);
 		ComboBox(GtkComboBox* combobox);
 		void WrapWidth(int width);
 		int WropWidth();
@@ -20,14 +20,14 @@ namespace CGui
 		int ColumnSpanColumn();
 		void Active(int index);
 		int Active();
-		void ActiveIter(TreeModal::TreeIter& iter);
-		bool ActiveIterG(TreeModal::TreeIter& iter);
+		void ActiveIter(TreeModel::TreeIter& iter);
+		bool ActiveIterG(TreeModel::TreeIter& iter);
 		void IdColumn(int id);
 		int IdColumn();
 		bool ActiveId(const char* active_id);
 		const char* ActiveId();
-		void Modal(TreeModal& modal);
-		TreeModal Modal();
+		void Modal(TreeModel& modal);
+		TreeModel Modal();
 		void PopUp();
 		void PopDown();
 		void ButtonSensitivity(SensitivityType type);

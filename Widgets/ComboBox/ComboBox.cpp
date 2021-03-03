@@ -11,7 +11,7 @@ namespace CGui
 		this->SetContext(widget);
 	}
 
-	ComboBox::ComboBox(TreeModal& tree_modal) : Container(this)
+	ComboBox::ComboBox(TreeModel& tree_modal) : Container(this)
 	{
 		widget = gtk_combo_box_new_with_model(tree_modal.GetWidget());
 		this->SetContext(widget);
@@ -62,12 +62,12 @@ namespace CGui
 		return gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
 	}
 
-	void ComboBox::ActiveIter(TreeModal::TreeIter& iter)
+	void ComboBox::ActiveIter(TreeModel::TreeIter& iter)
 	{
 		gtk_combo_box_set_active_iter(GTK_COMBO_BOX(widget), iter.GetWidget());
 	}
 
-	bool ComboBox::ActiveIterG(TreeModal::TreeIter& iter)
+	bool ComboBox::ActiveIterG(TreeModel::TreeIter& iter)
 	{
 		return gtk_combo_box_get_active_iter(GTK_COMBO_BOX(widget), iter.GetWidget());
 	}
@@ -92,14 +92,14 @@ namespace CGui
 		return gtk_combo_box_get_active_id(GTK_COMBO_BOX(widget));
 	}
 
-	void ComboBox::Modal(TreeModal& modal)
+	void ComboBox::Modal(TreeModel& modal)
 	{
 		gtk_combo_box_set_model(GTK_COMBO_BOX(widget), modal.GetWidget());
 	}
 
-	TreeModal ComboBox::Modal()
+	TreeModel ComboBox::Modal()
 	{
-		return TreeModal(gtk_combo_box_get_model(GTK_COMBO_BOX(widget)));
+		return TreeModel(gtk_combo_box_get_model(GTK_COMBO_BOX(widget)));
 	}
 
 	void ComboBox::PopUp()

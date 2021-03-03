@@ -38,7 +38,7 @@ namespace CGui
 		gtk_frame_set_label_align(GTK_FRAME(widget), xalign, yalign);
 	}
 
-	LabelAlignData Frame::LabelAlign()
+	AlignData Frame::LabelAlign()
 	{
 		float xalign, yalign;
 

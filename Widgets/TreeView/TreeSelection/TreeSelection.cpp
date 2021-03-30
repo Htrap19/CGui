@@ -39,17 +39,16 @@ namespace CGui
 	TreeSelection::SelectedRowsData TreeSelection::SelectedRows()
 	{
 		GtkTreeModel* model;
-		Single::List<TreeModel::TreePath> ret;
 		auto g_list = gtk_tree_selection_get_selected_rows(selection, &model);
+		Vector<TreeModel::TreePath> rows;
 
-		for (GList* it = g_list; it != NULL; it = g_list_next(it))
+		for (GList* it = g_list; it != nullptr; it = g_list_next(it))
 		{
-			ret.Insert(TreeModel::TreePath((GtkTreePath*)it->data));
+			rows.EmplaceBack((GtkTreePath*)(it->data));
 		}
 
-
 		// Note the path should be freed with Path::Free() method to free allocated memory
-		return { ret, TreeModel(model) };
+		return { Vector<TreeModel::TreePath>(std::move(rows)), TreeModel(model) };
 	}
 
 	int TreeSelection::CountSelectedRows()

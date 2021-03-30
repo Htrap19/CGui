@@ -53,9 +53,9 @@ namespace CGui
 		};
 
 		template <typename Data>
-		List<Data>::List() : selected_data{ NULL }
+		List<Data>::List() : selected_data{ nullptr }
 		{
-			head = NULL;
+			head = nullptr;
 		}
 
 		template <typename Data>
@@ -70,7 +70,7 @@ namespace CGui
 			Node<Data>* currNode = head;
 			unsigned int index = 0;
 
-			while (currNode && currNode->next != NULL)
+			while (currNode && currNode->next != nullptr)
 			{
 				currNode = currNode->next;
 				index++;
@@ -79,7 +79,7 @@ namespace CGui
 			Node<Data>* newNode = new Node<Data>;
 			newNode->data = data;
 
-			if (head == NULL)
+			if (head == nullptr)
 			{
 				newNode->next = head;
 				head = newNode;
@@ -103,7 +103,7 @@ namespace CGui
 		Data List<Data>::Last()
 		{
 			Node<Data>* currNode = head;
-			while (currNode && currNode->next != NULL)
+			while (currNode && currNode->next != nullptr)
 				currNode = currNode->next;
 
 			return currNode->data;
@@ -112,13 +112,13 @@ namespace CGui
 		template <typename Data>
 		unsigned int List<Data>::Size()
 		{
-			if (head == NULL)
+			if (head == nullptr)
 				return 0;
 
 			Node<Data>* currNode = head;
 			unsigned int size = 0;
 
-			while (currNode != NULL)
+			while (currNode != nullptr)
 			{
 				size++;
 				currNode = currNode->next;
@@ -132,7 +132,7 @@ namespace CGui
 		{
 			Node<Data>* currNode = head;
 
-			while (currNode != NULL)
+			while (currNode != nullptr)
 			{
 				if (currNode->data == data)
 				{
@@ -152,7 +152,7 @@ namespace CGui
 		template <typename Data>
 		bool List<Data>::HasSelectedData()
 		{
-			return !(selected_data == NULL);
+			return !(selected_data == nullptr);
 		}
 
 		template <typename Data>
@@ -164,7 +164,7 @@ namespace CGui
 		template <typename Data>
 		void List<Data>::UnselectData()
 		{
-			selected_data = NULL;
+			selected_data = nullptr;
 		}
 
 		template <typename Data>
@@ -172,7 +172,7 @@ namespace CGui
 		{
 			Node<Data>* currNode = head;
 
-			while (currNode && currNode->next != NULL)
+			while (currNode && currNode->next != nullptr)
 			{
 				if (currNode->data == data)
 					return true;
@@ -195,7 +195,7 @@ namespace CGui
 			Node<Data>* currNode = head;
 			List<filter> ret;
 
-			while (currNode != NULL)
+			while (currNode != nullptr)
 			{
 				ret.Insert(func(currNode, args...));
 				currNode = currNode->next;
@@ -210,7 +210,7 @@ namespace CGui
 			Node<Data>* currNode = head;
 			List<filter> ret;
 
-			while (currNode != NULL)
+			while (currNode != nullptr)
 			{
 				ret.Insert(func(currNode->data, args...));
 				currNode = currNode->next;
@@ -225,7 +225,7 @@ namespace CGui
 			Node<Data>* currNode = head;
 			unsigned int index = 0;
 
-			while (currNode && currNode != NULL)
+			while (currNode && currNode != nullptr)
 			{
 				if (currNode->data == data)
 					return index;
@@ -241,7 +241,7 @@ namespace CGui
 		void List<Data>::ForEach(void(*func)(Node<Data>*))
 		{
 			Node<Data>* currNode = head;
-			while (currNode != NULL)
+			while (currNode != nullptr)
 			{
 				func(currNode);
 				currNode = currNode->next;
@@ -253,7 +253,7 @@ namespace CGui
 		{
 			Node<Data>* currNode = head;
 			unsigned int index = 0;
-			while (currNode != NULL)
+			while (currNode != nullptr)
 			{
 				func(currNode, index);
 				index++;
@@ -265,7 +265,7 @@ namespace CGui
 		void List<Data>::ForEach(void(*func)(Data))
 		{
 			Node<Data>* currNode = head;
-			while (currNode != NULL)
+			while (currNode != nullptr)
 			{
 				func(currNode->data);
 				currNode = currNode->next;
@@ -277,7 +277,7 @@ namespace CGui
 		{
 			Node<Data>* currNode = head;
 			unsigned int index = 0;
-			while (currNode != NULL)
+			while (currNode != nullptr)
 			{
 				func(currNode->data, index);
 				index++;
@@ -289,7 +289,7 @@ namespace CGui
 		template <typename ... Args> void List<Data>::ForEach(void(*func)(Node<Data>*, Args...), Args ... args)
 		{
 			Node<Data>* currNode = head;
-			while (currNode != NULL)
+			while (currNode != nullptr)
 			{
 				func(currNode, args...);
 				currNode = currNode->next;
@@ -300,7 +300,7 @@ namespace CGui
 		template<typename ... Args> void List<Data>::ForEach(void(*func)(Data, Args...), Args ...args)
 		{
 			Node<Data>* currNode = head;
-			while (currNode != NULL)
+			while (currNode != nullptr)
 			{
 				func(currNode->data, args...);
 				currNode = currNode->next;
@@ -314,7 +314,7 @@ namespace CGui
 			Node<Data>* currNode = head;
 			unsigned int index = 0;
 
-			while (currNode != NULL)
+			while (currNode != nullptr)
 			{
 				func(currNode, index, args...);
 				index++;
@@ -329,7 +329,7 @@ namespace CGui
 			Node<Data>* currNode = head;
 			unsigned int index = 0;
 
-			while (currNode != NULL)
+			while (currNode != nullptr)
 			{
 				func(currNode->data, index, args...);
 				index++;
@@ -341,9 +341,9 @@ namespace CGui
 		bool List<Data>::Delete(Data data)
 		{
 			Node<Data>* currNode = head;
-			Node<Data>* prevNode = NULL;
+			Node<Data>* prevNode = nullptr;
 
-			while (currNode && currNode->next != NULL)
+			while (currNode && currNode->next != nullptr)
 			{
 				if (currNode->data != data)
 				{
@@ -377,16 +377,16 @@ namespace CGui
 		void List<Data>::DeleteAll()
 		{
 			Node<Data>* currNode = head;
-			Node<Data>* nextNode = NULL;
+			Node<Data>* nextNode = nullptr;
 
-			while (currNode != NULL)
+			while (currNode != nullptr)
 			{
 				nextNode = currNode->next;
 				delete currNode;
 				currNode = nextNode;
 			}
 
-			head = NULL;
+			head = nullptr;
 		}
 
 		template<typename Data>
@@ -398,7 +398,7 @@ namespace CGui
 			Node<Data>* currNode = head;
 			unsigned int currIndex = 0;
 
-			while (currNode && currNode != NULL)
+			while (currNode && currNode != nullptr)
 			{
 				if (currIndex != index)
 				{
@@ -456,15 +456,15 @@ namespace CGui
 		template <typename Key, typename Value>
 		List<Key, Value>::List()
 		{
-			head = NULL;
+			head = nullptr;
 		}
 
 		template <typename Key, typename Value>
 		List<Key, Value>::~List()
 		{
-			Node<Key, Value>* currNode = head, * nextNode = NULL;
+			Node<Key, Value>* currNode = head, * nextNode = nullptr;
 
-			while (currNode != NULL)
+			while (currNode != nullptr)
 			{
 				nextNode = currNode->next;
 				delete currNode;
@@ -475,7 +475,7 @@ namespace CGui
 		template <typename Key, typename Value>
 		bool List<Key, Value>::IsEmpty()
 		{
-			return (head == NULL);
+			return (head == nullptr);
 		}
 
 		template <typename Key, typename Value>
@@ -484,7 +484,7 @@ namespace CGui
 			Node<Key, Value>* currNode = head;
 			unsigned int index = 0;
 
-			while (currNode && currNode->next != NULL)
+			while (currNode && currNode->next != nullptr)
 			{
 				currNode = currNode->next;
 				index++;
@@ -494,7 +494,7 @@ namespace CGui
 			newNode->key = key;
 			newNode->value = value;
 
-			if (head == NULL)
+			if (head == nullptr)
 			{
 				newNode->next = head;
 				head = newNode;
@@ -520,7 +520,7 @@ namespace CGui
 			Node<Key, Value>* currNode = head;
 			unsigned int index = 0;
 
-			while (currNode && currNode->next != NULL)
+			while (currNode && currNode->next != nullptr)
 			{
 				currNode = currNode->next;
 				index++;
@@ -532,13 +532,13 @@ namespace CGui
 		template <typename Key, typename Value>
 		unsigned int List<Key, Value>::Size()
 		{
-			if (head == NULL)
+			if (head == nullptr)
 				return 0;
 
 			Node<Key, Value>* currNode = head;
 			unsigned int size = 0;
 
-			while (currNode != NULL)
+			while (currNode != nullptr)
 			{
 				size++;
 				currNode = currNode->next;
@@ -552,7 +552,7 @@ namespace CGui
 		{
 			Node<Key, Value>* currNode = head;
 
-			while (currNode && currNode->next != NULL)
+			while (currNode && currNode->next != nullptr)
 			{
 				if (currNode->key == key)
 					return true;
@@ -568,7 +568,7 @@ namespace CGui
 		{
 			Node<Key, Value>* currNode = head;
 
-			while (currNode && currNode->next != NULL)
+			while (currNode && currNode->next != nullptr)
 			{
 				if (currNode->value == value)
 					return true;
@@ -585,7 +585,7 @@ namespace CGui
 			Node<Key, Value>* currNode = head;
 			unsigned int index = 0;
 
-			while (currNode && currNode != NULL)
+			while (currNode && currNode != nullptr)
 			{
 				if (currNode->key == key)
 					return { currNode->key, currNode->value, index };
@@ -603,7 +603,7 @@ namespace CGui
 			Node<Key, Value>* currNode = head;
 			unsigned int index = 0;
 
-			while (currNode && currNode != NULL)
+			while (currNode && currNode != nullptr)
 			{
 				if (currNode->value == value)
 					return { currNode->key, currNode->value, index };
@@ -620,7 +620,7 @@ namespace CGui
 		{
 			Node<Key, Value>* currNode = head;
 
-			while (currNode != NULL)
+			while (currNode != nullptr)
 			{
 				func(currNode);
 				currNode = currNode->next;
@@ -632,7 +632,7 @@ namespace CGui
 		{
 			Node<Key, Value>* currNode = head;
 
-			while (currNode != NULL)
+			while (currNode != nullptr)
 			{
 				func(currNode->key, currNode->value);
 				currNode = currNode->next;
@@ -644,7 +644,7 @@ namespace CGui
 		{
 			Node<Key, Value>* currNode = head;
 
-			while (currNode != NULL)
+			while (currNode != nullptr)
 			{
 				func(currNode, args...);
 				currNode = currNode->next;
@@ -656,7 +656,7 @@ namespace CGui
 		{
 			Node<Key, Value>* currNode = head;
 
-			while (currNode != NULL)
+			while (currNode != nullptr)
 			{
 				func(currNode->key, currNode->value, args...);
 				currNode = currNode->next;
@@ -667,9 +667,9 @@ namespace CGui
 		bool List<Key, Value>::DeleteKey(Key key)
 		{
 			Node<Key, Value>* currNode = head;
-			Node<Key, Value>* prevNode = NULL;
+			Node<Key, Value>* prevNode = nullptr;
 
-			while (currNode && currNode->next != NULL)
+			while (currNode && currNode->next != nullptr)
 			{
 				if (currNode->key != key)
 				{
@@ -701,9 +701,9 @@ namespace CGui
 		bool List<Key, Value>::DeleteValue(Value value)
 		{
 			Node<Key, Value>* currNode = head;
-			Node<Key, Value>* prevNode = NULL;
+			Node<Key, Value>* prevNode = nullptr;
 
-			while (currNode && currNode->next != NULL)
+			while (currNode && currNode->next != nullptr)
 			{
 				if (currNode->value != value)
 				{
@@ -740,7 +740,7 @@ namespace CGui
 			Node<Key, Value>* currNode = head;
 			unsigned int currIndex = 0;
 
-			while (currNode != NULL)
+			while (currNode != nullptr)
 			{
 				if (currIndex != index)
 				{

@@ -35,6 +35,6 @@ namespace CGui
 		bool IsAssistant();
 
 	private:
-		static unsigned int m_ref_count;
+		static unsigned int m_RefCount;
 	};
 }

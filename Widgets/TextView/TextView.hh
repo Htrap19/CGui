@@ -17,7 +17,7 @@ namespace CGui
 		{
 		public:
 			TextChildAnchor();
-			Single::List<Widget> Widgets();
+			Vector<Widget> Widgets();
 			bool Deleted();
 
 			GtkTextChildAnchor* GetWidget() const;

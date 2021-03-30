@@ -24,6 +24,7 @@ namespace CGui
 			bool Activatable();
 			void Selectable(bool selectable);
 			bool Selectable();
+
 			bool IsRow();
 		};
 
@@ -36,7 +37,7 @@ namespace CGui
 		void SelectAll();
 		void UnselectAll();
 		ListBox::Row SelectedRow();
-		Single::List<Widget> SelectedRows();
+		Vector<Widget> SelectedRows();
 		void SelectionMode(CGui::SelectionMode mode);
 		CGui::SelectionMode SelectionMode();
 		void ActivateOnSingleClick(bool activate);

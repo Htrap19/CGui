@@ -7,15 +7,15 @@ namespace CGui
 
 		Spin::Spin()
 		{
-			auto renderer_ptr = G_OBJECT(renderer);
+			auto renderer_ptr = G_OBJECT(m_Renderer);
 			g_clear_object(&renderer_ptr);
 
-			renderer = gtk_cell_renderer_spin_new();
+			m_Renderer = gtk_cell_renderer_spin_new();
 		}
 
 		bool Spin::IsCellRendererSpin()
 		{
-			return GTK_IS_CELL_RENDERER_SPIN(renderer);
+			return GTK_IS_CELL_RENDERER_SPIN(m_Renderer);
 		}
 
 	}

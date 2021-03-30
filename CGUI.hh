@@ -122,9 +122,11 @@
 */
 
 #include "./Custom/Array/Array.hh"
+#include "./Custom/CallableGroup/CallableGroup.hh"
 #include "./Custom/DeleteOnQuit/DeleteOnQuit.hh"
 #include "./Custom/Initialize/Initialize.hh"
 #include "./Custom/List/List.hh"
+#include "./Custom/Vector/Vector.hh"
 
 /*
 	Pixbuf
@@ -136,6 +138,6 @@
 	Misc
 */
 
+#include "./Misc/AccelGroup/AccelGroup.hh"
 #include "./Misc/Adjustment/Adjustment.hh"
 #include "./Misc/SizeGroup/SizeGroup.hh"
-#include "./Misc/AccelGroup/AccelGroup.hh"

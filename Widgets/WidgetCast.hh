@@ -133,6 +133,9 @@ namespace CGui
 		static FlowBox Cast<FlowBox>(const CGui::Widget& widget);
 
 		template <>
+		static FlowBox::Child Cast<FlowBox::Child>(const CGui::Widget& widget);
+
+		template <>
 		static Frame Cast<Frame>(const CGui::Widget& widget);
 
 		template <>
@@ -374,6 +377,12 @@ namespace CGui
 	inline FlowBox WidgetCast::Cast(const CGui::Widget& widget)
 	{
 		return FlowBox(GTK_FLOW_BOX(widget.GetWidget()));
+	}
+
+	template<>
+	inline FlowBox::Child WidgetCast::Cast(const CGui::Widget& widget)
+	{
+		return FlowBox::Child(GTK_FLOW_BOX_CHILD(widget.GetWidget()));
 	}
 
 	template<>

@@ -4,24 +4,24 @@ namespace CGui
 {
 	CheckButton::CheckButton() : Handler<CheckButton>::Handler(this), Handler<ToggleButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this)
 	{
-		if (widget != nullptr)
-			gtk_widget_destroy(widget);
-		widget = gtk_check_button_new();
-		this->SetContext(widget);
+		if (m_Widget != nullptr)
+			gtk_widget_destroy(m_Widget);
+		m_Widget = gtk_check_button_new();
+		this->SetContext(m_Widget);
 	}
 
 	CheckButton::CheckButton(const char* text, bool mnemonic) : Handler<CheckButton>::Handler(this), Handler<ToggleButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this)
 	{
 		if (mnemonic)
-			widget = gtk_check_button_new_with_mnemonic(text);
+			m_Widget = gtk_check_button_new_with_mnemonic(text);
 		else
-			widget = gtk_check_button_new_with_label(text);
-		this->SetContext(widget);
+			m_Widget = gtk_check_button_new_with_label(text);
+		this->SetContext(m_Widget);
 	}
 
 	CheckButton::CheckButton(GtkCheckButton* checkbutton) : Handler<CheckButton>::Handler(this), Handler<ToggleButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this)
 	{
-		this->SetCheckButton(GTK_CHECK_BUTTON(widget));
+		this->SetCheckButton(GTK_CHECK_BUTTON(m_Widget));
 	}
 
 	long unsigned int CheckButton::Toggled(void(*func)())
@@ -36,12 +36,12 @@ namespace CGui
 
 	bool CheckButton::IsCheckButton()
 	{
-		return GTK_IS_CHECK_BUTTON(widget);
+		return GTK_IS_CHECK_BUTTON(m_Widget);
 	}
 
 	void CheckButton::SetCheckButton(GtkCheckButton* checkbutton)
 	{
-		this->widget = GTK_WIDGET(checkbutton);
-		this->SetContext(widget);
+		this->m_Widget = GTK_WIDGET(checkbutton);
+		this->SetContext(m_Widget);
 	}
 };

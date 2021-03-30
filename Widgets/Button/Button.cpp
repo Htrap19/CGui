@@ -4,68 +4,68 @@ namespace CGui
 {
 	Button::Button() : Handler(this), Container(this)
 	{
-		widget = gtk_button_new();
-		this->SetContext(widget);
+		m_Widget = gtk_button_new();
+		this->SetContext(m_Widget);
 	}
 
 	Button::Button(const char* text, bool mnemonic) : Handler(this), Container(this)
 	{
 		if (mnemonic)
-			widget = gtk_button_new_with_mnemonic(text);
+			m_Widget = gtk_button_new_with_mnemonic(text);
 		else
-			widget = gtk_button_new_with_label(text);
-		this->SetContext(widget);
+			m_Widget = gtk_button_new_with_label(text);
+		this->SetContext(m_Widget);
 	}
 
 	Button::Button(GtkButton* button) : Handler(this), Container(this)
 	{
-		this->widget = GTK_WIDGET(button);
-		this->SetContext(widget);
+		this->m_Widget = GTK_WIDGET(button);
+		this->SetContext(m_Widget);
 	}
 
 	void Button::Text(const char* text)
 	{
-		gtk_button_set_label(GTK_BUTTON(widget), text);
+		gtk_button_set_label(GTK_BUTTON(m_Widget), text);
 	}
 
 	const char* Button::Text()
 	{
-		return gtk_button_get_label(GTK_BUTTON(widget));
+		return gtk_button_get_label(GTK_BUTTON(m_Widget));
 	}
 
 	void Button::Click()
 	{
-		gtk_button_clicked(GTK_BUTTON(widget));
+		gtk_button_clicked(GTK_BUTTON(m_Widget));
 	}
 
 	void Button::Relief(ReliefStyle style)
 	{
-		gtk_button_set_relief(GTK_BUTTON(widget), (GtkReliefStyle)style);
+		gtk_button_set_relief(GTK_BUTTON(m_Widget), (GtkReliefStyle)style);
 	}
 
 	ReliefStyle Button::Relief()
 	{
-		return (ReliefStyle)gtk_button_get_relief(GTK_BUTTON(widget));
+		return (ReliefStyle)gtk_button_get_relief(GTK_BUTTON(m_Widget));
 	}
 
 	void Button::UseUnderline(bool use_underline)
 	{
-		gtk_button_set_use_underline(GTK_BUTTON(widget), use_underline);
+		gtk_button_set_use_underline(GTK_BUTTON(m_Widget), use_underline);
 	}
 
 	bool Button::UseUnderline()
 	{
-		return gtk_button_get_use_underline(GTK_BUTTON(widget));
+		return gtk_button_get_use_underline(GTK_BUTTON(m_Widget));
 	}
 
 	void Button::Image(CGui::Image& image)
 	{
-		gtk_button_set_image(GTK_BUTTON(widget), image.GetWidget());
+		gtk_button_set_image(GTK_BUTTON(m_Widget), image.GetWidget());
 	}
 
 	CGui::Image Button::Image()
 	{
-		return CGui::Image(GTK_IMAGE(gtk_button_get_image(GTK_BUTTON(widget))));
+		return CGui::Image(GTK_IMAGE(gtk_button_get_image(GTK_BUTTON(m_Widget))));
 	}
 
 	void Button::Image(CGui::Pixbuf& pixbuf)
@@ -76,22 +76,22 @@ namespace CGui
 
 	void Button::ImagePosition(PositionType position)
 	{
-		gtk_button_set_image_position(GTK_BUTTON(widget), (GtkPositionType)position);
+		gtk_button_set_image_position(GTK_BUTTON(m_Widget), (GtkPositionType)position);
 	}
 
 	PositionType Button::ImagePosition()
 	{
-		return (PositionType)gtk_button_get_image_position(GTK_BUTTON(widget));
+		return (PositionType)gtk_button_get_image_position(GTK_BUTTON(m_Widget));
 	}
 
 	void Button::AlwaysShowImage(bool always_show_image)
 	{
-		gtk_button_set_always_show_image(GTK_BUTTON(widget), always_show_image);
+		gtk_button_set_always_show_image(GTK_BUTTON(m_Widget), always_show_image);
 	}
 
 	bool Button::AlwaysShowImage()
 	{
-		return gtk_button_get_always_show_image(GTK_BUTTON(widget));
+		return gtk_button_get_always_show_image(GTK_BUTTON(m_Widget));
 	}
 
 	long unsigned int Button::Clicked(void(*func)())
@@ -106,12 +106,12 @@ namespace CGui
 
 	bool Button::IsButton()
 	{
-		return GTK_IS_BUTTON(widget);
+		return GTK_IS_BUTTON(m_Widget);
 	}
 
 	void Button::SetButton(GtkButton* button)
 	{
-		this->widget = GTK_WIDGET(button);
-		this->SetContext(widget);
+		this->m_Widget = GTK_WIDGET(button);
+		this->SetContext(m_Widget);
 	}
 };

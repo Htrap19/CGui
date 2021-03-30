@@ -40,7 +40,7 @@ namespace CGui
 		bool IsCellRenderer();
 
 	protected:
-		GtkCellRenderer* renderer;
-		CellRenderersTypes cell_renderer_type;
+		GtkCellRenderer* m_Renderer;
+		CellRenderersTypes m_Type;
 	};
 }

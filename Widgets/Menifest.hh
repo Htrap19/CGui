@@ -2,6 +2,7 @@
 
 namespace CGui
 {
+	class Widget;
 	class AboutDialog;
 	class Actionbar;
 	class AspectFrame;

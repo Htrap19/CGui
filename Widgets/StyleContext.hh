@@ -1,63 +1,27 @@
 #pragma once
 
 #include <gtk/gtk.h>
-#include "../Custom/List/List.hh"
+#include "../Custom/VectorsUtilities/VectorUtilities.hh"
+#include <iostream>
 
 namespace CGui
 {
 	class StyleContext
 	{
 	public:
-		StyleContext(GtkWidget* w)
-		{
-			this->SetContext(w);
-		}
+		StyleContext(GtkWidget* w);
+		virtual void AddStyleClass(const char* classname) const;
+		virtual void RemoveStyleClass(const char* classname) const;
+		virtual bool HasStyleClass(const char* classname) const;
+		virtual Vector<std::string> ListStyleClasses() const;
 
-		virtual void AddStyleClass(const char* classname) const
-		{
-			gtk_style_context_add_class(GTK_STYLE_CONTEXT(stylecontext), classname);
-		}
-
-		virtual void RemoveStyleClass(const char* classname) const
-		{
-			gtk_style_context_remove_class(GTK_STYLE_CONTEXT(stylecontext), classname);
-		}
-
-		virtual bool HasStyleClass(const char* classname) const
-		{
-			return gtk_style_context_has_class(GTK_STYLE_CONTEXT(stylecontext), classname);
-		}
-
-		virtual Single::List<const char*> ListStyleClasses() const
-		{
-			Single::List<const char*> t_list;
-			auto g_list = gtk_style_context_list_classes(GTK_STYLE_CONTEXT(stylecontext));
-
-			for (GList* l = g_list; l != NULL; l = l->next)
-			{
-				t_list.Insert((const char*)l->data);
-			}
-
-			g_list_free(g_list);
-
-			return t_list;
-		}
-
-		bool IsStyleContext() const
-		{
-			return GTK_IS_STYLE_CONTEXT(stylecontext);
-		}
+		bool IsStyleContext() const;
 
 	protected:
-		StyleContext() : stylecontext{NULL}
-		{  }
-
-		void SetContext(GtkWidget* w) const
-		{
-			stylecontext = gtk_widget_get_style_context(GTK_WIDGET(w));
-		}
+		StyleContext();
+		void SetContext(GtkWidget* widget) const;
 
 	private:
-		mutable GtkStyleContext* stylecontext;
+		mutable GtkStyleContext* m_StyleContext;
 	};
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include "../List/List.hh"
+#include "../Vector/Vector.hh"
 
 namespace CGui
 {
@@ -9,97 +9,37 @@ namespace CGui
 	{
 	public:
 		DeleteOnQuit(const DeleteOnQuit&) = delete;
-		DeleteOnQuit(const DeleteOnQuit&&) = delete;
+		DeleteOnQuit(DeleteOnQuit&&) = delete;
 		DeleteOnQuit& operator=(const DeleteOnQuit&) = delete;
-		DeleteOnQuit& operator=(const DeleteOnQuit&&) = delete;
+		DeleteOnQuit& operator=(DeleteOnQuit&&) = delete;
 		DeleteOnQuit& operator==(const DeleteOnQuit&) = delete;
-		DeleteOnQuit& operator==(const DeleteOnQuit&&) = delete;
+		DeleteOnQuit& operator==(DeleteOnQuit&&) = delete;
 
-		static DeleteOnQuit& GetInstance()
+		static DeleteOnQuit& Instance()
 		{
 			static DeleteOnQuit instance;
 			return instance;
 		}
 
-		unsigned int Add(void* data)
+		void Add(void* data)
 		{
-			return l_instance->Insert(data);
-		}
-
-		void ForEach(void(*func)(void*))
-		{
-			l_instance->ForEach(func);
-		}
-
-		Single::List<void*>* list()
-		{
-			return l_instance;
+			m_MemoryLocations.EmplaceBack(data);
 		}
 
 		~DeleteOnQuit()
 		{
-			l_instance->ForEach([](void* data) -> void
-				{
-					delete data;
-					data = nullptr;
-				});
-			delete l_instance;
+			for (auto& memoryaddr : m_MemoryLocations)
+			{
+				delete memoryaddr;
+				memoryaddr = nullptr;
+			}
 		}
 
 	private:
-		DeleteOnQuit() : l_instance{ new Single::List<void*> }
+		DeleteOnQuit()
 		{
 		}
 
-		Single::List<void*>* l_instance;
+		Vector<void*> m_MemoryLocations;
 	};
-
-	class DeleteOnQuitArray
-	{
-	public:
-		DeleteOnQuitArray(const DeleteOnQuitArray&) = delete;
-		DeleteOnQuitArray(const DeleteOnQuitArray&&) = delete;
-		DeleteOnQuitArray& operator=(const DeleteOnQuitArray&) = delete;
-		DeleteOnQuitArray& operator=(const DeleteOnQuitArray&&) = delete;
-		DeleteOnQuitArray& operator==(const DeleteOnQuitArray&) = delete;
-		DeleteOnQuitArray& operator==(const DeleteOnQuitArray&&) = delete;
-
-		static DeleteOnQuitArray& GetInstance()
-		{
-			static DeleteOnQuitArray instance;
-			return instance;
-		}
-
-		void Add(void* data)
-		{
-			l_instance->Insert(data);
-		}
-
-		void ForEach(void(*func)(void*))
-		{
-			l_instance->ForEach(func);
-		}
-
-		Single::List<void*>* list()
-		{
-			return l_instance;
-		}
-
-		~DeleteOnQuitArray()
-		{
-			l_instance->ForEach([](void* data) -> void
-				{
-					delete[] data;
-					data = nullptr;
-				});
-			delete l_instance;
-		}
-
-	private:
-		DeleteOnQuitArray() : l_instance{ new Single::List<void*> }
-		{
-		}
-
-		Single::List<void*>* l_instance;
-	};
-};
+}

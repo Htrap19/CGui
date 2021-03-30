@@ -49,7 +49,7 @@ namespace CGui
 		bool HideHeaderbarWhenMaximized();
 		bool IsActive();
 		bool HasToplevelFocus();
-		Single::List<Window*> ListToplevels();
+		Vector<Window> ListToplevels();
 		void Focus(Widget& focus);
 		Widget Focus();
 		void DefaultWidget(Widget& default_widget);
@@ -77,8 +77,8 @@ namespace CGui
 		void StartupId(const char* startup_id);
 		void Icon(Pixbuf& icon);
 		Pixbuf Icon();
-		void IconList(Single::List<Pixbuf*>& list);
-		Single::List<Pixbuf*> IconList();
+		void IconList(Vector<Pixbuf>& list);
+		Vector<Pixbuf> IconList();
 		void Iconname(const char* iconname);
 		const char* Iconname();
 		Requisition Size();
@@ -90,8 +90,8 @@ namespace CGui
 		void HasUserRefCount(bool has);
 		bool IsWindow();
 
-		static void DefaultIconList(Single::List<Pixbuf*>& list);
-		static Single::List<Pixbuf*> DefaultIconList();
+		static void DefaultIconList(Vector<Pixbuf>& list);
+		static Vector<Pixbuf> DefaultIconList();
 		static void DefaultIconname(const char* name);
 		static const char* DefaultIconname();
 		static void AutoStartupNotification(bool setting);
@@ -101,12 +101,12 @@ namespace CGui
 		bool HasError();
 
 	protected:
-		GError* error;
+		GError* m_Error;
 		Window();
 
 		void SetWindow(GtkWindow* window);
 
 	private:
-		static unsigned int m_ref_count;
+		static unsigned int m_RefCount;
 	};
 }

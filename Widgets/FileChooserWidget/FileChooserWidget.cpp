@@ -9,14 +9,14 @@ namespace CGui
 
 	FileChooserWidget::FileChooserWidget(FileChooserAction action) : Orientable(this)
 	{
-		widget = gtk_file_chooser_widget_new((GtkFileChooserAction)action);
-		this->SetContext(widget);
-		this->SetFileChooser(GTK_FILE_CHOOSER(widget));
+		m_Widget = gtk_file_chooser_widget_new((GtkFileChooserAction)action);
+		this->SetContext(m_Widget);
+		this->SetFileChooser(GTK_FILE_CHOOSER(m_Widget));
 	}
 
 	bool FileChooserWidget::IsFileChooserWidget()
 	{
-		return GTK_IS_FILE_CHOOSER_WIDGET(widget);
+		return GTK_IS_FILE_CHOOSER_WIDGET(m_Widget);
 	}
 
 	FileChooserWidget::FileChooserWidget() : Orientable(this)
@@ -25,8 +25,8 @@ namespace CGui
 
 	void FileChooserWidget::SetFileChooserWidget(GtkFileChooserWidget* filechooser)
 	{
-		widget = GTK_WIDGET(filechooser);
-		this->SetContext(widget);
-		this->SetFileChooser(GTK_FILE_CHOOSER(widget));
+		m_Widget = GTK_WIDGET(filechooser);
+		this->SetContext(m_Widget);
+		this->SetFileChooser(GTK_FILE_CHOOSER(m_Widget));
 	}
 };

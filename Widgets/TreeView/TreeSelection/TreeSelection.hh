@@ -1,10 +1,10 @@
 #pragma once
 
 #include "../../../Converter/Convert.hh"
-#include "../../../Custom/List/List.hh"
 #include "../../TreeModel.hh"
 #include "../../Menifest.hh"
 #include "../../Handler.hh"
+#include "../../../Custom/Vector/Vector.hh"
 
 namespace CGui
 {
@@ -20,7 +20,7 @@ namespace CGui
 
 		struct SelectedRowsData
 		{
-			Single::List<TreeModel::TreePath> rows;
+			Vector<TreeModel::TreePath> rows;
 			TreeModel model;
 		};
 

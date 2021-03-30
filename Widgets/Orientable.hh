@@ -9,27 +9,13 @@ namespace CGui
 	class Orientable
 	{
 	public:
-		Orientable(Widget *w)
-		{
-			this->m_widget = w;
-		}
+		Orientable(Widget *w);
+		virtual void Orientation(CGui::Orientation orientation);
+		virtual CGui::Orientation Orientation();
 
-		virtual void Orientation(CGui::Orientation orientation)
-		{
-			gtk_orientable_set_orientation(GTK_ORIENTABLE(m_widget->GetWidget()), (GtkOrientation)orientation);
-		}
-
-		virtual CGui::Orientation Orientation()
-		{
-			return (CGui::Orientation)gtk_orientable_get_orientation(GTK_ORIENTABLE(m_widget->GetWidget()));
-		}
-
-		bool IsOrientable()
-		{
-			return GTK_IS_ORIENTABLE(m_widget->GetWidget());
-		}
+		bool IsOrientable();
 
 	private:
-		Widget* m_widget;
+		Widget* m_CGuiWidget;
 	};
 }

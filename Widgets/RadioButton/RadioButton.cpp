@@ -1,125 +1,122 @@
 #include "./RadioButton.hh"
+#include "../../Custom/VectorsUtilities/VectorUtilities.hh"
 
 namespace CGui
 {
 	RadioButton::RadioButton() : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
 	{
-		widget = gtk_radio_button_new(NULL);
-		this->SetContext(widget);
+		gtk_widget_destroy(m_Widget);
+		m_Widget = gtk_radio_button_new(NULL);
+		this->SetContext(m_Widget);
 	}
 
 	RadioButton::RadioButton(GtkRadioButton* radiobutton) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
 	{
-		this->widget = GTK_WIDGET(radiobutton);
-		this->SetContext(widget);
+		gtk_widget_destroy(m_Widget);
+		this->m_Widget = GTK_WIDGET(radiobutton);
+		this->SetContext(m_Widget);
 	}
 
-	RadioButton::RadioButton(Single::List<RadioButton>& group) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
+	RadioButton::RadioButton(Vector<RadioButton>& group) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
 	{
-		GSList* g = NULL;
+		GSList g;
 
 		for (unsigned int i = 0; i < group.Size(); i++)
 		{
-			g->data = GTK_RADIO_BUTTON(group[i].GetWidget());
-			g = g->next;
+			g.data = GTK_RADIO_BUTTON(group[i].GetWidget());
+			g = *g.next;
 		}
 
-		widget = gtk_radio_button_new(g);
-		this->SetContext(widget);
+		m_Widget = gtk_radio_button_new(&g);
+		this->SetContext(m_Widget);
 
-		g_slist_free(g);
+		g_slist_free(&g);
 	}
 
 	RadioButton::RadioButton(RadioButton& radiobutton) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
 	{
-		widget = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(radiobutton.GetWidget()));
-		this->SetContext(widget);
+		m_Widget = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(radiobutton.GetWidget()));
+		this->SetContext(m_Widget);
 	}
 
-	RadioButton::RadioButton(Single::List<RadioButton>& group, const char* label, bool mnemonic) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
+	RadioButton::RadioButton(Vector<RadioButton>& group, const char* label, bool mnemonic) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
 	{
-		GSList* g = NULL;
+		GSList g;
 
 		for (unsigned int i = 0; i < group.Size(); i++)
 		{
-			g->data = GTK_RADIO_BUTTON(group[i].GetWidget());
-			g = g->next;
+			g.data = GTK_RADIO_BUTTON(group[i].GetWidget());
+			g = *g.next;
 		}
 
 		if (mnemonic)
-			widget = gtk_radio_button_new_with_mnemonic(g, label);
+			m_Widget = gtk_radio_button_new_with_mnemonic(&g, label);
 		else
-			widget = gtk_radio_button_new_with_label(g, label);
-		this->SetContext(widget);
+			m_Widget = gtk_radio_button_new_with_label(&g, label);
+		this->SetContext(m_Widget);
 
-		g_slist_free(g);
+		g_slist_free(&g);
 	}
 
 	RadioButton::RadioButton(const char* label, bool mnemonic) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
 	{
 		if (mnemonic)
-			widget = gtk_radio_button_new_with_mnemonic(NULL, label);
+			m_Widget = gtk_radio_button_new_with_mnemonic(NULL, label);
 		else
-			widget = gtk_radio_button_new_with_label(NULL, label);
-		this->SetContext(widget);
+			m_Widget = gtk_radio_button_new_with_label(NULL, label);
+		this->SetContext(m_Widget);
 	}
 
 	RadioButton::RadioButton(RadioButton& radiobutton, const char* label, bool mnemonic) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
 	{
 		if (mnemonic)
-			widget = gtk_radio_button_new_with_mnemonic_from_widget(GTK_RADIO_BUTTON(radiobutton.GetWidget()), label);
+			m_Widget = gtk_radio_button_new_with_mnemonic_from_widget(GTK_RADIO_BUTTON(radiobutton.GetWidget()), label);
 		else
-			widget = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radiobutton.GetWidget()), label);
-		this->SetContext(widget);
+			m_Widget = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(radiobutton.GetWidget()), label);
+		this->SetContext(m_Widget);
+	}
+
+	RadioButton::RadioButton(RadioButton&& radiobutton) : Handler<RadioButton>::Handler(this), Handler<Button>::Handler(this), Button::Container(this), Handler<ToggleButton>::Handler(this), Handler<CheckButton>::Handler(this)
+	{
+		m_Widget = radiobutton.m_Widget;
+		radiobutton.m_Widget = nullptr;
 	}
 
 	RadioButton::~RadioButton()
 	{
-		group.ForEach([](RadioButton* data)
+		/*group.ForEach([](RadioButton* data)
 			{
 				delete data;
 			});
-		group.DeleteAll();
+		group.DeleteAll();*/
 	}
 
-	void RadioButton::Group(Single::List<RadioButton>& group)
+	void RadioButton::Group(Vector<RadioButton>& group)
 	{
-		GSList* g = NULL;
+		GSList g;
 
 		for (unsigned int i = 0; i < group.Size(); i++)
 		{
-			g->data = GTK_RADIO_BUTTON(group[i].GetWidget());
-			g = g->next;
+			g.data = GTK_RADIO_BUTTON(group[i].GetWidget());
+			g = *g.next;
 		}
 
-		gtk_radio_button_set_group(GTK_RADIO_BUTTON(widget), g);
+		gtk_radio_button_set_group(GTK_RADIO_BUTTON(m_Widget), &g);
 
-		g_slist_free(g);
+		g_slist_free(&g);
 	}
 
-	Single::List<RadioButton*> RadioButton::Group()
+	Vector<RadioButton> RadioButton::Group()
 	{
-		GSList* g = gtk_radio_button_get_group(GTK_RADIO_BUTTON(widget));
-
-		group.ForEach([](RadioButton* data)
-			{
-				delete data;
-			});
-		group.DeleteAll();
-
-		for (GSList* it = g; it != NULL; it = it->next)
-		{
-			group.Insert(new RadioButton(GTK_RADIO_BUTTON(it->data)));
-		}
-
+		GSList* g = gtk_radio_button_get_group(GTK_RADIO_BUTTON(m_Widget));
+		Vector<RadioButton> group(std::move(WidgetVectorToRadioButton(std::move(GSListToWidgetVector(g)))));
 		g_slist_free(g);
-
-		return group;
+		return std::move(group);
 	}
 
 	void RadioButton::JoinGroup(RadioButton& radiobutton)
 	{
-		gtk_radio_button_join_group(GTK_RADIO_BUTTON(widget), GTK_RADIO_BUTTON(radiobutton.GetWidget()));
+		gtk_radio_button_join_group(GTK_RADIO_BUTTON(m_Widget), GTK_RADIO_BUTTON(radiobutton.GetWidget()));
 	}
 
 	long unsigned int RadioButton::Toggled(void(*func)())
@@ -134,7 +131,7 @@ namespace CGui
 
 	bool RadioButton::IsRadioButton()
 	{
-		return GTK_IS_RADIO_BUTTON(widget);
+		return GTK_IS_RADIO_BUTTON(m_Widget);
 	}
 
 }

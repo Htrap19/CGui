@@ -268,6 +268,8 @@ namespace CGui
 
 	enum class CellRendererState { SELECTED = 1 << 0, PRELIT = 1 << 1, INSENSITIVE = 1 << 2, SORTED = 1 << 3, FOCUSED = 1 << 4, EXPANDABLE = 1 << 5, EXPANDED = 1 << 6 };
 
+	enum class CellRenderersTypes { TEXT };
+
 	struct PaddingData
 	{
 		int xpad;
@@ -287,8 +289,6 @@ namespace CGui
 	enum class TreeViewDropPosition { DROP_BEFORE, DROP_AFTER, DROP_INTO_OR_BEFORE, DROP_INTO_OR_AFTER };
 
 	enum class TreeViewGridLines { NONE, HORIZONTAL, VERTICAL, BOTH };
-
-	enum class CellRenderersTypes { TEXT };
 
 	class Value
 	{

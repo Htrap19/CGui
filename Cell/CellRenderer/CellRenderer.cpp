@@ -5,7 +5,7 @@ namespace CGui
 
 	CellRenderer::CellRenderer(GtkCellRenderer* renderer)
 	{
-		this->renderer = renderer;
+		this->m_Renderer = renderer;
 	}
 
 	Rectangle CellRenderer::AlignedArea(Widget& widget, CellRendererState flags, Rectangle cell_area)
@@ -13,7 +13,7 @@ namespace CGui
 		GdkRectangle aligned_data;
 		GdkRectangle cell_area_ori = Converter::Convert::GetInstance().ConvertFromRectangle(cell_area);
 
-		gtk_cell_renderer_get_aligned_area(renderer, widget.GetWidget(), (GtkCellRendererState)flags, &cell_area_ori, &aligned_data);
+		gtk_cell_renderer_get_aligned_area(m_Renderer, widget.GetWidget(), (GtkCellRendererState)flags, &cell_area_ori, &aligned_data);
 
 		return { { aligned_data.x, aligned_data.y }, { aligned_data.width, aligned_data.height } };
 	}
@@ -23,7 +23,7 @@ namespace CGui
 		GdkRectangle background_area_ori = Converter::Convert::GetInstance().ConvertFromRectangle(background_area);
 		GdkRectangle cell_area_ori = Converter::Convert::GetInstance().ConvertFromRectangle(cell_area);
 
-		gtk_cell_renderer_render(renderer, cr, widget.GetWidget(), &background_area_ori, &cell_area_ori, (GtkCellRendererState)flags);
+		gtk_cell_renderer_render(m_Renderer, cr, widget.GetWidget(), &background_area_ori, &cell_area_ori, (GtkCellRendererState)flags);
 	}
 
 	void CellRenderer::FixedSize(Requisition size)
@@ -33,36 +33,36 @@ namespace CGui
 
 	void CellRenderer::FixedSize(int width, int height)
 	{
-		gtk_cell_renderer_set_fixed_size(renderer, width, height);
+		gtk_cell_renderer_set_fixed_size(m_Renderer, width, height);
 	}
 
 	CGui::Requisition CellRenderer::FixedSize()
 	{
 		gint width, height;
 
-		gtk_cell_renderer_get_fixed_size(renderer, &width, &height);
+		gtk_cell_renderer_get_fixed_size(m_Renderer, &width, &height);
 
 		return { width, height };
 	}
 
 	void CellRenderer::Visible(bool visible)
 	{
-		gtk_cell_renderer_set_visible(renderer, visible);
+		gtk_cell_renderer_set_visible(m_Renderer, visible);
 	}
 
 	bool CellRenderer::Visible()
 	{
-		return gtk_cell_renderer_get_visible(renderer);
+		return gtk_cell_renderer_get_visible(m_Renderer);
 	}
 
 	void CellRenderer::Sensitive(bool sensitive)
 	{
-		gtk_cell_renderer_set_sensitive(renderer, sensitive);
+		gtk_cell_renderer_set_sensitive(m_Renderer, sensitive);
 	}
 
 	bool CellRenderer::Sensitive()
 	{
-		gtk_cell_renderer_get_sensitive(renderer);
+		gtk_cell_renderer_get_sensitive(m_Renderer);
 	}
 
 	void CellRenderer::Alignment(AlignData data)
@@ -72,14 +72,14 @@ namespace CGui
 
 	void CellRenderer::Alignment(float xalign, float yalign)
 	{
-		gtk_cell_renderer_set_alignment(renderer, xalign, yalign);
+		gtk_cell_renderer_set_alignment(m_Renderer, xalign, yalign);
 	}
 
 	CGui::AlignData CellRenderer::Alignment()
 	{
 		gfloat xalign, yalign;
 
-		gtk_cell_renderer_get_alignment(renderer, &xalign, &yalign);
+		gtk_cell_renderer_get_alignment(m_Renderer, &xalign, &yalign);
 
 		return { xalign, yalign };
 	}
@@ -91,33 +91,33 @@ namespace CGui
 
 	void CellRenderer::Padding(int xpad, int ypad)
 	{
-		gtk_cell_renderer_set_padding(renderer, xpad, ypad);
+		gtk_cell_renderer_set_padding(m_Renderer, xpad, ypad);
 	}
 
 	CGui::PaddingData CellRenderer::Padding()
 	{
 		gint xpad, ypad;
 
-		gtk_cell_renderer_get_padding(renderer, &xpad, &ypad);
+		gtk_cell_renderer_get_padding(m_Renderer, &xpad, &ypad);
 
 		return { xpad, ypad };
 	}
 
 	CGui::StateFlags CellRenderer::State(Widget& widget, CellRendererState cell_state)
 	{
-		return (StateFlags)gtk_cell_renderer_get_state(renderer, widget.GetWidget(), (GtkCellRendererState)cell_state);
+		return (StateFlags)gtk_cell_renderer_get_state(m_Renderer, widget.GetWidget(), (GtkCellRendererState)cell_state);
 	}
 
 	bool CellRenderer::IsActivatable()
 	{
-		return gtk_cell_renderer_is_activatable(renderer);
+		return gtk_cell_renderer_is_activatable(m_Renderer);
 	}
 
 	CGui::PreferredHeightData CellRenderer::PreferredHeight(Widget& widget)
 	{
 		gint minimum_size, natural_size;
 
-		gtk_cell_renderer_get_preferred_height(renderer, widget.GetWidget(), &minimum_size, &natural_size);
+		gtk_cell_renderer_get_preferred_height(m_Renderer, widget.GetWidget(), &minimum_size, &natural_size);
 
 		return { minimum_size, natural_size };
 	}
@@ -126,7 +126,7 @@ namespace CGui
 	{
 		gint minimum_size, natural_size;
 
-		gtk_cell_renderer_get_preferred_height_for_width(renderer, widget.GetWidget(), width, &minimum_size, &natural_size);
+		gtk_cell_renderer_get_preferred_height_for_width(m_Renderer, widget.GetWidget(), width, &minimum_size, &natural_size);
 
 		return { minimum_size, natural_size };
 	}
@@ -135,7 +135,7 @@ namespace CGui
 	{
 		GtkRequisition minimum_size, natural_size;
 
-		gtk_cell_renderer_get_preferred_size(renderer, widget.GetWidget(), &minimum_size, &natural_size);
+		gtk_cell_renderer_get_preferred_size(m_Renderer, widget.GetWidget(), &minimum_size, &natural_size);
 
 		return { { minimum_size.width, minimum_size.height }, { natural_size.width, natural_size.height } };
 	}
@@ -144,7 +144,7 @@ namespace CGui
 	{
 		gint minimum_size, natural_size;
 
-		gtk_cell_renderer_get_preferred_width(renderer, widget.GetWidget(), &minimum_size, &natural_size);
+		gtk_cell_renderer_get_preferred_width(m_Renderer, widget.GetWidget(), &minimum_size, &natural_size);
 
 		return { minimum_size, natural_size };
 	}
@@ -153,29 +153,29 @@ namespace CGui
 	{
 		gint minimum_size, natural_size;
 
-		gtk_cell_renderer_get_preferred_width_for_height(renderer, widget.GetWidget(), height, &minimum_size, &natural_size);
+		gtk_cell_renderer_get_preferred_width_for_height(m_Renderer, widget.GetWidget(), height, &minimum_size, &natural_size);
 
 		return { minimum_size, natural_size };
 	}
 
 	CGui::SizeRequestMode CellRenderer::RequestMode()
 	{
-		return (SizeRequestMode)gtk_cell_renderer_get_request_mode(renderer);
+		return (SizeRequestMode)gtk_cell_renderer_get_request_mode(m_Renderer);
 	}
 
 	GtkCellRenderer* CellRenderer::GetCellRenderer()
 	{
-		return renderer;
+		return m_Renderer;
 	}
 
 	CGui::CellRenderersTypes CellRenderer::CellRendererType()
 	{
-		return cell_renderer_type;
+		return m_Type;
 	}
 
 	bool CellRenderer::IsCellRenderer()
 	{
-		return GTK_IS_CELL_RENDERER(renderer);
+		return GTK_IS_CELL_RENDERER(m_Renderer);
 	}
 
 }

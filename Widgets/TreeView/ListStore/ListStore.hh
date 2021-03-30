@@ -14,8 +14,6 @@ namespace CGui
 		ListStore(std::vector<Type> types);
 		void ColumnTypes(Type types[], int n_columns);
 		bool Remove(TreeIter& iter);
-		template <typename N> // Only for determination of missing value args
-		void Set(TreeModel::TreeIter& iter, N column);
 		template <typename N, typename value>
 		void Set(TreeModel::TreeIter& iter, N column, value data);
 		template <typename N, typename value, typename ... RS>
@@ -28,9 +26,9 @@ namespace CGui
 		void Clear();
 		bool IterIsValid(TreeIter& iter);
 		void Reorder(int new_order[]);
-		void Swap(TreeIter& a, TreeIter& b);
-		void MoveAfter(TreeIter& iter, TreeIter& position);
-		void MoveBefore(TreeIter& iter, TreeIter& position);
+		void Swap(TreeModel::TreeIter& a, TreeModel::TreeIter& b);
+		void MoveAfter(TreeModel::TreeIter& iter, TreeModel::TreeIter& position);
+		void MoveBefore(TreeModel::TreeIter& iter, TreeModel::TreeIter& position);
 
 		GtkListStore* GetWidget();
 
@@ -38,6 +36,10 @@ namespace CGui
 
 	protected:
 		ListStore() = default;
+
+		template <typename N> // Only for determination of missing value args
+		void Set(TreeModel::TreeIter& iter, N column);
+
 		GtkListStore* store;
 	};
 

@@ -25,6 +25,8 @@ namespace CGui
 		bool IsLocked();
 		ModifierType ModifierMask();
 
+		bool IsAccelGroup();
+
 		class Accelerator
 		{
 		public:
@@ -55,7 +57,7 @@ namespace CGui
 		{
 			std::make_tuple(callback, args...)
 		};
-		DeleteOnQuit::GetInstance().Add(data);
+		DeleteOnQuit::Instance().Add(data);
 
 		auto main_callback = [](GClosure* sender, GValue* return_value, guint number_param, const GValue* params, gpointer invokation_hint, gpointer marshal_data) -> void
 		{
@@ -79,7 +81,7 @@ namespace CGui
 		{
 			std::make_tuple(callback, args...)
 		};
-		DeleteOnQuit::GetInstance().Add(data);
+		DeleteOnQuit::Instance().Add(data);
 
 		auto main_callback = [](GClosure* sender, GValue* return_value, guint number_param, const GValue* params, gpointer invokation_hint, gpointer marshal_data) -> void
 		{
@@ -103,7 +105,7 @@ namespace CGui
 		{
 			std::make_tuple(callback, args...)
 		};
-		DeleteOnQuit::GetInstance().Add(data);
+		DeleteOnQuit::Instance().Add(data);
 
 		auto main_callback = [](GClosure* sender, GValue* return_value, guint number_param, const GValue* params, gpointer invokation_hint, gpointer marshal_data) -> void
 		{

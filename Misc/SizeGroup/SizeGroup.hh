@@ -3,7 +3,7 @@
 #include <gtk/gtk.h>
 #include "../../Converter/Convert.hh"
 #include "../../Widgets/Widget.hh"
-#include "../../Custom/List/List.hh"
+#include "../../Custom/Vector/Vector.hh"
 
 namespace CGui
 {
@@ -16,10 +16,10 @@ namespace CGui
 		SizeGroupMode Mode();
 		void AddWidget(Widget& widget);
 		void RemoveWidget(Widget& widget);
-		Single::List<Widget> Widgets();
+		Vector<Widget> Widgets();
 		bool IsSizeGroup();
 
 	protected:
-		GtkSizeGroup* m_sizegroup;
+		GtkSizeGroup* m_SizeGroup;
 	};
 }

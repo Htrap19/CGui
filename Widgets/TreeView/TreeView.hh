@@ -61,7 +61,7 @@ namespace CGui
 		void InsertColumn(TreeViewColumn& column, int position);
 		unsigned int NColumns();
 		TreeViewColumn Column(int n);
-		Single::List<TreeViewColumn> Columns();
+		Vector<TreeViewColumn> Columns();
 		void MoveColumnAfter(TreeViewColumn& column, TreeViewColumn& base_column);
 		void ExpanderColumn(TreeViewColumn& column);
 		TreeViewColumn ExpanderColumn();

@@ -37,6 +37,11 @@ namespace CGui
 		return (ModifierType)gtk_accel_group_get_modifier_mask(accel_group);
 	}
 
+	bool AccelGroup::IsAccelGroup()
+	{
+		return GTK_IS_ACCEL_GROUP(accel_group);
+	}
+
 	bool AccelGroup::Accelerator::Valid(unsigned int keyval, ModifierType modifiers)
 	{
 		return gtk_accelerator_valid(keyval, (GdkModifierType)modifiers);

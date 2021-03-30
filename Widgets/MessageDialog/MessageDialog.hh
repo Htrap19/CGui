@@ -20,12 +20,12 @@ namespace CGui
 	template<typename ... Args>
 	void MessageDialog::SecondaryText(const char* fmt, Args ... args)
 	{
-		gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(widget), fmt, args...);
+		gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(m_Widget), fmt, args...);
 	}
 
 	template<typename ... Args>
 	void MessageDialog::SecondaryTextMarkup(const char* fmt, Args ...args)
 	{
-		gtk_message_dialog_format_secondary_markup(GTK_MESSAGE_DIALOG(widget), fmt, args...);
+		gtk_message_dialog_format_secondary_markup(GTK_MESSAGE_DIALOG(m_Widget), fmt, args...);
 	}
 }

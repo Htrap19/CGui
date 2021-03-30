@@ -9,14 +9,14 @@ namespace CGui
 
 	Box::Box(CGui::Orientation type, int spacing) : Container(this), Orientable(this)
 	{
-		widget = gtk_box_new((GtkOrientation)type, spacing);
-		this->SetContext(widget);
+		m_Widget = gtk_box_new((GtkOrientation)type, spacing);
+		this->SetContext(m_Widget);
 	}
 
 	void Box::Add(PackType type, Widget& w, bool expand, bool fill, unsigned int padding)
 	{
 		auto func = Converter::Convert::GetInstance().BoxFuncPtr(type);
-		func(GTK_BOX(widget), w.GetWidget(), expand, fill, padding);
+		func(GTK_BOX(m_Widget), w.GetWidget(), expand, fill, padding);
 	}
 
 	void Box::AddStart(Widget& w, bool expand, bool fill, unsigned int padding)
@@ -31,32 +31,32 @@ namespace CGui
 
 	void Box::Homogeneous(bool homogeneous)
 	{
-		gtk_box_set_homogeneous(GTK_BOX(widget), homogeneous);
+		gtk_box_set_homogeneous(GTK_BOX(m_Widget), homogeneous);
 	}
 
 	bool Box::Homogeneous()
 	{
-		return gtk_box_get_homogeneous(GTK_BOX(widget));
+		return gtk_box_get_homogeneous(GTK_BOX(m_Widget));
 	}
 
 	void Box::Spacing(int spacing)
 	{
-		gtk_box_set_spacing(GTK_BOX(widget), spacing);
+		gtk_box_set_spacing(GTK_BOX(m_Widget), spacing);
 	}
 
 	int Box::Spacing()
 	{
-		return gtk_box_get_spacing(GTK_BOX(widget));
+		return gtk_box_get_spacing(GTK_BOX(m_Widget));
 	}
 
 	void Box::ReorderChild(Widget& w, int position)
 	{
-		gtk_box_reorder_child(GTK_BOX(widget), w.GetWidget(), position);
+		gtk_box_reorder_child(GTK_BOX(m_Widget), w.GetWidget(), position);
 	}
 
 	void Box::ChildPacking(Widget& w, PackType type, bool expand, bool fill, unsigned int padding)
 	{
-		gtk_box_set_child_packing(GTK_BOX(widget), w.GetWidget(), expand, fill, padding, (GtkPackType)type);
+		gtk_box_set_child_packing(GTK_BOX(m_Widget), w.GetWidget(), expand, fill, padding, (GtkPackType)type);
 	}
 
 	ChildPackingInfo Box::QueryChildPacking(Widget& w)
@@ -65,34 +65,34 @@ namespace CGui
 		gboolean expand, fill;
 		unsigned int padding;
 
-		gtk_box_query_child_packing(GTK_BOX(widget), w.GetWidget(), &expand, &fill, &padding, &type);
+		gtk_box_query_child_packing(GTK_BOX(m_Widget), w.GetWidget(), &expand, &fill, &padding, &type);
 
 		return { (PackType)type, (bool)expand, (bool)fill, padding };
 	}
 
 	void Box::BaselinePosition(CGui::BaselinePosition position)
 	{
-		gtk_box_set_baseline_position(GTK_BOX(widget), (GtkBaselinePosition)position);
+		gtk_box_set_baseline_position(GTK_BOX(m_Widget), (GtkBaselinePosition)position);
 	}
 
 	CGui::BaselinePosition Box::BaselinePosition()
 	{
-		return (CGui::BaselinePosition)gtk_box_get_baseline_position(GTK_BOX(widget));
+		return (CGui::BaselinePosition)gtk_box_get_baseline_position(GTK_BOX(m_Widget));
 	}
 
 	void Box::CenterWidget(Widget& w)
 	{
-		gtk_box_set_center_widget(GTK_BOX(widget), w.GetWidget());
+		gtk_box_set_center_widget(GTK_BOX(m_Widget), w.GetWidget());
 	}
 
 	Widget Box::CenterWidget()
 	{
-		return Widget(gtk_box_get_center_widget(GTK_BOX(widget)));
+		return Widget(gtk_box_get_center_widget(GTK_BOX(m_Widget)));
 	}
 
 	bool Box::IsBox()
 	{
-		return GTK_IS_BOX(widget);
+		return GTK_IS_BOX(m_Widget);
 	}
 
 	Box::Box() : Container(this), Orientable(this)
@@ -100,7 +100,7 @@ namespace CGui
 
 	void Box::SetBox(GtkBox* box)
 	{
-		this->widget = GTK_WIDGET(box);
-		this->SetContext(widget);
+		this->m_Widget = GTK_WIDGET(box);
+		this->SetContext(m_Widget);
 	}
 };

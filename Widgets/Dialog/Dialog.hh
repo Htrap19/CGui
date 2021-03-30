@@ -22,7 +22,7 @@ namespace CGui
 		void Remove(Widget& child) override;
 		void InternalWidth(unsigned int width) override;
 		unsigned int InternalWidth() override;
-		Single::List<void*>* Children() override;
+		Vector<Widget> Children() override;
 		bool IsDialog();
 
 	protected:

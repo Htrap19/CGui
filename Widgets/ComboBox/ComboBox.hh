@@ -2,15 +2,16 @@
 
 #include "../Widget.hh"
 #include "../Container.hh"
+#include "../Handler.hh"
 #include "../TreeModel.hh"
 
 namespace CGui
 {
-	class ComboBox : public virtual Widget, public virtual Container<ComboBox>
+	class ComboBox : public virtual Widget, public virtual Container<ComboBox>, public virtual Handler<ComboBox>
 	{
 	public:
-		ComboBox(bool with_entry = false);
-		ComboBox(TreeModel& tree_modal);
+		ComboBox(bool with_entry);
+		ComboBox(TreeModel& tree_modal, bool with_entry);
 		ComboBox(GtkComboBox* combobox);
 		void WrapWidth(int width);
 		int WropWidth();
@@ -26,8 +27,8 @@ namespace CGui
 		int IdColumn();
 		bool ActiveId(const char* active_id);
 		const char* ActiveId();
-		void Modal(TreeModel& modal);
-		TreeModel Modal();
+		void Model(TreeModel& modal);
+		TreeModel Model();
 		void PopUp();
 		void PopDown();
 		void ButtonSensitivity(SensitivityType type);

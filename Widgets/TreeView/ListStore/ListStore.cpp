@@ -5,13 +5,13 @@ namespace CGui
 	ListStore::ListStore(Type types[], int n_columns)
 	{
 		store = gtk_list_store_newv(n_columns, (GType*)types);
-		model = GTK_TREE_MODEL(store);
+		m_Model = GTK_TREE_MODEL(store);
 	}
 
 	ListStore::ListStore(std::vector<Type> types)
 	{
 		store = gtk_list_store_newv(types.size(), (GType*)&types[0]);
-		model = GTK_TREE_MODEL(store);
+		m_Model = GTK_TREE_MODEL(store);
 	}
 
 	void ListStore::ColumnTypes(Type types[], int n_columns)
@@ -30,7 +30,7 @@ namespace CGui
 
 		gtk_list_store_insert(store, &iter, position);
 
-		return TreeModel::TreeIter(&iter);
+		return TreeModel::TreeIter(iter);
 	}
 
 	CGui::TreeModel::TreeIter ListStore::InsertBefore(TreeIter& sibling)
@@ -39,7 +39,7 @@ namespace CGui
 
 		gtk_list_store_insert_before(store, &iter, sibling.GetWidget());
 
-		return TreeModel::TreeIter(&iter);
+		return TreeModel::TreeIter(iter);
 	}
 
 	CGui::TreeModel::TreeIter ListStore::InsertAfter(TreeIter& sibling)
@@ -48,7 +48,7 @@ namespace CGui
 
 		gtk_list_store_insert_after(store, &iter, sibling.GetWidget());
 
-		return TreeModel::TreeIter(&iter);
+		return TreeModel::TreeIter(iter);
 	}
 
 	CGui::TreeModel::TreeIter ListStore::Append()
@@ -57,7 +57,7 @@ namespace CGui
 
 		gtk_list_store_append(store, &iter);
 
-		return TreeModel::TreeIter(&iter);
+		return TreeModel::TreeIter(iter);
 	}
 
 	CGui::TreeModel::TreeIter ListStore::Prepend()
@@ -66,7 +66,7 @@ namespace CGui
 
 		gtk_list_store_prepend(store, &iter);
 
-		return TreeModel::TreeIter(&iter);
+		return TreeModel::TreeIter(iter);
 	}
 
 	void ListStore::Clear()
@@ -74,7 +74,7 @@ namespace CGui
 		gtk_list_store_clear(store);
 	}
 
-	bool ListStore::IterIsValid(TreeIter& iter)
+	bool ListStore::IterIsValid(TreeModel::TreeIter& iter)
 	{
 		return gtk_list_store_iter_is_valid(store, iter.GetWidget());
 	}
@@ -84,17 +84,17 @@ namespace CGui
 		gtk_list_store_reorder(store, (gint*)new_order);
 	}
 
-	void ListStore::Swap(TreeIter& a, TreeIter& b)
+	void ListStore::Swap(TreeModel::TreeIter& a, TreeModel::TreeIter& b)
 	{
 		gtk_list_store_swap(store, a.GetWidget(), b.GetWidget());
 	}
 
-	void ListStore::MoveAfter(TreeIter& iter, TreeIter& position)
+	void ListStore::MoveAfter(TreeModel::TreeIter& iter, TreeModel::TreeIter& position)
 	{
 		gtk_list_store_move_after(store, iter.GetWidget(), position.GetWidget());
 	}
 
-	void ListStore::MoveBefore(TreeIter& iter, TreeIter& position)
+	void ListStore::MoveBefore(TreeModel::TreeIter& iter, TreeModel::TreeIter& position)
 	{
 		gtk_list_store_move_before(store, iter.GetWidget(), position.GetWidget());
 	}

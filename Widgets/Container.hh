@@ -1,9 +1,9 @@
 #pragma once
 
 #include <gtk/gtk.h>
+#include "../Custom/Vector/Vector.hh"
+#include "../Custom/VectorsUtilities/VectorUtilities.hh"
 #include "./Widget.hh"
-#include "../Custom/List/List.hh"
-#include "../Custom/DeleteOnQuit/DeleteOnQuit.hh"
 
 namespace CGui
 {
@@ -18,15 +18,6 @@ namespace CGui
 
 		virtual ~Container()
 		{
-			if (children.Size() >= 1)
-			{
-				children.ForEach([](void* data)
-					{
-						//DeleteOnQuit::GetInstance().Add(data);
-						delete data;
-					});
-				children.DeleteAll();
-			}
 		}
 
 		virtual void Add(Widget& w)
@@ -59,37 +50,18 @@ namespace CGui
 			return Widget(gtk_container_get_focus_child(GTK_CONTAINER(t_widget->GetWidget())));
 		}
 
-		virtual Single::List<void*>* Children()
+		virtual Vector<Widget> Children()
 		{
 			auto g_list = gtk_container_get_children(GTK_CONTAINER(t_widget->GetWidget()));
-
-			if (children.Size() >= 1)
-			{
-				children.ForEach([](void* data) -> void
-					{
-						delete data;
-					});
-
-				children.DeleteAll();
-			}
-
-			for (GList* li = g_list; li != NULL; li = li->next)
-			{
-				children.Insert(new Widget(GTK_WIDGET(li->data)));
-			}
-
+			Vector<Widget> children(std::move(GListToWidgetVector(g_list)));
 			g_list_free(g_list);
-
-			return &children;
+			return std::move(children);
 		}
 
 		bool IsContainer()
 		{
 			return GTK_IS_CONTAINER(t_widget->GetWidget());
 		}
-
-	protected:
-		Single::List<void*> children;
 
 	private:
 		WidgetType* t_widget;
@@ -106,15 +78,15 @@ namespace CGui
 
 		virtual ~Container()
 		{
-			if (children.Size() >= 1)
-			{
-				children.ForEach([](void* data)
-					{
-						//DeleteOnQuit::GetInstance().Add(data);
-						delete data;
-					});
-				children.DeleteAll();
-			}
+			//if (children.Size() >= 1)
+			//{
+			//	children.ForEach([](void* data)
+			//		{
+			//			//DeleteOnQuit::GetInstance().Add(data);
+			//			delete data;
+			//		});
+			//	children.DeleteAll();
+			//}
 		}
 
 		virtual void Add(Widget& w)
@@ -147,28 +119,22 @@ namespace CGui
 			return Widget(gtk_container_get_focus_child(GTK_CONTAINER(t_widget)));
 		}
 
-		virtual Single::List<void*>* Children()
+		virtual Vector<Widget> Children()
 		{
 			auto g_list = gtk_container_get_children(GTK_CONTAINER(t_widget));
 
-			if (children.Size() >= 1)
-			{
-				children.ForEach([](void* data) -> void
-					{
-						delete data;
-					});
+			//if (children.Size() >= 1)
+			//{
+			//	children.ForEach([](void* data) -> void
+			//		{
+			//			delete data;
+			//		});
 
-				children.DeleteAll();
-			}
-
-			for (GList* li = g_list; li != NULL; li = li->next)
-			{
-				children.Insert(new Widget(GTK_WIDGET(li->data)));
-			}
-
+			//	children.DeleteAll();
+			//}
+			Vector<Widget> children(std::move(GListToWidgetVector(g_list)));
 			g_list_free(g_list);
-
-			return &children;
+			return std::move(children);
 		}
 
 		bool IsContainer()
@@ -177,12 +143,10 @@ namespace CGui
 		}
 
 	protected:
-		Container() : t_widget{NULL}
+		Container() : t_widget{ nullptr }
 		{
 		}
 
 		GtkWidget* t_widget;
-
-		Single::List<void*> children;
 	};
 };

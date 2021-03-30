@@ -1,54 +1,56 @@
 #include "./FlowBox.hh"
 
+#include "../../Custom/VectorsUtilities/VectorUtilities.hh"
+
 namespace CGui
 {
 	FlowBox::Child::Child() : Container(this)
 	{
-		widget = gtk_flow_box_child_new();
-		this->SetContext(widget);
+		m_Widget = gtk_flow_box_child_new();
+		this->SetContext(m_Widget);
 	}
 
 	FlowBox::Child::Child(GtkFlowBoxChild* child) : Container(this)
 	{
-		widget = GTK_WIDGET(child);
-		this->SetContext(widget);
+		m_Widget = GTK_WIDGET(child);
+		this->SetContext(m_Widget);
 	}
 
 	int FlowBox::Child::Index()
 	{
-		return gtk_flow_box_child_get_index(GTK_FLOW_BOX_CHILD(widget));
+		return gtk_flow_box_child_get_index(GTK_FLOW_BOX_CHILD(m_Widget));
 	}
 
 	bool FlowBox::Child::IsSelected()
 	{
-		return gtk_flow_box_child_is_selected(GTK_FLOW_BOX_CHILD(widget));
+		return gtk_flow_box_child_is_selected(GTK_FLOW_BOX_CHILD(m_Widget));
 	}
 
 	void FlowBox::Child::Changed()
 	{
-		gtk_flow_box_child_changed(GTK_FLOW_BOX_CHILD(widget));
+		gtk_flow_box_child_changed(GTK_FLOW_BOX_CHILD(m_Widget));
 	}
 
 	bool FlowBox::Child::IsChild()
 	{
-		return GTK_IS_FLOW_BOX_CHILD(widget);
+		return GTK_IS_FLOW_BOX_CHILD(m_Widget);
 	}
 
 	FlowBox::FlowBox() : Container(this), Orientable(this)
 	{
-		widget = gtk_flow_box_new();
-		this->SetContext(widget);
+		m_Widget = gtk_flow_box_new();
+		this->SetContext(m_Widget);
 	}
 
 	FlowBox::FlowBox(GtkFlowBox* flow_box) : Container(this), Orientable(this)
 	{
-		widget = GTK_WIDGET(flow_box);
-		this->SetContext(widget);
+		m_Widget = GTK_WIDGET(flow_box);
+		this->SetContext(m_Widget);
 	}
 
 	void FlowBox::Insert(Widget& child, int position)
 	{
-		gtk_flow_box_insert(GTK_FLOW_BOX(widget), child.GetWidget(), position);
+		gtk_flow_box_insert(GTK_FLOW_BOX(m_Widget), child.GetWidget(), position);
 	}
 
 	void FlowBox::Append(Widget& child)
@@ -56,133 +58,132 @@ namespace CGui
 		this->Insert(child, -1);
 	}
 
+	void FlowBox::Prepend(Widget& child)
+	{
+		this->Insert(child, 0);
+	}
+
 	FlowBox::Child FlowBox::ChildAtIndex(int index)
 	{
-		return FlowBox::Child(gtk_flow_box_get_child_at_index(GTK_FLOW_BOX(widget), index));
+		return FlowBox::Child(gtk_flow_box_get_child_at_index(GTK_FLOW_BOX(m_Widget), index));
 	}
 
 	FlowBox::Child FlowBox::ChildAtPos(int x, int y)
 	{
-		return FlowBox::Child(gtk_flow_box_get_child_at_pos(GTK_FLOW_BOX(widget), x, y));
+		return FlowBox::Child(gtk_flow_box_get_child_at_pos(GTK_FLOW_BOX(m_Widget), x, y));
 	}
 
 	void FlowBox::HAdjustment(Adjustment adjustment)
 	{
-		gtk_flow_box_set_hadjustment(GTK_FLOW_BOX(widget), adjustment.GetAdjustment());
+		gtk_flow_box_set_hadjustment(GTK_FLOW_BOX(m_Widget), adjustment.GetAdjustment());
 	}
 
 	void FlowBox::VAdjustment(Adjustment adjustment)
 	{
-		gtk_flow_box_set_vadjustment(GTK_FLOW_BOX(widget), adjustment.GetAdjustment());
+		gtk_flow_box_set_vadjustment(GTK_FLOW_BOX(m_Widget), adjustment.GetAdjustment());
 	}
 
 	void FlowBox::Homogeneous(bool homogeneous)
 	{
-		gtk_flow_box_set_homogeneous(GTK_FLOW_BOX(widget), homogeneous);
+		gtk_flow_box_set_homogeneous(GTK_FLOW_BOX(m_Widget), homogeneous);
 	}
 
 	bool FlowBox::Homogeneous()
 	{
-		return gtk_flow_box_get_homogeneous(GTK_FLOW_BOX(widget));
+		return gtk_flow_box_get_homogeneous(GTK_FLOW_BOX(m_Widget));
 	}
 
 	void FlowBox::RowSpacing(unsigned int spacing)
 	{
-		gtk_flow_box_set_row_spacing(GTK_FLOW_BOX(widget), spacing);
+		gtk_flow_box_set_row_spacing(GTK_FLOW_BOX(m_Widget), spacing);
 	}
 
 	unsigned int FlowBox::RowSpacing()
 	{
-		return gtk_flow_box_get_row_spacing(GTK_FLOW_BOX(widget));
+		return gtk_flow_box_get_row_spacing(GTK_FLOW_BOX(m_Widget));
 	}
 
 	void FlowBox::ColumnSpacing(unsigned int spacing)
 	{
-		gtk_flow_box_set_column_spacing(GTK_FLOW_BOX(widget), spacing);
+		gtk_flow_box_set_column_spacing(GTK_FLOW_BOX(m_Widget), spacing);
 	}
 
 	unsigned int FlowBox::ColumnSpacing()
 	{
-		return gtk_flow_box_get_column_spacing(GTK_FLOW_BOX(widget));
+		return gtk_flow_box_get_column_spacing(GTK_FLOW_BOX(m_Widget));
 	}
 
 	void FlowBox::MinChildrenPerLine(unsigned int n_children)
 	{
-		gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(widget), n_children);
+		gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(m_Widget), n_children);
 	}
 
 	unsigned int FlowBox::MinChildrenPerLine()
 	{
-		return gtk_flow_box_get_min_children_per_line(GTK_FLOW_BOX(widget));
+		return gtk_flow_box_get_min_children_per_line(GTK_FLOW_BOX(m_Widget));
 	}
 
 	void FlowBox::MaxChildrenPerLine(unsigned int n_children)
 	{
-		gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(widget), n_children);
+		gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(m_Widget), n_children);
 	}
 
 	unsigned int FlowBox::MaxChildrenPerLine()
 	{
-		return gtk_flow_box_get_max_children_per_line(GTK_FLOW_BOX(widget));
+		return gtk_flow_box_get_max_children_per_line(GTK_FLOW_BOX(m_Widget));
 	}
 
 	void FlowBox::ActivateOnSingleClick(bool activate)
 	{
-		gtk_flow_box_set_activate_on_single_click(GTK_FLOW_BOX(widget), activate);
+		gtk_flow_box_set_activate_on_single_click(GTK_FLOW_BOX(m_Widget), activate);
 	}
 
 	bool FlowBox::ActivateOnSingleClick()
 	{
-		return gtk_flow_box_get_activate_on_single_click(GTK_FLOW_BOX(widget));
+		return gtk_flow_box_get_activate_on_single_click(GTK_FLOW_BOX(m_Widget));
 	}
 
-	Single::List<Widget> FlowBox::SelectedChildren()
+	Vector<Widget> FlowBox::SelectedChildren()
 	{
-		auto glist = gtk_flow_box_get_selected_children(GTK_FLOW_BOX(widget));
-		Single::List<Widget> ret;
-
-		for (GList* it = glist; it != NULL; it = it->next)
-		{
-			ret.Insert(Widget(GTK_WIDGET(it->data)));
-		}
+		auto glist = gtk_flow_box_get_selected_children(GTK_FLOW_BOX(m_Widget));
+		Vector<Widget> selectedchildren(std::move(GListToWidgetVector(glist)));
 		g_list_free(glist);
-
-		return ret;
+		return std::move(selectedchildren);
 	}
 
 	void FlowBox::SelectChild(FlowBox::Child& child)
 	{
-		gtk_flow_box_select_child(GTK_FLOW_BOX(widget), GTK_FLOW_BOX_CHILD(child.GetWidget()));
+		gtk_flow_box_select_child(GTK_FLOW_BOX(m_Widget), GTK_FLOW_BOX_CHILD(child.GetWidget()));
 	}
 
 	void FlowBox::UnselectChild(FlowBox::Child& child)
 	{
-		gtk_flow_box_unselect_child(GTK_FLOW_BOX(widget), GTK_FLOW_BOX_CHILD(child.GetWidget()));
+		gtk_flow_box_unselect_child(GTK_FLOW_BOX(m_Widget), GTK_FLOW_BOX_CHILD(child.GetWidget()));
 	}
 
 	void FlowBox::SelectAll()
 	{
-		gtk_flow_box_select_all(GTK_FLOW_BOX(widget));
+		gtk_flow_box_select_all(GTK_FLOW_BOX(m_Widget));
 	}
 
 	void FlowBox::UnselectAll()
 	{
-		gtk_flow_box_unselect_all(GTK_FLOW_BOX(widget));
+		gtk_flow_box_unselect_all(GTK_FLOW_BOX(m_Widget));
 	}
 
 	void FlowBox::SelectionMode(CGui::SelectionMode mode)
 	{
-		gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(widget), (GtkSelectionMode)mode);
+		gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(m_Widget), (GtkSelectionMode)mode);
 	}
 
 	CGui::SelectionMode FlowBox::SelectionMode()
 	{
-		return (CGui::SelectionMode)gtk_flow_box_get_selection_mode(GTK_FLOW_BOX(widget));
+		return (CGui::SelectionMode)gtk_flow_box_get_selection_mode(GTK_FLOW_BOX(m_Widget));
 	}
 
 	bool FlowBox::IsFlowBox()
 	{
-		return GTK_IS_FLOW_BOX(widget);
+		return GTK_IS_FLOW_BOX(m_Widget);
 	}
 
 }

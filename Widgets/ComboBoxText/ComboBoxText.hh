@@ -7,7 +7,7 @@ namespace CGui
 	class ComboBoxText : public virtual ComboBox
 	{
 	public:
-		ComboBoxText(bool with_entry = false);
+		ComboBoxText(bool with_entry);
 		ComboBoxText(GtkComboBoxText* combo_box_text);
 		void Append(const char* id, const char* text);
 		void Prepend(const char* id, const char* text);

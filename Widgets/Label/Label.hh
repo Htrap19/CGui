@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Widget.hh"
+#include "../../Converter/Convert.hh"
 
 namespace CGui
 {
@@ -8,10 +9,12 @@ namespace CGui
 	{
 	public:
 		Label(GtkLabel* label);
-		Label(const char* text);
-		void Text(const char* text);
+		Label(const char* text, bool mnemonic = false);
+		void Text(const char* text, bool mnemonic = false);
 		const char* Text();
-		void Markup(const char* str);
+		void TextLabel(const char* label);
+		const char* TextLabel();
+		void Markup(const char* str, bool mnemonic = false);
 		void Pattern(const char* pattern);
 		void Justify(Justification justify);
 		Justification Justify();
@@ -31,8 +34,10 @@ namespace CGui
 		WrapMode LineWrapMode();
 		void Lines(int lines);
 		int Lines();
-		std::pair<int, int> LayoutOffsets();
+		CoordinatesInfo LayoutOffsets();
+		unsigned int MnemonicKeyval();
 		void SelectRegion(int start_offset, int end_offset);
+		void MnemonicWidget(Widget& widget);
 		void Selectable(bool selectable);
 		bool Selectable();
 		void UseMarkup(bool use_markup);
@@ -46,6 +51,7 @@ namespace CGui
 		const char* CurrentUri();
 		void TrackVisitedLinks(bool track_links);
 		bool TrackVisitedLinks();
+
 		bool IsLabel();
 	};
 };

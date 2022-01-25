@@ -103,6 +103,8 @@ int main(int argc, char *argv[])
   window.DefaultSize(640, 480); // window default size
   window.InternalWidth(10); // Internal window width
   window.ShowAll(); // Show all widgets
+  
+  init.Render(); // Start the main loop
 
   return 0;
 }
@@ -131,6 +133,8 @@ int main(int argc, char *argv[])
   window.DefaultSize(640, 480); // window default size
   window.InternalWidth(10); // Internal window width
   window.ShowAll(); // Show all widgets 
+  
+  init.Render(); // Start the main loop
   
   return 0;
 }
@@ -166,6 +170,8 @@ int main(int argc, char *argv[])
   window.InternalWidth(10); // Internal window width
   window.ShowAll(); // Show all widgets
   
+  init.Render(); // Start the main loop
+  
   return 0;
 }
 ```
@@ -177,7 +183,7 @@ On Button clicked:- <br>
 ## Contribution
 **Email: developmentprogramming154@gmail.com**
 
-## Owner Info
+## Developer Info
 **Name: Parth Lodhia** <br>
 **Age: 17** <br>
 **Email: parthlodhia154@gmail.com**

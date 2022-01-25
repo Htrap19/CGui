@@ -5,12 +5,14 @@
 #include "../Vector/Vector.hh"
 #include "../../Pixbuf/Pixbuf/Pixbuf.hh"
 #include "../../Widgets/Menifest.hh"
+#include "../../Widgets/TreeModel.hh"
 
 namespace CGui
 {
 	Vector<Widget> GSListToWidgetVector(GSList* begin);
 	Vector<Widget> GListToWidgetVector(GList* begin);
 	Vector<Pixbuf> GListToPixbufVector(GList* begin);
+	Vector<TreeModel::TreePath> GListToTreePath(GList* begin);
 	Vector<RadioButton> WidgetVectorToRadioButton(Vector<Widget>&& vec);
 	Vector<Window> WidgetVectorToWindow(Vector<Widget>&& vec);
 	Vector<TreeViewColumn> WidgetVectorToTreeViewColumn(Vector<Widget>&& vec);

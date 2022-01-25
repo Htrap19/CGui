@@ -4,7 +4,7 @@ namespace CGui
 {
 	Label::Label(GtkLabel* label)
 	{
-		m_Widget = GTK_WIDGET(m_Widget);
+		m_Widget = GTK_WIDGET(label);
 		this->SetContext(m_Widget);
 	}
 

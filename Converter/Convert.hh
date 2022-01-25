@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gtk/gtk.h>
+#include <vector>
 
 #ifndef nameof
 #define nameof(name) CGui::Converter::Convert::RetName(#name)
@@ -264,7 +265,20 @@ namespace CGui
 
 	enum class PopoverConstraint { NONE, WINDOW };
 
-	enum class Type : GType { INVALID = G_TYPE_INVALID, NONE = G_TYPE_NONE, INTERFACE = G_TYPE_INTERFACE, CHAR = G_TYPE_CHAR, UCHAR = G_TYPE_UCHAR, BOOLEAN = G_TYPE_BOOLEAN, INT = G_TYPE_INT, UINT = G_TYPE_UINT, LONG = G_TYPE_LONG, ULONG = G_TYPE_ULONG, INT64 = G_TYPE_INT64, UINT64 = G_TYPE_UINT64, ENUM = G_TYPE_ENUM, FLAGS = G_TYPE_FLAGS, FLOAT = G_TYPE_FLOAT, DOUBLE = G_TYPE_DOUBLE, STRING = G_TYPE_STRING, POINTER = G_TYPE_POINTER, BOXED = G_TYPE_BOXED, PARAM = G_TYPE_PARAM, OBJECT = G_TYPE_OBJECT, VARIANT = G_TYPE_VARIANT };
+	enum class Type { INVALID = G_TYPE_INVALID, NONE = G_TYPE_NONE, INTERFACE = G_TYPE_INTERFACE, CHAR = G_TYPE_CHAR, UCHAR = G_TYPE_UCHAR, BOOLEAN = G_TYPE_BOOLEAN, INT = G_TYPE_INT, UINT = G_TYPE_UINT, LONG = G_TYPE_LONG, ULONG = G_TYPE_ULONG, INT64 = G_TYPE_INT64, UINT64 = G_TYPE_UINT64, ENUM = G_TYPE_ENUM, FLAGS = G_TYPE_FLAGS, FLOAT = G_TYPE_FLOAT, DOUBLE = G_TYPE_DOUBLE, STRING = G_TYPE_STRING, POINTER = G_TYPE_POINTER, BOXED = G_TYPE_BOXED, PARAM = G_TYPE_PARAM, OBJECT = G_TYPE_OBJECT, VARIANT = G_TYPE_VARIANT, PIXBUF = 100 };
+
+	static std::vector<GType> MakeGType(std::vector<Type> types)
+	{
+		std::vector<GType> gtypes;
+		for (auto& type : types)
+		{
+			if (type == Type::PIXBUF)
+				gtypes.push_back((GType)gdk_pixbuf_get_type());
+			else
+				gtypes.push_back((GType)type);
+		}
+		return std::move(gtypes);
+	}
 
 	enum class CellRendererState { SELECTED = 1 << 0, PRELIT = 1 << 1, INSENSITIVE = 1 << 2, SORTED = 1 << 3, FOCUSED = 1 << 4, EXPANDABLE = 1 << 5, EXPANDED = 1 << 6 };
 

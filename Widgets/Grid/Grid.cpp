@@ -49,12 +49,12 @@ namespace CGui
 		return gtk_grid_get_row_homogeneous(GTK_GRID(m_Widget));
 	}
 
-	void Grid::RowSpacing(bool row_spacing)
+	void Grid::RowSpacing(unsigned int spacing)
 	{
-		gtk_grid_set_row_spacing(GTK_GRID(m_Widget), row_spacing);
+		gtk_grid_set_row_spacing(GTK_GRID(m_Widget), spacing);
 	}
 
-	bool Grid::RowSpacing()
+	unsigned int Grid::RowSpacing()
 	{
 		return gtk_grid_get_row_spacing(GTK_GRID(m_Widget));
 	}
@@ -69,12 +69,12 @@ namespace CGui
 		return gtk_grid_get_column_homogeneous(GTK_GRID(m_Widget));
 	}
 
-	void Grid::ColumnSpacing(bool column_spacing)
+	void Grid::ColumnSpacing(unsigned int spacing)
 	{
-		gtk_grid_set_column_spacing(GTK_GRID(m_Widget), column_spacing);
+		gtk_grid_set_column_spacing(GTK_GRID(m_Widget), spacing);
 	}
 
-	bool Grid::ColumnSpacing()
+	unsigned int Grid::ColumnSpacing()
 	{
 		return gtk_grid_get_column_spacing(GTK_GRID(m_Widget));
 	}

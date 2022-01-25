@@ -77,6 +77,11 @@ namespace CGui
 		this->SetContext(m_Widget);
 	}
 
+	void ListBox::Append(Widget& child)
+	{
+		this->Insert(child, -1);
+	}
+
 	void ListBox::Prepend(Widget& child)
 	{
 		gtk_list_box_prepend(GTK_LIST_BOX(m_Widget), child.GetWidget());

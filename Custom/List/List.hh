@@ -1,758 +1,279 @@
 #pragma once
 
-#include <iostream>
+#include <utility>
 
 namespace CGui
 {
 	namespace Single
 	{
-		template <typename Data>
-		class Node
+		template <typename List>
+		class ListIterator
 		{
 		public:
-			Data data;
-			Node<Data>* next;
+			using NodePtr = typename List::NodePtr;
+			using ReferenceType = typename List::ValueType&;
+
+		public:
+			ListIterator(NodePtr ptr) : m_Ptr(ptr)
+			{}
+
+			ListIterator& operator++()
+			{
+				m_Ptr = m_Ptr->m_Next;
+				return *this;
+			}
+
+			ListIterator& operator++(int)
+			{
+				ListIterator temp = *this;
+				m_Ptr = m_Ptr->m_Next;
+				return temp;
+			}
+
+			ReferenceType operator[](size_t index)
+			{
+				if (index == 0)
+					return m_Ptr->m_Data;
+
+				size_t idx = 0;
+				while (m_Ptr != nullptr)
+				{
+					if (idx == index)
+						break;
+
+					m_Ptr = m_Ptr->m_Next;
+					idx++;
+				}
+
+				return m_Ptr->m_Data;
+			}
+
+			ReferenceType operator*()
+			{
+				return m_Ptr->m_Data;
+			}
+
+			bool operator==(const ListIterator& other)
+			{
+				return (m_Ptr == other.m_Ptr);
+			}
+
+			bool operator!=(const ListIterator& other)
+			{
+				return !(*this == other);
+			}
+
+		private:
+			NodePtr m_Ptr;
 		};
 
-		template <typename Data>
+		template <typename T>
+		struct Node
+		{
+			T m_Data;
+			Node<T>* m_Next;
+
+			Node() = default;
+			Node(const T& data) : m_Data(data), m_Next(nullptr)
+			{}
+			Node(T&& data) : m_Data(std::move(data)), m_Next(nullptr)
+			{}
+
+			Node(const Node&) = delete;
+			Node(Node&&) = delete;
+		};
+
+		template <typename T>
 		class List
 		{
 		public:
-			List();
-			virtual ~List();
-			bool IsEmpty();
-			unsigned int Insert(Data data);
-			Data First();
-			Data Last();
-			unsigned int Size();
-			bool SelectData(Data data);
-			bool HasSelectedData();
-			Data& SelectedData();
-			void UnselectData();
-			bool Exists(Data data);
-			bool Exists(bool(*func)(List<Data>*));
-			template <typename filter, typename ... Args> List<filter> Filter(filter(*func)(Node<Data>*, Args...), Args ... args);
-			template <typename filter, typename ... Args> List<filter> Filter(filter(*func)(Data, Args...), Args ... args);
-			unsigned int Find(Data data);
-			void ForEach(void(*func)(Node<Data>*));
-			void ForEach(void(*func)(Node<Data>*, unsigned int));
-			void ForEach(void(*func)(Data));
-			void ForEach(void(*func)(Data, unsigned int));
-			template <typename ... Args> void ForEach(void(*func)(Node<Data>*, Args...), Args ... args);
-			template <typename ... Args> void ForEach(void(*func)(Data, Args...), Args ... args);
-			template <typename ... Args> void ForEach(void(*func)(Node<Data>*, unsigned int, Args...), Args ... args);
-			template <typename ... Args> void ForEach(void(*func)(Data, unsigned int, Args...), Args ... args);
-			bool Delete(Data data);
-			void DeleteAll();
+			using ValueType = T;
+			using Node = typename Node<T>;
+			using NodePtr = Node*;
+			using Iterator = ListIterator<List<T>>;
 
-			Data operator[](unsigned int index);
+		public:
+			List() : m_Head(nullptr), m_Size(0)
+			{
+			}
+
+			List(const List& other)
+			{
+				m_Size = other.m_Size;
+				NodePtr node = other.m_Head;
+				while (node != nullptr)
+				{
+					NodePtr newNode = new Node(node->m_Data);
+					PlaceBackNode(newNode);
+					node = node->m_Next;
+				}
+			}
+
+			List(List&& other)
+			{
+				m_Size = other.m_Size;
+				m_Head = other.m_Head;
+				other.m_Head = nullptr;
+				other.m_Size = 0;
+			}
+
+			~List()
+			{
+				Clear();
+			}
+
+			void PushFront(const T& obj)
+			{
+				NodePtr newNode = new Node(obj);
+				m_Size++;
+				PlaceFrontNode(newNode);
+			}
+
+			void PushFront(T&& obj)
+			{
+				NodePtr newNode = new Node(std::move(obj));
+				m_Size++;
+				PlaceFrontNode(newNode);
+			}
+
+			void PushBack(const T& obj)
+			{
+				NodePtr newNode = new Node(obj);
+				m_Size++;
+				PlaceBackNode(newNode);
+			}
+
+			void PushBack(T&& obj)
+			{
+				NodePtr newNode = new Node(std::move(obj));
+				m_Size++;
+				PlaceBackNode(newNode);
+			}
+
+			template <typename ... Args>
+			T& EmplaceFront(Args&& ... args)
+			{
+				NodePtr newNode = (NodePtr)::operator new(sizeof(Node));
+				new(&newNode->m_Data) T(std::forward<Args>(args)...);
+				m_Size++;
+
+				PlaceFrontNode(newNode);
+
+				return newNode->m_Data;
+			}
+
+			template <typename ... Args>
+			T& EmplaceBack(Args&& ... args)
+			{
+				NodePtr newNode = (NodePtr)::operator new(sizeof(Node));
+				new(&newNode->m_Data) T(std::forward<Args>(args)...);
+				m_Size++;
+
+				PlaceBackNode(newNode);
+
+				return newNode->m_Data;
+			}
+
+			void Remove(const T& obj)
+			{
+				NodePtr node = m_Head;
+				NodePtr prevNode = nullptr;
+				while (node != nullptr)
+				{
+					if (const_cast<T&>(obj) == node->m_Data)
+						break;
+
+					prevNode = node;
+					node = node->m_Next;
+				}
+
+				if (node != nullptr)
+				{
+					if (prevNode != nullptr)
+						prevNode->m_Next = node->m_Next;
+					else
+						m_Head = node->m_Next;
+
+					node->m_Data.~T();
+					::operator delete(node, sizeof(Node));
+					m_Size--;
+				}
+			}
+
+			void Clear()
+			{
+				NodePtr node = m_Head;
+				NodePtr nextNode = nullptr;
+				while (node != nullptr)
+				{
+					nextNode = node->m_Next;
+					node->m_Data.~T();
+					::operator delete(node, sizeof(Node));
+
+					node = nextNode;
+				}
+				m_Head = nullptr;
+				m_Size = 0;
+			}
+
+			size_t Size() const
+			{
+				return m_Size;
+			}
+
+			Iterator begin()
+			{
+				return Iterator(m_Head);
+			}
+
+			Iterator end()
+			{
+				return Iterator(nullptr);
+			}
+
+			T& operator[](size_t index)
+			{
+				if (index > m_Size)
+					throw "[List]: Out of range!.";
+
+				return begin()[index];
+			}
+
+			const T& operator[](size_t index) const
+			{
+				if (index > m_Size)
+					throw "[List]: Out of range!.";
+
+				return begin()[index];
+			}
+
+		protected:
+			void PlaceFrontNode(NodePtr newNode)
+			{
+				newNode->m_Next = m_Head;
+				m_Head = newNode;
+			}
+
+			void PlaceBackNode(NodePtr newNode)
+			{
+				if (m_Head == nullptr)
+					PlaceFrontNode(newNode);
+				else
+				{
+					NodePtr node = m_Head;
+					while (node != nullptr && node->m_Next != nullptr)
+						node = node->m_Next;
+
+					newNode->m_Next = node->m_Next;
+					node->m_Next = newNode;
+				}
+			}
 
 		private:
-			Node<Data>* head;
-			Data* selected_data;
+			NodePtr m_Head;
+			size_t m_Size;
 		};
 
-		template <typename Data>
-		List<Data>::List() : selected_data{ nullptr }
-		{
-			head = nullptr;
-		}
-
-		template <typename Data>
-		List<Data>::~List()
-		{
-			this->DeleteAll();
-		}
-
-		template <typename Data>
-		unsigned int List<Data>::Insert(Data data)
-		{
-			Node<Data>* currNode = head;
-			unsigned int index = 0;
-
-			while (currNode && currNode->next != nullptr)
-			{
-				currNode = currNode->next;
-				index++;
-			}
-
-			Node<Data>* newNode = new Node<Data>;
-			newNode->data = data;
-
-			if (head == nullptr)
-			{
-				newNode->next = head;
-				head = newNode;
-			}
-			else
-			{
-				newNode->next = currNode->next;
-				currNode->next = newNode;
-			}
-
-			return index;
-		}
-
-		template <typename Data>
-		Data List<Data>::First()
-		{
-			return head->data;
-		}
-
-		template <typename Data>
-		Data List<Data>::Last()
-		{
-			Node<Data>* currNode = head;
-			while (currNode && currNode->next != nullptr)
-				currNode = currNode->next;
-
-			return currNode->data;
-		}
-
-		template <typename Data>
-		unsigned int List<Data>::Size()
-		{
-			if (head == nullptr)
-				return 0;
-
-			Node<Data>* currNode = head;
-			unsigned int size = 0;
-
-			while (currNode != nullptr)
-			{
-				size++;
-				currNode = currNode->next;
-			}
-
-			return size;
-		}
-
-		template <typename Data>
-		bool List<Data>::SelectData(Data data)
-		{
-			Node<Data>* currNode = head;
-
-			while (currNode != nullptr)
-			{
-				if (currNode->data == data)
-				{
-					selected_data = &data;
-					return true;
-				}
-				else
-				{
-					currNode = currNode->next;
-					continue;
-				}
-			}
-
-			return false;
-		}
-
-		template <typename Data>
-		bool List<Data>::HasSelectedData()
-		{
-			return !(selected_data == nullptr);
-		}
-
-		template <typename Data>
-		Data& List<Data>::SelectedData()
-		{
-			return *selected_data;
-		}
-
-		template <typename Data>
-		void List<Data>::UnselectData()
-		{
-			selected_data = nullptr;
-		}
-
-		template <typename Data>
-		bool List<Data>::Exists(Data data)
-		{
-			Node<Data>* currNode = head;
-
-			while (currNode && currNode->next != nullptr)
-			{
-				if (currNode->data == data)
-					return true;
-
-				currNode = currNode->next;
-			}
-
-			return false;
-		}
-
-		template <typename Data>
-		bool List<Data>::Exists(bool(*func)(List<Data>*))
-		{
-			return func(this);
-		}
-
-		template <typename Data>
-		template <typename filter, typename ... Args> List<filter> List<Data>::Filter(filter(*func)(Node<Data>*, Args...), Args ... args)
-		{
-			Node<Data>* currNode = head;
-			List<filter> ret;
-
-			while (currNode != nullptr)
-			{
-				ret.Insert(func(currNode, args...));
-				currNode = currNode->next;
-			}
-
-			return ret;
-		}
-
-		template <typename Data>
-		template <typename filter, typename ... Args> List<filter> List<Data>::Filter(filter(*func)(Data, Args...), Args ... args)
-		{
-			Node<Data>* currNode = head;
-			List<filter> ret;
-
-			while (currNode != nullptr)
-			{
-				ret.Insert(func(currNode->data, args...));
-				currNode = currNode->next;
-			}
-
-			return ret;
-		}
-
-		template <typename Data>
-		unsigned int List<Data>::Find(Data data)
-		{
-			Node<Data>* currNode = head;
-			unsigned int index = 0;
-
-			while (currNode && currNode != nullptr)
-			{
-				if (currNode->data == data)
-					return index;
-
-				currNode = currNode->next;
-				index++;
-			}
-
-			return 0;
-		}
-
-		template <typename Data>
-		void List<Data>::ForEach(void(*func)(Node<Data>*))
-		{
-			Node<Data>* currNode = head;
-			while (currNode != nullptr)
-			{
-				func(currNode);
-				currNode = currNode->next;
-			}
-		}
-
-		template<typename Data>
-		inline void List<Data>::ForEach(void(*func)(Node<Data>*, unsigned int))
-		{
-			Node<Data>* currNode = head;
-			unsigned int index = 0;
-			while (currNode != nullptr)
-			{
-				func(currNode, index);
-				index++;
-				currNode = currNode->next;
-			}
-		}
-
-		template<typename Data>
-		void List<Data>::ForEach(void(*func)(Data))
-		{
-			Node<Data>* currNode = head;
-			while (currNode != nullptr)
-			{
-				func(currNode->data);
-				currNode = currNode->next;
-			}
-		}
-
-		template<typename Data>
-		inline void List<Data>::ForEach(void(*func)(Data, unsigned int))
-		{
-			Node<Data>* currNode = head;
-			unsigned int index = 0;
-			while (currNode != nullptr)
-			{
-				func(currNode->data, index);
-				index++;
-				currNode = currNode->next;
-			}
-		}
-
-		template <typename Data>
-		template <typename ... Args> void List<Data>::ForEach(void(*func)(Node<Data>*, Args...), Args ... args)
-		{
-			Node<Data>* currNode = head;
-			while (currNode != nullptr)
-			{
-				func(currNode, args...);
-				currNode = currNode->next;
-			}
-		}
-
-		template<typename Data>
-		template<typename ... Args> void List<Data>::ForEach(void(*func)(Data, Args...), Args ...args)
-		{
-			Node<Data>* currNode = head;
-			while (currNode != nullptr)
-			{
-				func(currNode->data, args...);
-				currNode = currNode->next;
-			}
-		}
-
-		template<typename Data>
-		template<typename ...Args>
-		inline void List<Data>::ForEach(void(*func)(Node<Data>*, unsigned int, Args...), Args ...args)
-		{
-			Node<Data>* currNode = head;
-			unsigned int index = 0;
-
-			while (currNode != nullptr)
-			{
-				func(currNode, index, args...);
-				index++;
-				currNode = currNode->next;
-			}
-		}
-
-		template<typename Data>
-		template<typename ...Args>
-		inline void List<Data>::ForEach(void(*func)(Data, unsigned int, Args...), Args ...args)
-		{
-			Node<Data>* currNode = head;
-			unsigned int index = 0;
-
-			while (currNode != nullptr)
-			{
-				func(currNode->data, index, args...);
-				index++;
-				currNode = currNode->next;
-			}
-		}
-
-		template <typename Data>
-		bool List<Data>::Delete(Data data)
-		{
-			Node<Data>* currNode = head;
-			Node<Data>* prevNode = nullptr;
-
-			while (currNode && currNode->next != nullptr)
-			{
-				if (currNode->data != data)
-				{
-					prevNode = currNode;
-					currNode = currNode->next;
-				}
-				else
-					break;
-			}
-
-			if (currNode)
-				if (prevNode)
-				{
-					prevNode->next = currNode->next;
-					delete currNode;
-					currNode = nullptr;
-					return true;
-				}
-				else
-				{
-					head = currNode->next;
-					delete currNode;
-					currNode = nullptr;
-					return true;
-				}
-
-			return false;
-		}
-
-		template<typename Data>
-		void List<Data>::DeleteAll()
-		{
-			Node<Data>* currNode = head;
-			Node<Data>* nextNode = nullptr;
-
-			while (currNode != nullptr)
-			{
-				nextNode = currNode->next;
-				delete currNode;
-				currNode = nextNode;
-			}
-
-			head = nullptr;
-		}
-
-		template<typename Data>
-		Data List<Data>::operator[](unsigned int index)
-		{
-			if (index <= 0)
-				return head->data;
-
-			Node<Data>* currNode = head;
-			unsigned int currIndex = 0;
-
-			while (currNode && currNode != nullptr)
-			{
-				if (currIndex != index)
-				{
-					currNode = currNode->next;
-					currIndex++;
-					continue;
-				}
-				else
-					break;
-			}
-
-			return currNode->data;
-		}
-	};
-
-	namespace KeyValue
-	{
-		template <typename Key, typename Value>
-		class Node
-		{
-		public:
-			Key key;
-			Value value;
-			Node<Key, Value>* next;
-		};
-
-		template <typename Key, typename Value>
-		class List
-		{
-		public:
-			List(void);
-			virtual ~List(void);
-			bool IsEmpty();
-			KeyValueData<Key, Value> Insert(Key key, Value value);
-			KeyValueData<Key, Value> First();
-			KeyValueData<Key, Value> Last();
-			unsigned int Size();
-			bool ExistsValue(Value value);
-			bool ExistsKey(Key key);
-			KeyValueData<Key, Value> FindByKey(Key key);
-			KeyValueData<Key, Value> FindByValue(Value value);
-			void ForEach(void(*func)(Node<Key, Value>*));
-			void ForEach(void(*func)(Key&, Value&));
-			template <typename ... Args> void ForEach(void(*func)(Node<Key, Value>*, Args...), Args ... args);
-			template <typename ... Args> void ForEach(void(*func)(Key&, Value&, Args...), Args ... args);
-			bool DeleteKey(Key key);
-			bool DeleteValue(Value value);
-
-			KeyValueData<Key, Value> operator[](unsigned int index);
-
-		private:
-			Node<Key, Value>* head;
-		};
-
-		template <typename Key, typename Value>
-		List<Key, Value>::List()
-		{
-			head = nullptr;
-		}
-
-		template <typename Key, typename Value>
-		List<Key, Value>::~List()
-		{
-			Node<Key, Value>* currNode = head, * nextNode = nullptr;
-
-			while (currNode != nullptr)
-			{
-				nextNode = currNode->next;
-				delete currNode;
-				currNode = nextNode;
-			}
-		}
-
-		template <typename Key, typename Value>
-		bool List<Key, Value>::IsEmpty()
-		{
-			return (head == nullptr);
-		}
-
-		template <typename Key, typename Value>
-		KeyValueData<Key, Value> List<Key, Value>::Insert(Key key, Value value)
-		{
-			Node<Key, Value>* currNode = head;
-			unsigned int index = 0;
-
-			while (currNode && currNode->next != nullptr)
-			{
-				currNode = currNode->next;
-				index++;
-			}
-
-			Node<Key, Value>* newNode = new Node<Key, Value>;
-			newNode->key = key;
-			newNode->value = value;
-
-			if (head == nullptr)
-			{
-				newNode->next = head;
-				head = newNode;
-			}
-			else
-			{
-				newNode->next = currNode->next;
-				currNode->next = newNode;
-			}
-
-			return { newNode->key, newNode->value, index };
-		}
-
-		template <typename Key, typename Value>
-		KeyValueData<Key, Value> List<Key, Value>::First()
-		{
-			return { head->key, head->value, 0 };
-		}
-
-		template <typename Key, typename Value>
-		KeyValueData<Key, Value> List<Key, Value>::Last()
-		{
-			Node<Key, Value>* currNode = head;
-			unsigned int index = 0;
-
-			while (currNode && currNode->next != nullptr)
-			{
-				currNode = currNode->next;
-				index++;
-			}
-
-			return { currNode->key, currNode->value, index };
-		}
-
-		template <typename Key, typename Value>
-		unsigned int List<Key, Value>::Size()
-		{
-			if (head == nullptr)
-				return 0;
-
-			Node<Key, Value>* currNode = head;
-			unsigned int size = 0;
-
-			while (currNode != nullptr)
-			{
-				size++;
-				currNode = currNode->next;
-			}
-
-			return size;
-		}
-
-		template <typename Key, typename Value>
-		bool List<Key, Value>::ExistsKey(Key key)
-		{
-			Node<Key, Value>* currNode = head;
-
-			while (currNode && currNode->next != nullptr)
-			{
-				if (currNode->key == key)
-					return true;
-
-				currNode = currNode->next;
-			}
-
-			return false;
-		}
-
-		template <typename Key, typename Value>
-		bool List<Key, Value>::ExistsValue(Value value)
-		{
-			Node<Key, Value>* currNode = head;
-
-			while (currNode && currNode->next != nullptr)
-			{
-				if (currNode->value == value)
-					return true;
-
-				currNode = currNode->next;
-			}
-
-			return false;
-		}
-
-		template <typename Key, typename Value>
-		KeyValueData<Key, Value> List<Key, Value>::FindByKey(Key key)
-		{
-			Node<Key, Value>* currNode = head;
-			unsigned int index = 0;
-
-			while (currNode && currNode != nullptr)
-			{
-				if (currNode->key == key)
-					return { currNode->key, currNode->value, index };
-
-				currNode = currNode->next;
-				index++;
-			}
-
-			return { };
-		}
-
-		template <typename Key, typename Value>
-		KeyValueData<Key, Value> List<Key, Value>::FindByValue(Value value)
-		{
-			Node<Key, Value>* currNode = head;
-			unsigned int index = 0;
-
-			while (currNode && currNode != nullptr)
-			{
-				if (currNode->value == value)
-					return { currNode->key, currNode->value, index };
-
-				currNode = currNode->next;
-				index++;
-			}
-
-			return { };
-		}
-
-		template <typename Key, typename Value>
-		void List<Key, Value>::ForEach(void(*func)(Node<Key, Value>*))
-		{
-			Node<Key, Value>* currNode = head;
-
-			while (currNode != nullptr)
-			{
-				func(currNode);
-				currNode = currNode->next;
-			}
-		}
-
-		template <typename Key, typename Value>
-		void List<Key, Value>::ForEach(void(*func)(Key&, Value&))
-		{
-			Node<Key, Value>* currNode = head;
-
-			while (currNode != nullptr)
-			{
-				func(currNode->key, currNode->value);
-				currNode = currNode->next;
-			}
-		}
-
-		template <typename Key, typename Value>
-		template <typename ... Args> void List<Key, Value>::ForEach(void(*func)(Node<Key, Value>*, Args...), Args ... args)
-		{
-			Node<Key, Value>* currNode = head;
-
-			while (currNode != nullptr)
-			{
-				func(currNode, args...);
-				currNode = currNode->next;
-			}
-		}
-
-		template <typename Key, typename Value>
-		template <typename ... Args> void List<Key, Value>::ForEach(void(*func)(Key&, Value&, Args...), Args ... args)
-		{
-			Node<Key, Value>* currNode = head;
-
-			while (currNode != nullptr)
-			{
-				func(currNode->key, currNode->value, args...);
-				currNode = currNode->next;
-			}
-		}
-
-		template <typename Key, typename Value>
-		bool List<Key, Value>::DeleteKey(Key key)
-		{
-			Node<Key, Value>* currNode = head;
-			Node<Key, Value>* prevNode = nullptr;
-
-			while (currNode && currNode->next != nullptr)
-			{
-				if (currNode->key != key)
-				{
-					prevNode = currNode;
-					currNode = currNode->next;
-				}
-				else
-					break;
-			}
-
-			if (currNode)
-				if (prevNode)
-				{
-					prevNode->next = currNode->next;
-					delete currNode;
-					return true;
-				}
-				else
-				{
-					head = currNode->next;
-					delete currNode;
-					return true;
-				}
-
-			return false;
-		}
-
-		template <typename Key, typename Value>
-		bool List<Key, Value>::DeleteValue(Value value)
-		{
-			Node<Key, Value>* currNode = head;
-			Node<Key, Value>* prevNode = nullptr;
-
-			while (currNode && currNode->next != nullptr)
-			{
-				if (currNode->value != value)
-				{
-					prevNode = currNode;
-					currNode = currNode->next;
-				}
-				else
-					break;
-			}
-
-			if (currNode)
-				if (prevNode)
-				{
-					prevNode->next = currNode->next;
-					delete currNode;
-					return true;
-				}
-				else
-				{
-					head = currNode->next;
-					delete currNode;
-					return true;
-				}
-
-			return false;
-		}
-
-		template <typename Key, typename Value>
-		KeyValueData<Key, Value> List<Key, Value>::operator[](unsigned int index)
-		{
-			if (index <= 0)
-				return { head->key, head->value };
-
-			Node<Key, Value>* currNode = head;
-			unsigned int currIndex = 0;
-
-			while (currNode != nullptr)
-			{
-				if (currIndex != index)
-				{
-					currNode = currNode->next;
-					currIndex++;
-					continue;
-				}
-				else
-					break;
-			}
-
-			return { currNode->key, currNode->value };
-		}
-	};
-};
+	}
+	using Single::List;
+}

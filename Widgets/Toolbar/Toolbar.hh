@@ -26,6 +26,7 @@ namespace CGui
 		CGui::IconSize IconSize() override;
 		void Style(ToolbarStyle style);
 		void UnsetStyle();
+
 		bool IsToolbar();
 	};
 }

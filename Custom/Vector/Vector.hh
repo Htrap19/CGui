@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 #include <utility>
 
 namespace CGui
@@ -107,7 +106,7 @@ namespace CGui
 		{
 			m_Data = other.m_Data;
 			m_Size = other.m_Size;
-			m_Capacity = m_Capacity;
+			m_Capacity = other.m_Capacity;
 			other.m_Data = nullptr;
 			other.m_Size = 0;
 			other.m_Capacity = 0;
@@ -122,7 +121,7 @@ namespace CGui
 		void PushBack(const T& value)
 		{
 			if (m_Size >= m_Capacity)
-				ReAlloc(++m_Capacity);
+				ReAlloc(m_Capacity + (m_Capacity / 2));
 
 			m_Data[m_Size++] = value;
 		}
@@ -130,7 +129,7 @@ namespace CGui
 		void PushBack(T&& value)
 		{
 			if (m_Size >= m_Capacity)
-				ReAlloc(++m_Capacity);
+				ReAlloc(m_Capacity + (m_Capacity / 2));
 
 			m_Data[m_Size++] = std::move(value);
 		}
@@ -139,7 +138,7 @@ namespace CGui
 		T& EmplaceBack(Args&& ... args)
 		{
 			if (m_Size >= m_Capacity)
-				ReAlloc(++m_Capacity);
+				ReAlloc(m_Capacity + (m_Capacity / 2));
 
 			new(&m_Data[m_Size]) T(std::forward<Args>(args)...);
 			return m_Data[m_Size++];
@@ -152,6 +151,14 @@ namespace CGui
 
 			m_Size--;
 			m_Data[m_Size].~T();
+		}
+
+		void Resize()
+		{
+			if (m_Capacity <= m_Size)
+				return;
+
+			ReAlloc(m_Size);
 		}
 
 		void Clear()
@@ -167,6 +174,21 @@ namespace CGui
 			return m_Size;
 		}
 
+		size_t Capacity() const
+		{
+			return m_Capacity;
+		}
+
+		T& Front()
+		{
+			return m_Data[0];
+		}
+
+		T& Back()
+		{
+			return m_Data[m_Size - 1];
+		}
+
 		Iterator begin()
 		{
 			return Iterator(m_Data);
@@ -180,10 +202,7 @@ namespace CGui
 		T& operator[](size_t index)
 		{
 			if (index > m_Size)
-			{
-				std::cerr << "Vector out of range!" << std::endl;
-				return m_Data[m_Size - 1];
-			}
+				throw "[Vector]: Out of range!.";
 
 			return m_Data[index];
 		}
@@ -191,10 +210,7 @@ namespace CGui
 		const T& operator[](size_t index) const
 		{
 			if (index > m_Size)
-			{
-				std::cerr << "Vector out of range!" << std::endl;
-				return m_Data[m_Size - 1];
-			}
+				throw "[Vector]: Out of range!.";
 
 			return m_Data[index];
 		}

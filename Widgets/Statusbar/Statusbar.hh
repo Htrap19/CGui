@@ -10,8 +10,6 @@ namespace CGui
 	public:
 		Statusbar();
 		Statusbar(GtkStatusbar* status_bar);
-		void Add(Widget& child) override;
-		void Remove(Widget& child) override;
 		int ContextID(const char* context_description);
 		int Push(int context_id, const char* text);
 		void Pop(int context_id);

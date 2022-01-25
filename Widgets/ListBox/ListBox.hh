@@ -30,6 +30,7 @@ namespace CGui
 
 		ListBox();
 		ListBox(GtkListBox* list_box);
+		void Append(Widget& child);
 		void Prepend(Widget& child);
 		void Insert(Widget& child, int pos);
 		void SelectRow(Row& row);
@@ -52,6 +53,7 @@ namespace CGui
 		void InvalidateSort();
 		void DragHighlightRow(ListBox::Row& row);
 		void DragUnhighlightRow(ListBox::Row& row);
+
 		bool IsListBox();
 	};
 }

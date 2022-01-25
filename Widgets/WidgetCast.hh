@@ -166,6 +166,9 @@ namespace CGui
 		static ListBox Cast<ListBox>(const CGui::Widget& widget);
 
 		template <>
+		static ListBox::Row Cast<ListBox::Row>(const CGui::Widget& widget);
+
+		template <>
 		static MessageDialog Cast<MessageDialog>(const CGui::Widget& widget);
 
 		template <>
@@ -443,6 +446,12 @@ namespace CGui
 	inline ListBox WidgetCast::Cast(const CGui::Widget& widget)
 	{
 		return ListBox(GTK_LIST_BOX(widget.GetWidget()));
+	}
+
+	template<>
+	inline ListBox::Row WidgetCast::Cast(const CGui::Widget& widget)
+	{
+		return ListBox::Row(GTK_LIST_BOX_ROW(widget.GetWidget()));
 	}
 
 	template<>

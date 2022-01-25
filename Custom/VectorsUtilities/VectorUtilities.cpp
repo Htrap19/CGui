@@ -14,6 +14,7 @@ namespace CGui
 		{
 			vec.EmplaceBack(GTK_WIDGET(it->data));
 		}
+		vec.Resize();
 
 		return std::move(vec);
 	}
@@ -25,6 +26,7 @@ namespace CGui
 		{
 			vec.EmplaceBack(GTK_WIDGET(it->data));
 		}
+		vec.Resize();
 
 		return std::move(vec);
 	}
@@ -36,8 +38,20 @@ namespace CGui
 		{
 			pbufs.EmplaceBack(GDK_PIXBUF(it->data));
 		}
+		pbufs.Resize();
 
 		return std::move(pbufs);
+	}
+
+	CGui::Vector<CGui::TreeModel::TreePath> GListToTreePath(GList* begin)
+	{
+		Vector<CGui::TreeModel::TreePath> paths;
+		for (GList* it = begin; it != nullptr; it = it->next)
+		{
+			paths.EmplaceBack((GtkTreePath*)(it->data));
+		}
+		paths.Resize();
+		return std::move(paths);
 	}
 
 	CGui::Vector<CGui::RadioButton> WidgetVectorToRadioButton(Vector<Widget>&& vec)
@@ -47,6 +61,7 @@ namespace CGui
 		{
 			ret.EmplaceBack(GTK_RADIO_BUTTON(widget.GetWidget()));
 		}
+		ret.Resize();
 		return std::move(ret);
 	}
 
@@ -57,6 +72,7 @@ namespace CGui
 		{
 			strs.EmplaceBack((char*)li->data);
 		}
+		strs.Resize();
 		return std::move(strs);
 	}
 
@@ -67,6 +83,7 @@ namespace CGui
 		{
 			strs.EmplaceBack((char*)li->data);
 		}
+		strs.Resize();
 		return std::move(strs);
 	}
 
@@ -77,6 +94,7 @@ namespace CGui
 		{
 			ret.EmplaceBack(GTK_WINDOW(widget.GetWidget()));
 		}
+		ret.Resize();
 		return std::move(ret);
 	}
 
@@ -87,6 +105,7 @@ namespace CGui
 		{
 			ret.EmplaceBack(GTK_TREE_VIEW_COLUMN(widget.GetWidget()));
 		}
+		ret.Resize();
 		return std::move(ret);
 	}
 

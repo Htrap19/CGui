@@ -6,24 +6,14 @@ namespace CGui
 	{
 		m_Widget = gtk_statusbar_new();
 		this->SetContext(m_Widget);
-		Container<Widget>::t_widget = gtk_statusbar_get_message_area(GTK_STATUSBAR(m_Widget));
+		Container<Widget>::m_WidgetIns = gtk_statusbar_get_message_area(GTK_STATUSBAR(m_Widget));
 	}
 
 	Statusbar::Statusbar(GtkStatusbar* status_bar) : Box::Container(this), Box::Orientable(this)
 	{
 		m_Widget = GTK_WIDGET(status_bar);
 		this->SetContext(m_Widget);
-		Container<Widget>::t_widget = gtk_statusbar_get_message_area(GTK_STATUSBAR(m_Widget));
-	}
-
-	void Statusbar::Add(Widget& child)
-	{
-		this->Container<Widget>::Add(child);
-	}
-
-	void Statusbar::Remove(Widget& child)
-	{
-		this->Container<Widget>::Remove(child);
+		Container<Widget>::m_WidgetIns = gtk_statusbar_get_message_area(GTK_STATUSBAR(m_Widget));
 	}
 
 	int Statusbar::ContextID(const char* context_description)

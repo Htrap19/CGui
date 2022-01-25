@@ -12,7 +12,7 @@ namespace CGui
 	class Handler
 	{
 	public:
-		Handler(WidgetType* w) : t_widget{w}
+		Handler(WidgetType* w) : m_WidgetIns{w}
 		{
 		}
 
@@ -23,14 +23,14 @@ namespace CGui
 				func();
 			};
 
-			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(signal), G_CALLBACK((void(*)(GtkWidget*, void(*)()))callback), func));
+			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(m_WidgetIns->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(signal), G_CALLBACK((void(*)(GtkWidget*, void(*)()))callback), func));
 		}
 
 		long unsigned int SignalHandler(Signals signal, void(*func)(WidgetType*))
 		{
 			PassingDataByFunc* pass = new PassingDataByFunc
 			{
-				func, t_widget
+				func, m_WidgetIns
 			};
 			DeleteOnQuit::Instance().Add(pass);
 
@@ -40,7 +40,7 @@ namespace CGui
 				user_func(func_data->ins);
 			};
 
-			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(signal), G_CALLBACK((void(*)(GtkWidget*, PassingDataByFunc*))callback), pass));
+			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(m_WidgetIns->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(signal), G_CALLBACK((void(*)(GtkWidget*, PassingDataByFunc*))callback), pass));
 		}
 
 		template <typename ... Args>
@@ -48,7 +48,7 @@ namespace CGui
 		{
 			PassingDataByFunc* pass = new PassingDataByFunc
 			{
-				std::make_tuple(func, args...), t_widget
+				std::make_tuple(func, args...), m_WidgetIns
 			};
 			DeleteOnQuit::Instance().Add(pass);
 
@@ -62,7 +62,7 @@ namespace CGui
 				std::apply(apply_f, std::any_cast<std::tuple<void(*)(WidgetType*, Args ...), Args ...>>(func_data->func));
 			};
 
-			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(signal), G_CALLBACK((void(*)(GtkWidget*, PassingDataByFunc*))callback), pass));
+			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(m_WidgetIns->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(signal), G_CALLBACK((void(*)(GtkWidget*, PassingDataByFunc*))callback), pass));
 		}
 
 		template <typename ... Args>
@@ -70,7 +70,7 @@ namespace CGui
 		{
 			PassingDataByFunc* pass = new PassingDataByFunc
 			{
-				std::make_tuple(func, args...), t_widget
+				std::make_tuple(func, args...), m_WidgetIns
 			};
 			DeleteOnQuit::Instance().Add(pass);
 
@@ -84,7 +84,7 @@ namespace CGui
 				std::apply(apply_f, std::any_cast<std::tuple<void(*)(Args ...), Args ...>>(func_data->func));
 			};
 
-			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(signal), G_CALLBACK((void(*)(GtkWidget*, PassingDataByFunc*))callback), pass));
+			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(m_WidgetIns->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(signal), G_CALLBACK((void(*)(GtkWidget*, PassingDataByFunc*))callback), pass));
 		}
 
 		long unsigned int EventHandler(Events event, int(*func)())
@@ -94,7 +94,7 @@ namespace CGui
 				return func();
 			};
 
-			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((gint(*)(GtkWidget*, GdkEvent*, int(*)()))callback), func));
+			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(m_WidgetIns->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((gint(*)(GtkWidget*, GdkEvent*, int(*)()))callback), func));
 		}
 
 		long unsigned int EventHandler(Events event, void(*func)())
@@ -104,14 +104,14 @@ namespace CGui
 				func();
 			};
 
-			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((gint(*)(GtkWidget*, GdkEvent*, void(*)()))callback), func));
+			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(m_WidgetIns->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((gint(*)(GtkWidget*, GdkEvent*, void(*)()))callback), func));
 		}
 
 		long unsigned int EventHandler(Events event, int(*func)(WidgetType*))
 		{
 			PassingDataByFunc* pass = new PassingDataByFunc
 			{
-				func, t_widget
+				func, m_WidgetIns
 			};
 			DeleteOnQuit::Instance().Add(pass);
 
@@ -121,7 +121,7 @@ namespace CGui
 				return user_func(func_data->ins);
 			};
 
-			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((gint(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
+			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(m_WidgetIns->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((gint(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
 
 		}
 
@@ -129,7 +129,7 @@ namespace CGui
 		{
 			PassingDataByFunc* pass = new PassingDataByFunc
 			{
-				func, t_widget
+				func, m_WidgetIns
 			};
 			DeleteOnQuit::Instance().Add(pass);
 
@@ -139,14 +139,15 @@ namespace CGui
 				user_func(func_data->ins);
 			};
 
-			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((void(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
+			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(m_WidgetIns->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((void(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
 		}
 
-		template <typename ... Args> long unsigned int EventHandler(Events event, int(*func)(WidgetType*, Args...), Args ... args)
+		template <typename ... Args> 
+		long unsigned int EventHandler(Events event, int(*func)(WidgetType*, Args...), Args ... args)
 		{
 			PassingDataByFunc* pass = new PassingDataByFunc
 			{
-				std::make_tuple(func, args...), t_widget
+				std::make_tuple(func, args...), m_WidgetIns
 			};
 			DeleteOnQuit::Instance().Add(pass);
 
@@ -160,15 +161,16 @@ namespace CGui
 				return std::apply(apply_f, std::any_cast<std::tuple<int(*)(WidgetType, Args ...), Args ...>>(func_data->func));
 			};
 
-			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((gint(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
+			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(m_WidgetIns->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((gint(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
 
 		}
 
-		template <typename ... Args> long unsigned int EventHandler(Events event, void(*func)(WidgetType*, Args ...), Args ... args)
+		template <typename ... Args> 
+		long unsigned int EventHandler(Events event, void(*func)(WidgetType*, Args ...), Args ... args)
 		{
 			PassingDataByFunc* pass = new PassingDataByFunc
 			{
-				std::make_tuple(func, args...), t_widget
+				std::make_tuple(func, args...), m_WidgetIns
 			};
 			DeleteOnQuit::Instance().Add(pass);
 
@@ -182,14 +184,15 @@ namespace CGui
 				std::apply(apply_f, std::any_cast<std::tuple<void(*)(WidgetType*, Args ...), Args ...>>(func_data->func));
 			};
 
-			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((void(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
+			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(m_WidgetIns->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((void(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
 		}
 
-		template <typename ... Args> long unsigned int EventHandler(Events event, int(*func)(Args...), Args ... args)
+		template <typename ... Args> 
+		long unsigned int EventHandler(Events event, int(*func)(Args...), Args ... args)
 		{
 			PassingDataByFunc* pass = new PassingDataByFunc
 			{
-				std::make_tuple(func, args...), t_widget
+				std::make_tuple(func, args...), m_WidgetIns
 			};
 			DeleteOnQuit::Instance().Add(pass);
 
@@ -203,15 +206,15 @@ namespace CGui
 				return std::apply(apply_f, std::any_cast<std::tuple<int(*)(Args ...), Args ...>>(func_data->func));
 			};
 
-			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((gint(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
-
+			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(m_WidgetIns->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((gint(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
 		}
 
-		template <typename ... Args> long unsigned int EventHandler(Events event, void(*func)(Args ...), Args ... args)
+		template <typename ... Args> 
+		long unsigned int EventHandler(Events event, void(*func)(Args ...), Args ... args)
 		{
 			PassingDataByFunc* pass = new PassingDataByFunc
 			{
-				std::make_tuple(func, args...), t_widget
+				std::make_tuple(func, args...), m_WidgetIns
 			};
 			DeleteOnQuit::Instance().Add(pass);
 
@@ -225,12 +228,12 @@ namespace CGui
 				std::apply(apply_f, std::any_cast<std::tuple<void(*)(Args ...), Args ...>>(func_data->func));
 			};
 
-			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(t_widget->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((void(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
+			return static_cast<long unsigned int>(g_signal_connect(G_OBJECT(m_WidgetIns->GetWidget()), Converter::Convert::GetInstance().GetGtkCode(event), G_CALLBACK((void(*)(GtkWidget*, GdkEvent*, PassingDataByFunc*))callback), pass));
 		}
 
 		void DisconnectHandler(long unsigned int id)
 		{
-			g_signal_handler_disconnect(t_widget->GetWidget(), *(gulong*)&id);
+			g_signal_handler_disconnect(m_WidgetIns->GetWidget(), *(gulong*)&id);
 		}
 
 		virtual ~Handler()
@@ -244,6 +247,6 @@ namespace CGui
 		};
 
 	private:
-		WidgetType* t_widget;
+		WidgetType* m_WidgetIns;
 	};
 };

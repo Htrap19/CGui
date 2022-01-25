@@ -29,6 +29,7 @@ namespace CGui
 		ToolItemGroup DropGroup(int x, int y);
 		ToolItem DropItem(int x, int y);
 		void DragSource(ToolPaletteDragTargets targets);
+
 		bool IsToolPalette();
 	};
 }

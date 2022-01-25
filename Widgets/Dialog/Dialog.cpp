@@ -5,11 +5,11 @@ namespace CGui
 	Dialog::Dialog(Window& window, bool modal, const char* title) : Window::Container(this)
 	{
 		m_Widget = gtk_dialog_new();
-		Container<Widget>::t_widget = gtk_dialog_get_content_area(GTK_DIALOG(m_Widget));
+		Container<Widget>::m_WidgetIns = gtk_dialog_get_content_area(GTK_DIALOG(m_Widget));
+		this->SetContext(m_Widget);
 		this->TransientFor(window);
 		this->Modal(modal);
 		this->Title(title);
-		this->SetContext(m_Widget);
 	}
 
 	Dialog::Dialog(GtkDialog* dialog) : Window::Container(this)
@@ -52,27 +52,28 @@ namespace CGui
 		return Widget(gtk_dialog_get_widget_for_response(GTK_DIALOG(m_Widget), (int)res_type));
 	}
 
+
 	void Dialog::Add(Widget& child)
 	{
-		this->Container<Widget>::Add(child);
+		Container<Widget>::Add(child);
 	}
 
 	void Dialog::Remove(Widget& child)
 	{
-		this->Container<Widget>::Remove(child);
+		Container<Widget>::Remove(child);
 	}
 
 	void Dialog::InternalWidth(unsigned int width)
 	{
-		this->Container<Widget>::InternalWidth(width);
+		Container<Widget>::InternalWidth(width);
 	}
 
 	unsigned int Dialog::InternalWidth()
 	{
-		return this->Container<Widget>::InternalWidth();
+		return Container<Widget>::InternalWidth();
 	}
 
-	Vector<Widget> Dialog::Children()
+	CGui::Vector<CGui::Widget> Dialog::Children()
 	{
 		return std::move(Container<Widget>::Children());
 	}
@@ -88,7 +89,7 @@ namespace CGui
 	void Dialog::SetDialog(GtkDialog* dialog)
 	{
 		this->m_Widget = GTK_WIDGET(dialog);
-		Container<Widget>::t_widget = gtk_dialog_get_content_area(GTK_DIALOG(m_Widget));
+		Container<Widget>::m_WidgetIns = gtk_dialog_get_content_area(GTK_DIALOG(m_Widget));
 		this->SetContext(m_Widget);
 	}
 

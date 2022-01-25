@@ -10,7 +10,14 @@ namespace CGui
 
 	ListStore::ListStore(std::vector<Type> types)
 	{
-		store = gtk_list_store_newv(types.size(), (GType*)&types[0]);
+		auto tys = MakeGType(types);
+		store = gtk_list_store_newv(types.size(), &tys[0]);
+		m_Model = GTK_TREE_MODEL(store);
+	}
+
+	ListStore::ListStore(TreeModel& model)
+	{
+		store = GTK_LIST_STORE(model.GetWidget());
 		m_Model = GTK_TREE_MODEL(store);
 	}
 

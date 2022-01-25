@@ -5,14 +5,14 @@ namespace CGui
 	Infobar::Infobar() : Box::Container(this), Box::Orientable(this)
 	{
 		m_Widget = gtk_info_bar_new();
-		Container<Widget>::t_widget = gtk_info_bar_get_content_area(GTK_INFO_BAR(m_Widget));
+		Container<Widget>::m_WidgetIns = gtk_info_bar_get_content_area(GTK_INFO_BAR(m_Widget));
 		this->SetContext(m_Widget);
 	}
 
 	Infobar::Infobar(GtkInfoBar* infobar) : Box::Container(this), Box::Orientable(this)
 	{
 		m_Widget = GTK_WIDGET(infobar);
-		Container<Widget>::t_widget = gtk_info_bar_get_content_area(GTK_INFO_BAR(m_Widget));
+		Container<Widget>::m_WidgetIns = gtk_info_bar_get_content_area(GTK_INFO_BAR(m_Widget));
 		this->SetContext(m_Widget);
 	}
 
@@ -21,7 +21,7 @@ namespace CGui
 		m_Widget = gtk_info_bar_new();
 		this->MessageType(messagetype);
 		this->ShowCloseButton(showclosebutton);
-		Container<Widget>::t_widget = gtk_info_bar_get_content_area(GTK_INFO_BAR(m_Widget));
+		Container<Widget>::m_WidgetIns = gtk_info_bar_get_content_area(GTK_INFO_BAR(m_Widget));
 		this->SetContext(m_Widget);
 	}
 

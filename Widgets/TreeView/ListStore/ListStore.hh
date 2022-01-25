@@ -4,6 +4,7 @@
 #include "../../../Converter/Convert.hh"
 #include "../../TreeModel.hh"
 #include "../../../Custom/List/List.hh"
+#include "../../../Pixbuf/Pixbuf/Pixbuf.hh"
 
 namespace CGui
 {
@@ -12,6 +13,7 @@ namespace CGui
 	public:
 		ListStore(Type types[], int n_columns);
 		ListStore(std::vector<Type> types);
+		ListStore(TreeModel& model);
 		void ColumnTypes(Type types[], int n_columns);
 		bool Remove(TreeIter& iter);
 		template <typename N, typename value>
@@ -55,7 +57,10 @@ namespace CGui
 	{
 		static_assert(std::is_same_v<int, N>, "[Setter]: Unknown type of indexing column.");
 
-		gtk_list_store_set(store, iter.GetWidget(), column, data, -1);
+		if constexpr (std::is_same_v<Pixbuf, value>)
+			gtk_list_store_set(store, iter.GetWidget(), column, data.GetWidget(), -1);
+		else
+			gtk_list_store_set(store, iter.GetWidget(), column, data, -1);
 	}
 
 	template <typename N, typename value, typename ... RS>
